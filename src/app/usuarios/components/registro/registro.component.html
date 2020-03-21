@@ -1,0 +1,35 @@
+<div  class="registro">
+  <div class="container">
+    <h2 class="text-center">ReciclaUA</h2>
+    <h4 class="text-center">Registro</h4>
+    <form (ngSubmit)="onRegister()" #frmRegistro="ngForm">
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" class="form-control" id="email" placeholder="fdlc4@alu.ua.es" ngModel name="email" required
+               email #email="ngModel">
+        <span class="help-block" style="color: red;"
+              *ngIf="!email.valid && email.touched"> Correo electrónico no valido</span>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Contraseña:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" ngModel name="contrasena"
+               required #contrasena="ngModel">
+        <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña no valida</span>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Nombre:</label>
+        <input type="name" class="form-control" id="name" ngModel name="name"
+               required #name="ngModel">
+        <span class="help-block" style="color: red;" *ngIf="!name.valid && name.touched"> Nombre no valido</span>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Apellidos:</label>
+        <input type="surname" class="form-control" id="surname" ngModel name="surname"
+               required #surname="ngModel">
+        <span class="help-block" style="color: red;" *ngIf="!surname.valid && surname.touched"> Nombre no valido</span>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="frmRegistro.invalid">Registrate</button>
+      <p>¿Tienes cuenta?<a class="link" [routerLink]="['']" > Inicia sesión aquí</a></p>
+    </form>
+  </div>
+</div>
