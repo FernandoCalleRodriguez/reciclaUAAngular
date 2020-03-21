@@ -2,26 +2,28 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Usuario} from '../models/Usuario';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
+import {error} from '@angular/compiler/src/util';
 
 @Injectable()
 export class UsuarioService {
   private currentUserSubject: BehaviorSubject<string>;
   SERVER = 'http://localhost:16209/api/';
   private token: string;
+  private email: string;
+  private id: number;
 
   constructor(private http: HttpClient) {
   }
 
-  getAllUsers() {
-    return this.http.get(this.SERVER + 'Usuario/ReadAll');
-  }
 
-  Login(usuario) {
-    return this.http.post<any>(this.SERVER + 'Usuario/Login', usuario).pipe(map(res => {
-      this.saveToken(res);
-      return res;
-    }));
+  Login(usuario: Usuario) {
+    return this.http.post<any>(this.SERVER + 'Usuario/Login', usuario).pipe(map(
+      res => {
+        this.saveToken(res, usuario.Email);
+        return res;
+      })
+    );
   }
 
   Logout(): void {
@@ -30,19 +32,37 @@ export class UsuarioService {
 
   }
 
-  Registro(usuario) {
-    console.log(usuario);
-    return this.http.post<any>(this.SERVER + '/Usuario/Crear', usuario).pipe(map(res => {
-      console.log(res);
-      this.saveToken(res);
+  Registro(usuario: Usuario) {
+    return this.http.post<any>(this.SERVER + 'Usuario/CrearUsuarioGeneral', usuario).pipe(map(res => {
       return res;
     }));
 
   }
 
-  private saveToken(token: string): void {
+  Update(usuario: Usuario) {
+    return this.http.put<any>(this.SERVER + 'Usuario/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }
+
+  Borrado() {
+    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/' + this.getId() + '?p_usuario_oid=' + this.getId(), this.getHeaderToken()).pipe(map(res => {
+      this.saveToken(null, null);
+      return res;
+    }));
+  }
+
+  private saveToken(token: string, email: string): void {
     localStorage.setItem('ACESS_TOKEN', token);
+    localStorage.setItem('EMAIL', email);
+
     this.token = token;
+    this.email = email;
+  }
+
+  private saveId(id: number): void {
+    localStorage.setItem('ID', id.toString());
+    this.id = id;
   }
 
   private getToken(): string {
@@ -53,7 +73,23 @@ export class UsuarioService {
 
   }
 
-  public damePuntos() {
+  private getEmail(): string {
+    if (!this.email) {
+      this.email = localStorage.getItem('EMAIL');
+    }
+    return this.email;
+
+  }
+
+  private getId(): number {
+    if (!this.id) {
+      this.id = parseInt(localStorage.getItem('ID'));
+    }
+    return this.id;
+
+  }
+
+  private getHeaderToken() {
     const header = {
       Authorization: this.getToken(),
     };
@@ -61,15 +97,24 @@ export class UsuarioService {
     const requestOptions = {
       headers: new HttpHeaders(header),
     };
-    console.log(requestOptions);
+    return requestOptions;
+  }
 
-    return this.http.get(this.SERVER + '/PuntoReciclaje/DameMisPuntos?idUsuarioWeb=32769', requestOptions).pipe(map(res => {
+  public damePuntos() {
+    return this.http.get(this.SERVER + '/PuntoReciclaje/DameMisPuntos?idUsuarioWeb=32769', this.getHeaderToken()).pipe(map(res => {
       console.log(res);
       return res;
     }));
   }
 
-  getProductById(id) {
-    return this.http.get(this.SERVER + '');
+  public obtenerUsusarioPorEmail() {
+    console.log(this.getEmail());
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/BuscarPorCorreo?p_correo=' + this.getEmail(),
+      this.getHeaderToken()).pipe(map((res: Usuario) => {
+      console.log(res.Id);
+      this.saveId(res.Id);
+      return res;
+    }));
   }
+
 }

@@ -1,8 +1,7 @@
 export class Usuario {
-  id: number;
-  nombre: string;
-  apellido: string;
-  contrasena: string;
-  email: string;
-  telefono: number;
+  Id: number;
+  Nombre: string;
+  Apellidos: string;
+  Pass: string;
+  Email: string;
 }

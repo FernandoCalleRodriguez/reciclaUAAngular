@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {UsuarioService} from '../../services/usuario.service';
 import {Router} from '@angular/router';
+import {Usuario} from '../../models/Usuario';
 
 @Component({
   selector: 'app-registro',
@@ -10,8 +11,7 @@ import {Router} from '@angular/router';
 })
 export class RegistroComponent implements OnInit {
   @ViewChild('frmRegistro', {static: false}) singupForm: NgForm;
-
-  private postData;
+  private user: Usuario;
 
   constructor(private userService: UsuarioService,
               private router: Router) {
@@ -21,20 +21,21 @@ export class RegistroComponent implements OnInit {
   }
 
   onRegister() {
-    this.postData = {
+    this.user = {
+      Id: -1,
       Nombre: this.singupForm.value.name,
       Apellidos: this.singupForm.value.surname,
       Email: this.singupForm.value.email,
       Pass: this.singupForm.value.contrasena,
-      Fecha: '2020-03-20T16:49:15.108Z',
-      Estado: false,
-      EmailVerificado: false,
     };
-    this.userService.Registro(this.postData).subscribe(
+
+    this.userService.Registro(this.user).subscribe(
       data => {
-        this.router.navigate(['home']);
+        this.user.Id = data;
+        console.log(this.user)
+        this.router.navigate(['']);
       }, error => {
-        console.log('Autenticación fallida');
+        console.log('Registro fallido', error);
       }
     );
   }

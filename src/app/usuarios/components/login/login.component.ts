@@ -3,7 +3,6 @@ import {NgForm} from '@angular/forms';
 import {Usuario} from '../../models/Usuario';
 import {UsuarioService} from '../../services/usuario.service';
 import {Router} from '@angular/router';
-import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +12,6 @@ import {first} from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   @ViewChild('frmLogin', {static: false}) singupForm: NgForm;
   user: Usuario;
-  users: Usuario[];
   private postData;
 
   constructor(private userService: UsuarioService,
@@ -25,15 +23,20 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.postData = {
+
+    this.user = {
+      Id: -1,
       Email: this.singupForm.value.email,
       Pass: this.singupForm.value.contrasena,
+      Nombre: '',
+      Apellidos: '',
     };
-    this.userService.Login(this.postData).subscribe(
+
+    this.userService.Login(this.user).subscribe(
       data => {
         this.router.navigate(['home']);
       }, error => {
-        console.log('Autenticación fallida');
+        console.log('Autenticación fallida', error);
       }
     );
   }

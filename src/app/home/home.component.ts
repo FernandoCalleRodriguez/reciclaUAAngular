@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from '../usuarios/services/usuario.service';
 import {Router} from '@angular/router';
+import {Usuario} from '../usuarios/models/Usuario';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.obtenerUsuarioPorEmail();
   }
 
   logout() {
@@ -31,5 +33,25 @@ export class HomeComponent implements OnInit {
       }
     );
 
+  }
+
+  borrarUsuario() {
+    this.userService.Borrado().subscribe(
+      data => {
+        console.log('Usuario eliminado');
+        this.router.navigate(['']);
+      }, error => {
+        console.log('Eliminación fallida', error);
+      }
+    );
+  }
+
+  obtenerUsuarioPorEmail() {
+    this.userService.obtenerUsusarioPorEmail().subscribe(
+      data => {
+      }, error => {
+        console.log('Obtenicion fallida', error);
+      }
+    );
   }
 }
