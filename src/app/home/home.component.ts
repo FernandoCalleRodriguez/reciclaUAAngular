@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerUsuarioPorEmail();
   }
 
   logout() {
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  borrarUsuario() {
+  /*borrarUsuario() {
     this.userService.Borrado().subscribe(
       data => {
         console.log('Usuario eliminado');
@@ -44,14 +43,7 @@ export class HomeComponent implements OnInit {
         console.log('Eliminación fallida', error);
       }
     );
-  }
+  }*/
 
-  obtenerUsuarioPorEmail() {
-    this.userService.obtenerUsusarioPorEmail().subscribe(
-      data => {
-      }, error => {
-        console.log('Obtenicion fallida', error);
-      }
-    );
-  }
+
 }

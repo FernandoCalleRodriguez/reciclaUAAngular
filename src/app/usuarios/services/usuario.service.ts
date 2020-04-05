@@ -18,7 +18,7 @@ export class UsuarioService {
 
 
   Login(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'Usuario/Login', usuario).pipe(map(
+    return this.http.post<any>(this.SERVER + 'UsuarioWebNoAutenticado/Login', usuario).pipe(map(
       res => {
         this.saveToken(res, usuario.Email);
         return res;
@@ -40,28 +40,39 @@ export class UsuarioService {
   }
 
   Update(usuario: Usuario) {
-    return this.http.put<any>(this.SERVER + 'Usuario/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+    return this.http.put<any>(this.SERVER + 'Usuario/Modificar/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
   }
 
-  Borrado() {
-    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/' + this.getId() + '?p_usuario_oid=' + this.getId(), this.getHeaderToken()).pipe(map(res => {
+  /*Borrado() {
+    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Eliminar/?p_usuario_oid=' + this.getId(), this.getHeaderToken())
+    .pipe(map(res => {
       this.saveToken(null, null);
       return res;
     }));
-  }
+  }*/
 
   private saveToken(token: string, email: string): void {
     localStorage.setItem('ACESS_TOKEN', token);
-    localStorage.setItem('EMAIL', email);
 
     this.token = token;
-    this.email = email;
+    console.log();
+    this.obtenerUsusarioPorId(this.parseJwt(token).id).subscribe(usuario => {
+      localStorage.setItem('DATA_USER', JSON.stringify(usuario));
+      localStorage.setItem('ID_USER', usuario.Id.toString());
+
+    });
+  }
+
+  private parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   }
 
   private saveId(id: number): void {
-    localStorage.setItem('ID', id.toString());
+    localStorage.setItem('ID_USER', id.toString());
     this.id = id;
   }
 
@@ -73,21 +84,14 @@ export class UsuarioService {
 
   }
 
-  private getEmail(): string {
-    if (!this.email) {
-      this.email = localStorage.getItem('EMAIL');
-    }
-    return this.email;
 
-  }
-
-  private getId(): number {
+  /*private getId(): number {
     if (!this.id) {
       this.id = parseInt(localStorage.getItem('ID'));
     }
     return this.id;
 
-  }
+  }*/
 
   private getHeaderToken() {
     const header = {
@@ -101,15 +105,14 @@ export class UsuarioService {
   }
 
   public damePuntos() {
-    return this.http.get(this.SERVER + '/PuntoReciclaje/DameMisPuntos?idUsuarioWeb=32769', this.getHeaderToken()).pipe(map(res => {
+    return this.http.get(this.SERVER + 'PuntoReciclaje/BuscarPuntosPorUsuario?id_usuario=332769', this.getHeaderToken()).pipe(map(res => {
       console.log(res);
       return res;
     }));
   }
 
-  public obtenerUsusarioPorEmail() {
-    console.log(this.getEmail());
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/BuscarPorCorreo?p_correo=' + this.getEmail(),
+  public obtenerUsusarioPorId(id) {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWebAutenticado/' + id,
       this.getHeaderToken()).pipe(map((res: Usuario) => {
       console.log(res.Id);
       this.saveId(res.Id);

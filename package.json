@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate-sdk": "openapi-generator generate -i http://localhost:16209/swagger/docs/v1 -g typescript-angular -o src/app/shared/sdk --additional-properties=\\\"ngVersion=8.0.0\\\""
+
   },
   "private": true,
   "dependencies": {
