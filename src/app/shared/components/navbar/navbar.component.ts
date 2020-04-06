@@ -9,14 +9,14 @@ import {Router} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(protected  userService: UsuarioService,
+  constructor(/*protected  userService: UsuarioService,*/
               protected  router: Router) { }
 
   ngOnInit(): void {
   }
 
   logout() {
-    this.userService.Logout();
+    localStorage.removeItem('ACESS_TOKEN');
     this.router.navigate(['']);
   }
 }

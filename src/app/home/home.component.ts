@@ -10,25 +10,11 @@ import {Usuario} from '../shared/models/Usuario';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private userService: UsuarioService,
-              private router: Router
-  ) {
+  constructor() {
   }
 
   ngOnInit(): void {
   }
-
-
-  /*borrarUsuario() {
-    this.userService.Borrado().subscribe(
-      data => {
-        console.log('Usuario eliminado');
-        this.router.navigate(['']);
-      }, error => {
-        console.log('Eliminación fallida', error);
-      }
-    );
-  }*/
 
 
 }

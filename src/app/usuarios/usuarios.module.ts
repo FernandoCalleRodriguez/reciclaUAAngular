@@ -14,6 +14,11 @@ import { CrearComponent } from './components/admin/crear/crear.component';
 import { ListadminComponent } from './components/admin/listadmin/listadmin.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ListwebComponent } from './components/web/listweb/listweb.component';
+import { CrearwebComponent } from './components/web/crearweb/crearweb.component';
+import { ModificarwebComponent } from './components/web/modificarweb/modificarweb.component';
+import {NavbarComponent} from '../shared/components/navbar/navbar.component';
+import {AppModule} from '../app.module';
+import { UsuariowebComponent } from './components/web/usuarioweb/usuarioweb.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +27,16 @@ import { ListwebComponent } from './components/web/listweb/listweb.component';
     CrearComponent,
     ListadminComponent,
     UsuarioComponent,
-    ListwebComponent
+    ListwebComponent,
+    CrearwebComponent,
+    ModificarwebComponent,
+    UsuariowebComponent,
   ],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
     FormsModule,
-    HttpClientModule
-  ],
+    HttpClientModule],
   providers: [
     UsuarioService,
   ]

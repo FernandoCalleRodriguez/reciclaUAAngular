@@ -5,18 +5,17 @@ import {UsuarioService} from '../../../../shared/services/usuario.service';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-crear',
-  templateUrl: './crear.component.html',
-  styleUrls: ['./crear.component.css']
+  selector: 'app-crearweb',
+  templateUrl: './crearweb.component.html',
+  styleUrls: ['./crearweb.component.css']
 })
-export class CrearComponent implements OnInit {
+export class CrearwebComponent implements OnInit {
 
   @ViewChild('frmRegistro', {static: false}) singupForm: NgForm;
   private user: Usuario;
 
   constructor(private userService: UsuarioService,
-              private router: Router) {
-  }
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,16 +29,14 @@ export class CrearComponent implements OnInit {
       Pass: this.singupForm.value.contrasena,
     };
 
-    this.userService.CrearAdmin(this.user).subscribe(
+    this.userService.CrearWeb(this.user).subscribe(
       data => {
         this.user.Id = data;
         console.log(this.user)
-        this.router.navigate(['list-admin']);
+        this.router.navigate(['list-web']);
       }, error => {
         console.log('Crear usuario admin fallido', error);
       }
     );
   }
-
-
 }

@@ -71,28 +71,30 @@ export class UsuarioService {
     }));
   }
 
-  /*Update(usuario: Usuario) {
-    return this.http.put<any>(this.SERVER + 'Usuario/Modificar/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }*/
-
-  UpdateWeb(usuario: Usuario) {
-    return this.http.put<any>(this.SERVER + 'UsuarioWeb/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+  modificarAdmin(usuario: Usuario) {
+    return this.http.put<any>(this.SERVER + 'UsuarioAdminAutenticado/Modificar?idUsuarioAdminAutenticado=' + usuario.Id,
+      usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
   }
 
-  /*Borrado() {
-    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Eliminar/?p_usuario_oid=' + this.getId(), this.getHeaderToken())
-    .pipe(map(res => {
-      this.saveToken(null, null);
+  modificarWeb(usuario: Usuario) {
+    return this.http.put<any>(this.SERVER + 'UsuarioWeb/Modificar?idUsuarioWeb=' + usuario.Id,
+      usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
-  }*/
+  }
 
-  Borrado(id) {
-    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/' + id, this.getHeaderToken()).pipe(map(res => {
+  borrarAdmin(id) {
+    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Borrar/?p_usuario_oid=' + id, this.getHeaderToken())
+      .pipe(map(res => {
+        this.saveToken(null, null);
+        return res;
+      }));
+  }
+
+  borrarWeb(id) {
+    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Borrar?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
   }

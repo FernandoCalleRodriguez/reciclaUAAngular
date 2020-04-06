@@ -1,9 +1,9 @@
 export class Usuario {
-  Id: number;
+  Id?: number;
   Nombre?: string;
   Apellidos?: string;
-  Pass: string;
-  Email: string;
+  Pass?: string;
+  Email?: string;
   Fecha?: Date;
   EmailVerificado?: string;
   Borrado?: boolean;

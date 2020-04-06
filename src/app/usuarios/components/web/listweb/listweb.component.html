@@ -1,21 +1,37 @@
 <div class="container">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th  scope="col">#</th>
-      <th class="th-sm" scope="col">Email</th>
-      <th class="th-sm" scope="col">Nompre</th>
-      <th class="th-sm" scope="col">Apellidos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let usuario of usuariosweb" >
-      <th scope="row">1</th>
-      <td ><a [routerLink]="['/usuarios/', usuario.Id]">{{usuario.Email | titlecase}}</a></td>
-      <td >{{usuario.Nombre}}</td>
-      <td >{{usuario.Apellidos}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="row">
+    <a type="button" [routerLink]="['../crear-web']" class="btn btn-primary">Crear usuario web</a>
+  </div>
+  <br>
 
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="th-sm" scope="col">Email</th>
+          <th class="th-sm" scope="col">Nompre</th>
+          <th class="th-sm" scope="col">Apellidos</th>
+          <th class="th-sm" scope="col">Modificar</th>
+          <th class="th-sm" scope="col">Borrar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let usuario of usuariosweb">
+          <ng-template [ngIf]="usuario.Nombre != ''">
+            <td><a [routerLink]="['/usuarios/', usuario.Id]">{{usuario.Email}}</a></td>
+            <td>{{usuario.Nombre | titlecase}}</td>
+            <td>{{usuario.Apellidos}}</td>
+            <td>
+              <button class="icon" (click)="modificarUsuario(usuario.Id)"><i class="fa fa-edit"></i></button>
+            </td>
+            <td>
+              <button class="icon" (click)="borrarUsuario(usuario.Id)"><i class="fa fa-trash"></i></button>
+            </td>
+          </ng-template>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
