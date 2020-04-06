@@ -1,0 +1,21 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th  scope="col">#</th>
+      <th class="th-sm" scope="col">Email</th>
+      <th class="th-sm" scope="col">Nompre</th>
+      <th class="th-sm" scope="col">Apellidos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let usuario of usuariosadmin" >
+      <th scope="row">1</th>
+      <td ><a [routerLink]="['/usuarios/', usuario.Id]">{{usuario.Email | titlecase}}</a></td>
+      <td >{{usuario.Nombre}}</td>
+      <td >{{usuario.Apellidos}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

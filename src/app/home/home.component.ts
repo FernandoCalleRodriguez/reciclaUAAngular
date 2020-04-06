@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UsuarioService} from '../usuarios/services/usuario.service';
+import {UsuarioService} from '../shared/services/usuario.service';
 import {Router} from '@angular/router';
-import {Usuario} from '../usuarios/models/Usuario';
+import {Usuario} from '../shared/models/Usuario';
 
 @Component({
   selector: 'app-home',
@@ -18,21 +18,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout() {
-    this.userService.Logout();
-    this.router.navigate(['']);
-  }
-
-  damePuntos() {
-    this.userService.damePuntos().subscribe(
-      data => {
-        console.log('Obtenidos puntos');
-      }, error => {
-        console.log('Obtención fallida');
-      }
-    );
-
-  }
 
   /*borrarUsuario() {
     this.userService.Borrado().subscribe(

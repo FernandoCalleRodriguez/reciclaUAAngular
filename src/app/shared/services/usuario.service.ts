@@ -18,7 +18,7 @@ export class UsuarioService {
 
 
   Login(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioWebNoAutenticado/Login', usuario).pipe(map(
+    return this.http.post<any>(this.SERVER + 'UsuarioAdminNoAutenticado/Login', usuario).pipe(map(
       res => {
         this.saveToken(res, usuario.Email);
         return res;
@@ -32,15 +32,53 @@ export class UsuarioService {
 
   }
 
-  Registro(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'Usuario/CrearUsuarioGeneral', usuario).pipe(map(res => {
+  CrearAdmin(usuario: Usuario) {
+    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
 
   }
 
-  Update(usuario: Usuario) {
+  CrearWeb(usuario: Usuario) {
+    return this.http.post<any>(this.SERVER + 'UsuarioWeb/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+
+  }
+
+
+  obtenerTodosAdmin() {
+    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioAdminAutenticado/BuscarTodos', this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }
+
+  obtenerTodosWeb() {
+    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/BuscarTodos', this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }
+
+  obtenerAdminPorId(id) {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/' + id, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }
+
+  public obtenerWebPorId(id) {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/' + id, this.getHeaderToken()).pipe(map((res: Usuario) => {
+      return res;
+    }));
+  }
+
+  /*Update(usuario: Usuario) {
     return this.http.put<any>(this.SERVER + 'Usuario/Modificar/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }*/
+
+  UpdateWeb(usuario: Usuario) {
+    return this.http.put<any>(this.SERVER + 'UsuarioWeb/' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }));
   }
@@ -53,12 +91,30 @@ export class UsuarioService {
     }));
   }*/
 
+  Borrado(id) {
+    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/' + id, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }));
+  }
+
+  obtenerRanking() {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe(map((res: Usuario) => {
+      return res;
+    }));
+  }
+
+  obtenerPuntuaciones() {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(map((res: Usuario) => {
+      return res;
+    }));
+  }
+
   private saveToken(token: string, email: string): void {
     localStorage.setItem('ACESS_TOKEN', token);
 
     this.token = token;
     console.log();
-    this.obtenerUsusarioPorId(this.parseJwt(token).id).subscribe(usuario => {
+    this.obtenerAdminPorId(this.parseJwt(token).id).subscribe(usuario => {
       localStorage.setItem('DATA_USER', JSON.stringify(usuario));
       localStorage.setItem('ID_USER', usuario.Id.toString());
 
@@ -104,20 +160,5 @@ export class UsuarioService {
     return requestOptions;
   }
 
-  public damePuntos() {
-    return this.http.get(this.SERVER + 'PuntoReciclaje/BuscarPuntosPorUsuario?id_usuario=332769', this.getHeaderToken()).pipe(map(res => {
-      console.log(res);
-      return res;
-    }));
-  }
-
-  public obtenerUsusarioPorId(id) {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWebAutenticado/' + id,
-      this.getHeaderToken()).pipe(map((res: Usuario) => {
-      console.log(res.Id);
-      this.saveId(res.Id);
-      return res;
-    }));
-  }
 
 }

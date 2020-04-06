@@ -1,15 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {UsuarioService} from '../../../shared/services/usuario.service';
+import {Usuario} from '../../../../shared/models/Usuario';
+import {UsuarioService} from '../../../../shared/services/usuario.service';
 import {Router} from '@angular/router';
-import {Usuario} from '../../../shared/models/Usuario';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  selector: 'app-crear',
+  templateUrl: './crear.component.html',
+  styleUrls: ['./crear.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class CrearComponent implements OnInit {
+
   @ViewChild('frmRegistro', {static: false}) singupForm: NgForm;
   private user: Usuario;
 
@@ -29,15 +30,16 @@ export class RegistroComponent implements OnInit {
       Pass: this.singupForm.value.contrasena,
     };
 
-    /*this.userService.Registro(this.user).subscribe(
+    this.userService.CrearAdmin(this.user).subscribe(
       data => {
         this.user.Id = data;
         console.log(this.user)
-        this.router.navigate(['']);
+        this.router.navigate(['../home']);
       }, error => {
-        console.log('Registro fallido', error);
+        console.log('Crear usuario admin fallido', error);
       }
-    );*/
+    );
   }
+
 
 }
