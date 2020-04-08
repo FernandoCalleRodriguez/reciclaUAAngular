@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let usuario of usuariosweb">
-          <ng-template [ngIf]="usuario.Nombre != ''">
+          <ng-template [ngIf]="!usuario.Borrado">
             <td><a [routerLink]="['/usuarios/', usuario.Id]">{{usuario.Email}}</a></td>
             <td>{{usuario.Nombre | titlecase}}</td>
             <td>{{usuario.Apellidos}}</td>
