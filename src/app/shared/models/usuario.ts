@@ -7,4 +7,5 @@ export class Usuario {
   Fecha?: Date;
   EmailVerificado?: string;
   Borrado?: boolean;
+  Puntuacion?: boolean;
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {Router} from '@angular/router';
-import {Usuario} from '../shared/models/Usuario';
+import {Usuario} from '../shared/models/usuario';
 
 @Component({
   selector: 'app-home',

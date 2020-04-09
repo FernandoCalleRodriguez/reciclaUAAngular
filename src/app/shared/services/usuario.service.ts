@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Usuario} from '../models/Usuario';
+import {Usuario} from '../models/usuario';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {error} from '@angular/compiler/src/util';
@@ -33,9 +33,11 @@ export class UsuarioService {
   }
 
   CrearAdmin(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
+    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).subscribe(res => {
       return res;
-    }));
+    }, error1 => {
+      console.log(error1);
+    });
 
   }
 
@@ -106,6 +108,7 @@ export class UsuarioService {
   }
 
   obtenerPuntuaciones() {
+
     return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(map((res: Usuario) => {
       return res;
     }));
@@ -127,11 +130,6 @@ export class UsuarioService {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
-  }
-
-  private saveId(id: number): void {
-    localStorage.setItem('ID_USER', id.toString());
-    this.id = id;
   }
 
   private getToken(): string {
