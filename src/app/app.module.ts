@@ -16,6 +16,9 @@ import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {FormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
+import { ListaDudasComponent } from './foro/lista-dudas/lista-dudas.component';
+import { ListaRespuestasComponent } from './shared/components/lista-respuestas/lista-respuestas.component';
+import { RespuestasComponent } from './foro/respuestas/respuestas.component';
 
 
 @NgModule({
@@ -35,6 +38,9 @@ import {HttpClientModule} from '@angular/common/http';
     ListwebComponent,
     CrearwebComponent,
     ModificarwebComponent,
+    ListaDudasComponent,
+    ListaRespuestasComponent,
+    RespuestasComponent,
   ],
   imports: [
     BrowserModule,
