@@ -16,8 +16,8 @@
                required #contrasena="ngModel">
         <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña no valida</span>
       </div>
-
       <button type="submit" class="btn btn-primary" [disabled]="frmLogin.invalid">Iniciar sesión</button>
+      <a [routerLink]="['/recuperarcontrasena']">    ¿Has olvidado tu contraseña?</a>
     </form>
   </div>
 </div>

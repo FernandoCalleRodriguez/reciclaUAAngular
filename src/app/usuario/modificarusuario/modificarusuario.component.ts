@@ -1,20 +1,21 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Usuario} from '../../shared/models/usuario';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
-import {Usuario} from '../../shared/models/usuario';
-import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-modificarweb',
-  templateUrl: './modificarweb.component.html',
-  styleUrls: ['./modificarweb.component.css']
+  selector: 'app-modificarusuario',
+  templateUrl: './modificarusuario.component.html',
+  styleUrls: ['./modificarusuario.component.css']
 })
-export class ModificarwebComponent implements OnInit {
+export class ModificarusuarioComponent implements OnInit {
 
   @ViewChild('frmModificar', {static: false}) updateForm: NgForm;
 
   usuario: Usuario;
   usuarioId: string;
+  tipousuario: string;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
@@ -25,8 +26,10 @@ export class ModificarwebComponent implements OnInit {
 
     this.route.params.subscribe(param => {
 
+      this.tipousuario = param['tipousuario'];
       this.usuarioId = param['usuarioId'];
-      this.usuarioService.obtenerWebPorId(this.usuarioId).subscribe(usuario => {
+
+      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, this.tipousuario).subscribe(usuario => {
         this.usuario = usuario;
 
       });
@@ -40,9 +43,9 @@ export class ModificarwebComponent implements OnInit {
     this.usuario.Apellidos = this.updateForm.value.surname;
     this.usuario.Email = this.updateForm.value.email;
     console.log(this.usuario);
-    this.usuarioService.modificarWeb(this.usuario).subscribe(
+    this.usuarioService.modificarUsuario(this.usuario, this.tipousuario).subscribe(
       data => {
-        this.router.navigate(['../list-web']);
+        this.router.navigate(['/listarusuario/' + this.tipousuario]);
       }, error => {
         console.log('Crear usuario admin fallido', error);
       }

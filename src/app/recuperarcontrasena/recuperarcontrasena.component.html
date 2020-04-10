@@ -1,0 +1,16 @@
+<div  class="login">
+  <div class="container">
+    <h2 class="text-center">ReciclaUA</h2>
+    <h4 class="text-center">Recuperación de la cuenta</h4>
+    <form (ngSubmit)="onChange()" #frmUpdatePass="ngForm">
+      <div class="form-group">
+        <label for="email">Escriba el correo electronico del que quieres recuperar la contraseña</label>
+        <input type="email" class="form-control" id="email" placeholder="fdlc4@alu.ua.es" ngModel name="email" required
+               email #email="ngModel">
+        <span class="help-block" style="color: red;"
+              *ngIf="!email.valid && email.touched"> Correo electrónico no valido</span>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="frmUpdatePass.invalid">Recuperar</button>
+    </form>
+  </div>
+</div>

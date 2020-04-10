@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {Usuario} from '../shared/models/usuario';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {Router} from '@angular/router';
+import {AutenticacionService} from '../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,9 @@ export class LoginComponent implements OnInit {
   user: Usuario;
   private postData;
 
-  constructor(private userService: UsuarioService,
+  constructor(private autenticacionService: AutenticacionService,
               private router: Router) {
+    autenticacionService.noEstaAutenticado();
   }
 
   ngOnInit(): void {
@@ -25,14 +27,13 @@ export class LoginComponent implements OnInit {
   onLogin() {
 
     this.user = {
-      Id: -1,
       Email: this.singupForm.value.email,
       Pass: this.singupForm.value.contrasena,
       Nombre: '',
       Apellidos: '',
     };
 
-    this.userService.Login(this.user).subscribe(
+    this.autenticacionService.Login(this.user).subscribe(
       data => {
         this.router.navigate(['home']);
       }, error => {
@@ -41,18 +42,4 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  /*onSubmit() {
-    console.log(this.singupForm);
-    this.postData = {
-      DNI: this.singupForm.value.email,
-      Pass: this.singupForm.value.contrasena,
-    };
-    console.log(this.postData);
-    this.userService.Login(this.postData);
-  }*/
-
-  /*getAllUsers() {
-    this.usuarios = this.userService.getAllUsers().subscribe((res: any) => {
-    });
-  }*/
 }
