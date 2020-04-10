@@ -1,0 +1,86 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <!-- titulo -->
+  <div class="row">
+    <div class="col">
+      <h1>Listado de dudas</h1>
+    </div>
+  </div>
+  <!-- tabla de dudas -->
+  <div class="row">
+    <div class="col">
+      <table *ngIf="dudas" class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Título</th>
+          <th scope="col" class="d-none d-md-table-cell">Tema</th>
+          <th scope="col" class="d-none d-md-table-cell">Usuario</th>
+          <th scope="col" class="d-none d-md-table-cell">Fecha</th>
+          <th scope="col">Respuestas</th>
+          <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let duda of dudas">
+          <th scope="row">{{ duda.Id }}</th>
+          <td>{{ duda.Titulo }}</td>
+          <td class="d-none d-md-table-cell">{{ getTema(duda.Tema) }}</td>
+          <td class="d-none d-md-table-cell">{{ duda.UsuarioDuda ? duda.UsuarioDuda.Email : 'Null' }}</td>
+          <td class="d-none d-md-table-cell">{{ duda.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
+          <td>
+            <button class="icon" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button class="icon" (click)="showDuda(duda)"><i class="fa fa-eye"></i></button>
+              <button class="icon"><i class="fa fa-edit"></i></button>
+              <button class="icon"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!dudas" class="alert alert-info">
+        No hay dudas actualmente
+      </div>
+    </div>
+  </div>
+  <!-- detalle duda -->
+  <div *ngIf="duda">
+    <hr>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <h5 class="card-header">
+            {{ duda.Titulo }}
+            <button type="button" class="close" (click)="duda=null">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </h5>
+          <div class="card-body">
+            <p class="card-text text-justify">
+              {{ duda.Cuerpo }}
+            </p>
+          </div>
+          <div class="card-footer text-muted text-right">
+            {{ duda.UsuarioDuda?.Nombre }}
+            <br>
+            {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- boton crear -->
+  <div class="row">
+    <div class="col-12">
+      <hr>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-success float-right">Añadir nueva duda</button>
+    </div>
+  </div>
+</div>
