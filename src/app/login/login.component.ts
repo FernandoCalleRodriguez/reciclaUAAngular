@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private autenticacionService: AutenticacionService,
               private router: Router) {
-    autenticacionService.noEstaAutenticado();
   }
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     this.autenticacionService.Login(this.user).subscribe(
       data => {
-        this.router.navigate(['home']);
+        this.router.navigate(['/home']);
       }, error => {
         console.log('Autenticación fallida', error);
       }

@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -9,9 +10,10 @@ import {UsuarioService} from '../../shared/services/usuario.service';
   styleUrls: ['./usuariolistar.component.css']
 })
 export class UsuariolistarComponent implements OnInit {
+  @ViewChild('frmSearch', {static: false}) searchForm: NgForm;
 
   tipousuario: string; // web o admin
-  usuariosweb: Usuario[];
+  usuarios: Usuario[];
 
 
   constructor(protected route: ActivatedRoute,
@@ -25,12 +27,21 @@ export class UsuariolistarComponent implements OnInit {
       this.tipousuario = param['tipousuario'];
 
       this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
-        this.usuariosweb = usuarios;
+        this.usuarios = usuarios;
         console.log(usuarios);
       });
     });
 
 
+  }
+
+  onSearch() {
+    console.log("entro");
+    this.usuarioService.obtenerUsuarioPorId(this.searchForm.value.id, this.tipousuario).subscribe(usuario => {
+      this.usuarios.splice(0);
+      this.usuarios.push(usuario);
+      console.log(this.usuarios);
+    });
   }
 
   borrarUsuario(id) {

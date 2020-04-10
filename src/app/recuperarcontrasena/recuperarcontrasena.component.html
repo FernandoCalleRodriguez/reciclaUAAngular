@@ -11,6 +11,8 @@
               *ngIf="!email.valid && email.touched"> Correo electrónico no valido</span>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="frmUpdatePass.invalid">Recuperar</button>
+      <h3 *ngIf="cambiado"> La contraseña se ha cambiado con exito. Revisa el correo electrónico.
+      </h3>
     </form>
   </div>
 </div>

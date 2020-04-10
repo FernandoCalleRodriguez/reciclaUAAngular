@@ -16,6 +16,8 @@ import {ModificarusuarioComponent} from './usuario/modificarusuario/modificarusu
 import {AutenticacionService} from './shared/services/autenticacion.service';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import { RecuperarcontrasenaComponent } from './recuperarcontrasena/recuperarcontrasena.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { VerificacionComponent } from './verificacion/verificacion.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { RecuperarcontrasenaComponent } from './recuperarcontrasena/recuperarcon
     CrearusuarioComponent,
     ModificarusuarioComponent,
     UsuarioComponent,
-    RecuperarcontrasenaComponent
+    RecuperarcontrasenaComponent,
+    RankingComponent,
+    VerificacionComponent
   ],
   imports: [
     BrowserModule,

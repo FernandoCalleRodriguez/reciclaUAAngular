@@ -1,10 +1,32 @@
 <app-navbar></app-navbar>
 <div class="container">
   <div class="row">
-    <a type="button" [routerLink]="['/usuariocrear/'+ tipousuario]" class="btn btn-primary">Crear usuario {{tipousuario}}</a>
+    <a type="button" [routerLink]="['/usuariocrear/'+ tipousuario]" class="btn btn-primary">Crear
+      usuario {{tipousuario}}</a>
   </div>
   <br>
+  <div class="row">
+    <form (ngSubmit)="onSearch()" #frmSearch="ngForm">
+      <div class="row">
+        <div>
+          <label for="id">ID:</label>
+        </div>
+        <div class="col">
+          <input type="id" class="form-control" id="id" ngModel name="id" required
+                 #id="ngModel">
+          <span class="help-block" style="color: red;" *ngIf="!id.valid && id.touched"> Id no valido</span>
 
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary" [disabled]="frmSearch.invalid">Buscar</button>
+
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+  <br>
   <div class="row">
     <div class="col">
       <table class="table table-striped">
@@ -18,9 +40,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let usuario of usuariosweb">
+        <tr *ngFor="let usuario of usuarios">
           <ng-template [ngIf]="!usuario.Borrado">
-            <td><a [routerLink]="['/usuarios/', usuario.Id]">{{usuario.Email}}</a></td>
+            <td><a [routerLink]="['/usuario/' + tipousuario + '/' + usuario.Id]">{{usuario.Email}}</a></td>
             <td>{{usuario.Nombre | titlecase}}</td>
             <td>{{usuario.Apellidos}}</td>
             <td>

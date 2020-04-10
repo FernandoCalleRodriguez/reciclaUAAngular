@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="th-sm" scope="col">#</th>
+          <th class="th-sm" scope="col">Email</th>
+          <th class="th-sm" scope="col">Nompre</th>
+          <th class="th-sm" scope="col">Apellidos</th>
+          <th class="th-sm" scope="col">Puntuación</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let usuario of usuarios;let contador=index">
+            <th>{{contador + 1}}</th>
+            <td>{{usuario.Email}}</td>
+            <td>{{usuario.Nombre | titlecase}}</td>
+            <td>{{usuario.Apellidos}}</td>
+            <td>{{usuario.Puntuacion}}</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

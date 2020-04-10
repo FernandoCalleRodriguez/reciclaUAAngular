@@ -28,10 +28,10 @@ export class AutenticacionService {
   }
 
   Logout(): void {
-    this.token = '';
     localStorage.removeItem('ACESS_TOKEN');
     localStorage.removeItem('ID_USER');
     this.router.navigate(['']);
+
 
   }
 
@@ -79,11 +79,8 @@ export class AutenticacionService {
 
   noEstaAutenticado() {
 
-    if (this.getToken() != null || this.getID() != null) {
-      if (this.getID() == this.parseJwt(this.getToken()).id) {
+    if (this.getToken() != null && this.getID() != null) {
         this.router.navigate(['/home']);
-
-      }
     }
 
   }

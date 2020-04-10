@@ -13,6 +13,7 @@ export class RecuperarcontrasenaComponent implements OnInit {
   @ViewChild('frmUpdatePass', {static: false}) updatePassForm: NgForm;
 
   usuario: Usuario;
+  cambiado = false;
 
   constructor(private usuarioService: UsuarioService,
               private autenticacionService: AutenticacionService) {
@@ -29,8 +30,8 @@ export class RecuperarcontrasenaComponent implements OnInit {
         console.log(usuario.Pass);
         this.usuarioService.recuperarPass(usuario).subscribe(result => {
           console.log(result);
-          //Indicar contraseña cambiada 
-          //Enviar email con la nueva contraseña
+          //Indicar contraseña cambiada
+          this.cambiado = true;
         });
 
       }

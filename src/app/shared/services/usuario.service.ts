@@ -6,7 +6,6 @@ import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UsuarioService {
-
   SERVER = 'http://localhost:16209/api/';
 
   constructor(private http: HttpClient,
@@ -31,7 +30,7 @@ export class UsuarioService {
 
   }
 
-  obtenerUsuarios (tipo: string) {
+  obtenerUsuarios(tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -60,6 +59,7 @@ export class UsuarioService {
       return res;
     });
   }
+
   obtenerUsuarioPorEmail(email) {
 
     return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminNoAutenticado/BuscarPorCorreo?p_correo=' + email).pipe(res => {
@@ -97,7 +97,7 @@ export class UsuarioService {
   }
 
   obtenerRanking() {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe( res => {
+    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe(res => {
       return res;
     });
   }
@@ -105,6 +105,13 @@ export class UsuarioService {
   obtenerPuntuaciones() {
 
     return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  verificarEmail(id) {
+
+    return this.http.post<any>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(res => {
       return res;
     });
   }
