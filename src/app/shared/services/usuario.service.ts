@@ -28,16 +28,16 @@ export class UsuarioService {
 
   Logout(): void {
     this.token = '';
-    localStorage.removeItem('ACESS_TOKEN');
+    localStorage.removeItem('ACCESS_TOKEN');
 
   }
 
   CrearAdmin(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).subscribe(res => {
+    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }, error1 => {
       console.log(error1);
-    });
+    }));
 
   }
 
@@ -115,7 +115,7 @@ export class UsuarioService {
   }
 
   private saveToken(token: string, email: string): void {
-    localStorage.setItem('ACESS_TOKEN', token);
+    localStorage.setItem('ACCESS_TOKEN', token);
 
     this.token = token;
     console.log();
@@ -134,7 +134,7 @@ export class UsuarioService {
 
   private getToken(): string {
     if (!this.token) {
-      this.token = localStorage.getItem('ACESS_TOKEN');
+      this.token = localStorage.getItem('ACCESS_TOKEN');
     }
     return this.token;
 
