@@ -4,7 +4,7 @@ export class Respuesta {
   Id?: number;
   Cuerpo?: string;
   Fecha?: Date;
-  Util?: boolean;
+  Util?: number;
   EsCorrecta?: boolean;
   UsuarioRespuesta?: Usuario;
 }
