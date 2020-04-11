@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Nueva duda</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input
+            type="text"
+            id="titulo"
+            formControlName="titulo"
+            class="form-control"
+            [ngClass]="{'is-invalid' : titulo().invalid && titulo().touched, 'is-valid':titulo().valid}">
+          <div class="invalid-feedback" *ngIf="titulo().errors?.required && titulo().touched">
+            Campo requerido
+          </div>
+          <div class="invalid-feedback" *ngIf="titulo().errors?.maxlength">
+            Longitud máxima excedida ({{ 30 - titulo().value.length}})
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cuerpo">Cuerpo</label>
+          <textarea
+            type="text"
+            id="cuerpo"
+            formControlName="cuerpo"
+            class="form-control"
+            rows="12"
+            [ngClass]="{'is-invalid' : cuerpo().invalid && cuerpo().touched, 'is-valid':cuerpo().valid}">
+          </textarea>
+          <div class="invalid-feedback" *ngIf="cuerpo().errors?.required && cuerpo().touched">
+            Campo requerido
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tema">Tema</label>
+          <select id="tema" formGroupName="tema" class="custom-select">
+            <option *ngFor="let tema of temas" value="{{tema.Id}}">{{ tema.Tema }}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary float-right" type="submit" [disabled]="formulario.invalid">{{ this.edit? 'Modificar' : 'Crear' }}</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -8,4 +8,6 @@ export class Duda {
   Util?: boolean;
   Tema?: number;
   UsuarioDuda?: Usuario;
+  // tslint:disable-next-line:variable-name
+  Usuario_oid?: number;
 }
