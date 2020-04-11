@@ -2,7 +2,16 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h3>Perfil usuario: {{usuario?.Id}}</h3>
+      <div class="row">
+        <div class="col">
+          <h3>Perfil usuario: {{usuario?.Id}}</h3>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-secondary" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">Cambiar contraseña</button>
+          <button class="icon btn btn-warning" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i class="fa fa-edit"></i></button>
+          <button class="icon btn btn-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
+        </div>
+      </div>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
@@ -14,7 +23,8 @@
             {{usuario?.Nombre}}
           </div>
         </div>
-      </li>      <li class="list-group-item">
+      </li>
+      <li class="list-group-item">
         <div class="row">
           <div class=" col-2">
             <b>Apellidos: </b>
@@ -23,7 +33,8 @@
             {{usuario?.Apellidos}}
           </div>
         </div>
-      </li>      <li class="list-group-item">
+      </li>
+      <li class="list-group-item">
         <div class="row">
           <div class=" col-2">
             <b>Email: </b>
