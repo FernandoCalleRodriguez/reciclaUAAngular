@@ -10,6 +10,7 @@ import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
 import {RespuestasComponent} from './foro/respuestas/respuestas.component';
+import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -28,6 +29,8 @@ const routes: Routes = [
   {path: 'foro/duda/listar', component: ListaDudasComponent},
   {path: 'foro/duda/:dudaId/respuestas', component: RespuestasComponent},
   {path: 'foro/respuesta/listar', component: RespuestasComponent},
+  {path: 'foro/duda/crear', component: FormDudaComponent},
+  {path: 'foro/duda/:dudaId/modificar', component: FormDudaComponent},
 
   {path: '**', redirectTo: ''}
 ];

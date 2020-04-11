@@ -13,12 +13,13 @@ import {UsuarioComponent} from './usuario/usuario.component';
 import {ListwebComponent} from './web/listweb/listweb.component';
 import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {CrearwebComponent} from './web/crearweb/crearweb.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
 import { ListaDudasComponent } from './foro/lista-dudas/lista-dudas.component';
 import { ListaRespuestasComponent } from './shared/components/lista-respuestas/lista-respuestas.component';
 import { RespuestasComponent } from './foro/respuestas/respuestas.component';
+import { FormDudaComponent } from './foro/form-duda/form-duda.component';
 
 
 @NgModule({
@@ -27,26 +28,24 @@ import { RespuestasComponent } from './foro/respuestas/respuestas.component';
     HomeComponent,
     NavbarComponent,
     SidebarComponent,
-
     LoginComponent,
-
     CrearComponent,
     ListadminComponent,
-
     UsuarioComponent,
-
     ListwebComponent,
     CrearwebComponent,
     ModificarwebComponent,
     ListaDudasComponent,
     ListaRespuestasComponent,
     RespuestasComponent,
+    FormDudaComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     UsuarioService,
