@@ -9,6 +9,7 @@ import {RecuperarcontrasenaComponent} from './recuperarcontrasena/recuperarcontr
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RankingComponent} from './ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
+import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'listarusuario/:tipousuario', component: UsuariolistarComponent},
   {path: 'usuariocrear/:tipousuario', component: CrearusuarioComponent},
   {path: 'modificarusuario/:tipousuario/:usuarioId', component: ModificarusuarioComponent},
+  {path: 'usuario/cambiarcontrasena/:usuarioId', component: CambiarcontrasenaComponent},
   {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
 
   {path: '**', redirectTo: 'home'}

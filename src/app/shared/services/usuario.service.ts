@@ -126,6 +126,15 @@ export class UsuarioService {
 
   }
 
+  cambiarPass(usuario: Usuario) {
+
+    return this.http.put<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/CambiarPassword?idUsuarioAdminAutenticado=' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Cambiar contraseña fallida' + error1);
+    }));
+  }
+
   private getHeaderToken() {
 
     const header = {

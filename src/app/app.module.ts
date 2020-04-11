@@ -18,6 +18,7 @@ import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import { RecuperarcontrasenaComponent } from './recuperarcontrasena/recuperarcontrasena.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { VerificacionComponent } from './verificacion/verificacion.component';
+import { CambiarcontrasenaComponent } from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { VerificacionComponent } from './verificacion/verificacion.component';
     UsuarioComponent,
     RecuperarcontrasenaComponent,
     RankingComponent,
-    VerificacionComponent
+    VerificacionComponent,
+    CambiarcontrasenaComponent
   ],
   imports: [
     BrowserModule,

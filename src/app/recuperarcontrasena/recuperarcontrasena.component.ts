@@ -14,6 +14,7 @@ export class RecuperarcontrasenaComponent implements OnInit {
 
   usuario: Usuario;
   cambiado = false;
+  error = false;
 
   constructor(private usuarioService: UsuarioService,
               private autenticacionService: AutenticacionService) {
@@ -25,14 +26,20 @@ export class RecuperarcontrasenaComponent implements OnInit {
   onChange() {
 
     this.usuarioService.obtenerUsuarioPorEmail(this.updatePassForm.value.email).subscribe(usuario => {
-        usuario.Pass = this.autenticacionService.generarContrasena();
 
-        console.log(usuario.Pass);
-        this.usuarioService.recuperarPass(usuario).subscribe(result => {
-          console.log(result);
-          //Indicar contraseña cambiada
-          this.cambiado = true;
-        });
+        if (usuario == null) {
+          this.error = true;
+
+        } else {
+          usuario.Pass = this.autenticacionService.generarContrasena();
+          this.usuarioService.recuperarPass(usuario).subscribe(result => {
+            this.cambiado = true;
+          });
+        }
+
+
+      }, error => {
+        this.error = true;
 
       }
     );

@@ -10,12 +10,13 @@ import {AutenticacionService} from '../shared/services/autenticacion.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  idusuario: string;
   constructor(private autenticacionService: AutenticacionService) {
   }
 
   ngOnInit(): void {
     this.autenticacionService.estaAutenticado();
+    this.idusuario = this.autenticacionService.getID();
 
   }
 
