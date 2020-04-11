@@ -22,7 +22,7 @@ export class UsuarioService {
     } else {
       console.log('Crear usuario error tipo usuario no valido');
     }
-    return this.http.post<any>(this.SERVER + url, usuario, this.getHeaderToken()).pipe(map(res => {
+    return this.http.post<Usuario>(this.SERVER + url, usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }, error1 => {
       console.log('Crear usuario fallida' + error1);

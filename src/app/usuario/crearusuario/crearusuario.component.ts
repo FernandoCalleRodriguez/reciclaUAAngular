@@ -14,6 +14,8 @@ export class CrearusuarioComponent implements OnInit {
 
   tipousuario: string;
   usuario: Usuario;
+  error = false;
+
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
               private router: Router) {
@@ -36,9 +38,13 @@ export class CrearusuarioComponent implements OnInit {
 
     this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
       data => {
-        this.usuario.Id = data;
-        console.log(this.usuario)
-        this.router.navigate(['/listarusuario/' + this.tipousuario]);
+        if (data === null) {
+          this.error = true;
+        } else {
+          console.log(this.usuario);
+          this.router.navigate(['/listarusuario/' + this.tipousuario]);
+        }
+
       }, error => {
         console.log('Crear usuario ' + this.tipousuario + ' fallido', error);
       }

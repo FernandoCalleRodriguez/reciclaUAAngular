@@ -28,6 +28,9 @@
         <span class="help-block" style="color: red;" *ngIf="!surname.valid && surname.touched"> Nombre no valido</span>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="frmRegistro.invalid">Crear</button>
+      <div class="alert alert-danger" *ngIf="error">
+        <strong>Error!</strong> La cuenta no se ha podido crear por que el email ya existe.
+      </div>
     </form>
   </div>
 </div>
