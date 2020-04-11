@@ -5,5 +5,38 @@
       <h1>Listado de respuestas</h1>
     </div>
   </div>
-  <app-lista-respuestas [respuestas]="respuestas"></app-lista-respuestas>
+  <app-lista-respuestas [respuestas]="respuestas" (output)="showRespuesta($event)"></app-lista-respuestas>
+  <div *ngIf="respuesta">
+    <hr>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <h5 class="card-header">
+            RE: Titulo Duda
+            <button type="button" class="close" (click)="respuesta=null">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </h5>
+          <div class="card-body">
+            <p class="card-text text-justify">
+              {{ respuesta.Cuerpo }}
+            </p>
+          </div>
+          <div class="card-footer text-muted text-right">
+            {{ respuesta.UsuarioRespuesta?.Nombre }}
+            <br>
+            {{ respuesta.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <hr>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-success float-right">Añadir nueva respuesta</button>
+    </div>
+  </div>
 </div>

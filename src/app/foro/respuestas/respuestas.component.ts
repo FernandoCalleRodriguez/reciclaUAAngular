@@ -10,6 +10,7 @@ import {RespuestaService} from '../../shared/services/respuesta.service';
 })
 export class RespuestasComponent implements OnInit {
   public respuestas: Respuesta[] = null;
+  public respuesta: Respuesta = null;
 
   constructor(protected route: ActivatedRoute, protected respuestaService: RespuestaService) {
     this.route.params.subscribe(params => {
@@ -28,4 +29,7 @@ export class RespuestasComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showRespuesta(respuesta: Respuesta) {
+    this.respuesta = respuesta;
+  }
 }
