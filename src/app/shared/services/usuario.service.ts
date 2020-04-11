@@ -160,5 +160,8 @@ export class UsuarioService {
     return requestOptions;
   }
 
+  public getLoggedUser(): Usuario {
+    return JSON.parse(localStorage.getItem('DATA_USER'));
+  }
 
 }
