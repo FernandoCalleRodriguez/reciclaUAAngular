@@ -9,7 +9,7 @@ import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
-import {RespuestasComponent} from './foro/respuestas/respuestas.component';
+import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
 
@@ -28,8 +28,8 @@ const routes: Routes = [
   {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
 
   {path: 'foro/duda/listar', component: ListaDudasComponent},
-  {path: 'foro/duda/:dudaId/respuestas', component: RespuestasComponent},
-  {path: 'foro/respuesta/listar', component: RespuestasComponent},
+  {path: 'foro/duda/:dudaId/lista-respuestas', component: ListaRespuestasComponent},
+  {path: 'foro/respuesta/listar', component: ListaRespuestasComponent},
   {path: 'foro/duda/crear', component: FormDudaComponent},
   {path: 'foro/duda/:dudaId/modificar', component: FormDudaComponent},
   {path: 'foro/respuesta/crear', component: FormRespuestaComponent},

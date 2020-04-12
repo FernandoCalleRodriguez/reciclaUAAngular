@@ -7,10 +7,10 @@ import {Duda} from '../../shared/models/duda';
 
 @Component({
   selector: 'app-respuestas',
-  templateUrl: './respuestas.component.html',
-  styleUrls: ['./respuestas.component.css']
+  templateUrl: './lista-respuestas.component.html',
+  styleUrls: ['./lista-respuestas.component.css']
 })
-export class RespuestasComponent implements OnInit {
+export class ListaRespuestasComponent implements OnInit {
   public respuestas: Respuesta[] = null;
   public respuesta: Respuesta = null;
   public duda: Duda = null;
@@ -37,5 +37,9 @@ export class RespuestasComponent implements OnInit {
     this.dudaService.getDudaByRespuesta(respuesta.Id).subscribe(d => {
       this.duda = d;
     });
+  }
+
+  editRespuesta(respuesta: Respuesta) {
+    
   }
 }

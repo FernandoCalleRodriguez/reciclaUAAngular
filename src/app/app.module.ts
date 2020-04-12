@@ -16,10 +16,9 @@ import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
-import { ListaDudasComponent } from './foro/lista-dudas/lista-dudas.component';
-import { ListaRespuestasComponent } from './shared/components/lista-respuestas/lista-respuestas.component';
-import { RespuestasComponent } from './foro/respuestas/respuestas.component';
-import { FormDudaComponent } from './foro/form-duda/form-duda.component';
+import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
+import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
+import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
 
 
@@ -38,7 +37,7 @@ import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.compo
     ModificarwebComponent,
     ListaDudasComponent,
     ListaRespuestasComponent,
-    RespuestasComponent,
+    ListaRespuestasComponent,
     FormDudaComponent,
     FormRespuestaComponent
   ],
