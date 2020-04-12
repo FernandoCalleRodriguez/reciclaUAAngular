@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Respuesta} from '../../shared/models/respuesta';
 import {RespuestaService} from '../../shared/services/respuesta.service';
 import {DudaService} from '../../shared/services/duda.service';
@@ -15,7 +15,8 @@ export class ListaRespuestasComponent implements OnInit {
   public respuesta: Respuesta = null;
   public duda: Duda = null;
 
-  constructor(protected route: ActivatedRoute, protected respuestaService: RespuestaService, protected dudaService: DudaService) {
+  constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
+              protected router: Router, protected route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       if (params.dudaId) {
         respuestaService.getRespuestasByDuda(params.dudaId).subscribe(respuestas => {
@@ -40,6 +41,8 @@ export class ListaRespuestasComponent implements OnInit {
   }
 
   editRespuesta(respuesta: Respuesta) {
-    
+    this.dudaService.getDudaByRespuesta(respuesta.Id).subscribe(d => {
+      this.router.navigate(['/foro/duda', d.Id, 'respuesta', respuesta.Id, 'modificar']);
+    });
   }
 }

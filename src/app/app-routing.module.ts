@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
 
   {path: 'foro/duda/listar', component: ListaDudasComponent},
-  {path: 'foro/duda/:dudaId/lista-respuestas', component: ListaRespuestasComponent},
+  {path: 'foro/duda/:dudaId/respuestas', component: ListaRespuestasComponent},
   {path: 'foro/respuesta/listar', component: ListaRespuestasComponent},
   {path: 'foro/duda/crear', component: FormDudaComponent},
   {path: 'foro/duda/:dudaId/modificar', component: FormDudaComponent},
