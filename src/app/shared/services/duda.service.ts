@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Duda} from '../models/duda';
 import {Observable} from 'rxjs';
+import {Respuesta} from '../models/respuesta';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,9 @@ export class DudaService {
 
   public modificar(duda: Duda): Observable<Duda> {
     return this.http.put<Duda>(this.SERVER + 'Duda/Modificar?idDuda=' + duda.Id, duda, {headers: this.headers});
+  }
+
+  public getDudaByRespuesta(id: number): Observable<Duda> {
+    return this.http.get<Duda>(this.SERVER + 'Duda/DudaRespuesta?idRespuesta=' + id, {headers: this.headers});
   }
 }

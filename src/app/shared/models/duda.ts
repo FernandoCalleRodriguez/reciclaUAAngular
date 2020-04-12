@@ -10,4 +10,6 @@ export class Duda {
   UsuarioDuda?: Usuario;
   // tslint:disable-next-line:variable-name
   Usuario_oid?: number;
+  ObtenerNumeroDeRespuestas?: number;
+  ObtenerSiRespuestaValida?: boolean;
 }

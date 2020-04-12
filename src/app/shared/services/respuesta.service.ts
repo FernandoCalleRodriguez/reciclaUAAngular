@@ -22,4 +22,16 @@ export class RespuestaService {
   public getRespuestasByDuda(id: number): Observable<Respuesta[]> {
     return this.http.get<Respuesta[]>(this.SERVER + 'Respuesta/RespuestasDuda?idDuda=' + id, {headers: this.headers});
   }
+
+  public getRespuestaById(id: number): Observable<Respuesta> {
+    return this.http.get<Respuesta>(this.SERVER + 'Respuesta/' + id, {headers: this.headers});
+  }
+
+  public crear(respuesta: Respuesta): Observable<number> {
+    return this.http.post<number>(this.SERVER + 'Respuesta/Crear', respuesta, {headers: this.headers});
+  }
+
+  public modificar(respuesta: Respuesta): Observable<Respuesta> {
+    return this.http.put<Respuesta>(this.SERVER + 'Respuesta/Modificar?idRespuesta=' + respuesta.Id, respuesta, {headers: this.headers});
+  }
 }

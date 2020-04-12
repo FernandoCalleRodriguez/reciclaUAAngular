@@ -20,6 +20,7 @@ import { ListaDudasComponent } from './foro/lista-dudas/lista-dudas.component';
 import { ListaRespuestasComponent } from './shared/components/lista-respuestas/lista-respuestas.component';
 import { RespuestasComponent } from './foro/respuestas/respuestas.component';
 import { FormDudaComponent } from './foro/form-duda/form-duda.component';
+import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { FormDudaComponent } from './foro/form-duda/form-duda.component';
     ListaRespuestasComponent,
     RespuestasComponent,
     FormDudaComponent,
+    FormRespuestaComponent
   ],
   imports: [
     BrowserModule,
