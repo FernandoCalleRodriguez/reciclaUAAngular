@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Respuesta} from '../../shared/models/respuesta';
 import {RespuestaService} from '../../shared/services/respuesta.service';
+import {DudaService} from '../../shared/services/duda.service';
+import {Duda} from '../../shared/models/duda';
 
 @Component({
   selector: 'app-respuestas',
@@ -11,8 +13,9 @@ import {RespuestaService} from '../../shared/services/respuesta.service';
 export class RespuestasComponent implements OnInit {
   public respuestas: Respuesta[] = null;
   public respuesta: Respuesta = null;
+  public duda: Duda = null;
 
-  constructor(protected route: ActivatedRoute, protected respuestaService: RespuestaService) {
+  constructor(protected route: ActivatedRoute, protected respuestaService: RespuestaService, protected dudaService: DudaService) {
     this.route.params.subscribe(params => {
       if (params.dudaId) {
         respuestaService.getRespuestasByDuda(params.dudaId).subscribe(respuestas => {
@@ -31,5 +34,8 @@ export class RespuestasComponent implements OnInit {
 
   showRespuesta(respuesta: Respuesta) {
     this.respuesta = respuesta;
+    this.dudaService.getDudaByRespuesta(respuesta.Id).subscribe(d => {
+      this.duda = d;
+    });
   }
 }

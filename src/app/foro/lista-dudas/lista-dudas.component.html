@@ -31,6 +31,8 @@
           <td>
             <button class="icon" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
               <i class="fa fa-eye"></i>
+              &nbsp;
+              <span class="badge badge-dark">{{ duda.ObtenerNumeroDeRespuestas }}</span>
             </button>
           </td>
           <td>
@@ -80,7 +82,7 @@
       <hr>
     </div>
     <div class="col-12">
-      <button class="btn btn-success float-right">Añadir nueva duda</button>
+      <button class="btn btn-success float-right" [routerLink]="'/foro/duda/crear'">Añadir nueva duda</button>
     </div>
   </div>
 </div>
