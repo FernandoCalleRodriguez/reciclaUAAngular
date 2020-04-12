@@ -47,4 +47,15 @@ export class ListaRespuestasComponent implements OnInit {
       this.router.navigate(['/foro/duda', d.Id, 'respuesta', respuesta.Id, 'modificar']);
     });
   }
+
+  deleteRespuesta(respuesta: Respuesta) {
+    if (confirm('¿Seguro que deseas borrar esta respuesta?')) {
+      this.respuestaService.borrar(respuesta).subscribe(() => {
+        const index = this.respuestas.indexOf(respuesta);
+        if (index > -1) {
+          this.respuestas.splice(index, 1);
+        }
+      });
+    }
+  }
 }

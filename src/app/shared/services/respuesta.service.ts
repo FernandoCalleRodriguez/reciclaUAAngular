@@ -34,4 +34,8 @@ export class RespuestaService {
   public modificar(respuesta: Respuesta): Observable<Respuesta> {
     return this.http.put<Respuesta>(this.SERVER + 'Respuesta/Modificar?idRespuesta=' + respuesta.Id, respuesta, {headers: this.headers});
   }
+
+  public borrar(respuesta: Respuesta): Observable<void> {
+    return this.http.delete<void>(this.SERVER + 'Respuesta/Borrar?p_respuesta_oid=' + respuesta.Id, {headers: this.headers});
+  }
 }

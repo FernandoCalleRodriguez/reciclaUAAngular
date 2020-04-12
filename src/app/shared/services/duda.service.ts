@@ -31,6 +31,10 @@ export class DudaService {
     return this.http.put<Duda>(this.SERVER + 'Duda/Modificar?idDuda=' + duda.Id, duda, {headers: this.headers});
   }
 
+  public borrar(duda: Duda): Observable<void> {
+    return this.http.delete<void>(this.SERVER + 'Duda/Borrar?p_duda_oid=' + duda.Id, {headers: this.headers});
+  }
+
   public getDudaByRespuesta(id: number): Observable<Duda> {
     return this.http.get<Duda>(this.SERVER + 'Duda/DudaRespuesta?idRespuesta=' + id, {headers: this.headers});
   }
