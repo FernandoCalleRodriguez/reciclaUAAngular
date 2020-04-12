@@ -14,11 +14,13 @@ export class ListaRespuestasComponent implements OnInit {
   public respuestas: Respuesta[] = null;
   public respuesta: Respuesta = null;
   public duda: Duda = null;
+  public dudaId: number = null;
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
               protected router: Router, protected route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       if (params.dudaId) {
+        this.dudaId = params.dudaId;
         respuestaService.getRespuestasByDuda(params.dudaId).subscribe(respuestas => {
           this.respuestas = respuestas;
         });
