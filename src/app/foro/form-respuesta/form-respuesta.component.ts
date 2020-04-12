@@ -64,12 +64,12 @@ export class FormRespuestaComponent implements OnInit {
       this.respuesta.Duda_oid = this.dudaId().value;
       if (this.edit) {
         this.respuestaService.modificar(this.respuesta).subscribe(d => {
-          this.router.navigate(['/foro/duda/' + this.dudaId() + '/respuestas']);
+          this.router.navigate(['/foro/duda/' + this.dudaId().value + '/respuestas']);
         });
       } else {
         this.respuesta.Usuario_oid = this.user.Id;
         this.respuestaService.crear(this.respuesta).subscribe(id => {
-          this.router.navigate(['/foro/duda/' + this.dudaId() + '/respuestas']);
+          this.router.navigate(['/foro/duda/' + this.dudaId().value + '/respuestas']);
         });
       }
     }
