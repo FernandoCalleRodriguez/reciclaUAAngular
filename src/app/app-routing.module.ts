@@ -15,6 +15,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
   {path: '', component: LoginComponent},
+  {path: 'login/:cerrarsesion', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
   {path: 'ranking', component: RankingComponent},
   {path: 'verificacion/:usuarioId', component: VerificacionComponent},

@@ -30,7 +30,10 @@ export class AutenticacionService {
   Logout(): void {
     localStorage.removeItem('ACESS_TOKEN');
     localStorage.removeItem('ID_USER');
-    this.router.navigate(['']);
+    localStorage.clear();
+    window.setTimeout(() => {
+      this.router.navigate(['login/si']);
+    }, 500);
 
 
   }
@@ -78,10 +81,13 @@ export class AutenticacionService {
   }
 
   noEstaAutenticado() {
-
     if (this.getToken() != null && this.getID() != null) {
-        this.router.navigate(['/home']);
+      console.log('Voy a home' + this.getToken() + this.getID());
+      this.router.navigate(['/home']);
+    } else {
+      console.log('me quedo');
     }
+
 
   }
 

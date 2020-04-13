@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div  class="registro">
   <div class="container">
     <h4 class="text-center">Crear usuario {{tipousuario}}</h4>
@@ -12,8 +13,9 @@
       <div class="form-group">
         <label for="pwd">Contraseña:</label>
         <input type="password" class="form-control" id="pwd" placeholder="Enter password" ngModel name="contrasena"
-               required #contrasena="ngModel">
-        <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña no valida</span>
+               required
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\d$@$!%*?&-_].{8,}$" #contrasena="ngModel" >
+        <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
       </div>
       <div class="form-group">
         <label for="pwd">Nombre:</label>

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Usuario} from '../shared/models/usuario';
 import {UsuarioService} from '../shared/services/usuario.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AutenticacionService} from '../shared/services/autenticacion.service';
 
 @Component({
@@ -14,13 +14,26 @@ export class LoginComponent implements OnInit {
   @ViewChild('frmLogin', {static: false}) singupForm: NgForm;
   user: Usuario;
   private postData;
+  cerrarsesion;
 
   constructor(private autenticacionService: AutenticacionService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
+
+    this.route.params.subscribe(param => {
+
+      this.cerrarsesion = param['cerrarsesion'];
+
+      console.log(this.cerrarsesion);
+      if (this.cerrarsesion === '' || this.cerrarsesion === undefined) {
+        this.autenticacionService.noEstaAutenticado();
+
+      }
+
+    });
   }
 
   ngOnInit(): void {
-
   }
 
   onLogin() {
