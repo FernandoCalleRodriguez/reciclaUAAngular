@@ -5,7 +5,7 @@ export class Punto {
   Id?: number;
   Latitud?: number;
   Longitud?: number;
-  EsValido?: boolean;
+  EsValido?: number; // Estado
   Contenedores?: Contenedor[];
   EstanciaPunto?: Estancia;
 }
