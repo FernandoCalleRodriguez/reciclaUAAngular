@@ -19,6 +19,7 @@ import { RecuperarcontrasenaComponent } from './recuperarcontrasena/recuperarcon
 import { RankingComponent } from './ranking/ranking.component';
 import { VerificacionComponent } from './verificacion/verificacion.component';
 import { CambiarcontrasenaComponent } from './usuario/cambiarcontrasena/cambiarcontrasena.component';
+import {BnNgIdleService} from 'bn-ng-idle';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { CambiarcontrasenaComponent } from './usuario/cambiarcontrasena/cambiarc
   ],
   providers: [
     UsuarioService,
-    AutenticacionService
+    AutenticacionService,
+    BnNgIdleService,
   ],
   exports: [
   ],

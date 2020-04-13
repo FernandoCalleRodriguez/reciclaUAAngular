@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {UsuarioService} from './usuario.service';
 import {Router} from '@angular/router';
+import {BnNgIdleService} from 'bn-ng-idle';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,15 @@ export class AutenticacionService {
   usuario: Usuario;
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private bnIdle: BnNgIdleService) {
   }
 
   Login(usuario: Usuario) {
     return this.http.post<any>(this.SERVER + 'UsuarioAdminNoAutenticado/Login', usuario).pipe(map(
       res => {
         this.saveToken(res);
+        this.controlSesion();
         return res;
       }));
   }
@@ -99,5 +102,15 @@ export class AutenticacionService {
     }
     return contraseña;
   }
+
+  controlSesion() {
+    this.bnIdle.startWatching(300).subscribe((res) => {
+      if (res) {
+        this.Logout();
+      }
+    });
+
+  }
+
 
 }
