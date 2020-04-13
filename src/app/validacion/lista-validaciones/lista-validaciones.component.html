@@ -48,8 +48,8 @@
                 <td>
                   <div class="btn-group">
                     <button class="icon" data-toggle="tooltip" title="Ver"><i class="fa fa-eye"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Validar"><i class="fa fa-check"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Descartar"><i class="fa fa-times"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Validar" (click)="validarPunto(punto)"><i class="fa fa-check"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Descartar" (click)="descartarPunto(punto)"><i class="fa fa-times"></i></button>
                   </div>
                 </td>
               </tr>
@@ -74,8 +74,8 @@
                 <td>
                   <div class="btn-group">
                     <button class="icon" data-toggle="tooltip" title="Ver"><i class="fa fa-eye"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Validar"><i class="fa fa-check"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Descartar"><i class="fa fa-times"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Validar" (click)="validarItem(item)"><i class="fa fa-check"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Descartar" (click)="descartarItem(item)"><i class="fa fa-times"></i></button>
                   </div>
                 </td>
               </tr>
@@ -101,8 +101,8 @@
                 <td>
                   <div class="btn-group">
                     <button class="icon" data-toggle="tooltip" title="Ver"><i class="fa fa-eye"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Validar"><i class="fa fa-check"></i></button>
-                    <button class="icon" data-toggle="tooltip" title="Descartar"><i class="fa fa-times"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Validar" (click)="validarMaterial(material)"><i class="fa fa-check"></i></button>
+                    <button class="icon" data-toggle="tooltip" title="Descartar" (click)="descartarMaterial(material)"><i class="fa fa-times"></i></button>
                   </div>
                 </td>
               </tr>
@@ -116,7 +116,7 @@
   <ng-template [ngIf]="!puntos && !items && !materiales">
     <div class="row">
       <div class="col">
-        <div class="alert alert-info">
+        <div class="alert alert-info mt-3">
           No hay nada pendiente por validar
         </div>
       </div>

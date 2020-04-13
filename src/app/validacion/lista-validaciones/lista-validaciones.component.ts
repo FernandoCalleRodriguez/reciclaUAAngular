@@ -34,4 +34,47 @@ export class ListaValidacionesComponent implements OnInit {
   public getTipoContenedor(id: number): TipoContenedor {
     return this.tipoContenedorService.getTipoById(id);
   }
+
+  validarMaterial(material: Material) {
+    this.validacionService.validarMaterial(material).subscribe(() => {
+      this.deleteFromArray(this.materiales, material);
+    });
+  }
+
+  validarPunto(punto: Punto) {
+    this.validacionService.validarPunto(punto).subscribe(() => {
+      this.deleteFromArray(this.puntos, punto);
+    });
+  }
+
+  validarItem(item: Item) {
+    this.validacionService.validarItem(item).subscribe(() => {
+      this.deleteFromArray(this.items, item);
+    });
+  }
+
+  descartarMaterial(material: Material) {
+    this.validacionService.descartarMaterial(material).subscribe(() => {
+      this.deleteFromArray(this.materiales, material);
+    });
+  }
+
+  descartarPunto(punto: Punto) {
+    this.validacionService.descartarPunto(punto).subscribe(() => {
+      this.deleteFromArray(this.puntos, punto);
+    });
+  }
+
+  descartarItem(item: Item) {
+    this.validacionService.descartarItem(item).subscribe(() => {
+      this.deleteFromArray(this.items, item);
+    });
+  }
+
+  deleteFromArray(array: any[], element: any): void {
+    const index = array.indexOf(element);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
 }
