@@ -45,6 +45,30 @@ export class ValidacionService {
     return this.http.get<Item[]>(this.SERVER + 'Item/BuscarItemsPorValidar', {headers: this.headers});
   }
 
+  public validarPunto(punto: Punto): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'PuntoReciclaje/ValidarPunto?p_oid=' + punto.Id, null, {headers: this.headers});
+  }
+
+  public validarMaterial(material: Material): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'Material/ValidarMaterial?p_oid=' + material.Id, null, {headers: this.headers});
+  }
+
+  public validarItem(item: Item): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'Item/ValidarItem?p_oid=' + item.Id, null, {headers: this.headers});
+  }
+
+  public descartarPunto(punto: Punto): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'PuntoReciclaje/DescartarPunto?p_oid=' + punto.Id, null, {headers: this.headers});
+  }
+
+  public descartarMaterial(material: Material): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'Material/DescartarMaterial?p_oid=' + material.Id, null, {headers: this.headers});
+  }
+
+  public descartarItem(item: Item): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'Item/DescartarItem?p_oid=' + item.Id, null, {headers: this.headers});
+  }
+
   public getEstados(): Estado[] {
     return this.estados;
   }
