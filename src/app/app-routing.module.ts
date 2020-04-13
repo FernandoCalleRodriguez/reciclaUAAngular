@@ -12,6 +12,7 @@ import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
 import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
+import {ListaValidacionesComponent} from './validacion/lista-validaciones/lista-validaciones.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -36,6 +37,8 @@ const routes: Routes = [
   {path: 'foro/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
   {path: 'foro/duda/:dudaId/respuesta/crear', component: FormRespuestaComponent},
   {path: 'foro/duda/:dudaId/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
+
+  {path: 'validaciones', component: ListaValidacionesComponent},
 
   {path: '**', redirectTo: ''}
 ];
