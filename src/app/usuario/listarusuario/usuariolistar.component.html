@@ -20,7 +20,8 @@
             formControlName="id"
             id="id"
           >
-          <span class="help-block" style="color: red;" *ngIf="!formularioBuscar.get('id').valid && formularioBuscar.get('id').touched"> Id no valido</span>
+          <span class="help-block" style="color: red;"
+                *ngIf="!formularioBuscar.get('id').valid && formularioBuscar.get('id').touched"> Id no valido</span>
 
         </div>
         <div class="col">
@@ -33,7 +34,7 @@
     </form>
   </div>
   <br>
-  <div class="row">
+  <div class="row" *ngIf="usuarios?.length > 0; else listnull">
     <div class="col">
       <table class="table table-striped">
         <thead>
@@ -65,4 +66,5 @@
       </table>
     </div>
   </div>
+  <ng-template #listnull><p>No existe ningún usuario con esas restricciones</p></ng-template>
 </div>
