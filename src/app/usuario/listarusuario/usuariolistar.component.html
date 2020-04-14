@@ -6,19 +6,25 @@
   </div>
   <br>
   <div class="row">
-    <form (ngSubmit)="onSearch()" #frmSearch="ngForm">
+    <form (ngSubmit)="onSearch()" [formGroup]="formularioBuscar">
       <div class="row">
         <div>
           <label for="id">ID:</label>
         </div>
         <div class="col">
-          <input type="id" class="form-control" id="id" ngModel name="id" required
-                 #id="ngModel">
-          <span class="help-block" style="color: red;" *ngIf="!id.valid && id.touched"> Id no valido</span>
+          <input
+            [ngClass]="{'is-invalid' : formularioBuscar.get('id').invalid && formularioBuscar.get('id').touched,
+              'is-valid' : formularioBuscar.get('id').valid && formularioBuscar.get('id').touched}"
+            type="number"
+            class="form-control"
+            formControlName="id"
+            id="id"
+          >
+          <span class="help-block" style="color: red;" *ngIf="!formularioBuscar.get('id').valid && formularioBuscar.get('id').touched"> Id no valido</span>
 
         </div>
         <div class="col">
-          <button type="submit" class="btn btn-primary" [disabled]="frmSearch.invalid">Buscar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="formularioBuscar.invalid">Buscar</button>
 
         </div>
 
@@ -32,6 +38,7 @@
       <table class="table table-striped">
         <thead>
         <tr>
+          <th class="th-sm" scope="col">ID</th>
           <th class="th-sm" scope="col">Email</th>
           <th class="th-sm" scope="col">Nompre</th>
           <th class="th-sm" scope="col">Apellidos</th>
@@ -42,6 +49,7 @@
         <tbody>
         <tr *ngFor="let usuario of usuarios">
           <ng-template [ngIf]="!usuario.Borrado">
+            <td>{{usuario.Id}}</td>
             <td><a [routerLink]="['/usuario/' + tipousuario + '/' + usuario.Id]">{{usuario.Email}}</a></td>
             <td>{{usuario.Nombre | titlecase}}</td>
             <td>{{usuario.Apellidos}}</td>

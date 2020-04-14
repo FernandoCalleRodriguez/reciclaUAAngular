@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -10,8 +10,7 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./usuariolistar.component.css']
 })
 export class UsuariolistarComponent implements OnInit {
-  @ViewChild('frmSearch', {static: false}) searchForm: NgForm;
-
+  formularioBuscar: FormGroup;
   tipousuario: string; // web o admin
   usuarios: Usuario[];
 
@@ -32,12 +31,16 @@ export class UsuariolistarComponent implements OnInit {
       });
     });
 
+    this.formularioBuscar = new FormGroup({
+      id: new FormControl(null, [Validators.required]),
+
+    });
 
   }
 
   onSearch() {
     console.log("entro");
-    this.usuarioService.obtenerUsuarioPorId(this.searchForm.value.id, this.tipousuario).subscribe(usuario => {
+    this.usuarioService.obtenerUsuarioPorId(this.formularioBuscar.value.id, this.tipousuario).subscribe(usuario => {
       this.usuarios.splice(0);
       this.usuarios.push(usuario);
       console.log(this.usuarios);
