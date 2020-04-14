@@ -10,7 +10,6 @@ import {Usuario} from '../../shared/models/usuario';
   styleUrls: ['./crearusuario.component.css']
 })
 export class CrearusuarioComponent implements OnInit {
-  @ViewChild('frmRegistro', {static: false}) singupForm: NgForm;
 
   tipousuario: string;
   usuario: Usuario;

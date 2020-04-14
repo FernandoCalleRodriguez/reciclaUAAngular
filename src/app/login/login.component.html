@@ -1,23 +1,33 @@
-<div  class="login">
+<div class="login">
   <div class="container">
     <h2 class="text-center">ReciclaUA</h2>
     <h4 class="text-center">Iniciar sesión</h4>
-    <form (ngSubmit)="onLogin()" #frmLogin="ngForm">
-      <div class="form-group">
+    <form (ngSubmit)="onLogin()" [formGroup]="formularioLogin">
+      <div>
         <label for="email">Correo electrónico:</label>
-        <input type="email" class="form-control" id="email" placeholder="fdlc4@alu.ua.es" ngModel name="email" required
-               email #email="ngModel">
-        <span class="help-block" style="color: red;"
-              *ngIf="!email.valid && email.touched"> Correo electrónico no valido</span>
+        <input [ngClass]="{'is-invalid' : formularioLogin.get('email').invalid && formularioLogin.get('email').touched,
+              'is-valid' : formularioLogin.get('email').valid && formularioLogin.get('email').touched}"
+               type="email"
+               class="form-control"
+               id="email"
+               formControlName="email"
+               placeholder="fdlc4@alu.ua.es">
       </div>
-      <div class="form-group">
+      <div>
         <label for="pwd">Contraseña:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" ngModel name="contrasena"
-               required #contrasena="ngModel">
-        <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña no valida</span>
+        <input [ngClass]="{'is-invalid' : formularioLogin.get('pwd').invalid && formularioLogin.get('pwd').touched,
+              'is-valid' : formularioLogin.get('pwd').valid && formularioLogin.get('pwd').touched}"
+               type="password"
+               class="form-control"
+               id="pwd"
+               formControlName="pwd"
+               placeholder="Enter password" >
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="frmLogin.invalid">Iniciar sesión</button>
-      <a [routerLink]="['/recuperarcontrasena']">    ¿Has olvidado tu contraseña?</a>
+      <button type="submit" class="btn btn-primary" [disabled]="formularioLogin.invalid">Iniciar sesión</button>
+      <a [routerLink]="['/recuperarcontrasena']"> ¿Has olvidado tu contraseña?</a>
+      <div class="alert alert-danger" *ngIf="error">
+        <strong>Error!</strong> Las credenciales introducidas no son correctas.
+      </div>
     </form>
   </div>
 </div>

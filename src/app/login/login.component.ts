@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../shared/models/usuario';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,10 +11,10 @@ import {AutenticacionService} from '../shared/services/autenticacion.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('frmLogin', {static: false}) singupForm: NgForm;
   user: Usuario;
-  private postData;
   cerrarsesion;
+  formularioLogin: FormGroup;
+  error = false;
 
   constructor(private autenticacionService: AutenticacionService,
               private router: Router,
@@ -34,15 +34,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.formularioLogin = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      pwd: new FormControl(null, [Validators.required]),
+    });
   }
 
   onLogin() {
 
     this.user = {
-      Email: this.singupForm.value.email,
-      Pass: this.singupForm.value.contrasena,
-      Nombre: '',
-      Apellidos: '',
+      Email: this.formularioLogin.value.email,
+      Pass: this.formularioLogin.value.pwd,
+
     };
 
     this.autenticacionService.Login(this.user).subscribe(
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }, error => {
         console.log('Autenticación fallida', error);
+        this.error  = true;
       }
     );
   }
