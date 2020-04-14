@@ -1,26 +1,37 @@
 <app-navbar></app-navbar>
 <div class="container">
   <h4 class="text-center">Cambiar contraseña</h4>
-  <form (ngSubmit)="changePass()" #frmchange="ngForm">
-    <div class="form-group">
-      <label for="pwd">Contraseña nueva:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" ngModel name="contrasena"
-             required #contrasena="ngModel">
+  <form (ngSubmit)="changePass()" [formGroup]="formularioCambiar">
+    <div>
+      <label for="pwd">Contraseña:</label>
+      <input
+        [ngClass]="{'is-invalid' : formularioCambiar.get('pwd').invalid && formularioCambiar.get('pwd').touched,
+              'is-valid' : formularioCambiar.get('pwd').valid && formularioCambiar.get('pwd').touched}"
+        type="password"
+        class="form-control"
+        id="pwd"
+        formControlName="pwd"
+        placeholder="Enter password">
       <span class="help-block" style="color: red;"
-            *ngIf="!contrasena.valid && contrasena.touched"> Contraseña no valida</span>
+            *ngIf="!formularioCambiar.get('pwd').valid && formularioCambiar.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
     </div>
-    <div class="form-group">
-      <label for="pwd2">Confirma la nueva contraseña:</label>
-      <input type="password" class="form-control" id="pwd2" ngModel name="contrasena2"
-             required #contrasena2="ngModel">
-      <div>
-              <span class="help-block" style="color: red;"
-                    *ngIf="!contrasena2.valid && contrasena2.touched "> Contraseña no valida</span>
-      </div>
+    <div>
+      <label for="pwd">Contraseña:</label>
+      <input
+        [ngClass]="{'is-invalid' : formularioCambiar.get('pwd2').invalid && formularioCambiar.get('pwd2').touched,
+              'is-valid' : formularioCambiar.get('pwd2').valid && formularioCambiar.get('pwd2').touched}"
+        type="password"
+        class="form-control"
+        id="pwd2"
+        formControlName="pwd2"
+        placeholder="Enter password">
       <span class="help-block" style="color: red;"
-            *ngIf="contrasena.value != contrasena2.value && contrasena2.touched && contrasena.touched "> Las contraseñas no coinciden</span>
+            *ngIf="formularioCambiar.get('pwd').value != formularioCambiar.get('pwd2').value && formularioCambiar.get('pwd2').touched && formularioCambiar.get('pwd').touched "> Las contraseñas no coinciden</span>
+
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="frmchange.invalid || contrasena.value != contrasena2.value">Cambiar</button>
+    <button type="submit" class="btn btn-primary"
+            [disabled]="formularioCambiar.invalid || formularioCambiar.get('pwd2').value != formularioCambiar.get('pwd').value">Cambiar
+    </button>
     <div class="alert alert-success" *ngIf="cambiado">
       <strong>Exito!</strong> La contraseña se ha cambiado, revisa el correo electrónico {{usuario?.Email}}.
     </div>

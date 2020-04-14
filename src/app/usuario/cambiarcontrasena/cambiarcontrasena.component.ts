@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
@@ -10,7 +10,8 @@ import {Usuario} from '../../shared/models/usuario';
   styleUrls: ['./cambiarcontrasena.component.css']
 })
 export class CambiarcontrasenaComponent implements OnInit {
-  @ViewChild('frmchange', {static: false}) changeForm: NgForm;
+
+  formularioCambiar: FormGroup;
   usuarioId: string;
   usuario: Usuario;
   cambiado = false;
@@ -27,28 +28,33 @@ export class CambiarcontrasenaComponent implements OnInit {
 
       this.usuarioId = param['usuarioId'];
 
-      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, "administrador").subscribe(usuario => {
+      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, 'administrador').subscribe(usuario => {
         this.usuario = usuario;
 
       });
 
     });
+
+    this.formularioCambiar = new FormGroup({
+      pwd: new FormControl(null, [Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+      pwd2: new FormControl(null, [Validators.required]),
+    });
   }
 
   changePass() {
-    this.usuario.Pass = this.changeForm.value.contrasena;
+    this.usuario.Pass = this.formularioCambiar.value.pwd;
 
-    this.usuarioService.cambiarPass(this.usuario).subscribe( usuario => {
-      if(usuario != null){
+    this.usuarioService.cambiarPass(this.usuario).subscribe(usuario => {
+      if (usuario != null) {
         console.log(usuario);
         this.cambiado = true;
-      }else{
+      } else {
         this.error = true;
 
       }
 
-
-    },error => {
+    }, error => {
       this.error = true;
 
     });
