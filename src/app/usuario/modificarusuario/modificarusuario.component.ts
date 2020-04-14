@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../../shared/models/usuario';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
@@ -11,8 +11,7 @@ import {UsuarioService} from '../../shared/services/usuario.service';
 })
 export class ModificarusuarioComponent implements OnInit {
 
-  @ViewChild('frmModificar', {static: false}) updateForm: NgForm;
-
+  formularioModificar: FormGroup;
   usuario: Usuario;
   usuarioId: string;
   tipousuario: string;
@@ -35,13 +34,19 @@ export class ModificarusuarioComponent implements OnInit {
       });
 
     });
+
+    this.formularioModificar = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      name: new FormControl(null, [Validators.required]),
+      surname: new FormControl(null, [Validators.required]),
+    });
   }
 
   onUpdate() {
 
-    this.usuario.Nombre = this.updateForm.value.name;
-    this.usuario.Apellidos = this.updateForm.value.surname;
-    this.usuario.Email = this.updateForm.value.email;
+    this.usuario.Nombre = this.formularioModificar.value.name;
+    this.usuario.Apellidos = this.formularioModificar.value.surname;
+    this.usuario.Email = this.formularioModificar.value.email;
     console.log(this.usuario);
     this.usuarioService.modificarUsuario(this.usuario, this.tipousuario).subscribe(
       data => {
