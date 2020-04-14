@@ -4,6 +4,7 @@ import {Duda} from '../../shared/models/duda';
 import {Router} from '@angular/router';
 import {TemaService} from '../../shared/services/tema.service';
 import {Respuesta} from '../../shared/models/respuesta';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -14,6 +15,8 @@ export class ListaDudasComponent implements OnInit {
 
   public dudas: Duda[] = null;
   public duda: Duda = null;
+  public searchform: FormGroup = null;
+  public submitted = false;
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router) {
     dudaService.getAllDudas().subscribe(d => {
@@ -32,6 +35,9 @@ export class ListaDudasComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchform = new FormGroup({
+      term: new FormControl(null, [Validators.required])
+    });
   }
 
   deleteDuda(duda: Duda) {
@@ -45,4 +51,24 @@ export class ListaDudasComponent implements OnInit {
     }
   }
 
+  public term(): AbstractControl {
+    return this.searchform.get('term');
+  }
+
+  onSubmit() {
+    if (this.searchform.valid) {
+      this.submitted = true;
+      this.dudaService.searchDudasByTerm(this.term().value).subscribe(d => {
+        this.dudas = d;
+      });
+    }
+  }
+
+  resetSearch() {
+    this.submitted = false;
+    this.term().reset();
+    this.dudaService.getAllDudas().subscribe(d => {
+      this.dudas = d;
+    });
+  }
 }

@@ -38,4 +38,8 @@ export class DudaService {
   public getDudaByRespuesta(id: number): Observable<Duda> {
     return this.http.get<Duda>(this.SERVER + 'Duda/DudaRespuesta?idRespuesta=' + id, {headers: this.headers});
   }
+
+  public searchDudasByTerm(term: string): Observable<Duda[]> {
+    return this.http.get<Duda[]>(this.SERVER + 'Duda/BuscarDudaPorTitulo?p_titulo=' + term, {headers: this.headers});
+  }
 }

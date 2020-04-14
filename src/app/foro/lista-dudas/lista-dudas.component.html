@@ -2,8 +2,21 @@
 <div class="container">
   <!-- titulo -->
   <div class="row">
-    <div class="col">
+    <div class="col-6">
       <h1>Listado de dudas</h1>
+    </div>
+    <div class="col-6">
+      <form class="form-inline float-right mt-2" [formGroup]="searchform" (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Título..." name="term" formControlName="term">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+          </div>
+          <div class="input-group-append" *ngIf="submitted">
+            <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <!-- tabla de dudas -->
@@ -45,8 +58,11 @@
         </tr>
         </tbody>
       </table>
-      <div *ngIf="!dudas" class="alert alert-info">
+      <div *ngIf="!dudas && !submitted" class="alert alert-info">
         No hay dudas actualmente
+      </div>
+      <div *ngIf="!dudas && submitted" class="alert alert-info">
+        No existe ninguna coincidencia para el término <i><strong>{{ term().value }}</strong></i>
       </div>
     </div>
   </div>
