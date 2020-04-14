@@ -7,7 +7,7 @@ import {HomeComponent} from './home/home.component';
 import {NavbarComponent} from './shared/components/navbar/navbar.component';
 import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
 import {LoginComponent} from './login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
 import {UsuariolistarComponent} from './usuario/listarusuario/usuariolistar.component';
@@ -45,6 +45,7 @@ import {BnNgIdleService} from 'bn-ng-idle';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     UsuarioService,

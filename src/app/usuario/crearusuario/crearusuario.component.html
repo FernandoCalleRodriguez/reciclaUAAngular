@@ -1,38 +1,64 @@
 <app-navbar></app-navbar>
-<div  class="registro">
+<div class="registro">
   <div class="container">
     <h4 class="text-center">Crear usuario {{tipousuario}}</h4>
-    <form (ngSubmit)="onRegister()" #frmRegistro="ngForm">
-      <div class="form-group">
-        <label for="email">Correo electrónico:</label>
-        <input type="email" class="form-control" id="email" placeholder="fdlc4@alu.ua.es" ngModel name="email" required
-               email #email="ngModel">
-        <span class="help-block" style="color: red;"
-              *ngIf="!email.valid && email.touched"> Correo electrónico no valido</span>
-      </div>
-      <div class="form-group">
-        <label for="pwd">Contraseña:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" ngModel name="contrasena"
-               required
-               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\d$@$!%*?&-_].{8,}$" #contrasena="ngModel" >
-        <span class="help-block" style="color: red;" *ngIf="!contrasena.valid && contrasena.touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
-      </div>
-      <div class="form-group">
-        <label for="pwd">Nombre:</label>
-        <input type="name" class="form-control" id="name" ngModel name="name"
-               required #name="ngModel">
-        <span class="help-block" style="color: red;" *ngIf="!name.valid && name.touched"> Nombre no valido</span>
-      </div>
-      <div class="form-group">
-        <label for="pwd">Apellidos:</label>
-        <input type="surname" class="form-control" id="surname" ngModel name="surname"
-               required #surname="ngModel">
-        <span class="help-block" style="color: red;" *ngIf="!surname.valid && surname.touched"> Nombre no valido</span>
-      </div>
-      <button type="submit" class="btn btn-primary" [disabled]="frmRegistro.invalid">Crear</button>
-      <div class="alert alert-danger" *ngIf="error">
-        <strong>Error!</strong> La cuenta no se ha podido crear por que el email ya existe.
-      </div>
-    </form>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form (ngSubmit)="onRegister()" [formGroup]="formularioCrear">
+
+        <!-- EMAIL DEL USUARIO -->
+        <div>
+          <label for="email">Correo electrónico:</label>
+          <input [ngClass]="{'is-invalid' : formularioCrear.get('email').invalid && formularioCrear.get('email').touched,
+              'is-valid' : formularioCrear.get('email').valid && formularioCrear.get('email').touched}"
+                 type="email"
+                 id="email"
+                 formControlName="email"
+                 placeholder="fdlc4@alu.ua.es"
+                 class="form-control">
+        </div>
+
+        <!-- CONTRASEÑA DEL USUARIO -->
+        <div>
+          <label for="pwd">Contraseña:</label>
+          <input
+            [ngClass]="{'is-invalid' : formularioCrear.get('pwd').invalid && formularioCrear.get('pwd').touched,
+              'is-valid' : formularioCrear.get('pwd').valid && formularioCrear.get('pwd').touched}"
+            type="password"
+            class="form-control"
+            id="pwd"
+            formControlName="pwd"
+            placeholder="Enter password">
+          <span class="help-block" style="color: red;" *ngIf="!formularioCrear.get('pwd').valid && formularioCrear.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
+        </div>
+
+        <!-- NOMBRE DEL USUARIO -->
+        <div >
+          <label for="name">Nombre:</label>
+          <input [ngClass]="{'is-invalid' : formularioCrear.get('name').invalid && formularioCrear.get('name').touched,
+              'is-valid' : formularioCrear.get('name').valid && formularioCrear.get('name').touched}"
+                 type="text"
+                 class="form-control"
+                 id="name"
+                 formControlName="name"
+          >
+        </div>
+
+        <!-- APELLIDOS DEL USUARIO -->
+        <div>
+          <label for="surname">Apellidos:</label>
+          <input [ngClass]="{'is-invalid' : formularioCrear.get('surname').invalid && formularioCrear.get('surname').touched,
+              'is-valid' : formularioCrear.get('surname').valid && formularioCrear.get('surname').touched}"
+                 type="text"
+                 class="form-control"
+                 id="surname"
+                 formControlName="surname"
+          >
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="formularioCrear.invalid">Crear</button>
+        <div class="alert alert-danger" *ngIf="error">
+          <strong>Error!</strong> La cuenta no se ha podido crear por que el email ya existe.
+        </div>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../../shared/models/usuario';
 
 @Component({
@@ -15,6 +15,7 @@ export class CrearusuarioComponent implements OnInit {
   tipousuario: string;
   usuario: Usuario;
   error = false;
+  formularioCrear: FormGroup;
 
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
@@ -26,14 +27,23 @@ export class CrearusuarioComponent implements OnInit {
 
       this.tipousuario = param['tipousuario'];
     });
+
+    this.formularioCrear = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      pwd: new FormControl(null, [Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+      name: new FormControl(null, [Validators.required]),
+      surname: new FormControl(null, [Validators.required]),
+    });
   }
 
   onRegister() {
+
     this.usuario = {
-      Nombre: this.singupForm.value.name,
-      Apellidos: this.singupForm.value.surname,
-      Email: this.singupForm.value.email,
-      Pass: this.singupForm.value.contrasena,
+      Email:      this.formularioCrear.value.email,
+      Pass:       this.formularioCrear.value.pwd,
+      Nombre:     this.formularioCrear.value.name,
+      Apellidos:  this.formularioCrear.value.surname,
     };
 
     this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
