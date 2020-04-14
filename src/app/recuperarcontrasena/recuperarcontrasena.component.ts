@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {AutenticacionService} from '../shared/services/autenticacion.service';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Usuario} from '../shared/models/usuario';
 
 @Component({
@@ -10,22 +10,26 @@ import {Usuario} from '../shared/models/usuario';
   styleUrls: ['./recuperarcontrasena.component.css']
 })
 export class RecuperarcontrasenaComponent implements OnInit {
-  @ViewChild('frmUpdatePass', {static: false}) updatePassForm: NgForm;
 
   usuario: Usuario;
   cambiado = false;
   error = false;
+  formularioRecuperar: FormGroup;
 
   constructor(private usuarioService: UsuarioService,
               private autenticacionService: AutenticacionService) {
   }
 
   ngOnInit(): void {
+    this.formularioRecuperar = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+
+    });
   }
 
   onChange() {
 
-    this.usuarioService.obtenerUsuarioPorEmail(this.updatePassForm.value.email).subscribe(usuario => {
+    this.usuarioService.obtenerUsuarioPorEmail(this.formularioRecuperar.value.email).subscribe(usuario => {
 
         if (usuario == null) {
           this.error = true;
