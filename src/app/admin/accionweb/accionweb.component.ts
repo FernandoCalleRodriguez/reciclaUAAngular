@@ -14,16 +14,12 @@ export class AccionwebComponent implements OnInit {
 
   AccionesWeb: AccionWeb[];
   AccionWeb: AccionWeb;
-  TipoAccion: TipoAccion;
   Usuario: Usuario;
 
-  constructor(private accionwebservice: AccionwebService,
-              private tipoaccionservice: TipoaccionService,
-              private usuarioservice: UsuarioService) { }
+  constructor(private accionwebservice: AccionwebService) { }
 
   ngOnInit(): void {
     this.obtenerTodosAW();
-    this.crearAccion();
   }
 
   obtenerTodosAW() {
@@ -33,33 +29,15 @@ export class AccionwebComponent implements OnInit {
     });
   }
 
-  crearAccion() {
-    this.tipoaccionservice.obtenerTipoAccionPorId(262144).subscribe( tipo => {
-      this.TipoAccion = tipo;
-      console.log(tipo);
-    });
-
-    this.usuarioservice.obtenerWebPorId(32769).subscribe( usu => {
-      this.Usuario = usu;
-      console.log(usu);
-    });
-
-    const date: Date = new Date();
-    const accionPrueba: AccionWeb = {Tipo: this.TipoAccion, Fecha: date, Usuario: this.Usuario };
-    this.accionwebservice.crear(accionPrueba).subscribe( res => {
-      console.log(res);
-    });
-  }
-
-  modificarAccion() {
-    this.accionwebservice.modificar(this.AccionWeb).subscribe( accion => {
+  obtenerTodosAWporId() {
+    this.accionwebservice.obtenerAccionWebPorId(294912).subscribe(accion => {
       this.AccionWeb = accion;
-      console.log('Se modifica la opcion ' + accion);
-  });
+      console.log('Acciones Web:' + accion);
+    });
   }
 
   borrarAccion() {
-      const id = 557060;
+      const id = 491520;
       this.accionwebservice.borrar(id).subscribe( accion => {
       console.log('Se elimino la accion web ' + id);
   });

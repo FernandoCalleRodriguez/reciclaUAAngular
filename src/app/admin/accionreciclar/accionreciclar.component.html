@@ -1,0 +1,11 @@
+<h1>Accion Reciclar</h1>
+
+<h3>Detalles</h3>
+
+<button (click)="borrarAccion()" >Borrar</button>
+<button (click)="obtenerTodosARporId()" >Obtener Accion por ID</button>
+
+<h3>Lista</h3>
+<li *ngFor="let accion of AccionesReciclar index as i; first as isFirst">
+  {{i}}- {{accion.Id}}  -  {{accion.Item}} <span *ngIf="isFirst">(Primer registro)</span>
+</li>

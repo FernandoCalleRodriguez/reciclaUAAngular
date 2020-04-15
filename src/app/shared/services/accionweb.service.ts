@@ -16,22 +16,18 @@ export class AccionwebService {
   AccionWeb: AccionWeb;
   constructor(private http: HttpClient) { }
 
-  public obtenerTodosAccionWeb() {
+  public obtenerTodosAccionWeb(): Observable<AccionWeb[]> {
     return this.http.get<AccionWeb[]>(this.server + 'AccionWeb/BuscarTodos').pipe(map(res => {
       return res;
     }));
   }
 
-  public crear(accion: AccionWeb): Observable<any> {
-    const body = {Tipo_oid: 458752, Usuario_oid: 32769, Fecha: accion.Fecha };
-    return this.http.post<any>(this.server + 'AccionWeb/Crear', body);
+  public obtenerAccionWebPorId(id: number): Observable<AccionWeb> {
+    return this.http.get<AccionWeb>(this.server + 'AccionWeb/' + id);
   }
 
-  public borrar(id): Observable<void> {
+  public borrar(id: number): Observable<void> {
     return this.http.delete<void>(this.server + 'AccionWeb/Borrar?p_accionweb_oid=' + id);
   }
 
-  public modificar(accion: AccionWeb): Observable<any> {
-    return this.http.put<AccionWeb>(this.server + 'AccionWeb/Modificar?idAccionWeb=' + accion.Id, accion);
-  }
 }

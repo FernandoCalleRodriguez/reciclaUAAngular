@@ -10,14 +10,18 @@ import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {NotaComponent} from './admin/nota/nota.component';
 import {AccionwebComponent} from './admin/accionweb/accionweb.component';
+import {AccionreciclarComponent} from './admin/accionreciclar/accionreciclar.component';
+import {TipoaccionComponent} from './admin/tipoaccion/tipoaccion.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
   {path: '', component: LoginComponent},
 
-  {path: 'notaadmin', component: NotaComponent},
-  {path: 'accionadmin', component: AccionwebComponent},
+  {path: 'nota', component: NotaComponent},
+  {path: 'accionweb', component: AccionwebComponent},
+  {path: 'accionreciclar', component: AccionreciclarComponent},
+  {path: 'tipoaccion', component: TipoaccionComponent},
 
 
   {path: 'usuarioadmin/crear', component: CrearComponent},

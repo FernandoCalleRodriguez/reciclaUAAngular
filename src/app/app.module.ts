@@ -18,6 +18,8 @@ import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
 import { NotaComponent } from './admin/nota/nota.component';
 import { AccionwebComponent } from './admin/accionweb/accionweb.component';
+import { AccionreciclarComponent } from './admin/accionreciclar/accionreciclar.component';
+import { TipoaccionComponent } from './admin/tipoaccion/tipoaccion.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { AccionwebComponent } from './admin/accionweb/accionweb.component';
     ModificarwebComponent,
     NotaComponent,
     AccionwebComponent,
+    AccionreciclarComponent,
+    TipoaccionComponent,
   ],
   imports: [
     BrowserModule,

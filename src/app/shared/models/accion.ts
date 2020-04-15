@@ -1,10 +1,21 @@
 import {Usuario} from './usuario';
+import {Contenedor} from './contenedor';
+import {Item} from './item';
 
 export class AccionWeb {
   Id?: number;
   Fecha?: Date;
   Tipo?: TipoAccion;
   Usuario?: Usuario;
+}
+
+export class AccionReciclar {
+  Id?: number;
+  Usuario?: Usuario;
+  Item?: Item;
+  Contenedor?: Contenedor;
+  Cantidad?: number;
+  Fecha?: Date;
 }
 
 export class TipoAccion {
