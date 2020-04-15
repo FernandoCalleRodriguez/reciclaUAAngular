@@ -8,6 +8,10 @@ import {ListwebComponent} from './web/listweb/listweb.component';
 import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
+import {EdificioComponent} from "./edificio/edificio.component";
+import {PlantaComponent} from './planta/planta.component';
+import {EstanciaComponent} from './estancia/estancia.component';
+import {PuntoComponent} from './punto/punto.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -20,6 +24,11 @@ const routes: Routes = [
   {path: 'usuarioweb/listar', component: ListwebComponent},
   {path: 'usuarioweb/crear', component: CrearwebComponent},
   {path: 'usuarioweb/modificar/:usuarioId', component: ModificarwebComponent},
+
+  {path: 'edificio/listar', component: EdificioComponent},
+  {path: 'estancia/listar', component: EstanciaComponent},
+  {path: 'planta/listar', component: PlantaComponent},
+  {path: 'punto/listar', component: PuntoComponent},
 
   {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
 

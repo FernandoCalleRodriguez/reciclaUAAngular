@@ -1,0 +1,113 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <h1>Lista de Estancias</h1>
+        </div>
+        <div class="col-md-1">
+            <h1><button class="btn btn-outline-primary" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-stripped" *ngIf="estancias !=null">
+            <tr>
+                <td>idEstancia</td>
+                <td>Actividad</td>
+                <td>Latitud</td>
+                <td>Longitud</td>
+                <td>Nombre</td>
+
+                <td></td>
+            </tr>
+            <tr *ngFor="let item of estancias">
+                <td>{{item.Id}}</td>
+                <td>{{item.Actividad}}</td>
+                <td>{{item.Latitud}}</td>
+                <td>{{item.Longitud}}</td>
+                <td>{{item.Nombre}}</td>
+
+                <td>
+                    <button class="btn btn-outline-success" (click)="getEstanciaById(item.Id)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Estancia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm">
+                    <div class="form-group row">
+                        <label for="IdEstancia" class="col-sm-2 col-form-label">IdEstancia</label>
+                        <div class="col-sm-10">
+                            <input type="text" ngModel required class="form-control" [(ngModel)]="estancia.Id"
+                                id="IdEstancia" name="IdEstancia" #IdEstancia>
+                            <div *ngIf="IdEstancia.touched && !IdEstancia.valid">
+                                <small class="text-danger">IdEstancia es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Actividad" class="col-sm-2 col-form-label">Actividad</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Actividad" name="Actividad" #Actividad
+                                [(ngModel)]="estancia.Actividad" ngModel required>
+                            <div *ngIf="Actividad.touched && !Actividad.valid">
+                                <small class="text-danger">Actividad es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Latitud" class="col-sm-2 col-form-label">Latitud</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Latitud" name="Latitud" #Latitud
+                                [(ngModel)]="estancia.Nombre" ngModel required>
+                            <div *ngIf="Latitud.touched && !Latitud.valid">
+                                <small class="text-danger">Latitud es obligatorio</small>
+                            </div>
+                        </div>
+                    </div><div class="form-group row">
+                        <label for="Longitud" class="col-sm-2 col-form-label">Longitud</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Longitud" name="Longitud" #Longitud
+                                [(ngModel)]="estancia.Longitud" ngModel required>
+                            <div *ngIf="Longitud.touched && !Longitud.valid">
+                                <small class="text-danger">Longitud es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Nombre" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
+                                [(ngModel)]="estancia.Nombre" ngModel required>
+                            <div *ngIf="Nombre.touched && !Nombre.valid">
+                                <small class="text-danger">Nombre es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
+                    Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

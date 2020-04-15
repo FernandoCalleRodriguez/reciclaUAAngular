@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <h1>Lista de Plantas</h1>
+        </div>
+        <div class="col-md-1">
+            <h1><button class="btn btn-outline-primary" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-stripped" *ngIf="plantas !=null">
+            <tr>
+                <td>idPlanta</td>
+                <td>NumeroPlanta</td>
+
+                <td></td>
+            </tr>
+            <tr *ngFor="let item of plantas">
+                <td>{{item.IdPlanta}}</td>
+                <td>{{item.NumeroPlanta}}</td>
+
+                <td>
+                    <button class="btn btn-outline-success" (click)="getPlantaById(item.IdPlanta)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" (click)="delete(item.IdPlanta)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Planta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm">
+                    <div class="form-group row">
+                        <label for="IdPlanta" class="col-sm-2 col-form-label">IdPlanta</label>
+                        <div class="col-sm-10">
+                            <input type="text" ngModel required class="form-control" [(ngModel)]="planta.IdPlanta"
+                                id="IdPlanta" name="IdPlanta" #IdPlanta>
+                            <div *ngIf="IdPlanta.touched && !IdPlanta.valid">
+                                <small class="text-danger">IdPlanta es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="NumeroPlanta" class="col-sm-2 col-form-label">NumeroPlanta</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="NumeroPlanta" name="NumeroPlanta" #NumeroPlanta
+                                [(ngModel)]="planta.NumeroPlanta" ngModel required>
+                            <div *ngIf="NumeroPlanta.touched && !NumeroPlanta.valid">
+                                <small class="text-danger">NumeroPlanta es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
+                    Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

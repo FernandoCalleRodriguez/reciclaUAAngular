@@ -1,0 +1,91 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <h1>Lista de Puntos</h1>
+        </div>
+        <div class="col-md-1">
+            <h1><button class="btn btn-outline-primary" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-stripped" *ngIf="puntos !=null">
+            <tr>
+                <td>Id</td>
+                <td>Latitud</td>
+                <td>Longitud</td>
+                <td>Validez</td>
+                <td></td>
+            </tr>
+            <tr *ngFor="let item of puntos">
+                <td>{{item.Id}}</td>
+                <td>{{item.Latitud}}</td>
+                <td>{{item.Longitud}}</td>
+                <td>{{item.EsValido}}</td>
+                
+                <td>
+                    <button class="btn btn-outline-success" (click)="getPuntoById(item.Id)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Punto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm">
+                    <div class="form-group row">
+                        <label for="Id" class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" [disabled]="isEdit" ngModel required class="form-control"
+                                [(ngModel)]="punto.Id" id="Id" name="Id" #Id>
+                            <div *ngIf="Id.touched && !Id.valid">
+                                <small class="text-danger">Id es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Latitud" class="col-sm-2 col-form-label">Latitud</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Latitud" name="Latitud" #Latitud
+                                [(ngModel)]="punto.Latitud" ngModel required>
+                            <div *ngIf="Latitud.touched && !Latitud.valid">
+                                <small class="text-danger">Latitud es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Longitud" class="col-sm-2 col-form-label">Longitud</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Longitud" name="Longitud" #Longitud
+                                [(ngModel)]="punto.Longitud" ngModel required>
+                            <div *ngIf="Longitud.touched && !Longitud.valid">
+                                <small class="text-danger">Longitud es obligatorio</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
+                    Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

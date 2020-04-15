@@ -33,11 +33,11 @@ export class UsuarioService {
   }
 
   CrearAdmin(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).subscribe(res => {
-      return res;
-    }, error1 => {
-      console.log(error1);
-    });
+    // return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).subscribe(res => {
+    //   return res;
+    // }, error1 => {
+    //   console.log(error1);
+    // });
 
   }
 
