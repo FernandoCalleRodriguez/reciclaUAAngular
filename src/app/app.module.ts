@@ -21,6 +21,7 @@ import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
 import { ListaValidacionesComponent } from './validacion/lista-validaciones/lista-validaciones.component';
+import {DataTablesModule} from 'angular-datatables';
 
 
 @NgModule({
@@ -43,13 +44,14 @@ import { ListaValidacionesComponent } from './validacion/lista-validaciones/list
     FormRespuestaComponent,
     ListaValidacionesComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        DataTablesModule
+    ],
   providers: [
     UsuarioService,
   ],
