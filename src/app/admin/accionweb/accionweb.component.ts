@@ -45,10 +45,24 @@ export class AccionwebComponent implements OnInit {
     });
 
     const date: Date = new Date();
-    const accionPrueba: AccionWeb = {Tipo: this.TipoAccion, Fecha: date, Usuario: this.Usuario }
+    const accionPrueba: AccionWeb = {Tipo: this.TipoAccion, Fecha: date, Usuario: this.Usuario };
     this.accionwebservice.crear(accionPrueba).subscribe( res => {
       console.log(res);
     });
+  }
+
+  modificarAccion() {
+    this.accionwebservice.modificar(this.AccionWeb).subscribe( accion => {
+      this.AccionWeb = accion;
+      console.log('Se modifica la opcion ' + accion);
+  });
+  }
+
+  borrarAccion() {
+      const id = 557060;
+      this.accionwebservice.borrar(id).subscribe( accion => {
+      console.log('Se elimino la accion web ' + id);
+  });
   }
 
 }
