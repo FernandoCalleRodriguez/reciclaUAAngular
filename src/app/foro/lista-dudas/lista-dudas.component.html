@@ -2,10 +2,12 @@
 <div class="container">
   <!-- titulo -->
   <div class="row">
-    <div class="col-6">
+    <div class="col">
       <h1>Listado de dudas</h1>
     </div>
-    <div class="col-6">
+  </div>
+  <div class="row mb-1">
+    <div class="col-6 offset-6">
       <form class="form-inline float-right mt-2" [formGroup]="searchform" (ngSubmit)="onSubmit()">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Título..." name="term" formControlName="term">
@@ -42,7 +44,7 @@
           <td class="d-none d-md-table-cell">{{ duda.UsuarioDuda ? duda.UsuarioDuda.Email : 'Null' }}</td>
           <td class="d-none d-md-table-cell">{{ duda.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
           <td>
-            <button class="icon" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
+            <button class="icon btn btn-outline-dark" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
               <i class="fa fa-eye"></i>
               &nbsp;
               <span class="badge badge-dark">{{ duda.ObtenerNumeroDeRespuestas }}</span>
@@ -50,9 +52,9 @@
           </td>
           <td>
             <div class="btn-group">
-              <button class="icon" (click)="showDuda(duda)"><i class="fa fa-eye"></i></button>
-              <button class="icon" [routerLink]="'/foro/duda/' + duda.Id + '/modificar'"><i class="fa fa-edit"></i></button>
-              <button class="icon" (click)="deleteDuda(duda)"><i class="fa fa-trash"></i></button>
+              <button class="btn btn-outline-info" (click)="showDuda(duda)"><i class="fa fa-info-circle"></i></button>
+              <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + duda.Id + '/modificar'"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-danger" (click)="deleteDuda(duda)"><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
