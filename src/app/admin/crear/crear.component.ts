@@ -30,15 +30,15 @@ export class CrearComponent implements OnInit {
       Pass: this.singupForm.value.contrasena,
     };
 
-    this.userService.CrearAdmin(this.user).subscribe(
-      data => {
-        this.user.Id = data;
-        console.log(this.user)
-        this.router.navigate(['list-admin']);
-      }, error => {
-        console.log('Crear usuario admin fallido', error);
-      }
-    );
+    // this.userService.CrearAdmin(this.user).subscribe(
+    // data => {
+    // this.user.Id = data;
+    // console.log(this.user)
+    // this.router.navigate(['list-admin']);
+    // }, error => {
+    // console.log('Crear usuario admin fallido', error);
+    // }
+    // ;
   }
 
 

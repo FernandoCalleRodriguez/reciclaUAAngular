@@ -1,0 +1,15 @@
+<h1>Notas</h1>
+
+<h3>Detalles</h3>
+
+<button (click)="borrarNota()">Borrar</button>
+<button (click)="modificarNota()">Modificar</button>
+<button (click)="obtenerNotaId()">Obtener Nota por ID</button>
+
+<h3>Lista</h3>
+<li *ngFor="let nota of Notas index as i; first as isFirst">
+  {{i}}- {{nota.Id}},Titulo {{nota.Titulo}}, Cuerpo:{{nota.Cuerpo}},Fecha {{nota.Fecha}}  <span *ngIf="isFirst">default</span>
+</li>
+
+
+

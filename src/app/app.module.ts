@@ -16,6 +16,8 @@ import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {FormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
+import { NotaComponent } from './admin/nota/nota.component';
+import { AccionwebComponent } from './admin/accionweb/accionweb.component';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import {HttpClientModule} from '@angular/common/http';
     ListwebComponent,
     CrearwebComponent,
     ModificarwebComponent,
+    NotaComponent,
+    AccionwebComponent,
   ],
   imports: [
     BrowserModule,

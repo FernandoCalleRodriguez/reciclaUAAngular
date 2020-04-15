@@ -1,0 +1,13 @@
+<h1>Accion Web</h1>
+
+<h3>Detalles</h3>
+
+<button >Borrar</button>
+<button >Modificar</button>
+<button >Obtener Accion por ID</button>
+
+<h3>Lista</h3>
+<li *ngFor="let accion of AccionesWeb index as i; first as isFirst">
+  {{i}}- {{accion.Id}}  -  {{accion.Tipo.Nombre}} <span *ngIf="isFirst">(Primer registro)</span>
+</li>
+
