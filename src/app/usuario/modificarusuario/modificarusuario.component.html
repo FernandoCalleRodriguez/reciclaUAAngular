@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="registro">
+<div class="registro" *ngIf="usuario != null">
   <div class="container">
     <h4 class="text-center">Modificar usuario </h4>
     <form (ngSubmit)="onUpdate()" [formGroup]="formularioModificar">

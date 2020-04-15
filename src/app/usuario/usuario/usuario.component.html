@@ -7,8 +7,11 @@
           <h3>Perfil usuario: {{usuario?.Id}}</h3>
         </div>
         <div class="col-4" *ngIf="perfil">
-          <button type="button" class="btn btn-secondary" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">Cambiar contraseña</button>
-          <button class="icon btn btn-warning" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-secondary" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
+            Cambiar contraseña
+          </button>
+          <button class="icon btn btn-warning" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i
+            class="fa fa-edit"></i></button>
           <button class="icon btn btn-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
         </div>
       </div>
@@ -60,7 +63,7 @@
             <b>Email verificado: </b>
           </div>
           <div class=" col">
-            {{usuario?.EmailVerificado}}
+            {{true == usuario?.EmailVerificado ? 'Si' : 'No' }}
           </div>
         </div>
       </li>

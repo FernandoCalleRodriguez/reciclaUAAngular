@@ -19,6 +19,8 @@ export class AutenticacionService {
   constructor(private http: HttpClient,
               private router: Router,
               private bnIdle: BnNgIdleService) {
+    this.controlSesion();
+
   }
 
   Login(usuario: Usuario) {
@@ -34,9 +36,7 @@ export class AutenticacionService {
     localStorage.removeItem('ACESS_TOKEN');
     localStorage.removeItem('ID_USER');
     localStorage.clear();
-    window.setTimeout(() => {
-      this.router.navigate(['login/si']);
-    }, 500);
+    this.router.navigate(['login/si']);
 
 
   }
