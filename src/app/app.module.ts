@@ -28,6 +28,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {DudaService} from './shared/services/duda.service';
 import {RespuestaService} from './shared/services/respuesta.service';
 import {ValidacionService} from './shared/services/validacion.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {ValidacionService} from './shared/services/validacion.service';
     DataTablesModule,
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     UsuarioService,
