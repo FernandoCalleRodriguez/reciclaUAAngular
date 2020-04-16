@@ -5,14 +5,21 @@
     <div class="col">
       <h1>Listado de respuestas</h1>
     </div>
+    <div *ngIf="dudaId" class="col">
+      <button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/' + dudaId + '/respuesta/crear'">
+        Añadir nueva respuesta
+      </button>
+    </div>
   </div>
+  <hr/>
   <!-- tabla de lista-respuestas -->
   <div class="row">
     <div class="col">
-      <table *ngIf="respuestas" class="table table-striped text-center">
+      <table *ngIf="respuestas" class="table table-striped text-center" datatable>
         <thead>
         <tr>
           <th scope="col">#</th>
+          <th scope="col" class="d-none">Cuerpo</th>
           <th scope="col" class="d-none d-md-table-cell">Votos</th>
           <th scope="col" class="d-none d-md-table-cell">Correcta</th>
           <th scope="col" class="d-none d-md-table-cell">Usuario</th>
@@ -23,6 +30,7 @@
         <tbody>
         <tr *ngFor="let respuesta of respuestas">
           <th scope="row">{{ respuesta.Id }}</th>
+          <td class="d-none">{{ respuesta.Cuerpo }}</td>
           <td class="d-none d-md-table-cell">{{ respuesta.Util }}</td>
           <td class="d-none d-md-table-cell">{{ respuesta.EsCorrecta }}</td>
           <td
@@ -30,9 +38,9 @@
           <td class="d-none d-md-table-cell">{{ respuesta.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
           <td>
             <div class="btn-group">
-              <button class="icon" (click)="showRespuesta(respuesta)"><i class="fa fa-eye"></i></button>
-              <button class="icon" (click)="editRespuesta(respuesta)"><i class="fa fa-edit"></i></button>
-              <button class="icon" (click)="deleteRespuesta(respuesta)"><i class="fa fa-trash"></i></button>
+              <button class="btn btn-outline-info" (click)="showRespuesta(respuesta)"><i class="fa fa-eye"></i></button>
+              <button class="btn btn-outline-success" (click)="editRespuesta(respuesta)"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-danger" (click)="deleteRespuesta(respuesta)"><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
@@ -67,18 +75,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- boton crear -->
-  <div class="row">
-    <div class="col-12">
-      <hr>
-    </div>
-    <div class="col-12">
-      <button class="btn btn-success float-right"
-              [routerLink]="dudaId? '/foro/duda/' + dudaId + '/respuesta/crear' : '/foro/respuesta/crear'">
-        Añadir nueva respuesta
-      </button>
     </div>
   </div>
 </div>
