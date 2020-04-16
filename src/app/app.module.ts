@@ -21,7 +21,10 @@ import { VerificacionComponent } from './verificacion/verificacion.component';
 import { CambiarcontrasenaComponent } from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 import {BnNgIdleService} from 'bn-ng-idle';
 import { DataTablesModule } from 'angular-datatables';
+import {ToastrModule} from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -45,12 +48,15 @@ import { DataTablesModule } from 'angular-datatables';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DataTablesModule
+    DataTablesModule,
+    ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     UsuarioService,
     AutenticacionService,
     BnNgIdleService,
+    NgbModule
   ],
   exports: [
   ],
