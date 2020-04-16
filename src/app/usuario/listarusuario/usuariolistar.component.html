@@ -1,71 +1,52 @@
 <app-navbar></app-navbar>
 <div class="container">
+
+  <!-- titulo -->
+  <div class="row">
+    <div class="col">
+      <h1>Listado de usuarios {{tipousuario}}</h1>
+    </div>
+  </div>
+
+  <!-- botón crear -->
   <div class="row">
     <a type="button" [routerLink]="['/usuariocrear/'+ tipousuario]" class="btn btn-primary">Crear
-      usuario {{tipousuario}}</a>
+      usuario {{tipousuario}} <i class="fa fa-plus"></i></a>
   </div>
   <br>
-  <div class="row">
-    <form (ngSubmit)="onSearch()" [formGroup]="formularioBuscar">
-      <div class="row">
-        <div>
-          <label for="id">ID:</label>
-        </div>
-        <div class="col">
-          <input
-            [ngClass]="{'is-invalid' : formularioBuscar.get('id').invalid && formularioBuscar.get('id').touched,
-              'is-valid' : formularioBuscar.get('id').valid && formularioBuscar.get('id').touched}"
-            type="number"
-            class="form-control"
-            formControlName="id"
-            id="id"
-          >
-          <span class="help-block" style="color: red;"
-                *ngIf="!formularioBuscar.get('id').valid && formularioBuscar.get('id').touched"> Id no valido</span>
 
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-primary" [disabled]="formularioBuscar.invalid">Buscar</button>
-
-        </div>
-
-      </div>
-
-    </form>
-  </div>
-  <br>
-  <div class="row" *ngIf="usuarios?.length > 0; else listnull"  >
+  <!-- tabla de lista-usuarios -->
+  <div class="row" >
     <div class="col">
-      <table class="table table-striped text-center" datatable >
+      <table *ngIf="usuarios" class="table table-striped text-center" datatable >
         <thead>
         <tr>
-          <th class="th-sm" scope="col">ID</th>
-          <th class="th-sm" scope="col">Email</th>
-          <th class="th-sm" scope="col">Nompre</th>
-          <th class="th-sm" scope="col">Apellidos</th>
-          <th class="th-sm" scope="col">Acciones</th>
+          <th class="d-none d-md-table-cell" scope="col">ID</th>
+          <th class="d-none d-md-table-cell" scope="col">Email</th>
+          <th class="d-none d-md-table-cell" scope="col">Nompre</th>
+          <th class="d-none d-md-table-cell" scope="col">Apellidos</th>
+          <th scope="col">Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let usuario of usuarios">
-          <ng-template [ngIf]="!usuario.Borrado">
-            <td>{{usuario.Id}}</td>
-            <td><a [routerLink]="['/usuario/' + tipousuario + '/' + usuario.Id]">{{usuario.Email}}</a></td>
-            <td>{{usuario.Nombre | titlecase}}</td>
-            <td>{{usuario.Apellidos}}</td>
+        <tr *ngFor="let usuario of usuarios" >
+            <th scope="row">{{usuario.Id}}</th>
+            <td class="d-none d-md-table-cell">{{usuario.Email}}</td>
+            <td class="d-none d-md-table-cell">{{usuario.Nombre | titlecase}}</td>
+            <td class="d-none d-md-table-cell">{{usuario.Apellidos}}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-outline-info" ><i class="fa fa-info-circle"></i></button>
+                <button class="btn btn-outline-info" (click)="mostrarUsuario(usuario.Id)" ><i class="fa fa-info-circle"></i></button>
                 <button class="btn btn-outline-success" (click)="modificarUsuario(usuario.Id)"><i class="fa fa-edit"></i></button>
-
                 <button class="btn btn-outline-danger" (click)="borrarUsuario(usuario.Id)"><i class="fa fa-trash"></i></button>
               </div>
             </td>
-          </ng-template>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <ng-template #listnull><p>No existe ningún usuario con esas restricciones</p></ng-template>
+  <div *ngIf="!usuarios" class="alert alert-info">
+    No hay usuarios actualmente
+  </div>
 </div>
