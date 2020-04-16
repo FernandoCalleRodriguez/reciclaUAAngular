@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {NavbarComponent} from './shared/components/navbar/navbar.component';
-import {SidebarComponent} from './shared/components/sidebar/sidebar.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
@@ -32,7 +31,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    SidebarComponent,
     LoginComponent,
     UsuariolistarComponent,
     CrearusuarioComponent,
