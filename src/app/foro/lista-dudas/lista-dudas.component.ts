@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DudaService} from '../../shared/services/duda.service';
 import {Duda} from '../../shared/models/duda';
 import {Router} from '@angular/router';
@@ -7,22 +7,27 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-lista-dudas',
   templateUrl: './lista-dudas.component.html',
   styleUrls: ['./lista-dudas.component.css']
 })
-export class ListaDudasComponent implements OnInit {
+export class ListaDudasComponent implements OnInit, OnDestroy {
 
   public dudas: Duda[] = null;
   public duda: Duda = null;
-  public dtTrigger: Subject<any> = new Subject();
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
               protected modalService: NgbModal, protected toaster: ToastrService) {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
+      this.dtTrigger.next();
     }, error => {
       router.navigate(['/']);
     });
@@ -56,10 +61,21 @@ export class ListaDudasComponent implements OnInit {
           if (index > -1) {
             this.dudas.splice(index, 1);
           }
-          this.dtTrigger.next();
           this.toaster.error('Duda ' + duda.Id + ' borrada');
+          this.refresh();
         });
       }
     });
+  }
+
+  refresh() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 }

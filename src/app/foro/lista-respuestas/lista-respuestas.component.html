@@ -15,7 +15,7 @@
   <!-- tabla de lista-respuestas -->
   <div class="row">
     <div class="col">
-      <table *ngIf="respuestas" class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
           <th scope="col">#</th>
@@ -46,9 +46,9 @@
         </tr>
         </tbody>
       </table>
-      <div *ngIf="!respuestas" class="alert alert-info">
+      <!-- div *ngIf="!respuestas" class="alert alert-info">
         No hay respuestas actualmente
-      </div>
+      </div-->
     </div>
   </div>
 </div>

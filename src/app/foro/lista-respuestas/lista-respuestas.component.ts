@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Respuesta} from '../../shared/models/respuesta';
 import {RespuestaService} from '../../shared/services/respuesta.service';
@@ -8,17 +8,21 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-respuestas',
   templateUrl: './lista-respuestas.component.html',
   styleUrls: ['./lista-respuestas.component.css']
 })
-export class ListaRespuestasComponent implements OnInit {
+export class ListaRespuestasComponent implements OnInit, OnDestroy {
   public respuestas: Respuesta[] = null;
   public respuesta: Respuesta = null;
   public duda: Duda = null;
   public dudaId: number = null;
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   public dtTrigger: Subject<any> = new Subject();
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
@@ -29,10 +33,12 @@ export class ListaRespuestasComponent implements OnInit {
         this.dudaId = params.dudaId;
         respuestaService.getRespuestasByDuda(params.dudaId).subscribe(respuestas => {
           this.respuestas = respuestas;
+          this.dtTrigger.next();
         });
       } else {
         respuestaService.getAllRespuestas().subscribe(respuestas => {
           this.respuestas = respuestas;
+          this.dtTrigger.next();
         });
       }
     });
@@ -71,10 +77,21 @@ export class ListaRespuestasComponent implements OnInit {
           if (index > -1) {
             this.respuestas.splice(index, 1);
           }
-          this.dtTrigger.next();
+          this.refresh();
           this.toaster.error('Respuesta ' + respuesta.Id + ' borrada');
         });
       }
     });
+  }
+
+  refresh() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 }
