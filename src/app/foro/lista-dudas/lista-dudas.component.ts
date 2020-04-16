@@ -3,8 +3,7 @@ import {DudaService} from '../../shared/services/duda.service';
 import {Duda} from '../../shared/models/duda';
 import {Router} from '@angular/router';
 import {TemaService} from '../../shared/services/tema.service';
-import {Respuesta} from '../../shared/models/respuesta';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -16,7 +15,8 @@ export class ListaDudasComponent implements OnInit {
   public dudas: Duda[] = null;
   public duda: Duda = null;
 
-  constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router) {
+  constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
+              protected modalService: NgbModal) {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
     }, error => {
@@ -28,8 +28,9 @@ export class ListaDudasComponent implements OnInit {
     return this.temaService.getTemaById(id).Tema;
   }
 
-  public showDuda(duda: Duda) {
+  public showDuda(duda: Duda, detail) {
     this.duda = duda;
+    this.modalService.open(detail, { size: 'xl' });
   }
 
   ngOnInit(): void {

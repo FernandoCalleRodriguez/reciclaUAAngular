@@ -41,7 +41,8 @@
           </td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="showDuda(duda)"><i class="fa fa-info-circle"></i></button>
+              <button class="btn btn-outline-info" (click)="showDuda(duda, content)"><i class="fa fa-info-circle"></i>
+              </button>
               <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + duda.Id + '/modificar'"><i
                 class="fa fa-edit"></i></button>
               <button class="btn btn-outline-danger" (click)="deleteDuda(duda)"><i class="fa fa-trash"></i></button>
@@ -55,30 +56,24 @@
       </div>
     </div>
   </div>
-  <!-- detalle duda -->
-  <div *ngIf="duda">
-    <hr>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <h5 class="card-header">
-            {{ duda.Titulo }}
-            <button type="button" class="close" (click)="duda=null">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </h5>
-          <div class="card-body">
-            <p class="card-text text-justify">
-              {{ duda.Cuerpo }}
-            </p>
-          </div>
-          <div class="card-footer text-muted text-right">
-            {{ duda.UsuarioDuda?.Nombre }}
-            <br>
-            {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
-          </div>
-        </div>
-      </div>
+</div>
+
+<!-- MODALES -->
+<ng-template #content let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ duda?.Titulo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ duda?.Cuerpo }}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+      {{ duda.UsuarioDuda?.Nombre }}
+      <br>
+      {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
-</div>
+</ng-template>
