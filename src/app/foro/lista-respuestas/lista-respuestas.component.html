@@ -6,7 +6,7 @@
       <h1>Listado de respuestas</h1>
     </div>
     <div *ngIf="dudaId" class="col">
-      <button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/' + dudaId + '/respuesta/crear'">
+      <button class="btn btn-success float-right mt-2" (click)="addRespuesta(modalForm)">
         Añadir nueva respuesta
       </button>
     </div>
@@ -38,8 +38,8 @@
           <td class="d-none d-md-table-cell">{{ respuesta.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="showRespuesta(respuesta, detail)"><i class="fa fa-eye"></i></button>
-              <button class="btn btn-outline-success" (click)="editRespuesta(respuesta)"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-info" (click)="showRespuesta(respuesta, modalDetail)"><i class="fa fa-eye"></i></button>
+              <button class="btn btn-outline-success" (click)="modRespuesta(respuesta, modalForm)"><i class="fa fa-edit"></i></button>
               <button class="btn btn-outline-danger" (click)="deleteRespuesta(respuesta)"><i class="fa fa-trash"></i></button>
             </div>
           </td>
@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<ng-template #detail let-modal>
+<ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">RE: {{ duda?.Titulo }}</h5>
@@ -68,6 +68,25 @@
       {{ respuesta.UsuarioRespuesta?.Nombre }}
       <br>
       {{ respuesta.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ edit? 'Modificar duda' : 'Añadir duda' }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss(modalForm)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-form-respuesta-modal #form [dudaId]="dudaId" [respuestaId]="edit? respuesta.Id : null"></app-form-respuesta-modal>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+        {{ edit? 'Modificar' : 'Añadir' }}
+      </button>
     </div>
   </div>
 </ng-template>

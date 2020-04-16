@@ -4,11 +4,12 @@ import {Respuesta} from '../../shared/models/respuesta';
 import {RespuestaService} from '../../shared/services/respuesta.service';
 import {DudaService} from '../../shared/services/duda.service';
 import {Duda} from '../../shared/models/duda';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
+import {FormRespuestaModalComponent} from '../form-respuesta-modal/form-respuesta-modal.component';
 
 @Component({
   selector: 'app-respuestas',
@@ -24,6 +25,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   public dtTrigger: Subject<any> = new Subject();
+
+  public edit = false;
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
               protected router: Router, protected route: ActivatedRoute,
@@ -53,12 +56,6 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       this.duda = d;
     });
     this.modalService.open(detail, {size: 'xl'});
-  }
-
-  editRespuesta(respuesta: Respuesta) {
-    this.dudaService.getDudaByRespuesta(respuesta.Id).subscribe(d => {
-      this.router.navigate(['/foro/duda', d.Id, 'respuesta', respuesta.Id, 'modificar']);
-    });
   }
 
   deleteRespuesta(respuesta: Respuesta) {
@@ -93,5 +90,42 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  addRespuesta(form) {
+    this.edit = false;
+    this.modalService.open(form, {size: 'xl'});
+  }
+
+  crearSubmit(formRespuesta: FormRespuestaModalComponent, modal: NgbModalRef) {
+    formRespuesta.onSubmit().subscribe(d => {
+      if (!this.respuestas) {
+        this.respuestas = [];
+      }
+      this.respuestas.push(d);
+      modal.dismiss();
+      this.refresh();
+    });
+  }
+
+  modRespuesta(respuesta: Respuesta, modal) {
+    this.dudaService.getDudaByRespuesta(respuesta.Id).subscribe(d => {
+      this.duda = d;
+      this.respuesta = respuesta;
+      this.edit = true;
+      this.modalService.open(modal, {size: 'xl'});
+    });
+  }
+
+  editarSubmit(formRespuesta: FormRespuestaModalComponent, modal: NgbModalRef) {
+    formRespuesta.onSubmit().subscribe(d => {
+      this.respuestas.forEach((element, i, array) => {
+        if (element.Id === d.Id) {
+          array[i] = d;
+        }
+      });
+      modal.dismiss();
+      this.refresh();
+    });
   }
 }

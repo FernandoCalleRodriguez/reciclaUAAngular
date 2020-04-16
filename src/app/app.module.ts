@@ -30,6 +30,7 @@ import {RespuestaService} from './shared/services/respuesta.service';
 import {ValidacionService} from './shared/services/validacion.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormDudaModalComponent } from './foro/form-duda-modal/form-duda-modal.component';
+import { FormRespuestaModalComponent } from './foro/form-respuesta-modal/form-respuesta-modal.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { FormDudaModalComponent } from './foro/form-duda-modal/form-duda-modal.c
     FormDudaComponent,
     FormRespuestaComponent,
     ListaValidacionesComponent,
-    FormDudaModalComponent
+    FormDudaModalComponent,
+    FormRespuestaModalComponent
   ],
   imports: [
     BrowserModule,
