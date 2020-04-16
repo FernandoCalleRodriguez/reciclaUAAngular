@@ -50,11 +50,8 @@
         </tr>
         </tbody>
       </table>
-      <div *ngIf="!dudas && !submitted" class="alert alert-info">
+      <div *ngIf="!dudas" class="alert alert-info">
         No hay dudas actualmente
-      </div>
-      <div *ngIf="!dudas && submitted" class="alert alert-info">
-        No existe ninguna coincidencia para el término <i><strong>{{ term().value }}</strong></i>
       </div>
     </div>
   </div>
