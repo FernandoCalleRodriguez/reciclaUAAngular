@@ -6,7 +6,8 @@
       <h1>Listado de dudas</h1>
     </div>
     <div class="col">
-      <button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/crear'">Añadir nueva duda</button>
+      <!--button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/crear'">Añadir nueva duda</button-->
+      <button class="btn btn-success float-right mt-2" (click)="addDuda(modalForm)">Añadir nueva duda</button>
     </div>
   </div>
   <hr/>
@@ -41,9 +42,9 @@
           </td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="showDuda(duda, detail)"><i class="fa fa-info-circle"></i>
+              <button class="btn btn-outline-info" (click)="showDuda(duda, modalDetail)"><i class="fa fa-info-circle"></i>
               </button>
-              <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + duda.Id + '/modificar'"><i
+              <button class="btn btn-outline-success" (click)="modDuda(duda, modalForm)"><i
                 class="fa fa-edit"></i></button>
               <button class="btn btn-outline-danger" (click)="deleteDuda(duda)"><i class="fa fa-trash"></i></button>
             </div>
@@ -59,7 +60,7 @@
 </div>
 
 <!-- MODALES -->
-<ng-template #detail let-modal>
+<ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">{{ duda?.Titulo }}</h5>
@@ -75,5 +76,24 @@
       <br>
       {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
+  </div>
+</ng-template>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ edit? 'Modificar duda' : 'Añadir duda' }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss(modalForm)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+      <div class="modal-body">
+        <app-form-duda-modal #form [dudaId]="edit? duda.Id : null"></app-form-duda-modal>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+          {{ edit? 'Modificar' : 'Añadir' }}
+        </button>
+      </div>
   </div>
 </ng-template>

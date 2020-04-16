@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {DudaService} from '../../shared/services/duda.service';
 import {Duda} from '../../shared/models/duda';
 import {Router} from '@angular/router';
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
+import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -22,6 +23,8 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+
+  public edit = false;
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
               protected modalService: NgbModal, protected toaster: ToastrService) {
@@ -70,12 +73,43 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-        this.dtTrigger.next();
+      dtInstance.destroy();
+      this.dtTrigger.next();
     });
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  addDuda(form) {
+    this.edit = false;
+    this.modalService.open(form, {size: 'xl'});
+  }
+
+  crearSubmit(formDuda: FormDudaModalComponent, modal: NgbModalRef) {
+    formDuda.onSubmit().subscribe(d => {
+      this.dudas.push(d);
+      modal.dismiss();
+      this.refresh();
+    });
+  }
+
+  modDuda(duda: Duda, modal) {
+    this.duda = duda;
+    this.edit = true;
+    this.modalService.open(modal, {size: 'xl'});
+  }
+
+  editarSubmit(formDuda: FormDudaModalComponent, modal: NgbModalRef) {
+    formDuda.onSubmit().subscribe(d => {
+      this.dudas.forEach((element, i, array) => {
+        if (element.Id === d.Id) {
+          array[i] = d;
+        }
+      });
+      modal.dismiss();
+      this.refresh();
+    });
   }
 }
