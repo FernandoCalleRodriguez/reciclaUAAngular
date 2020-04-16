@@ -10,34 +10,45 @@
                     data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
         </div>
     </div>
+
+    <!-- tabla de estancias ([dtTrigger]="dtTrigger")  *ngIf="estancias !=null"-->
+
     <div class="row">
-        <table class="table table-stripped" *ngIf="estancias !=null">
-            <tr>
-                <td>idEstancia</td>
-                <td>Actividad</td>
-                <td>Latitud</td>
-                <td>Longitud</td>
-                <td>Nombre</td>
+        <div class="col">
+            <table class="table table-striped text-center" datatable>
+                <thead>
+                    <tr>
 
-                <td></td>
-            </tr>
-            <tr *ngFor="let item of estancias">
-                <td>{{item.Id}}</td>
-                <td>{{item.Actividad}}</td>
-                <td>{{item.Latitud}}</td>
-                <td>{{item.Longitud}}</td>
-                <td>{{item.Nombre}}</td>
+                        <th scope="col">Id</th>
+                        <th scope="col">Actividad</th>
+                        <th scope="col">Latitud</th>
+                        <th scope="col">Longitud</th>
+                        <th scope="col">Nombre</th>
 
-                <td>
-                    <button class="btn btn-outline-success" (click)="getEstanciaById(item.Id)">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-outline-danger" (click)="delete(item.Id)">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of estancias">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Actividad}}</td>
+                        <td>{{item.Latitud}}</td>
+                        <td>{{item.Longitud}}</td>
+                        <td>{{item.Nombre}}</td>
+
+                        <td>
+                            <button class="btn btn-outline-success" (click)="getEstanciaById(item.Id)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -76,12 +87,13 @@
                         <label for="Latitud" class="col-sm-2 col-form-label">Latitud</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="Latitud" name="Latitud" #Latitud
-                                [(ngModel)]="estancia.Nombre" ngModel required>
+                                [(ngModel)]="estancia.Latitud" ngModel required>
                             <div *ngIf="Latitud.touched && !Latitud.valid">
                                 <small class="text-danger">Latitud es obligatorio</small>
                             </div>
                         </div>
-                    </div><div class="form-group row">
+                    </div>
+                    <div class="form-group row">
                         <label for="Longitud" class="col-sm-2 col-form-label">Longitud</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="Longitud" name="Longitud" #Longitud

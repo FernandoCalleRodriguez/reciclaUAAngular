@@ -47,7 +47,7 @@ export class EstanciaComponent implements OnInit {
   }
   delete(id) {
     Swal.fire({
-      title: 'Estas Seguro de borrar este estancia?',
+      title: '¿Está seguro de borrar esta estancia?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -56,7 +56,7 @@ export class EstanciaComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.estanciaService.removeEstancia(id).subscribe(res => {
-          this.toaster.error("estancia borrado");
+          this.toaster.error("Estancia borrada");
           this.refresh();
         });
       }
@@ -70,7 +70,7 @@ export class EstanciaComponent implements OnInit {
         if (res != null) {
           this.closebutton.nativeElement.click();
           this.refresh();
-          this.toaster.success("estancia creado");
+          this.toaster.success("Estancia creada");
         }
       });
     }

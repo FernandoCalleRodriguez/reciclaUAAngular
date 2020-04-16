@@ -1,4 +1,4 @@
 export class Planta{
-    IdPlanta: number;
-    NumeroPlanta: number;
+    Id: number;
+    Planta: number;
 }

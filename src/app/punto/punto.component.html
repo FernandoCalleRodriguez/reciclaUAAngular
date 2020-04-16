@@ -10,31 +10,41 @@
                     data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
         </div>
     </div>
+
+    <!-- tabla de puntos de reciclaje ([dtTrigger]="dtTrigger")  *ngIf="estancias !=null"-->
+
     <div class="row">
-        <table class="table table-stripped" *ngIf="puntos !=null">
-            <tr>
-                <td>Id</td>
-                <td>Latitud</td>
-                <td>Longitud</td>
-                <td>Validez</td>
-                <td></td>
-            </tr>
-            <tr *ngFor="let item of puntos">
-                <td>{{item.Id}}</td>
-                <td>{{item.Latitud}}</td>
-                <td>{{item.Longitud}}</td>
-                <td>{{item.EsValido}}</td>
-                
-                <td>
-                    <button class="btn btn-outline-success" (click)="getPuntoById(item.Id)">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-outline-danger" (click)="delete(item.Id)">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
+        <div class="col">
+            <table class="table table-striped text-center" datatable>
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Latitud</th>
+                        <th scope="col">Longitud</th>
+                        <th scope="col">Validez</th>
+
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of puntos">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Latitud}}</td>
+                        <td>{{item.Longitud}}</td>
+                        <td>{{item.EsValido}}</td>
+
+                        <td>
+                            <button class="btn btn-outline-success" (click)="getPuntoById(item.Id)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -42,7 +52,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Punto</h5>
+                <h5 class="modal-title">Agregar Punto de Reciclaje</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -55,7 +65,7 @@
                             <input type="text" [disabled]="isEdit" ngModel required class="form-control"
                                 [(ngModel)]="punto.Id" id="Id" name="Id" #Id>
                             <div *ngIf="Id.touched && !Id.valid">
-                                <small class="text-danger">Id es obligatorio</small>
+                                <small class="text-danger"> Id obligatorio</small>
                             </div>
                         </div>
                     </div>

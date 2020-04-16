@@ -10,30 +10,38 @@
                     data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
         </div>
     </div>
+
+    <!-- tabla de edificios ([dtTrigger]="dtTrigger")  *ngIf="edificios !=null"-->
     <div class="row">
-        <table class="table table-stripped" *ngIf="edificios !=null">
-            <tr>
-                <td>Id</td>
-                <td>Nombre</td>
+        <div class="col">
+            <table class="table table-striped text-center" datatable>
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of edificios">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Nombre}}</td>
 
-                <td></td>
-            </tr>
-            <tr *ngFor="let item of edificios">
-                <td>{{item.Id}}</td>
-                <td>{{item.Nombre}}</td>
-
-                <td>
-                    <button class="btn btn-outline-success" (click)="getEdificioById(item.Id)">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-outline-danger" (click)="delete(item.Id)">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
+                        <td>
+                            <button class="btn btn-outline-success" (click)="getEdificioById(item.Id)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -49,8 +57,8 @@
                     <div class="form-group row">
                         <label for="Id" class="col-sm-2 col-form-label">Id</label>
                         <div class="col-sm-10">
-                            <input type="text"  [disabled]="isEdit" ngModel required class="form-control" [(ngModel)]="edificio.Id"
-                                id="Id" name="Id" #Id>
+                            <input type="text" [disabled]="isEdit" ngModel required class="form-control"
+                                [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
                             <div *ngIf="Id.touched && !Id.valid">
                                 <small class="text-danger">Id es obligatorio</small>
                             </div>

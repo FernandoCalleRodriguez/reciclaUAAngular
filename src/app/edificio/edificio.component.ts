@@ -4,6 +4,7 @@ import { EdificioService } from '../shared/services/edificio.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
     selector: 'app-edificio',
     templateUrl: './edificio.component.html',
@@ -47,7 +48,7 @@ export class EdificioComponent implements OnInit {
     }
     delete(id) {
         Swal.fire({
-            title: 'Estas Seguro de borrar este edificio?',
+            title: '¿Estas seguro de borrar este edificio?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -56,7 +57,7 @@ export class EdificioComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.edificioService.removeEdificio(id).subscribe(res => {
-                    this.toaster.error("edificio borrado");
+                    this.toaster.error("Edificio borrado");
                     this.refresh();
                 });
             }
@@ -70,7 +71,7 @@ export class EdificioComponent implements OnInit {
                 if (res != null) {
                     this.closebutton.nativeElement.click();
                     this.refresh();
-                    this.toaster.success("edificio creado");
+                    this.toaster.success("Edificio creado");
                 }
             });
         }

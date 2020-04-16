@@ -64,8 +64,8 @@ export class PlantaComponent implements OnInit {
   }
   submit(form: NgForm) {
     if (!this.isEdit) {
-      this.planta.IdPlanta = form.value.IdPlanta;
-      this.planta.NumeroPlanta = form.value.NumeroPlanta;
+      this.planta.Id = form.value.IdPlanta;
+      this.planta.Planta = form.value.NumeroPlanta;
       this.plantaService.setPlanta(this.planta).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
