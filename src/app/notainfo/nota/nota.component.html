@@ -5,11 +5,10 @@
       <h1>Notas informativas</h1>
     </div>
     <div class="col">
-      <button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/crear'">Añadir nueva nota informativa</button>
+      <button class="btn btn-success float-right mt-2" [routerLink]="'/nota/crear'">Añadir nueva nota informativa</button>
     </div>
   </div>
   <hr/>
-  <!-- tabla de dudas -->
   <div class="row">
     <div class="col">
       <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
@@ -40,9 +39,6 @@
         </tr>
         </tbody>
       </table>
-      <!-- div *ngIf="!dudas || !dudas.length" class="alert alert-info">
-        No hay dudas actualmente
-      </div-->
     </div>
   </div>
 </div>

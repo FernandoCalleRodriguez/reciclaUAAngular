@@ -27,14 +27,8 @@ export class NotaService {
     }));
   }
 
-  public crear(idAdmin, titulo, cuerpo): Observable<any> {
-    const nota: Nota = {UsuarioAdministrador_oid: idAdmin, Titulo: titulo, Cuerpo: cuerpo};
-
-    return this.http.post<any>(this.server + 'NotaInformativa/Crear', nota)
-      .pipe
-          (map(res => {
-          return res;
-    }));
+  public crear(nota: Nota): Observable<any> {
+    return this.http.post<any>(this.server + 'NotaInformativa/Crear', nota);
   }
 
   public borrar(nota: Nota): Observable<void> {

@@ -22,7 +22,8 @@ export class NotaComponent implements OnInit, OnDestroy {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private notaservice: NotaService, protected modalService: NgbModal, protected toaster: ToastrService, protected router: Router) { }
+  constructor(private notaservice: NotaService, protected modalService: NgbModal,
+              protected toaster: ToastrService, protected router: Router) { }
 
   ngOnInit(): void {
     this.notaservice.obtenerTodasNotas().subscribe(res => {
@@ -47,16 +48,7 @@ export class NotaComponent implements OnInit, OnDestroy {
     });
   }
 
-  crear(): void {
-    this.notaservice.crear(32768, 'Reciclaje 2.0', 'Tecnologias que ayudan al reciclaje').subscribe(res => {
-      console.log(res);
-    });
-  }
-
   borrarNota(nota: Nota): void {
-    this.notaservice.borrar(nota).subscribe(res => {
-      console.log(res);
-
       Swal.fire({
         title: '¿Estás seguro de que deseas borrar la nota ' + nota.Id + '?',
         icon: 'warning',
@@ -77,7 +69,6 @@ export class NotaComponent implements OnInit, OnDestroy {
           });
         }
       });
-    });
   }
 
   modificarNota(): void {

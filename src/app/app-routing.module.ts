@@ -8,10 +8,11 @@ import {ListwebComponent} from './web/listweb/listweb.component';
 import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
-import {NotaComponent} from './admin/nota/nota.component';
+import {NotaComponent} from './notainfo/nota/nota.component';
 import {AccionwebComponent} from './admin/accionweb/accionweb.component';
 import {AccionreciclarComponent} from './admin/accionreciclar/accionreciclar.component';
 import {TipoaccionComponent} from './admin/tipoaccion/tipoaccion.component';
+import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -19,6 +20,8 @@ const routes: Routes = [
   {path: '', component: LoginComponent},
 
   {path: 'nota', component: NotaComponent},
+  {path: 'nota/crear', component: FormNotaComponent},
+
   {path: 'accionweb', component: AccionwebComponent},
   {path: 'accionreciclar', component: AccionreciclarComponent},
   {path: 'tipoaccion', component: TipoaccionComponent},
