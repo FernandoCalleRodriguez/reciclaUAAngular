@@ -20,9 +20,13 @@
             <a  [routerLink]="['/listarusuario//web']"class="dropdown-item" >Usuarios web</a>
             <a  [routerLink]="['/ranking']"class="dropdown-item">Ranking de usuarios</a>
           </div>
-          <a class="nav-link" [routerLink]="['/usuario/administrador/']" >
+        </li>
+        <li>
+          <a class="nav-link" [routerLink]="['/usuario/administrador/' + idusuario]" >
             Perfil
           </a>
+        </li>
+
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <a type="button" (click)="logout()" class="btn btn-danger"><i class="fa fa-power-off"></i></a>

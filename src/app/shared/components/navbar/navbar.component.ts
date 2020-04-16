@@ -8,9 +8,13 @@ import {AutenticacionService} from '../../services/autenticacion.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  idusuario;
 
   constructor(private autenticacionService: AutenticacionService,
-              protected  router: Router) { }
+              protected  router: Router) {
+    this.autenticacionService.estaAutenticado();
+    this.idusuario = this.autenticacionService.getID();
+  }
 
   ngOnInit(): void {
   }
