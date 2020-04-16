@@ -15,7 +15,7 @@
   <!-- tabla de lista-respuestas -->
   <div class="row">
     <div class="col">
-      <table *ngIf="respuestas" class="table table-striped text-center" datatable>
+      <table *ngIf="respuestas" class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
           <th scope="col">#</th>
@@ -38,7 +38,7 @@
           <td class="d-none d-md-table-cell">{{ respuesta.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="showRespuesta(respuesta)"><i class="fa fa-eye"></i></button>
+              <button class="btn btn-outline-info" (click)="showRespuesta(respuesta, detail)"><i class="fa fa-eye"></i></button>
               <button class="btn btn-outline-success" (click)="editRespuesta(respuesta)"><i class="fa fa-edit"></i></button>
               <button class="btn btn-outline-danger" (click)="deleteRespuesta(respuesta)"><i class="fa fa-trash"></i></button>
             </div>
@@ -51,30 +51,23 @@
       </div>
     </div>
   </div>
-  <!-- detalle respuesta -->
-  <div *ngIf="respuesta">
-    <hr>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <h5 class="card-header">
-            RE: {{ duda?.Titulo }}
-            <button type="button" class="close" (click)="respuesta=null">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </h5>
-          <div class="card-body">
-            <p class="card-text text-justify">
-              {{ respuesta.Cuerpo }}
-            </p>
-          </div>
-          <div class="card-footer text-muted text-right">
-            {{ respuesta.UsuarioRespuesta?.Nombre }}
-            <br>
-            {{ respuesta.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
-          </div>
-        </div>
-      </div>
+</div>
+
+<ng-template #detail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">RE: {{ duda?.Titulo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ respuesta?.Cuerpo }}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+      {{ respuesta.UsuarioRespuesta?.Nombre }}
+      <br>
+      {{ respuesta.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
-</div>
+</ng-template>
