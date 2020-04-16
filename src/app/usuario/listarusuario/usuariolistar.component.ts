@@ -20,7 +20,6 @@ export class UsuariolistarComponent implements OnInit {
   error = false;
   isEdit: boolean;
   isCreate: boolean;
-
   modal: NgbModalRef;
 
   constructor(protected route: ActivatedRoute,

@@ -8,10 +8,12 @@
         </div>
         <div class="col-4" *ngIf="perfil">
           <div class="btn-group">
-            <button type="button" class="btn btn-outline-dark" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
+            <button type="button" class="btn btn-outline-dark"
+                    [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
               Cambiar contraseña
             </button>
-            <button class="btn btn-outline-success" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i
+            <button class="btn btn-outline-success"
+                    (click)="modificarUsuario(content)"><i
               class="fa fa-edit"></i></button>
             <button class="btn btn-outline-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
           </div>
@@ -81,6 +83,60 @@
       </li>
     </ul>
   </div>
+
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h5 *ngIf="isEdit" class="modal-title">Modificar usuario</h5>
+      <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <h4 class="text-center">Usuario {{tipousuario}} </h4>
+      <form (ngSubmit)="onUpdate()" [formGroup]="formulario">
+        <!-- EMAIL DEL USUARIO -->
+        <div>
+          <label for="email">Correo electrónico:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('email').invalid && formulario.get('email').touched,
+              'is-valid' : formulario.get('email').valid && formulario.get('email').touched}"
+                 type="email"
+                 id="email"
+                 formControlName="email"
+                 placeholder="fdlc4@alu.ua.es"
+                 class="form-control">
+        </div>
+
+        <!-- NOMBRE DEL USUARIO -->
+        <div>
+          <label for="name">Nombre:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('name').invalid && formulario.get('name').touched,
+              'is-valid' : formulario.get('name').valid && formulario.get('name').touched}"
+                 type="text"
+                 class="form-control"
+                 id="name"
+                 formControlName="name"
+          >
+        </div>
+
+        <!-- APELLIDOS DEL USUARIO -->
+        <div>
+          <label for="surname">Apellidos:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('surname').invalid && formulario.get('surname').touched,
+              'is-valid' : formulario.get('surname').valid && formulario.get('surname').touched}"
+                 type="text"
+                 class="form-control"
+                 id="surname"
+                 formControlName="surname"
+          >
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="isEdit" type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Modificar
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cerrar()">Volver</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
 </div>
 
 
