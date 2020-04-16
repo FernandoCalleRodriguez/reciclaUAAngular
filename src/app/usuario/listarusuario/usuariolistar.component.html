@@ -10,15 +10,15 @@
 
   <!-- botón crear -->
   <div class="row">
-    <a type="button" [routerLink]="['/usuariocrear/'+ tipousuario]" class="btn btn-primary">Crear
+    <a type="button" (click)="crearUsuario(content)" class="btn btn-primary">Crear
       usuario {{tipousuario}} <i class="fa fa-plus"></i></a>
   </div>
   <br>
 
   <!-- tabla de lista-usuarios -->
-  <div class="row" >
+  <div class="row">
     <div class="col">
-      <table *ngIf="usuarios" class="table table-striped text-center" datatable >
+      <table *ngIf="usuarios" class="table table-striped text-center" datatable>
         <thead>
         <tr>
           <th class="d-none d-md-table-cell" scope="col">ID</th>
@@ -29,18 +29,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let usuario of usuarios" >
-            <th scope="row">{{usuario.Id}}</th>
-            <td class="d-none d-md-table-cell">{{usuario.Email}}</td>
-            <td class="d-none d-md-table-cell">{{usuario.Nombre | titlecase}}</td>
-            <td class="d-none d-md-table-cell">{{usuario.Apellidos}}</td>
-            <td>
-              <div class="btn-group">
-                <button class="btn btn-outline-info" (click)="mostrarUsuario(usuario.Id)" ><i class="fa fa-info-circle"></i></button>
-                <button class="btn btn-outline-success" (click)="modificarUsuario(usuario.Id)"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-outline-danger" (click)="borrarUsuario(usuario.Id)"><i class="fa fa-trash"></i></button>
-              </div>
-            </td>
+        <tr *ngFor="let usuario of usuarios">
+          <th scope="row">{{usuario.Id}}</th>
+          <td class="d-none d-md-table-cell">{{usuario.Email}}</td>
+          <td class="d-none d-md-table-cell">{{usuario.Nombre | titlecase}}</td>
+          <td class="d-none d-md-table-cell">{{usuario.Apellidos}}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="mostrarUsuario(usuario.Id,content)"><i
+                class="fa fa-info-circle"></i></button>
+              <button class="btn btn-outline-success" (click)="modificarUsuario(usuario.Id,content)"><i
+                class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="borrarUsuario(usuario.Id)"><i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -49,4 +53,94 @@
   <div *ngIf="!usuarios" class="alert alert-info">
     No hay usuarios actualmente
   </div>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h5 *ngIf="isCreate" class="modal-title">Crear usuario</h5>
+      <h5 *ngIf="isEdit" class="modal-title">Modificar usuario</h5>
+      <h5 *ngIf="!isCreate && !isEdit" class="modal-title">Eliminar usuario</h5>
+      <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <h4 class="text-center">Usuario {{tipousuario}} </h4>
+      <form (ngSubmit)="onSubmit(content)" [formGroup]="formulario">
+        <!-- EMAIL DEL USUARIO -->
+        <div>
+          <label for="email">Correo electrónico:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('email').invalid && formulario.get('email').touched,
+              'is-valid' : formulario.get('email').valid && formulario.get('email').touched}"
+                 type="email"
+                 id="email"
+                 formControlName="email"
+                 placeholder="fdlc4@alu.ua.es"
+                 class="form-control">
+        </div>
+        <!-- CONTRASEÑA DEL USUARIO -->
+        <div *ngIf="isCreate">
+          <label for="pwd">Contraseña:</label>
+
+          <input
+            [ngClass]="{'is-invalid' : formulario.get('pwd').invalid && formulario.get('pwd').touched,
+              'is-valid' : formulario.get('pwd').valid && formulario.get('pwd').touched}"
+            type="password"
+            class="form-control"
+            id="pwd"
+            formControlName="pwd"
+            placeholder="Enter password">
+          <span class="help-block" style="color: red;"
+                *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
+
+        </div>
+        <!-- NOMBRE DEL USUARIO -->
+        <div>
+          <label for="name">Nombre:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('name').invalid && formulario.get('name').touched,
+              'is-valid' : formulario.get('name').valid && formulario.get('name').touched}"
+                 type="text"
+                 class="form-control"
+                 id="name"
+                 formControlName="name"
+          >
+        </div>
+
+        <!-- APELLIDOS DEL USUARIO -->
+        <div>
+          <label for="surname">Apellidos:</label>
+          <input [ngClass]="{'is-invalid' : formulario.get('surname').invalid && formulario.get('surname').touched,
+              'is-valid' : formulario.get('surname').valid && formulario.get('surname').touched}"
+                 type="text"
+                 class="form-control"
+                 id="surname"
+                 formControlName="surname"
+          >
+        </div>
+        <!-- FECHA DEL USUARIO -->
+        <div *ngIf="!isCreate && !isEdit">
+          <label for="date">Fecha de creación:</label>
+          <input type="text"
+                 class="form-control"
+                 id="date"
+                 formControlName="date"
+          >
+        </div>
+        <!-- FECHA DEL USUARIO -->
+        <div *ngIf="!isCreate && !isEdit">
+          <label for="verificado">Email verificado:</label>
+          <input type="text"
+                 class="form-control"
+                 id="verificado"
+                 formControlName="verificado"
+          >
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="isEdit" type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Modificar
+          </button>
+          <button *ngIf="isCreate" type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Crear</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrar()">Volver</button>
+        </div>
+      </form>
+    </div>
+
+  </ng-template>
 </div>
