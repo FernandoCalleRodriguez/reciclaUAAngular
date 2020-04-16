@@ -13,7 +13,7 @@
   <!-- tabla de dudas -->
   <div class="row">
     <div class="col">
-      <table *ngIf="dudas" class="table table-striped text-center" datatable>
+      <table *ngIf="dudas" class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
           <th scope="col">#</th>
@@ -41,7 +41,7 @@
           </td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="showDuda(duda, content)"><i class="fa fa-info-circle"></i>
+              <button class="btn btn-outline-info" (click)="showDuda(duda, detail)"><i class="fa fa-info-circle"></i>
               </button>
               <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + duda.Id + '/modificar'"><i
                 class="fa fa-edit"></i></button>
@@ -59,7 +59,7 @@
 </div>
 
 <!-- MODALES -->
-<ng-template #content let-modal>
+<ng-template #detail let-modal>
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">{{ duda?.Titulo }}</h5>
