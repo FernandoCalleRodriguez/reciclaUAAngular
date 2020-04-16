@@ -1,16 +1,68 @@
-<h1>Notas</h1>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Notas informativas</h1>
+    </div>
+    <div class="col">
+      <button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/crear'">Añadir nueva nota informativa</button>
+    </div>
+  </div>
+  <hr/>
+  <!-- tabla de dudas -->
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Titulo</th>
+          <th scope="col" class="d-none d-md-table-cell">Cuerpo</th>
+          <th scope="col" class="d-none d-md-table-cell">Fecha</th>
+          <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let nota of Notas ">
+          <th scope="row">{{ nota.Id }}</th>
+          <td>{{ nota.Titulo}}</td>
+          <td class="d-none d-md-table-cell">{{nota.Cuerpo}}</td>
+          <td class="d-none d-md-table-cell">{{nota.Fecha | date: 'dd/MM/yyyy - hh:mm' }}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="obtenerTodasNotas"><i class="fa fa-info-circle"></i>
+              </button>
+              <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + 1+ '/modificar'"><i
+                class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-danger" (click)="borrarNota(nota)"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- div *ngIf="!dudas || !dudas.length" class="alert alert-info">
+        No hay dudas actualmente
+      </div-->
+    </div>
+  </div>
+</div>
 
-<h3>Detalles</h3>
-
-<button (click)="borrarNota()">Borrar</button>
-<button (click)="modificarNota()">Modificar</button>
-<button (click)="obtenerNotaId()">Obtener Nota por ID</button>
-<button (click)="obtenerNotaId()">Consultar Nota por Titulo </button>
-
-<h3>Lista</h3>
-<li *ngFor="let nota of Notas index as i; first as isFirst">
-  {{i}}- {{nota.Id}},Titulo {{nota.Titulo}}, Cuerpo:{{nota.Cuerpo}},Fecha {{nota.Fecha}}  <span *ngIf="isFirst">default</span>
-</li>
-
-
-
+<!-- MODALES -->
+<ng-template #detail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ Nota?.Titulo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{  1 }}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+      {{ 1}}
+      <br>
+      {{  1}}
+    </div>
+  </div>
+</ng-template>

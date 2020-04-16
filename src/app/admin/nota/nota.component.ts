@@ -1,21 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Nota} from '../../shared/models/nota';
 import {NotaService} from '../../shared/services/nota.service';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import Swal from 'sweetalert2';
+import {not} from 'rxjs/internal-compatibility';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nota',
   templateUrl: './nota.component.html',
   styleUrls: ['./nota.component.css']
 })
-export class NotaComponent implements OnInit {
+export class NotaComponent implements OnInit, OnDestroy {
   Notas: Nota[];
   Nota: Nota;
 
-  constructor(private notaservice: NotaService) { }
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+
+  constructor(private notaservice: NotaService, protected modalService: NgbModal, protected toaster: ToastrService, protected router: Router) { }
 
   ngOnInit(): void {
-    this.obtenerTodasNotas();
-    this.crear();
+    this.notaservice.obtenerTodasNotas().subscribe(res => {
+      this.Notas = res;
+      this.dtTrigger.next();
+    }, error => {
+      this.router.navigate(['/']);
+    });
   }
 
   obtenerNotaId() {
@@ -38,11 +53,30 @@ export class NotaComponent implements OnInit {
     });
   }
 
-  borrarNota(): void {
-    const notaPrueba: Nota = {Id: 425984};
-    console.log(notaPrueba);
-    this.notaservice.borrar(notaPrueba).subscribe(res => {
+  borrarNota(nota: Nota): void {
+    this.notaservice.borrar(nota).subscribe(res => {
       console.log(res);
+
+      Swal.fire({
+        title: '¿Estás seguro de que deseas borrar la nota ' + nota.Id + '?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.value) {
+          this.notaservice.borrar(nota).subscribe(() => {
+            const index = this.Notas.indexOf(nota);
+            if (index > -1) {
+              this.Notas.splice(index, 1);
+            }
+            this.toaster.error('Nota ' + nota.Id + ' borrada');
+            this.refresh();
+          });
+        }
+      });
     });
   }
 
@@ -55,7 +89,16 @@ export class NotaComponent implements OnInit {
     });
   }
 
+  refresh() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
+  }
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
 
 

@@ -20,6 +20,10 @@ import { NotaComponent } from './admin/nota/nota.component';
 import { AccionwebComponent } from './admin/accionweb/accionweb.component';
 import { AccionreciclarComponent } from './admin/accionreciclar/accionreciclar.component';
 import { TipoaccionComponent } from './admin/tipoaccion/tipoaccion.component';
+import {DataTablesModule} from 'angular-datatables';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {ToastrModule} from 'ngx-toastr';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -28,27 +32,27 @@ import { TipoaccionComponent } from './admin/tipoaccion/tipoaccion.component';
     HomeComponent,
     NavbarComponent,
     SidebarComponent,
-
     LoginComponent,
-
     CrearComponent,
     ListadminComponent,
-
     UsuarioComponent,
-
     ListwebComponent,
     CrearwebComponent,
     ModificarwebComponent,
     NotaComponent,
     AccionwebComponent,
     AccionreciclarComponent,
-    TipoaccionComponent,
+    TipoaccionComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    DataTablesModule,
+    ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
+    NgbModule
   ],
   providers: [
     UsuarioService,
