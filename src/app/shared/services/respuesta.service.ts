@@ -27,8 +27,8 @@ export class RespuestaService {
     return this.http.get<Respuesta>(this.SERVER + 'Respuesta/' + id, {headers: this.headers});
   }
 
-  public crear(respuesta: Respuesta): Observable<number> {
-    return this.http.post<number>(this.SERVER + 'Respuesta/Crear', respuesta, {headers: this.headers});
+  public crear(respuesta: Respuesta): Observable<Respuesta> {
+    return this.http.post<Respuesta>(this.SERVER + 'Respuesta/Crear', respuesta, {headers: this.headers});
   }
 
   public modificar(respuesta: Respuesta): Observable<Respuesta> {
