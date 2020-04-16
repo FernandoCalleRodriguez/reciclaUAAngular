@@ -20,8 +20,14 @@ import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
 import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
-import { ListaValidacionesComponent } from './validacion/lista-validaciones/lista-validaciones.component';
+import {ListaValidacionesComponent} from './validacion/lista-validaciones/lista-validaciones.component';
 import {DataTablesModule} from 'angular-datatables';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrModule} from 'ngx-toastr';
+import {DudaService} from './shared/services/duda.service';
+import {RespuestaService} from './shared/services/respuesta.service';
+import {ValidacionService} from './shared/services/validacion.service';
 
 
 @NgModule({
@@ -44,16 +50,22 @@ import {DataTablesModule} from 'angular-datatables';
     FormRespuestaComponent,
     ListaValidacionesComponent
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        DataTablesModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    DataTablesModule,
+    ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
+  ],
   providers: [
     UsuarioService,
+    DudaService,
+    RespuestaService,
+    ValidacionService,
+    NgbModule
   ],
   exports: [
     NavbarComponent
