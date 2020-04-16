@@ -89,6 +89,9 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
 
   crearSubmit(formDuda: FormDudaModalComponent, modal: NgbModalRef) {
     formDuda.onSubmit().subscribe(d => {
+      if (!this.dudas) {
+        this.dudas = [];
+      }
       this.dudas.push(d);
       modal.dismiss();
       this.refresh();
