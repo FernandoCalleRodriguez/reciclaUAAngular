@@ -3,30 +3,41 @@
     <h2 class="text-center">ReciclaUA</h2>
     <h4 class="text-center">Iniciar sesión</h4>
     <form (ngSubmit)="onLogin()" [formGroup]="formularioLogin">
-      <div>
-        <label for="email">Correo electrónico:</label>
-        <input [ngClass]="{'is-invalid' : formularioLogin.get('email').invalid && formularioLogin.get('email').touched,
+      <div class="row">
+        <div class="col-12">
+          <label for="email">Correo electrónico:</label>
+          <input [ngClass]="{'is-invalid' : formularioLogin.get('email').invalid && formularioLogin.get('email').touched,
               'is-valid' : formularioLogin.get('email').valid && formularioLogin.get('email').touched}"
-               type="email"
-               class="form-control"
-               id="email"
-               formControlName="email"
-               placeholder="fdlc4@alu.ua.es">
-      </div>
-      <div>
-        <label for="pwd">Contraseña:</label>
-        <input [ngClass]="{'is-invalid' : formularioLogin.get('pwd').invalid && formularioLogin.get('pwd').touched,
+                 type="email"
+                 class="form-control"
+                 id="email"
+                 formControlName="email"
+                 placeholder="fdlc4@alu.ua.es">
+        </div>
+        <div class="col-12">
+          <label for="pwd">Contraseña:</label>
+          <input [ngClass]="{'is-invalid' : formularioLogin.get('pwd').invalid && formularioLogin.get('pwd').touched,
               'is-valid' : formularioLogin.get('pwd').valid && formularioLogin.get('pwd').touched}"
-               type="password"
-               class="form-control"
-               id="pwd"
-               formControlName="pwd"
-               placeholder="Enter password" >
+                 type="password"
+                 class="form-control"
+                 id="pwd"
+                 formControlName="pwd"
+                 placeholder="Enter password">
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="formularioLogin.invalid">Iniciar sesión</button>
-      <a [routerLink]="['/recuperarcontrasena']"> ¿Has olvidado tu contraseña?</a>
-      <div class="alert alert-danger" *ngIf="error">
-        <strong>Error!</strong> Las credenciales introducidas no son correctas.
+      <br>
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary" [disabled]="formularioLogin.invalid">Iniciar sesión</button>
+        </div>
+        <div class="col-offset">
+          <a [routerLink]="['/recuperarcontrasena']"> ¿Has olvidado tu contraseña?</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="alert alert-danger" *ngIf="error">
+          <strong>Error!</strong> Las credenciales introducidas no son correctas.
+        </div>
       </div>
     </form>
   </div>
