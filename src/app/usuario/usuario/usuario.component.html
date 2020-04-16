@@ -7,12 +7,14 @@
           <h3>Perfil usuario: {{usuario?.Id}}</h3>
         </div>
         <div class="col-4" *ngIf="perfil">
-          <button type="button" class="btn btn-secondary" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
-            Cambiar contraseña
-          </button>
-          <button class="icon btn btn-warning" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i
-            class="fa fa-edit"></i></button>
-          <button class="icon btn btn-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-dark" [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
+              Cambiar contraseña
+            </button>
+            <button class="btn btn-outline-success" [routerLink]="['/modificarusuario/' + tipousuario + '/' + usuarioId]"><i
+              class="fa fa-edit"></i></button>
+            <button class="btn btn-outline-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
+          </div>
         </div>
       </div>
     </div>
