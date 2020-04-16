@@ -20,6 +20,7 @@ import { RankingComponent } from './ranking/ranking.component';
 import { VerificacionComponent } from './verificacion/verificacion.component';
 import { CambiarcontrasenaComponent } from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 import {BnNgIdleService} from 'bn-ng-idle';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -28,9 +29,7 @@ import {BnNgIdleService} from 'bn-ng-idle';
     HomeComponent,
     NavbarComponent,
     SidebarComponent,
-
     LoginComponent,
-
     UsuariolistarComponent,
     CrearusuarioComponent,
     ModificarusuarioComponent,
@@ -46,6 +45,7 @@ import {BnNgIdleService} from 'bn-ng-idle';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    DataTablesModule
   ],
   providers: [
     UsuarioService,
