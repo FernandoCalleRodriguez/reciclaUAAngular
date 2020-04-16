@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {Usuario} from '../models/usuario';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {UsuarioService} from './usuario.service';
 import {Router} from '@angular/router';
 import {BnNgIdleService} from 'bn-ng-idle';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'

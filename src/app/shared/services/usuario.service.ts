@@ -34,9 +34,9 @@ export class UsuarioService {
     let url;
 
     if (tipo === 'web') {
-      url = 'UsuarioWeb/BuscarTodos';
+      url = 'UsuarioWeb/BuscarNoBorrados';
     } else if (tipo === 'administrador') {
-      url = 'UsuarioAdminAutenticado/BuscarTodos';
+      url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
     } else {
     }
 
