@@ -10,7 +10,7 @@
 
   <!-- botón crear -->
   <div class="row">
-    <a type="button" (click)="crearUsuario(content)" class="btn btn-primary">Crear
+    <a type="button" (click)="crearUsuario(content)" class="btn btn-outline-primary">Crear
       usuario {{tipousuario}} <i class="fa fa-plus"></i></a>
   </div>
   <br>
@@ -18,7 +18,7 @@
   <!-- tabla de lista-usuarios -->
   <div class="row">
     <div class="col">
-      <table *ngIf="usuarios" class="table table-striped text-center" datatable>
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
           <th class="d-none d-md-table-cell" scope="col">ID</th>
@@ -41,7 +41,7 @@
               <button class="btn btn-outline-success" (click)="modificarUsuario(usuario.Id,content)"><i
                 class="fa fa-edit"></i>
               </button>
-              <button class="btn btn-outline-danger" (click)="borrarUsuario(usuario.Id)"><i class="fa fa-trash"></i>
+              <button class="btn btn-outline-danger" (click)="borrarUsuario(usuario)"><i class="fa fa-trash"></i>
               </button>
             </div>
           </td>
@@ -50,9 +50,9 @@
       </table>
     </div>
   </div>
-  <div *ngIf="!usuarios" class="alert alert-info">
+  <!-- <div *ngIf="!usuarios" class="alert alert-info">
     No hay usuarios actualmente
-  </div>
+  </div>-->
 
   <ng-template #content let-modal>
     <div class="modal-header">

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
@@ -6,13 +6,15 @@ import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from '@angu
 import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {NgbModal, NgbModalModule, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableDirective} from 'angular-datatables';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-usuariolistar',
   templateUrl: './usuariolistar.component.html',
   styleUrls: ['./usuariolistar.component.css']
 })
-export class UsuariolistarComponent implements OnInit {
+export class UsuariolistarComponent implements OnInit, OnDestroy {
   formulario: FormGroup;
   tipousuario: string; // web o admin
   usuarios: Usuario[];
@@ -21,6 +23,10 @@ export class UsuariolistarComponent implements OnInit {
   isEdit: boolean;
   isCreate: boolean;
   modal: NgbModalRef;
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
@@ -38,7 +44,7 @@ export class UsuariolistarComponent implements OnInit {
 
       this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
         this.usuarios = usuarios;
-        console.log(usuarios);
+        this.dtTrigger.next();
       });
     });
 
@@ -55,6 +61,10 @@ export class UsuariolistarComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
   obtenerUsuarioPorId(id) {
     this.usuarioService.obtenerUsuarioPorId(id, this.tipousuario).subscribe(usuario => {
       this.usuario = usuario;
@@ -63,22 +73,26 @@ export class UsuariolistarComponent implements OnInit {
     });
   }
 
-  borrarUsuario(id) {
+  borrarUsuario(usuario: Usuario) {
     Swal.fire({
-      title: '¿Estas Seguro de que quieres borrar al usuario ' + id + ' ?',
+      title: '¿Estas Seguro de que quieres borrar al usuario ' + usuario.Id + ' ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrar!',
+      confirmButtonText: 'Sí',
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-        this.usuarioService.borrarUsuario(id, this.tipousuario).subscribe(res => {
-          this.toaster.error('Usuario borrado');
+        this.usuarioService.borrarUsuario(usuario.Id, this.tipousuario).subscribe(res => {
+          const index = this.usuarios.indexOf(usuario);
+          if (index > -1) {
+            this.usuarios.splice(index, 1);
+          }
+          this.refresh();
+          this.toaster.error('Usuario ' + usuario.Id + ' borrado');
         });
       }
-      this.refresh();
     });
 
 
@@ -124,9 +138,13 @@ export class UsuariolistarComponent implements OnInit {
           if (data === null) {
             this.error = true;
           } else {
-            console.log(this.usuario);
+            if (!this.usuarios) {
+              this.usuarios = [];
+            }
+            this.usuarios.push(data);
             this.cerrar();
-            this.refresh();          }
+            this.refresh();
+          }
 
         }, error => {
           console.log('Crear usuario ' + this.tipousuario + ' fallido', error);
@@ -139,6 +157,11 @@ export class UsuariolistarComponent implements OnInit {
       console.log(this.usuario);
       this.usuarioService.modificarUsuario(this.usuario, this.tipousuario).subscribe(
         data => {
+          this.usuarios.forEach((element, i, array) => {
+            if (element.Id === this.usuario.Id) {
+              array[i] = this.usuario;
+            }
+          });
           this.cerrar();
           this.refresh();
         }, error => {
@@ -194,9 +217,9 @@ export class UsuariolistarComponent implements OnInit {
   }
 
   refresh() {
-    this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
-      this.usuarios = usuarios;
-      console.log(usuarios);
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
     });
   }
 
