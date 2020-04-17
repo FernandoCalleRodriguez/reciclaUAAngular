@@ -12,15 +12,14 @@ import {NotaService} from '../../shared/services/nota.service';
   styleUrls: ['./modal-nota.component.css']
 })
 export class ModalNotaComponent implements OnInit {
+
   public formulario: FormGroup;
   public user: Usuario = new Usuario();
-  public nota: Nota = null;
+  public nota: Nota = new Nota();
   public edit = false;
 
-  @Input('dudaId')
-  public dId: number;
-  @Input()
-  public respuestaId: number;
+  @Input('IdNota')
+  public Id: number;
 
   constructor(protected notaService: NotaService, protected usuarioService: UsuarioService) { }
 
@@ -29,6 +28,15 @@ export class ModalNotaComponent implements OnInit {
       titulo: new FormControl(null, [Validators.required]),
       cuerpo: new FormControl(null, [Validators.required]),
     });
+
+    if (this.Id) {
+      this.notaService.obtenerNotaPorId(this.Id).subscribe(nota => {
+        this.nota = nota;
+        this.edit = true;
+        this.titulo().setValue(nota.Titulo);
+        this.cuerpo().setValue(nota.Cuerpo);
+      });
+    }
   }
 
   public titulo(): AbstractControl {
@@ -40,8 +48,20 @@ export class ModalNotaComponent implements OnInit {
   }
 
   onSubmit(): Observable<Nota> {
+    if (this.formulario.valid ) {
+      this.nota.Titulo = this.titulo().value;
+      this.nota.Cuerpo = this.cuerpo().value;
+      this.nota.Fecha = new Date();
+      this.nota.UsuarioAdministrador_oid = 32768; //Se tiene que conseguir el oid del usuario admin
 
-    return this.notaService.crear(this.nota);
+      console.log('');
+
+      if (this.edit) {
+        return this.notaService.modificar(this.nota);
+      } else {
+        return this.notaService.crear(this.nota);
+      }
+    }
   }
 
 }

@@ -83,7 +83,7 @@ export class NotaComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Metodos base de los modales
+  // Metodos base de los modales
   public modalCrearNota(detail) {
     this.edit = false;
     this.modalService.open(detail, {size: 'xl'});

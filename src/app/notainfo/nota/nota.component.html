@@ -47,7 +47,7 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">RE: {{ Nota?.Titulo }}</h5>
+      <h5 class="modal-title">Nota informativa: {{ Nota?.Titulo }}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -55,7 +55,7 @@
     <div class="modal-body">
       <p>{{ Nota?.Cuerpo }}</p>
     </div>
-    <div class="modal-body">
+    <div class="modal-footer">
       {{ Nota?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
@@ -64,13 +64,13 @@
 <ng-template #modalForm let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">{{ edit? 'Modificar duda' : 'Añadir duda' }}</h5>
+      <h5 class="modal-title">{{ edit? 'Modificar nota informativa' : 'Añadir nota informativa' }}</h5>
       <button type="button" class="close" (click)="modal.dismiss(modalForm)">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <app-modal-nota #form [dudaId]="Nota.Id" [respuestaId]="edit? Nota.Id : null"></app-modal-nota>
+      <app-modal-nota #form [IdNota]= "edit? Nota.Id : null" ></app-modal-nota>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
