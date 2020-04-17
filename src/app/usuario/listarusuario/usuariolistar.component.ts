@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
@@ -22,7 +22,6 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   error = false;
   isEdit: boolean;
   isCreate: boolean;
-  modal: NgbModalRef;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -35,17 +34,28 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
               private modalService: NgbModal) {
     this.isEdit = false;
     this.isCreate = false;
+
   }
 
+
   ngOnInit(): void {
+
     this.route.params.subscribe(param => {
 
-      this.tipousuario = param['tipousuario'];
+      console.log('antes');
 
-      this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
-        this.usuarios = usuarios;
-        this.dtTrigger.next();
-      });
+      if (!this.dtElement) {
+        this.inicializar(param);
+
+      } else {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.inicializar(param);
+        });
+
+      }
+
+
     });
 
     this.formulario = new FormGroup({
@@ -59,6 +69,15 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
     });
 
 
+  }
+
+  inicializar(param) {
+    this.tipousuario = param['tipousuario'];
+
+    this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
+      this.usuarios = usuarios;
+      this.dtTrigger.next();
+    });
   }
 
   ngOnDestroy(): void {
@@ -75,7 +94,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
   borrarUsuario(usuario: Usuario) {
     Swal.fire({
-      title: '¿Estas Seguro de que quieres borrar al usuario ' + usuario.Id + ' ?',
+      title: '¿Estás seguro de que quieres borrar al usuario ' + usuario.Id + ' ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -101,7 +120,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   modificarUsuario(id, content) {
     this.obtenerUsuarioPorId(id);
     this.habilitarCampos();
-    this.modal = this.modalService.open(content);
+    this.modalService.open(content);
     this.isEdit = true;
     this.isCreate = false;
 
@@ -110,7 +129,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   crearUsuario(content) {
     this.rellenarFormulario(null);
     this.habilitarCampos();
-    this.modal = this.modalService.open(content);
+    this.modalService.open(content);
     this.isEdit = false;
     this.isCreate = true;
   }
@@ -118,13 +137,13 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   mostrarUsuario(id, content) {
     this.obtenerUsuarioPorId(id);
     this.deshabilitarCampos();
-    this.modal = this.modalService.open(content);
+    this.modalService.open(content);
     this.isEdit = false;
     this.isCreate = false;
 
   }
 
-  onSubmit() {
+  onSubmit(modal: NgbModalRef) {
     if (this.isCreate) {
       this.usuario = {
         Email: this.formulario.value.email,
@@ -142,7 +161,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
               this.usuarios = [];
             }
             this.usuarios.push(data);
-            this.cerrar();
+            modal.dismiss();
             this.refresh();
           }
 
@@ -162,10 +181,10 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
               array[i] = this.usuario;
             }
           });
-          this.cerrar();
+          modal.dismiss();
           this.refresh();
         }, error => {
-          console.log('Crear usuario admin fallido', error);
+          console.log('Modificar usuario admin fallido', error);
         }
       );
     }
@@ -223,7 +242,4 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
     });
   }
 
-  cerrar() {
-    this.modal.close();
-  }
 }

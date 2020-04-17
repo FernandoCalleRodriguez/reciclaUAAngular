@@ -2,18 +2,19 @@
 <div class="container">
 
   <!-- titulo -->
+
   <div class="row">
-    <div class="col">
+    <div class="col-9">
       <h1>Listado de usuarios {{tipousuario}}</h1>
     </div>
+    <div class="col">
+      <button (click)="crearUsuario(content)" class="btn btn-outline-primary float-right mt-2"><i
+        class="fa fa-plus"></i>
+        Añadir nuevo usuario
+      </button>
+    </div>
   </div>
-
-  <!-- botón crear -->
-  <div class="row">
-    <a type="button" (click)="crearUsuario(content)" class="btn btn-outline-primary">Crear
-      usuario {{tipousuario}} <i class="fa fa-plus"></i></a>
-  </div>
-  <br>
+  <hr>
 
   <!-- tabla de lista-usuarios -->
   <div class="row">
@@ -50,96 +51,103 @@
       </table>
     </div>
   </div>
-  <!-- <div *ngIf="!usuarios" class="alert alert-info">
-    No hay usuarios actualmente
-  </div>-->
 
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h5 *ngIf="isCreate" class="modal-title">Crear usuario</h5>
-      <h5 *ngIf="isEdit" class="modal-title">Modificar usuario</h5>
-      <h5 *ngIf="!isCreate && !isEdit" class="modal-title">Visualizar usuario</h5>
-      <button type="button" class="close" aria-label="Close" (click)="cerrar()">
-        <span aria-hidden="true">&times;</span></button>
-    </div>
-    <div class="modal-body">
-      <h4 class="text-center">Usuario {{tipousuario}} </h4>
-      <form (ngSubmit)="onSubmit()" [formGroup]="formulario">
-        <!-- EMAIL DEL USUARIO -->
-        <div>
-          <label for="email">Correo electrónico:</label>
-          <input [ngClass]="{'is-invalid' : formulario.get('email').invalid && formulario.get('email').touched,
-              'is-valid' : formulario.get('email').valid && formulario.get('email').touched}"
-                 type="email"
-                 id="email"
-                 formControlName="email"
-                 placeholder="fdlc4@alu.ua.es"
-                 class="form-control">
+  <div class="row">
+    <ng-template #content let-modal>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf="isCreate" class="modal-title">Añadir usuario {{tipousuario}}</h5>
+          <h5 *ngIf="isEdit" class="modal-title">Modificar usuario {{tipousuario}}</h5>
+          <h5 *ngIf="!isCreate && !isEdit" class="modal-title">Visualizar usuario {{tipousuario}}</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span></button>
         </div>
-        <!-- CONTRASEÑA DEL USUARIO -->
-        <div *ngIf="isCreate">
-          <label for="pwd">Contraseña:</label>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
 
-          <input
-            [ngClass]="{'is-invalid' : formulario.get('pwd').invalid && formulario.get('pwd').touched,
-              'is-valid' : formulario.get('pwd').valid && formulario.get('pwd').touched}"
-            type="password"
-            class="form-control"
-            id="pwd"
-            formControlName="pwd"
-            placeholder="Enter password">
-          <span class="help-block" style="color: red;"
-                *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
+              <form [formGroup]="formulario">
+                <!-- EMAIL DEL USUARIO -->
+                <div class="form-group">
+                  <label for="email">Correo electrónico:</label>
+                  <input [ngClass]="{'is-invalid' : formulario.get('email').invalid && formulario.get('email').touched,
+              'is-valid' : formulario.get('email').valid }"
+                         type="email"
+                         id="email"
+                         formControlName="email"
+                         placeholder="fdlc4@alu.ua.es"
+                         class="form-control">
+                </div>
+                <!-- CONTRASEÑA DEL USUARIO -->
+                <div *ngIf="isCreate" class="form-group">
+                  <label for="pwd">Contraseña:</label>
 
-        </div>
-        <!-- NOMBRE DEL USUARIO -->
-        <div>
-          <label for="name">Nombre:</label>
-          <input [ngClass]="{'is-invalid' : formulario.get('name').invalid && formulario.get('name').touched,
-              'is-valid' : formulario.get('name').valid && formulario.get('name').touched}"
-                 type="text"
-                 class="form-control"
-                 id="name"
-                 formControlName="name"
-          >
-        </div>
+                  <input
+                    [ngClass]="{'is-invalid' : formulario.get('pwd').invalid && formulario.get('pwd').touched,
+              'is-valid' : formulario.get('pwd').valid}"
+                    type="password"
+                    class="form-control"
+                    id="pwd"
+                    formControlName="pwd"
+                    placeholder="Enter password">
+                  <span class="help-block" style="color: red;"
+                        *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
 
-        <!-- APELLIDOS DEL USUARIO -->
-        <div>
-          <label for="surname">Apellidos:</label>
-          <input [ngClass]="{'is-invalid' : formulario.get('surname').invalid && formulario.get('surname').touched,
-              'is-valid' : formulario.get('surname').valid && formulario.get('surname').touched}"
-                 type="text"
-                 class="form-control"
-                 id="surname"
-                 formControlName="surname"
-          >
-        </div>
-        <!-- FECHA DEL USUARIO -->
-        <div *ngIf="!isCreate && !isEdit">
-          <label for="date">Fecha de creación:</label>
-          <input type="text"
-                 class="form-control"
-                 id="date"
-                 formControlName="date"
-          >
-        </div>
-        <!-- FECHA DEL USUARIO -->
-        <div *ngIf="!isCreate && !isEdit">
-          <label for="verificado">Email verificado:</label>
-          <input type="text"
-                 class="form-control"
-                 id="verificado"
-                 formControlName="verificado"
-          >
+                </div>
+                <!-- NOMBRE DEL USUARIO -->
+                <div class="form-group">
+                  <label for="name">Nombre:</label>
+                  <input [ngClass]="{'is-invalid' : formulario.get('name').invalid && formulario.get('name').touched,
+              'is-valid' : formulario.get('name').valid }"
+                         type="text"
+                         class="form-control"
+                         id="name"
+                         formControlName="name"
+                  >
+                </div>
+
+                <!-- APELLIDOS DEL USUARIO -->
+                <div class="form-group">
+                  <label for="surname">Apellidos:</label>
+                  <input [ngClass]="{'is-invalid' : formulario.get('surname').invalid && formulario.get('surname').touched,
+              'is-valid' : formulario.get('surname').valid }"
+                         type="text"
+                         class="form-control"
+                         id="surname"
+                         formControlName="surname"
+                  >
+                </div>
+                <!-- FECHA DEL USUARIO -->
+                <div *ngIf="!isCreate && !isEdit" class="form-group">
+                  <label for="date">Fecha de creación:</label>
+                  <input type="text"
+                         class="form-control"
+                         id="date"
+                         formControlName="date"
+                  >
+                </div>
+                <!-- FECHA DEL USUARIO -->
+                <div *ngIf="!isCreate && !isEdit" class="form-group">
+                  <label for="verificado">Email verificado:</label>
+                  <input type="text"
+                         class="form-control"
+                         id="verificado"
+                         formControlName="verificado"
+                  >
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="isEdit" type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Modificar
+          <button *ngIf="isEdit" type="submit" class="btn btn-primary" (click)="onSubmit(modal)"
+                  [disabled]="formulario.invalid">Modificar
           </button>
-          <button *ngIf="isCreate" type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Crear</button>
-          <button type="button" class="btn btn-secondary" (click)="cerrar()">Volver</button>
+          <button *ngIf="isCreate" type="submit" class="btn btn-primary" (click)="onSubmit(modal)"
+                  [disabled]="formulario.invalid">Añadir
+          </button>
         </div>
-      </form>
-    </div>
-  </ng-template>
+      </div>
+    </ng-template>
+  </div>
 </div>
