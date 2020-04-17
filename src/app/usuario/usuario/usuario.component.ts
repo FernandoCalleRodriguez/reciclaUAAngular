@@ -87,9 +87,9 @@ export class UsuarioComponent implements OnInit {
 
     }
 
-    borrarUsuario(id) {
+    borrarUsuario() {
         Swal.fire({
-            title: '¿Estas Seguro de que quieres borrar al usuario ' + id + ' ?',
+            title: '¿Estas Seguro de que quieres borrar al usuario ' + this.usuario.Id + ' ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -98,7 +98,7 @@ export class UsuarioComponent implements OnInit {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.value) {
-                this.usuarioService.borrarUsuario(id, this.tipousuario).subscribe(res => {
+                this.usuarioService.borrarUsuario(this.usuario.Id, this.tipousuario).subscribe(res => {
                     this.toaster.error('Usuario borrado');
                     this.router.navigate(['/listarusuario/' + this.tipousuario]);
 
