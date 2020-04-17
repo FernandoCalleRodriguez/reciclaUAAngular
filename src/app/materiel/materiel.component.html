@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <h1>Lista de Materiales</h1>
+    </div>
+    <div class="col-md-2">
+      <h1><button class="btn btn-outline-primary" (click)="add()" data-toggle="modal" #showModel
+          data-target="#exampleModal"><i class="fa fa-plus"></i>Agregar Material</button></h1>
+    </div>
+  </div>
+  <hr>
+  <div class=" ">
+    <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" *ngIf="materiales !=null">
+      <thead>
+        <tr>
+          <td>id</td>
+          <td>Nombre</td>
+          <td>Contenedor</td>
+          <td>Estado</td>
+
+         
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of materiales">
+          <td>{{item.Id}}</td>
+          <td>{{item.Nombre}}</td>
+          <td>{{item.Contenedor}}</td>
+          <td>{{getEstado(item.EsValido)}}</td>
+         
+          <td>
+            <button class="btn btn-outline-success" (click)="getMaterialById(item.Id)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Agregar Item</h5>
+        <ng-template #EditTitle>
+          <h5 class="modal-title">Editar Material</h5>
+        </ng-template>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm">
+          <div class="form-group row">
+            <label for="Nombre" class="col-sm-2 col-form-label">Nombre</label>
+            <div class="col-sm-10">
+              <input type="text" [(ngModel)]="material.Nombre" required class="form-control" id="Nombre" name="Nombre"
+                #Nombre="ngModel">
+              <div *ngIf="Nombre.touched && !Nombre.valid">
+                <small class="text-danger">Nombre es obligatorio</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Contenedor" class="col-sm-2 col-form-label">Contenedor</label>
+            <div class="col-sm-10">
+
+              <input type="number" class="form-control" id="Contenedor" name="Contenedor" #Contenedor="ngModel"
+                [(ngModel)]="material.Contenedor" required>
+              <div *ngIf="Contenedor.touched && !Contenedor.valid">
+                <small class="text-danger">Contenedor es obligatorio</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="EsValido" class="col-sm-2 col-form-label">Estado</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="EsValido" required name="EsValido" [(ngModel)]="material.EsValido"
+                #Estado="ngModel">
+                <option value="">Elije Estado</option>
+                <option *ngFor="let estado of estados" [value]="estado.id">{{estado.value}}</option>
+              </select>
+              <div *ngIf="Estado.touched && !Estado.valid">
+                <small class="text-danger">Estado es obligatorio</small>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Save
+          changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

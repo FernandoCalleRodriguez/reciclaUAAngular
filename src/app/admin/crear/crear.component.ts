@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {Usuario} from '../../shared/models/usuario';
-import {UsuarioService} from '../../shared/services/usuario.service';
-import {Router} from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Usuario } from '../../shared/models/usuario';
+import { UsuarioService } from '../../shared/services/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear',
@@ -11,11 +11,11 @@ import {Router} from '@angular/router';
 })
 export class CrearComponent implements OnInit {
 
-  @ViewChild('frmRegistro', {static: false}) singupForm: NgForm;
+  @ViewChild('frmRegistro', { static: false }) singupForm: NgForm;
   private user: Usuario;
 
   constructor(private userService: UsuarioService,
-              private router: Router) {
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -30,15 +30,15 @@ export class CrearComponent implements OnInit {
       Pass: this.singupForm.value.contrasena,
     };
 
-    this.userService.CrearAdmin(this.user).subscribe(
-      data => {
-        this.user.Id = data;
-        console.log(this.user)
-        this.router.navigate(['list-admin']);
-      }, error => {
-        console.log('Crear usuario admin fallido', error);
-      }
-    );
+    // this.userService.CrearAdmin(this.user).subscribe(
+    //   data => {
+    //     this.user.Id = data;
+    //     console.log(this.user)
+    //     this.router.navigate(['list-admin']);
+    //   }, error => {
+    //     console.log('Crear usuario admin fallido', error);
+    //   }
+    // );
   }
 
 
