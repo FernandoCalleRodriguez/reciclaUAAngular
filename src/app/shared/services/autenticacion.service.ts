@@ -20,7 +20,6 @@ export class AutenticacionService {
   constructor(private http: HttpClient,
               private router: Router,
               private bnIdle: BnNgIdleService) {
-    this.controlSesion();
 
   }
 
@@ -105,7 +104,7 @@ export class AutenticacionService {
   }
 
   controlSesion() {
-    this.bnIdle.startWatching(300).subscribe((res) => {
+    this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.Logout();
       }
