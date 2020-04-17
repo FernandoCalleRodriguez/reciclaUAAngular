@@ -1,6 +1,6 @@
 <div id="content">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand"[routerLink]="['/home']">ReciclaUA</a>
+    <a class="navbar-brand" [routerLink]="['/home']">ReciclaUA</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -9,17 +9,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
             Gestión de usuarios
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a  [routerLink]="['/listarusuario/administrador']" class="dropdown-item" >Usuarios administrador</a>
-            <a  [routerLink]="['/listarusuario//web']"class="dropdown-item" >Usuarios web</a>
-            <a  [routerLink]="['/ranking']"class="dropdown-item">Ranking de usuarios</a>
+            <a [routerLink]="['/listarusuario/administrador']" class="dropdown-item">Usuarios administrador</a>
+            <a [routerLink]="['/listarusuario/web']" class="dropdown-item">Usuarios web</a>
+            <a [routerLink]="['/ranking']" class="dropdown-item">Ranking de usuarios</a>
           </div>
         </li>
         <li>
-          <a class="nav-link" [routerLink]="['/usuario/administrador/' + idusuario]" >
+          <a class="nav-link" [routerLink]="['/usuario/administrador/' + idusuario]">
             Perfil
           </a>
         </li>
