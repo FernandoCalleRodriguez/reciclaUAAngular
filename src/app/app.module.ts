@@ -26,6 +26,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
+import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
     AccionwebComponent,
     AccionreciclarComponent,
     TipoaccionComponent,
-    FormNotaComponent
+    FormNotaComponent,
+    ModalNotaComponent
   ],
   imports: [
     BrowserModule,

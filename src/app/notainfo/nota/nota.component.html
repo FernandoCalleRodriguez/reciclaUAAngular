@@ -5,7 +5,7 @@
       <h1>Notas informativas</h1>
     </div>
     <div class="col">
-      <button class="btn btn-success float-right mt-2" [routerLink]="'/nota/crear'">Añadir nueva nota informativa</button>
+      <button class="btn btn-success float-right mt-2" (click)="modalCrearNota(modalForm)">Añadir nueva nota informativa</button>
     </div>
   </div>
   <hr/>
@@ -29,9 +29,9 @@
           <td class="d-none d-md-table-cell">{{nota.Fecha | date: 'dd/MM/yyyy - hh:mm' }}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-info" (click)="obtenerTodasNotas"><i class="fa fa-info-circle"></i>
+              <button class="btn btn-outline-info" (click)="modalDetalleNota(nota,modalDetail)"><i class="fa fa-info-circle"></i>
               </button>
-              <button class="btn btn-outline-success" [routerLink]="'/foro/duda/' + 1+ '/modificar'"><i
+              <button class="btn btn-outline-success" (click)="modalModificarNota(nota,modalForm)"><i
                 class="fa fa-edit"></i></button>
               <button class="btn btn-outline-danger" (click)="borrarNota(nota)"><i class="fa fa-trash"></i></button>
             </div>
@@ -44,21 +44,42 @@
 </div>
 
 <!-- MODALES -->
-<ng-template #detail let-modal>
+<ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">{{ Nota?.Titulo }}</h5>
+      <h5 class="modal-title">RE: {{ Nota?.Titulo }}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>{{  1 }}</p>
+      <p>{{ Nota?.Cuerpo }}</p>
     </div>
-    <div class="modal-footer text-muted text-right">
-      {{ 1}}
-      <br>
-      {{  1}}
+    <div class="modal-body">
+      {{ Nota?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
 </ng-template>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ edit? 'Modificar duda' : 'Añadir duda' }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss(modalForm)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-modal-nota #form [dudaId]="Nota.Id" [respuestaId]="edit? Nota.Id : null"></app-modal-nota>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+        {{ edit? 'Modificar' : 'Añadir' }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
