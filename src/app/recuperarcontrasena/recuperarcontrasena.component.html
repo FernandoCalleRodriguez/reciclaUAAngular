@@ -1,39 +1,42 @@
-<div class="recuperar">
-  <div class="container">
-
-    <h2 class="text-center">ReciclaUA</h2>
-    <h4 class="text-center">Recuperación de la contraseña</h4>
-    <form (ngSubmit)="onChange()" [formGroup]="formularioRecuperar">
-      <div>
-        <label for="email">Escriba el correo electronico del que quieres recuperar la contraseña</label>
-        <input [ngClass]="{'is-invalid' : formularioRecuperar.get('email').invalid && formularioRecuperar.get('email').touched,
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-center">ReciclaUA</h2>
+      <h4 class="text-center">Recuperación de la contraseña</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <form (ngSubmit)="onChange()" [formGroup]="formularioRecuperar">
+        <div class="form-group">
+          <label for="email">Escriba el correo electronico del que quieres recuperar la contraseña:</label>
+          <input [ngClass]="{'is-invalid' : formularioRecuperar.get('email').invalid && formularioRecuperar.get('email').touched,
               'is-valid' : formularioRecuperar.get('email').valid && formularioRecuperar.get('email').touched}"
-               type="email"
-               id="email"
-               formControlName="email"
-               class="form-control"
-               placeholder="fdlc4@alu.ua.es">
-      </div>
-      <br>
-      <div class="row">
-        <div class="col">
-
-          <button type="submit" class="btn btn-primary" [disabled]="formularioRecuperar.invalid">Recuperar
-            contraseña
-          </button>
+                 type="email"
+                 id="email"
+                 formControlName="email"
+                 class="form-control"
+                 placeholder="fdlc4@alu.ua.es">
         </div>
-        <div class="col-offset">
-          <a [routerLink]="['']"> ¿Ya tienes tu contraseña? Accede aquí!</a>
+        <div class="row">
+          <div class="col-7">
+            <a [routerLink]="['']"> ¿Ya tienes tu contraseña? Accede aquí!</a>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary float-right" [disabled]="formularioRecuperar.invalid">Recuperar
+              contraseña
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="alert alert-success" *ngIf="cambiado">
-          <strong>Exito!</strong> La contraseña se ha cambiado.
+        <div class="row">
+          <div class="alert alert-success" *ngIf="cambiado">
+            <strong>Exito!</strong> La contraseña se ha cambiado.
+          </div>
+          <div class="alert alert-danger" *ngIf="error">
+            <strong>Error!</strong> La contraseña NO se ha podido cambiar. Pruebe en otro momento.
+          </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error">
-          <strong>Error!</strong> La contraseña NO se ha podido cambiar. Pruebe en otro momento.
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
