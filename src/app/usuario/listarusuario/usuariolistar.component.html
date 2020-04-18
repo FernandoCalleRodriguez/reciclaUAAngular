@@ -22,7 +22,7 @@
       <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
-          <th class="d-none d-md-table-cell" scope="col">ID</th>
+          <th scope="col">ID</th>
           <th class="d-none d-md-table-cell" scope="col">Email</th>
           <th class="d-none d-md-table-cell" scope="col">Nompre</th>
           <th class="d-none d-md-table-cell" scope="col">Apellidos</th>
@@ -63,7 +63,8 @@
             <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <app-form-usuario-modal #form [usuarioId]="!isCreate? usuario.Id : null" [isEdit]="isEdit" [tipousuario]="tipousuario"></app-form-usuario-modal>
+          <app-form-usuario-modal #form [usuarioId]="!isCreate? usuario.Id : null" [isEdit]="isEdit"
+                                  [tipousuario]="tipousuario"></app-form-usuario-modal>
         </div>
         <div class="modal-footer">
           <div class="row">
