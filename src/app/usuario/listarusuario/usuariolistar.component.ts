@@ -103,13 +103,18 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
   modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
     form.onSubmit().subscribe(usuario => {
-      this.usuarios.forEach((element, i, array) => {
-        if (element.Id === usuario.Id) {
-          array[i] = usuario;
-        }
-      });
-      modal.dismiss();
-      this.refresh();
+      if (usuario) {
+        this.usuarios.forEach((element, i, array) => {
+          if (element.Id === usuario.Id) {
+            array[i] = usuario;
+          }
+        });
+        modal.dismiss();
+        this.refresh();
+      } else {
+        this.error = true;
+      }
+
       this.toaster.success('Usuario ' + usuario.Id + ' modificado');
     });
 
@@ -124,13 +129,18 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   crearUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
 
     form.onSubmit().subscribe(usuario => {
-      if (!this.usuarios) {
-        this.usuarios = [];
+      if (usuario) {
+        if (!this.usuarios) {
+          this.usuarios = [];
+        }
+        this.usuarios.push(usuario);
+        modal.dismiss();
+        this.refresh();
+        this.toaster.success('Usuario ' + usuario.Id + ' creado');
+      } else {
+        this.error = true;
       }
-      this.usuarios.push(usuario);
-      modal.dismiss();
-      this.refresh();
-      this.toaster.success('Usuario ' + usuario.Id + ' creado');
+
 
     });
   }
