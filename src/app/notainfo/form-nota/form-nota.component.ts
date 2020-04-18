@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotaService} from '../../shared/services/nota.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Nota} from '../../shared/models/nota';
@@ -12,7 +12,7 @@ import {Usuario} from '../../shared/models/usuario';
 })
 export class FormNotaComponent implements OnInit {
   public formulario: FormGroup;
-  Nota: Nota;
+  nota: Nota = new Nota();
   Notas: Nota[];
   Usuario: Usuario;
   check: boolean;
@@ -27,22 +27,25 @@ export class FormNotaComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    console.log(this.formulario);
-      this.Nota.Titulo = this.formulario.get('titulo').value;
-      this.Nota.Cuerpo = this.formulario.get('cuerpo').value;
-
-      if (this.check) {
-        this.notaservice.modificar(this.Nota).subscribe(d => {
-          this.router.navigate(['/nota']);
-        });
-      } else {
-        this.Nota.UsuarioAdministrador_oid = 32768;
-        this.notaservice.crear(this.Nota).subscribe(id => {
-          this.router.navigate(['/nota']);
-        });
-      }
-
+  public titulo(): AbstractControl {
+    return this.formulario.get('titulo');
   }
+
+  public cuerpo(): AbstractControl {
+    return this.formulario.get('cuerpo');
+  }
+
+  onSubmit() {
+    this.nota.Titulo = this.titulo().value;
+    this.nota.Cuerpo = this.cuerpo().value;
+    this.nota.Fecha = new Date();
+    this.nota.UsuarioAdministrador_oid = 32768; // Se tiene que conseguir el oid del usuario admin
+    console.log(this.nota);
+
+    this.notaservice.crear(this.nota).subscribe(id => {
+        console.log(this.nota);
+      //this.router.navigate(['/nota']);
+      });
+      }
 }
 
