@@ -22,23 +22,23 @@ export class TipoaccionService {
     }));
   }
 
-  public obtenerTipoAccionPorId(id) {
+  public obtenerTipoAccionPorId(id: number) {
     return this.http.get<TipoAccion>(this.server + 'TipoAccion/' + id).pipe(map((res: TipoAccion) => {
       return res;
     }));
   }
 
-  public crear(tipoaccion: TipoAccion): Observable<number> {
-    return this.http.post<number>(this.server + 'TipoAccion/Crear', tipoaccion);
+  public crear(tipoAccion: TipoAccion): Observable<TipoAccion> {
+    return this.http.post<TipoAccion>(this.server + 'TipoAccion/Crear', tipoAccion);
   }
 
-  public borrar(id: number): Observable<void> {
-    return this.http.delete<void>(this.server + 'TipoAccion/Borrar?p_tipoaccion_oid=' + id);
+  public borrar(tipoAccion: TipoAccion): Observable<void> {
+    return this.http.delete<void>(this.server + 'TipoAccion/Borrar?p_tipoaccion_oid=' + tipoAccion.Id);
   }
 
-  public modificar(tipoaccion: TipoAccion): Observable<any> {
-    console.log(tipoaccion);
-    return this.http.put<Nota>(this.server + 'TipoAccion/Modificar?idTipoAccion=' + tipoaccion.Id, tipoaccion);
+  public modificar(tipoAccion: TipoAccion): Observable<any> {
+    console.log(tipoAccion);
+    return this.http.put<Nota>(this.server + 'TipoAccion/Modificar?idTipoAccion=' + tipoAccion.Id, tipoAccion);
   }
 
 }

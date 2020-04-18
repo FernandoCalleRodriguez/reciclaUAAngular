@@ -36,21 +36,6 @@ export class NotaComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     });
   }
-
-  public  obtenerNotaId() {
-    this.notaservice.obtenerNotaPorId(393216).subscribe(nota => {
-      this.Nota = nota;
-      console.log('Nota por ID' + this.Notas);
-    });
-  }
-
-  public  obtenerTodasNotas() {
-    this.notaservice.obtenerTodasNotas().subscribe(notas => {
-      this.Notas = notas;
-      console.log('Obtener todas las notas ' + this.Notas);
-    });
-  }
-
   public borrarNota(nota: Nota): void {
       Swal.fire({
         title: '¿Estás seguro de que deseas borrar la nota ' + nota.Id + '?',
@@ -74,15 +59,6 @@ export class NotaComponent implements OnInit, OnDestroy {
       });
   }
 
-  public modificarNota(): void {
-    const date: Date = new Date();
-    const notaPrueba: Nota = {Id: 425985, Titulo: 'Nota Modificada', Cuerpo: 'Cuerpo nota modificada', Fecha: date};
-    console.log(notaPrueba);
-    this.notaservice.modificar(notaPrueba).subscribe(res => {
-      console.log(res);
-    });
-  }
-
   // Metodos base de los modales
   public modalCrearNota(detail) {
     this.edit = false;
@@ -100,7 +76,7 @@ export class NotaComponent implements OnInit, OnDestroy {
     this.modalService.open(detail, {size: 'xl'});
   }
 
-  //Metodos Submit de modales
+  // Metodos Submit de modales
   editarSubmit(formNota: ModalNotaComponent, modal: NgbModalRef) {
     formNota.onSubmit().subscribe(d => {
       this.Notas.forEach((element, i, array) => {
@@ -134,7 +110,4 @@ export class NotaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
-
-
-
 }

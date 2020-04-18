@@ -13,9 +13,7 @@ import {Usuario} from '../../shared/models/usuario';
 export class FormNotaComponent implements OnInit {
   public formulario: FormGroup;
   nota: Nota = new Nota();
-  Notas: Nota[];
   Usuario: Usuario;
-  check: boolean;
 
   constructor(protected notaservice: NotaService, protected router: Router, protected route: ActivatedRoute) {
   }
@@ -44,8 +42,8 @@ export class FormNotaComponent implements OnInit {
 
     this.notaservice.crear(this.nota).subscribe(id => {
         console.log(this.nota);
-      //this.router.navigate(['/nota']);
+        this.router.navigate(['/nota']);
       });
-      }
+  }
 }
 

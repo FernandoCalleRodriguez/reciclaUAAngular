@@ -12,7 +12,6 @@ import {NotaService} from '../../shared/services/nota.service';
   styleUrls: ['./modal-nota.component.css']
 })
 export class ModalNotaComponent implements OnInit {
-
   public formulario: FormGroup;
   public user: Usuario = new Usuario();
   public nota: Nota = new Nota();
@@ -53,8 +52,6 @@ export class ModalNotaComponent implements OnInit {
       this.nota.Cuerpo = this.cuerpo().value;
       this.nota.Fecha = new Date();
       this.nota.UsuarioAdministrador_oid = 32768; //Se tiene que conseguir el oid del usuario admin
-
-      console.log('');
 
       if (this.edit) {
         return this.notaService.modificar(this.nota);

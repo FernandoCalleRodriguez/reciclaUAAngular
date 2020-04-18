@@ -9,10 +9,11 @@ import {CrearwebComponent} from './web/crearweb/crearweb.component';
 import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {NotaComponent} from './notainfo/nota/nota.component';
-import {AccionwebComponent} from './admin/accionweb/accionweb.component';
-import {AccionreciclarComponent} from './admin/accionreciclar/accionreciclar.component';
-import {TipoaccionComponent} from './admin/tipoaccion/tipoaccion.component';
+import {AccionwebComponent} from './accion/accionweb/accionweb.component';
+import {AccionreciclarComponent} from './accion/accionreciclar/accionreciclar.component';
+import {TipoaccionComponent} from './accion/tipoaccion/tipoaccion.component';
 import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
+import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -24,8 +25,9 @@ const routes: Routes = [
 
   {path: 'accionweb', component: AccionwebComponent},
   {path: 'accionreciclar', component: AccionreciclarComponent},
-  {path: 'tipoaccion', component: TipoaccionComponent},
 
+  {path: 'tipoaccion', component: TipoaccionComponent},
+  {path: 'tipoaccion/crear', component: FormTipoaccionComponent},
 
   {path: 'usuarioadmin/crear', component: CrearComponent},
   {path: 'usuarioadmin/listar', component: ListadminComponent},

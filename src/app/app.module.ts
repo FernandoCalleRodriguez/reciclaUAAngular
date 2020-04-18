@@ -17,9 +17,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioService} from './shared/services/usuario.service';
 import {HttpClientModule} from '@angular/common/http';
 import { NotaComponent } from './notainfo/nota/nota.component';
-import { AccionwebComponent } from './admin/accionweb/accionweb.component';
-import { AccionreciclarComponent } from './admin/accionreciclar/accionreciclar.component';
-import { TipoaccionComponent } from './admin/tipoaccion/tipoaccion.component';
+import { AccionwebComponent } from './accion/accionweb/accionweb.component';
+import { AccionreciclarComponent } from './accion/accionreciclar/accionreciclar.component';
+import { TipoaccionComponent } from './accion/tipoaccion/tipoaccion.component';
 import {DataTablesModule} from 'angular-datatables';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {ToastrModule} from 'ngx-toastr';
@@ -27,6 +27,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
 import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
+import { FormTipoaccionComponent } from './accion/form-tipoaccion/form-tipoaccion.component';
+import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoaccion.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
     AccionreciclarComponent,
     TipoaccionComponent,
     FormNotaComponent,
-    ModalNotaComponent
+    ModalNotaComponent,
+    FormTipoaccionComponent,
+    ModalTipoaccionComponent
   ],
   imports: [
     BrowserModule,
