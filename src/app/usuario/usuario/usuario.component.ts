@@ -7,6 +7,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
 
 @Component({
     selector: 'app-usuario',
@@ -53,39 +54,21 @@ export class UsuarioComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    obtenerUsuarioPorId(id) {
-        this.usuarioService.obtenerUsuarioPorId(id, this.tipousuario).subscribe(usuario => {
-            this.usuario = usuario;
-            this.rellenarFormulario(this.usuario);
 
-        });
-    }
-
-    rellenarFormulario(usuario: Usuario) {
-
-        this.email().setValue(usuario.Email);
-        this.nombre().setValue(usuario.Nombre);
-        this.apellidos().setValue(usuario.Apellidos);
-    }
-
-    public email(): AbstractControl {
-        return this.formulario.get('email');
-    }
-
-    public nombre(): AbstractControl {
-        return this.formulario.get('name');
-    }
-
-    public apellidos(): AbstractControl {
-        return this.formulario.get('surname');
-    }
-
-    modificarUsuario(content) {
-        this.obtenerUsuarioPorId(this.usuarioId);
-        this.modal = this.modalService.open(content);
+    modUsuario(usuario: Usuario, modal) {
+        this.usuario = usuario;
         this.isEdit = true;
+        this.modalService.open(modal);
+    }
+
+    modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
+        form.onSubmit().subscribe(usuario => {
+            this.usuario = usuario;
+            modal.dismiss();
+        });
 
     }
+
 
     borrarUsuario() {
         Swal.fire({
@@ -94,7 +77,7 @@ export class UsuarioComponent implements OnInit {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, borrar!',
+            confirmButtonText: 'Sí!',
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.value) {
@@ -108,25 +91,5 @@ export class UsuarioComponent implements OnInit {
 
 
     }
-
-    onUpdate() {
-
-        this.usuario.Nombre = this.formulario.value.name;
-        this.usuario.Apellidos = this.formulario.value.surname;
-        this.usuario.Email = this.formulario.value.email;
-        console.log(this.usuario);
-        this.usuarioService.modificarUsuario(this.usuario, this.tipousuario).subscribe(
-            data => {
-                this.cerrar();
-                this.obtenerUsuarioPorId(this.usuarioId);
-
-            }, error => {
-                console.log('Crear usuario admin fallido', error);
-            }
-        );
-    }
-
-    cerrar() {
-        this.modal.close();
-    }
+    
 }

@@ -25,6 +25,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormUsuarioModalComponent } from './usuario/form-usuario-modal/form-usuario-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RecuperarcontrasenaComponent,
     RankingComponent,
     VerificacionComponent,
-    CambiarcontrasenaComponent
+    CambiarcontrasenaComponent,
+    FormUsuarioModalComponent
   ],
   imports: [
     BrowserModule,

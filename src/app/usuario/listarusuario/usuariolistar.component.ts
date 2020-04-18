@@ -8,6 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import {NgbModal, NgbModalModule, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
+import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -15,7 +16,6 @@ import {Subject} from 'rxjs';
   styleUrls: ['./usuariolistar.component.css']
 })
 export class UsuariolistarComponent implements OnInit, OnDestroy {
-  formulario: FormGroup;
   tipousuario: string; // web o admin
   usuarios: Usuario[];
   usuario: Usuario;
@@ -42,8 +42,6 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe(param => {
 
-      console.log('antes');
-
       if (!this.dtElement) {
         this.inicializar(param);
 
@@ -55,19 +53,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
       }
 
-
     });
-
-    this.formulario = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      pwd: new FormControl(null, [
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
-      name: new FormControl(null, [Validators.required]),
-      surname: new FormControl(null, [Validators.required]),
-      date: new FormControl(null),
-      verificado: new FormControl(null),
-    });
-
 
   }
 
@@ -82,14 +68,6 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-  }
-
-  obtenerUsuarioPorId(id) {
-    this.usuarioService.obtenerUsuarioPorId(id, this.tipousuario).subscribe(usuario => {
-      this.usuario = usuario;
-      this.rellenarFormulario(this.usuario);
-
-    });
   }
 
   borrarUsuario(usuario: Usuario) {
@@ -114,126 +92,53 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
       }
     });
 
-
   }
 
-  modificarUsuario(id, content) {
-    this.obtenerUsuarioPorId(id);
-    this.habilitarCampos();
-    this.modalService.open(content);
+  modUsuario(usuario: Usuario, modal) {
+    this.usuario = usuario;
     this.isEdit = true;
     this.isCreate = false;
+    this.modalService.open(modal);
+  }
+
+  modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
+    form.onSubmit().subscribe(usuario => {
+      this.usuarios.forEach((element, i, array) => {
+        if (element.Id === usuario.Id) {
+          array[i] = usuario;
+        }
+      });
+      modal.dismiss();
+      this.refresh();
+    });
 
   }
 
-  crearUsuario(content) {
-    this.rellenarFormulario(null);
-    this.habilitarCampos();
-    this.modalService.open(content);
+  addUsuario(form) {
     this.isEdit = false;
     this.isCreate = true;
+    this.modalService.open(form);
   }
 
-  mostrarUsuario(id, content) {
-    this.obtenerUsuarioPorId(id);
-    this.deshabilitarCampos();
-    this.modalService.open(content);
+  crearUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
+
+    form.onSubmit().subscribe(usuario => {
+      if (!this.usuarios) {
+        this.usuarios = [];
+      }
+      this.usuarios.push(usuario);
+      modal.dismiss();
+      this.refresh();
+    });
+  }
+
+  mostrarUsuario(usuario: Usuario, modal) {
+    this.usuario = usuario;
     this.isEdit = false;
     this.isCreate = false;
-
+    this.modalService.open(modal);
   }
 
-  onSubmit(modal: NgbModalRef) {
-    if (this.isCreate) {
-      this.usuario = {
-        Email: this.formulario.value.email,
-        Pass: this.formulario.value.pwd,
-        Nombre: this.formulario.value.name,
-        Apellidos: this.formulario.value.surname,
-      };
-
-      this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
-        data => {
-          if (data === null) {
-            this.error = true;
-          } else {
-            if (!this.usuarios) {
-              this.usuarios = [];
-            }
-            this.usuarios.push(data);
-            modal.dismiss();
-            this.refresh();
-          }
-
-        }, error => {
-          console.log('Crear usuario ' + this.tipousuario + ' fallido', error);
-        }
-      );
-    } else if (this.isEdit) {
-      this.usuario.Nombre = this.formulario.value.name;
-      this.usuario.Apellidos = this.formulario.value.surname;
-      this.usuario.Email = this.formulario.value.email;
-      console.log(this.usuario);
-      this.usuarioService.modificarUsuario(this.usuario, this.tipousuario).subscribe(
-        data => {
-          this.usuarios.forEach((element, i, array) => {
-            if (element.Id === this.usuario.Id) {
-              array[i] = this.usuario;
-            }
-          });
-          modal.dismiss();
-          this.refresh();
-        }, error => {
-          console.log('Modificar usuario admin fallido', error);
-        }
-      );
-    }
-
-  }
-
-  public email(): AbstractControl {
-    return this.formulario.get('email');
-  }
-
-  public nombre(): AbstractControl {
-    return this.formulario.get('name');
-  }
-
-  public apellidos(): AbstractControl {
-    return this.formulario.get('surname');
-  }
-
-  rellenarFormulario(usuario: Usuario) {
-    if (usuario == null) {
-      this.email().setValue('');
-      this.nombre().setValue('');
-      this.apellidos().setValue('');
-      this.formulario.get('date').setValue('');
-      this.formulario.get('verificado').setValue('');
-    } else {
-      this.email().setValue(usuario.Email);
-      this.nombre().setValue(usuario.Nombre);
-      this.apellidos().setValue(usuario.Apellidos);
-      this.formulario.get('date').setValue(usuario.Fecha.toLocaleString());
-      this.formulario.get('verificado').setValue(usuario.EmailVerificado ? 'Si' : 'No');
-    }
-
-
-  }
-
-  deshabilitarCampos() {
-    this.email().disable();
-    this.nombre().disable();
-    this.apellidos().disable();
-    this.formulario.get('date').disable();
-    this.formulario.get('verificado').disable();
-  }
-
-  habilitarCampos() {
-    this.email().enable();
-    this.nombre().enable();
-    this.apellidos().enable();
-  }
 
   refresh() {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
