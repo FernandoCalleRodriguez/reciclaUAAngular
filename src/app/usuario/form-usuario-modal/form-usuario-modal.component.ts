@@ -23,22 +23,22 @@ export class FormUsuarioModalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.formulario = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      pwd: new FormControl(null, [
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
-      name: new FormControl(null, [Validators.required]),
-      surname: new FormControl(null, [Validators.required]),
-      date: new FormControl(null),
-      verificado: new FormControl(null),
-    });
 
     if (this.usuarioId != null) {
+      this.formulario = new FormGroup({
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        pwd: new FormControl(null,),
+        name: new FormControl(null, [Validators.required]),
+        surname: new FormControl(null, [Validators.required]),
+        date: new FormControl(null),
+        verificado: new FormControl(null),
+      });
+
       this.usuarioService.obtenerUsuarioPorId(this.usuarioId, this.tipousuario).subscribe(usuario => {
         this.usuario = usuario;
         this.rellenarFormulario(this.usuario);
-
       });
+
       if (this.isEdit) {
         //modificar
         this.habilitarCampos();
@@ -48,9 +48,20 @@ export class FormUsuarioModalComponent implements OnInit {
         this.deshabilitarCampos();
       }
     } else {
+      this.formulario = new FormGroup({
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        pwd: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+        name: new FormControl(null, [Validators.required]),
+        surname: new FormControl(null, [Validators.required]),
+        date: new FormControl(null),
+        verificado: new FormControl(null),
+      });
+      
       //Crear
       this.isCreate = true;
       this.habilitarCampos();
+
+
 
     }
   }
