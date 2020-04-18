@@ -9,22 +9,24 @@
   <hr>
   <div class="row">
     <div class="col">
-      <table class="table table-striped" datatable [dtTrigger]="dtTrigger">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
         <thead>
         <tr>
-          <th class="th-sm" scope="col">#</th>
-          <th class="th-sm" scope="col">Email</th>
-          <th class="th-sm" scope="col">Nompre</th>
-          <th class="th-sm" scope="col">Apellidos</th>
-          <th class="th-sm" scope="col">Puntuación</th>
+          <th scope="col">#</th>
+          <th scope="col">ID</th>
+          <th class="d-none d-md-table-cell" scope="col">Email</th>
+          <th class="d-none d-md-table-cell" scope="col">Nompre</th>
+          <th class="d-none d-md-table-cell" scope="col">Apellidos</th>
+          <th scope="col">Puntuación</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let usuario of usuarios;let contador=index">
             <th>{{contador + 1}}</th>
-            <td>{{usuario.Email}}</td>
-            <td>{{usuario.Nombre | titlecase}}</td>
-            <td>{{usuario.Apellidos}}</td>
+            <td>{{usuario.Id}}</td>
+            <td class="d-none d-md-table-cell">{{usuario.Email}}</td>
+            <td class="d-none d-md-table-cell">{{usuario.Nombre | titlecase}}</td>
+            <td class="d-none d-md-table-cell">{{usuario.Apellidos}}</td>
             <td>{{usuario.Puntuacion}}</td>
 
         </tr>
