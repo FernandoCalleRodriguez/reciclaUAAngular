@@ -22,11 +22,11 @@
         </thead>
         <tbody>
         <tr *ngFor="let accion of accionesRec ">
-          <th scope="row">{{ accion.Id }}</th>
-          <td>{{ accion.Contenedor}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Item}}</td>
+          <th scope="row">{{accion.Id}}</th>
+          <td>{{getContenedor(accion?.ContenedorAccion?.Tipo)}}</td>
+          <td class="d-none d-md-table-cell">{{accion.ItemAccion.Nombre ? accion.ItemAccion.Nombre : 'Null'}}</td>
           <td class="d-none d-md-table-cell">{{accion.Cantidad}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Usuario}}</td>
+          <td class="d-none d-md-table-cell">{{''}}</td>
           <td class="d-none d-md-table-cell">{{accion.Fecha}}</td>
           <td>
             <div class="btn-group">
@@ -52,10 +52,10 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>{{ accionRec?.Contenedor }}</p>
+      <p>{{ accionRec?.ContenedorAccion.Tipo }}</p>
     </div>
     <div class="modal-body">
-      <p>{{ accionRec?.Item }}</p>
+      <p>{{ accionRec?.ItemAccion.Nombre }}</p>
     </div>
     <div class="modal-body">
       <p>{{ accionRec?.Cantidad }}</p>

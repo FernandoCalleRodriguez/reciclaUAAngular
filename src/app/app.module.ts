@@ -67,6 +67,7 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
   ],
   providers: [
     UsuarioService,
+    NgbModule
   ],
   exports: [
     NavbarComponent

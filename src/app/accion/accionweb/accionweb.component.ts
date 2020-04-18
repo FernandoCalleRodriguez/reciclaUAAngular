@@ -9,7 +9,7 @@ import {Subject} from 'rxjs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-accionweb',
@@ -19,18 +19,31 @@ import Swal from "sweetalert2";
 export class AccionwebComponent implements OnInit, OnDestroy {
   accionesWeb: AccionWeb[];
   accionWeb: AccionWeb;
-  Usuario: Usuario;
+  usuario: Usuario;
+  usuarios: Usuario[];
+  texto: string;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private accionwebservice: AccionwebService, protected modalService: NgbModal,
+  constructor(private accionwebservice: AccionwebService, protected usuarioservice: UsuarioService, protected modalService: NgbModal,
               protected toaster: ToastrService, protected router: Router) { }
 
   ngOnInit(): void {
     this.accionwebservice.obtenerTodosAccionWeb().subscribe(acciones => {
       this.accionesWeb = acciones;
+      this.texto = (JSON.stringify(acciones));
+      console.log('Detalle de la carga de acciones ' + this.texto);
+      this.dtTrigger.next();
+    }, error => {
+      this.router.navigate(['/']);
+    });
+
+    this.usuarioservice.obtenerTodosWeb().subscribe(usuarios => {
+      this.usuarios = usuarios;
+      this.texto = (JSON.stringify(usuarios));
+      console.log('Detalle de la carga de acciones ' + this.texto);
       this.dtTrigger.next();
     }, error => {
       this.router.navigate(['/']);
@@ -60,7 +73,7 @@ export class AccionwebComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Metodo base de modal
+  // Metodo base de modal
   public modalDetalleAccionWeb(accion: AccionWeb, detail) {
     this.accionWeb = accion;
     this.modalService.open(detail, {size: 'xl'});

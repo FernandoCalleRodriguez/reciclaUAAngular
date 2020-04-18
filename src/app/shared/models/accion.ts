@@ -12,8 +12,8 @@ export class AccionWeb {
 export class AccionReciclar {
   Id?: number;
   Usuario?: Usuario;
-  Item?: Item;
-  Contenedor?: Contenedor;
+  ItemAccion?: Item;
+  ContenedorAccion?: Contenedor;
   Cantidad?: number;
   Fecha?: Date;
 }

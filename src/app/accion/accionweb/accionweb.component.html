@@ -20,10 +20,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let accion of accionesWeb ">
-          <th scope="row">{{ accion.Id}}</th>
-          <td>{{ accion.Tipo}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Usuario}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Fecha}}</td>
+          <th scope="row">{{ accion?.Id}}</th>
+          <td>{{ accion?.Tipo?.Nombre}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.Usuario}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.Fecha}}</td>
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-info" (click)="modalDetalleAccionWeb(accion,modalDetail)"><i class="fa fa-info-circle"></i>
