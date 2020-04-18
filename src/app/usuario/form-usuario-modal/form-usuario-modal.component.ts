@@ -40,28 +40,24 @@ export class FormUsuarioModalComponent implements OnInit {
       });
 
       if (this.isEdit) {
-        //modificar
         this.habilitarCampos();
 
       } else {
-        //visualizar
         this.deshabilitarCampos();
       }
     } else {
       this.formulario = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
-        pwd: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+        pwd: new FormControl(null, [Validators.required,
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),
         date: new FormControl(null),
         verificado: new FormControl(null),
       });
-      
-      //Crear
+
       this.isCreate = true;
       this.habilitarCampos();
-
-
 
     }
   }
