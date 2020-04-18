@@ -29,7 +29,8 @@ export class UsuarioComponent implements OnInit {
                 private  autenticacionService: AutenticacionService,
                 private router: Router,
                 private toaster: ToastrService,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                ) {
         this.route.params.subscribe(param => {
 
             this.tipousuario = param['tipousuario'];
@@ -65,6 +66,8 @@ export class UsuarioComponent implements OnInit {
         form.onSubmit().subscribe(usuario => {
             this.usuario = usuario;
             modal.dismiss();
+            this.toaster.success('Usuario ' + this.usuarioId + ' modificado');
+
         });
 
     }
@@ -82,7 +85,7 @@ export class UsuarioComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.usuarioService.borrarUsuario(this.usuario.Id, this.tipousuario).subscribe(res => {
-                    this.toaster.error('Usuario borrado');
+                    this.toaster.error('Usuario ' + this.usuarioId + ' borrado');
                     this.router.navigate(['/listarusuario/' + this.tipousuario]);
 
                 });

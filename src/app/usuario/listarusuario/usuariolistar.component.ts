@@ -110,6 +110,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
       });
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Usuario ' + usuario.Id + ' modificado');
     });
 
   }
@@ -129,6 +130,8 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
       this.usuarios.push(usuario);
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Usuario ' + usuario.Id + ' creado');
+
     });
   }
 
