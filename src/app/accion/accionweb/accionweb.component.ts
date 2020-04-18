@@ -1,46 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AccionwebService} from '../../shared/services/accionweb.service';
 import {AccionWeb, TipoAccion} from '../../shared/models/accion';
 import {TipoaccionService} from '../../shared/services/tipoaccion.service';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
+import {DataTableDirective} from 'angular-datatables';
+import {Subject} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-accionweb',
   templateUrl: './accionweb.component.html',
   styleUrls: ['./accionweb.component.css']
 })
-export class AccionwebComponent implements OnInit {
-
-  AccionesWeb: AccionWeb[];
-  AccionWeb: AccionWeb;
+export class AccionwebComponent implements OnInit, OnDestroy {
+  accionesWeb: AccionWeb[];
+  accionWeb: AccionWeb;
   Usuario: Usuario;
 
-  constructor(private accionwebservice: AccionwebService) { }
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+
+  constructor(private accionwebservice: AccionwebService, protected modalService: NgbModal,
+              protected toaster: ToastrService, protected router: Router) { }
 
   ngOnInit(): void {
-    this.obtenerTodosAW();
-  }
-
-  obtenerTodosAW() {
     this.accionwebservice.obtenerTodosAccionWeb().subscribe(acciones => {
-    this.AccionesWeb = acciones;
-    console.log('Acciones Web:' + acciones);
+      this.accionesWeb = acciones;
+      this.dtTrigger.next();
+    }, error => {
+      this.router.navigate(['/']);
     });
   }
 
-  obtenerTodosAWporId() {
-    this.accionwebservice.obtenerAccionWebPorId(294912).subscribe(accion => {
-      this.AccionWeb = accion;
-      console.log('Acciones Web:' + accion);
+  public borrarAccionWeb(accion: AccionWeb): void {
+    Swal.fire({
+      title: '¿Estás seguro de que deseas borrar la acción web ' + accion.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Sí'
+    }).then((result) => {
+      if (result.value) {
+        this.accionwebservice.borrar(accion).subscribe(() => {
+          const index = this.accionesWeb.indexOf(accion);
+          if (index > -1) {
+            this.accionesWeb.splice(index, 1);
+          }
+          this.toaster.error('Tipo de acción ' + accion.Id + ' borrada');
+          this.refresh();
+        });
+      }
     });
   }
 
-  borrarAccion() {
-      const id = 491520;
-      this.accionwebservice.borrar(id).subscribe( accion => {
-      console.log('Se elimino la accion web ' + id);
-  });
+  //Metodo base de modal
+  public modalDetalleAccionWeb(accion: AccionWeb, detail) {
+    this.accionWeb = accion;
+    this.modalService.open(detail, {size: 'xl'});
   }
 
+  refresh() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
+  }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 }

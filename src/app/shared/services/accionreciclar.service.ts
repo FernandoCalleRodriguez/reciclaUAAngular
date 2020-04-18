@@ -11,7 +11,6 @@ export class AccionreciclarService {
   server = 'http://localhost:16209/api/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});
-  AccionReciclar: AccionReciclar;
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +24,8 @@ export class AccionreciclarService {
     return this.http.get<AccionReciclar>(this.server + 'AccionReciclar/' + id);
   }
 
-  public borrar(id: number): Observable<void> {
-    return this.http.delete<void>(this.server + 'AccionReciclar/Borrar?p_accionreciclar_oid=' + id);
+  public borrar(accion: AccionReciclar): Observable<void> {
+    return this.http.delete<void>(this.server + 'AccionReciclar/Borrar?p_accionreciclar_oid=' + accion.Id);
   }
 
 }

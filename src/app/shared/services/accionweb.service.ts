@@ -26,8 +26,8 @@ export class AccionwebService {
     return this.http.get<AccionWeb>(this.server + 'AccionWeb/' + id);
   }
 
-  public borrar(id: number): Observable<void> {
-    return this.http.delete<void>(this.server + 'AccionWeb/Borrar?p_accionweb_oid=' + id);
+  public borrar(accion: AccionWeb): Observable<void> {
+    return this.http.delete<void>(this.server + 'AccionWeb/Borrar?p_accionweb_oid=' + accion.Id);
   }
 
 }

@@ -1,12 +1,55 @@
-<h1>Accion Web</h1>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Acción Web</h1>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tipo</th>
+          <th scope="col" class="d-none d-md-table-cell">Usuario</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let accion of accionesWeb ">
+          <th scope="row">{{ accion.Id}}</th>
+          <td>{{ accion.Tipo}}</td>
+          <td class="d-none d-md-table-cell">{{accion.Usuario}}</td>
+          <td class="d-none d-md-table-cell">{{accion.Fecha}}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="modalDetalleAccionWeb(accion,modalDetail)"><i class="fa fa-info-circle"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="borrarAccionWeb(accion)"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-<h3>Detalles</h3>
-
-<button (click)="borrarAccion()" >Borrar</button>
-<button (click)="obtenerTodosAWporId()" >Obtener Accion por ID</button>
-
-<h3>Lista</h3>
-<li *ngFor="let accion of AccionesWeb index as i; first as isFirst">
-  {{i}}- {{accion.Id}}  -  {{accion.Tipo.Nombre}} <span *ngIf="isFirst">(Primer registro)</span>
-</li>
+<!-- MODALES -->
+<ng-template #modalDetail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Accion Web: {{ accionWeb?.Tipo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ accionWeb?.Usuario }}</p>
+    </div>
+  </div>
+</ng-template>
 
