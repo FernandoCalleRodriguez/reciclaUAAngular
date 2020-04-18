@@ -95,7 +95,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary"
-              (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+              (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)" [disabled]="form.formulario.invalid">
         {{ edit ? 'Modificar' : 'Añadir' }}
       </button>
     </div>

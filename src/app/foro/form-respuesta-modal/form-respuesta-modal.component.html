@@ -2,13 +2,13 @@
   <div class="col">
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="duda">Duda</label>
+        <label for="duda">Duda:</label>
         <select id="duda" formControlName="duda" class="custom-select">
           <option *ngIf="duda" value="{{duda.Id}}">{{ duda.Titulo }}</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="cuerpo">Cuerpo</label>
+        <label for="cuerpo">Cuerpo:</label>
         <textarea
           type="text"
           id="cuerpo"

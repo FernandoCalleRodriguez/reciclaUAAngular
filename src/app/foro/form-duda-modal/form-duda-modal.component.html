@@ -2,7 +2,7 @@
   <div class="col">
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="titulo">Título</label>
+        <label for="titulo">Título:</label>
         <input
           type="text"
           id="titulo"
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="cuerpo">Cuerpo</label>
+        <label for="cuerpo">Cuerpo:</label>
         <textarea
           type="text"
           id="cuerpo"
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="tema">Tema</label>
+        <label for="tema">Tema:</label>
         <select id="tema" formControlName="tema" class="custom-select">
           <option *ngFor="let tema of temas" value="{{tema.Id}}">{{ tema.Tema }}</option>
         </select>
