@@ -31,6 +31,9 @@ import {ValidacionService} from './shared/services/validacion.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormDudaModalComponent } from './foro/form-duda-modal/form-duda-modal.component';
 import { FormRespuestaModalComponent } from './foro/form-respuesta-modal/form-respuesta-modal.component';
+import { TablaMaterialesComponent } from './validacion/tabla-materiales/tabla-materiales.component';
+import { TablaItemsComponent } from './validacion/tabla-items/tabla-items.component';
+import { TablaPuntosComponent } from './validacion/tabla-puntos/tabla-puntos.component';
 
 
 @NgModule({
@@ -53,7 +56,10 @@ import { FormRespuestaModalComponent } from './foro/form-respuesta-modal/form-re
     FormRespuestaComponent,
     ListaValidacionesComponent,
     FormDudaModalComponent,
-    FormRespuestaModalComponent
+    FormRespuestaModalComponent,
+    TablaMaterialesComponent,
+    TablaItemsComponent,
+    TablaPuntosComponent
   ],
   imports: [
     BrowserModule,
