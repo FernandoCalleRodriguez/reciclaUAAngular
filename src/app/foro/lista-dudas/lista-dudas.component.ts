@@ -9,6 +9,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
+import {Tema} from '../../shared/models/tema';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -37,7 +38,11 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   }
 
   public getTema(id: number): string {
-    return this.temaService.getTemaById(id).Tema;
+    if (id) {
+      return this.temaService.getTemaById(id).Tema;
+    } else {
+      return 'Null';
+    }
   }
 
   public showDuda(duda: Duda, detail) {

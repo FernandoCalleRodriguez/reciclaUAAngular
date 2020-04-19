@@ -23,7 +23,7 @@
           <th scope="col" class="d-none d-md-table-cell">Votos</th>
           <th scope="col" class="d-none d-md-table-cell">Correcta</th>
           <th scope="col" class="d-none d-md-table-cell">Usuario</th>
-          <th scope="col" class="d-none d-md-table-cell">Fecha</th>
+          <!--th scope="col" class="d-none d-md-table-cell">Fecha</th-->
           <th scope="col">Acciones</th>
         </tr>
         </thead>
@@ -35,7 +35,7 @@
           <td class="d-none d-md-table-cell">{{ respuesta.EsCorrecta }}</td>
           <td
             class="d-none d-md-table-cell">{{ respuesta.UsuarioRespuesta ? respuesta.UsuarioRespuesta.Email : 'Null' }}</td>
-          <td class="d-none d-md-table-cell">{{ respuesta.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td>
+          <!--td class="d-none d-md-table-cell">{{ respuesta.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td-->
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-info" (click)="showRespuesta(respuesta, modalDetail)"><i class="fa fa-eye"></i></button>
@@ -61,7 +61,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body text-wrap text-break">
       <p><i>{{ duda?.Cuerpo }}</i></p>
     </div>
   </div>
@@ -69,7 +69,7 @@
     <div class="modal-header">
       <h6 class="modal-title">RE: {{ duda?.Titulo }}</h6>
     </div>
-    <div class="modal-body">
+    <div class="modal-body text-wrap text-break">
       <p>{{ respuesta?.Cuerpo }}</p>
     </div>
     <div class="modal-footer text-muted text-right">
