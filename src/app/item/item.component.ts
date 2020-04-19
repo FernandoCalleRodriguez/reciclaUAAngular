@@ -11,7 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Nivel } from '../shared/models/Nivel';
 import { stringify } from 'querystring';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-item',
@@ -27,8 +29,11 @@ export class ItemComponent implements OnInit {
   imageToDisplay = null;
   @ViewChild('closebutton') closebutton;
   @ViewChild('showModel') showModel;
+  dtTrigger: Subject<any> = new Subject<any>();
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService, private nivelService: NivelService, private toaster: ToastrService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService, private nivelService: NivelService, private toaster: ToastrService) { }
   isEdit = false;
   selectedImage: File = null;
   dtOptions: DataTables.Settings = {};
@@ -37,8 +42,10 @@ export class ItemComponent implements OnInit {
 
     this.itemService.getItems().subscribe(res => {
       this.items = res;
-
-    })
+      this.dtTrigger.next();
+    }, error => {
+      this.router.navigate(['/']);
+    });
 
     this.nivelService.getNivel().subscribe(res => {
       this.nivels = res;
@@ -49,17 +56,27 @@ export class ItemComponent implements OnInit {
     })
     this.dtOptions = {
       "language": {
-        "lengthMenu": "Mostrar _MENU_ records per page",
-        "zeroRecords": "No hay datos",
-        "info": "Mostrar  _PAGE_ pagina de _PAGES_ paginas",
-        "infoEmpty": "No hay datos",
-        "infoFiltered": "",
-        "search": "buscar",
-        paginate: {
-          previous: "Previoso",
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente"
+        "decimal": "",
+        "emptyTable": "No hay nivel disponibles en la tabla",
+        "info": "Mostrando _START_ hasta _END_ de _TOTAL_ niveles en total",
+        "infoEmpty": "Mostrando 0 hasta 0 de 0 niveles",
+        "infoFiltered": "(filtrado de _MAX_ niveles en total)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostar _MENU_ niveles por página",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar: ",
+        "zeroRecords": "No se encontraron niveles",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Próximo",
+          "previous": "Anterior"
+        },
+        "aria": {
+          "sortAscending": ": activar ordenamiento de columnas ascendentemente",
+          "sortDescending": ": activar ordenamiento de columnas descendentemente"
         }
       }
     }
@@ -79,21 +96,25 @@ export class ItemComponent implements OnInit {
     this.isEdit = false;
     this.item = new Item();
   }
-  delete(id) {
+  delete(item: Item) {
     var tempItem: Item;
-    var getTempItem = this.itemService.getById(id).subscribe(res => { tempItem = res });
     Swal.fire({
-      title: 'Estas Seguro de borrar este item?',
+      title: '¿Estás seguro de que deseas borrar el item ' + item.Id + '?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si!'
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-        this.itemService.removeItem(id).subscribe(res => {
+        this.itemService.removeItem(item.Id).subscribe(res => {
+          const index = this.items.indexOf(item);
+          if (index > -1) {
+            this.items.splice(index, 1);
+          }
           this.toaster.error("item borrado")
-          this.itemService.RemoveImage(id, tempItem.Imagen).subscribe(res => console.log(res));
+          this.itemService.RemoveImage(item.Id, item.Imagen).subscribe(res => console.log(res));
           this.refresh();
         });
       }
@@ -115,15 +136,18 @@ export class ItemComponent implements OnInit {
       this.item.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
       this.item.Material_oid = parseInt(form.value.Material);
       var nivelId = parseInt(this.route.snapshot.queryParamMap.get("Niveles_oid"));
-       if (nivelId != null)
+      if (nivelId != null)
         this.item.Niveles_oid = nivelId;
 
-      console.log(this.item);
+      if (!this.items) {
+        this.items = [];
+      }
+      this.items.push(this.item);
+
       this.itemService.setItem(this.item).subscribe(res => {
         if (res != null) {
           if (this.selectedImage != null) {
             this.uploadImage(res.Id)
-
           }
           this.closebutton.nativeElement.click();
           this.refresh();
@@ -138,17 +162,27 @@ export class ItemComponent implements OnInit {
       }
       this.itemService.updateItem(this.item).subscribe(res => {
         if (res != null) {
-          this.uploadImage(res.Id)
-
+          if (this.selectedImage != null) {
+            this.uploadImage(res.Id)
+          }
           this.closebutton.nativeElement.click();
           this.refresh();
           this.toaster.info("item modificado");
         }
       });
+
+
+
     }
+    form.reset();
   }
   refresh() {
     this.itemService.getItems().subscribe(res => this.items = res)
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+
+      this.dtTrigger.next();
+    });
   }
   showImage(event) {
     this.selectedImage = <File>event.target.files[0];
@@ -158,7 +192,7 @@ export class ItemComponent implements OnInit {
     console.log("img name:", this.selectedImage.name)
     fd.append('img', this.selectedImage, this.selectedImage.name);
     this.itemService.uploadImage(fd, id).subscribe(res => {
-      console.log(res)
+      this.refresh();
     })
   }
   getEstado(id) {
@@ -182,8 +216,5 @@ export class ItemComponent implements OnInit {
       this.imageToDisplay = "data:image/bmp;base64," + res
     });
   }
-  getNivel(id) {
-   
-    return ""
-  }
+
 }

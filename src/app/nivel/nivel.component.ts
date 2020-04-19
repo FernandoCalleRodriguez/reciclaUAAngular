@@ -1,51 +1,69 @@
 import Swal from 'sweetalert2';
 import { Nivel } from '../shared/models/Nivel';
 import { NivelService } from '../shared/services/nivel.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-nivel',
   templateUrl: './nivel.component.html',
   styleUrls: ['./nivel.component.css']
 })
-export class NivelComponent implements OnInit {
+export class NivelComponent implements OnInit, OnDestroy {
   niveles: Nivel[];
   nivel: Nivel;
   @ViewChild('closebutton') closebutton;
   @ViewChild('showModel') showModel;
-  constructor(private nivelService: NivelService, private toaster: ToastrService) { }
+  constructor(private router: Router, private nivelService: NivelService, private toaster: ToastrService) { }
   isEdit = false;
   modelTitle = "";
   dtOptions: DataTables.Settings = {};
-
+  dtTrigger: Subject<any> = new Subject<any>();
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   ngOnInit(): void {
     this.nivelService.getNivel().subscribe(res => {
       this.niveles = res;
-      console.log(this.niveles)
+      this.dtTrigger.next();
+    }, error => {
+      this.router.navigate(['/']);
+    });
 
-    })
+
     this.nivel = new Nivel();
     this.dtOptions = {
       "language": {
-        "lengthMenu": "Mostrar _MENU_ records per page",
-        "zeroRecords": "No hay datos",
-        "info": "Mostrar  _PAGE_ pagina de _PAGES_ paginas",
-        "infoEmpty": "No hay datos",
-        "infoFiltered": "",
-        "search": "buscar",
-        paginate: {
-          previous: "Previoso",
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente"
+        "decimal": "",
+        "emptyTable": "No hay nivel disponibles en la tabla",
+        "info": "Mostrando _START_ hasta _END_ de _TOTAL_ niveles en total",
+        "infoEmpty": "Mostrando 0 hasta 0 de 0 niveles",
+        "infoFiltered": "(filtrado de _MAX_ niveles en total)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostar _MENU_ niveles por página",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar: ",
+        "zeroRecords": "No se encontraron niveles",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Próximo",
+          "previous": "Anterior"
+        },
+        "aria": {
+          "sortAscending": ": activar ordenamiento de columnas ascendentemente",
+          "sortDescending": ": activar ordenamiento de columnas descendentemente"
         }
       }
-    };
-
+    }
   }
+
   getNivelById(id) {
-    
+
     this.nivelService.getNivelById(id).subscribe(res => {
       this.nivel = res
     });
@@ -60,18 +78,24 @@ export class NivelComponent implements OnInit {
     this.nivel = new Nivel();
   }
 
-  delete(id) {
+  delete(nivel: Nivel) {
+
     Swal.fire({
-      title: 'Estas Seguro de borrar este nivel?',
+      title: '¿Estás seguro de que deseas borrar el nivel ' + nivel.Id + '?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si'
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-        this.nivelService.removeNivel(id).subscribe(res => {
-          this.toaster.error("nivel borrado")
+        this.nivelService.removeNivel(nivel.Id).subscribe(res => {
+          const index = this.niveles.indexOf(nivel);
+          if (index > -1) {
+            this.niveles.splice(index, 1);
+          }
+          this.toaster.error('Nivel ' + nivel.Id + ' borrado');
           this.refresh();
         });
       }
@@ -82,11 +106,16 @@ export class NivelComponent implements OnInit {
   }
   submit(form: NgForm) {
     if (!this.isEdit) {
+      if (!this.niveles) {
+        this.niveles = [];
+      }
       this.nivel.Numero = form.value.Numero;
       this.nivel.Puntuacion = form.value.Puntuacion;
-
+      this.niveles.push(this.nivel);
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
+
+
           console.log("add", res)
           this.closebutton.nativeElement.click();
           this.refresh();
@@ -104,12 +133,21 @@ export class NivelComponent implements OnInit {
         }
       });
     }
+    form.reset();
   }
   refresh() {
     this.nivelService.getNivel().subscribe(res => this.niveles = res)
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+
+      this.dtTrigger.next();
+    });
+
   }
-  show(id) {
-    console.log(id);
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
+
 
 }
