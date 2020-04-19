@@ -45,6 +45,18 @@ export class ValidacionService {
     return this.http.get<Item[]>(this.SERVER + 'Item/BuscarItemsPorValidar', {headers: this.headers});
   }
 
+  public countAllPuntosSinValidar(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'PuntoReciclaje/BuscarPuntosPorValidarCount', {headers: this.headers});
+  }
+
+  public countAllMaterialesSinValidar(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'Material/BuscarMaterialesPorValidarCount', {headers: this.headers});
+  }
+
+  public countAllItemsSinValidar(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'Item/BuscarItemsPorValidarCount', {headers: this.headers});
+  }
+
   public validarPunto(punto: Punto): Observable<void> {
     return this.http.post<void>(this.SERVER + 'PuntoReciclaje/ValidarPunto?p_oid=' + punto.Id, null, {headers: this.headers});
   }
