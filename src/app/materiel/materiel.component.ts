@@ -41,7 +41,13 @@ export class MaterielComponent implements OnInit {
         "info": "Mostrar  _PAGE_ pagina de _PAGES_ paginas",
         "infoEmpty": "No hay datos",
         "infoFiltered": "",
-        "search": "buscar"
+        "search": "buscar",
+        paginate: {
+          previous: "Previoso",
+          first: "Primero",
+          last: "Ultimo",
+          next: "Siguiente"
+        }
       }
     }
     this.material = new Material();
@@ -66,7 +72,7 @@ export class MaterielComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Si!'
     }).then((result) => {
       if (result.value) {
         this.materialService.removeMaterial(id).subscribe(res => {
@@ -80,7 +86,7 @@ export class MaterielComponent implements OnInit {
     if (!this.isEdit) {
       this.material.Nombre = form.value.Nombre;
       this.material.Contenedor = form.value.Contenedor;
-      this.material.EsValido = form.value.EsValido;
+      this.material.EsValido = 2;
       this.material.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
 
       this.materialService.setMaterial(this.material).subscribe(res => {

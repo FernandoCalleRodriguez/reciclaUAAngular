@@ -19,7 +19,7 @@ export class NivelComponent implements OnInit {
   modelTitle = "";
   dtOptions: DataTables.Settings = {};
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.nivelService.getNivel().subscribe(res => {
       this.niveles = res;
       console.log(this.niveles)
@@ -33,13 +33,19 @@ export class NivelComponent implements OnInit {
         "info": "Mostrar  _PAGE_ pagina de _PAGES_ paginas",
         "infoEmpty": "No hay datos",
         "infoFiltered": "",
-        "search":"buscar"
-    }
+        "search": "buscar",
+        paginate: {
+          previous: "Previoso",
+          first: "Primero",
+          last: "Ultimo",
+          next: "Siguiente"
+        }
+      }
     };
- 
+
   }
   getNivelById(id) {
-
+    
     this.nivelService.getNivelById(id).subscribe(res => {
       this.nivel = res
     });
@@ -49,7 +55,7 @@ export class NivelComponent implements OnInit {
     console.log(this.modelTitle)
   }
   add() {
- 
+
     this.isEdit = false;
     this.nivel = new Nivel();
   }
@@ -61,7 +67,7 @@ export class NivelComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Si'
     }).then((result) => {
       if (result.value) {
         this.nivelService.removeNivel(id).subscribe(res => {
@@ -81,7 +87,7 @@ export class NivelComponent implements OnInit {
 
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
-          console.log("add",res)
+          console.log("add", res)
           this.closebutton.nativeElement.click();
           this.refresh();
           this.toaster.success("nivel creado")

@@ -17,7 +17,7 @@ export class ItemService {
     return this.http.get<Item[]>(this.SERVER + "BuscarTodos")
   }
   public setItem(item: Item) :Observable<Item>{
-    console.log(JSON.stringify(item))
+    console.log("lol",JSON.stringify(item))
     return this.http.post<Item>(this.SERVER + "Crear", item)
   }
 
@@ -39,7 +39,10 @@ export class ItemService {
     return this.http.post(this.SERVER +"UploadImage?p_oid="+id,image)
   }
 
-  public GetImage(imageName){
-    return this.http.get(this.SERVER +"GetImage?imageName="+imageName)
+  public GetImage(id,imageName){
+    return this.http.get(this.SERVER +"GetImage?id="+id+"&imageName="+imageName)
+  }
+  public RemoveImage(id,imageName){
+    return this.http.post(this.SERVER+"RemoveImage?id="+id+"&imageName="+imageName,null)
   }
 }

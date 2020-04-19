@@ -11,40 +11,44 @@
     </div>
   </div>
   <hr>
-  <div class="">
-    <table datatable [dtOptions]="dtOptions"  class="table table-striped text-center" *ngIf="items !=null">
-      <thead>
-        <tr>
-          <td>id</td>
-          <td>nombre</td>
-          <td>descripcion</td>
-          <td>imagen</td>
-          <td>Estado</td>
-          <td>Material</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of items">
-          <td>{{item.Id}}</td>
-          <td>{{item.Nombre}}</td>
-          <td>{{item.Descripcion}}</td>
-          <td><a (click)="getImage(item.Imagen)" *ngIf="item.Imagen!=''" data-toggle="modal"
-              data-target="#imageModel">Mostrar imagen <i class="fa fa-eye"></i></a></td>
-          <td>{{getEstado(item.EsValido)}}</td>
-          <td>{{item.MaterialItem.Nombre}}</td>
-
-          <td>
-            <button class="btn btn-outline-success" (click)="getItemById(item.Id)">
-              <i class="fa fa-edit"></i>
-            </button>
-            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
-              <i class="fa fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-12">
+      <table datatable [dtOptions]="dtOptions"  class="table table-striped text-center" *ngIf="items !=null">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>nombre</td>
+            <td>descripcion</td>
+            <td>imagen</td>
+            <td>Estado</td>
+            <td>Material</td>
+            <td>Nivel</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{item.Id}}</td>
+            <td>{{item.Nombre}}</td>
+            <td>{{item.Descripcion}}</td>
+            <td><a (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''" data-toggle="modal"
+                data-target="#imageModel">Mostrar imagen <i class="fa fa-eye"></i></a></td>
+            <td>{{getEstado(item.EsValido)}}</td>
+            <td>{{item.MaterialItem.Nombre}}</td>
+            <td> {{getNivel(item.Id)}}</td>
+            <td>
+              <button class="btn btn-outline-success" (click)="getItemById(item.Id)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -90,21 +94,9 @@
               <!-- <img *ngIf="item.Imagen != '' " src="{{item.Imagen}}" alt="lol"> -->
             </div>
           </div>
+      
           <div class="form-group row">
-            <label for="EsValido" class="col-sm-2 col-form-label">Estado</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="EsValido" required name="EsValido" #Estado="ngModel"
-                [(ngModel)]="item.EsValido">
-                <option value="">Elije Estado</option>
-                <option *ngFor="let estado of estados" [value]="estado.id">{{estado.value}}</option>
-              </select>
-              <div *ngIf="Estado.touched && !Estado.valid">
-                <small class="text-danger">Estado es obligatorio</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="EsValido" class="col-sm-2 col-form-label">Material</label>
+            <label for="Material" class="col-sm-2 col-form-label">Material</label>
             <div class="col-sm-10">
               <select class="form-control" id="Material" required name="Material" #Material="ngModel"
                 [(ngModel)]="item.Material_oid">
@@ -116,8 +108,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="EsValido" class="col-sm-2 col-form-label">Nivel</label>
+          <!-- <div class="form-group row" *ngIf="isEdit==false">
+            <label for="Nivel" class="col-sm-2 col-form-label">Nivel</label>
             <div class="col-sm-10">
               <select class="form-control" id="Nivel" required name="Nivel" #Nivel="ngModel"
                 [(ngModel)]="item.Niveles_oid">
@@ -128,13 +120,12 @@
                 <small class="text-danger">Nivel es obligatorio</small>
               </div>
             </div>
-          </div>
+          </div> -->
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Save
-          changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>

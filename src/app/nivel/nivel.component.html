@@ -11,7 +11,7 @@
     </div>
   </div>
   <hr>
-  <div class="">
+  <div class="row">
     <div class="col-md-12">
       <table datatable [dtOptions]="dtOptions"  class="table table-striped text-center" *ngIf="niveles !=null">
         <thead>
@@ -19,6 +19,7 @@
             <td>id</td>
             <td>Numero</td>
             <td>Puntuacion</td>
+            <td>Asignar Items</td>
             <td></td>
           </tr>
         </thead>
@@ -27,11 +28,11 @@
             <td>{{item.Id}}</td>
             <td>{{item.Numero}}</td>
             <td>{{item.Puntuacion}}</td>       
+            <td><a [routerLink]="['/juego/item']"
+            routerLinkActive="router-link-active" [queryParams]={Niveles_oid:item.Id}>go </a></td>       
             <td>
-              <button class="btn btn-outline-dark" (click)="show(item.Id)">
-                <i class="fa fa-eye"></i>
-              </button>
-              <span>&nbsp;</span>
+              
+              
               <button class="btn btn-outline-success" (click)="getNivelById(item.Id)">
                 <i class="fa fa-edit"></i>
               </button>

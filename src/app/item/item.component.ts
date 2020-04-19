@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { Nivel } from '../shared/models/Nivel';
 import { stringify } from 'querystring';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-item',
@@ -18,15 +19,7 @@ import { stringify } from 'querystring';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  estados = [{
-    id: 1, value: "verificado"
-  },
-  {
-    id: 2, value: "enProceso"
-  },
-  {
-    id: 3, value: "descartado"
-  }];
+
   items: Item[];
   item: Item;
   nivels: Nivel[];
@@ -35,12 +28,13 @@ export class ItemComponent implements OnInit {
   @ViewChild('closebutton') closebutton;
   @ViewChild('showModel') showModel;
 
-  constructor(private itemService: ItemService, private materialService: MaterialService, private nivelService: NivelService, private toaster: ToastrService) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService, private nivelService: NivelService, private toaster: ToastrService) { }
   isEdit = false;
   selectedImage: File = null;
   dtOptions: DataTables.Settings = {};
 
   ngOnInit(): void {
+
     this.itemService.getItems().subscribe(res => {
       this.items = res;
 
@@ -60,7 +54,13 @@ export class ItemComponent implements OnInit {
         "info": "Mostrar  _PAGE_ pagina de _PAGES_ paginas",
         "infoEmpty": "No hay datos",
         "infoFiltered": "",
-        "search": "buscar"
+        "search": "buscar",
+        paginate: {
+          previous: "Previoso",
+          first: "Primero",
+          last: "Ultimo",
+          next: "Siguiente"
+        }
       }
     }
     this.item = new Item();
@@ -80,17 +80,20 @@ export class ItemComponent implements OnInit {
     this.item = new Item();
   }
   delete(id) {
+    var tempItem: Item;
+    var getTempItem = this.itemService.getById(id).subscribe(res => { tempItem = res });
     Swal.fire({
       title: 'Estas Seguro de borrar este item?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Si!'
     }).then((result) => {
       if (result.value) {
         this.itemService.removeItem(id).subscribe(res => {
           this.toaster.error("item borrado")
+          this.itemService.RemoveImage(id, tempItem.Imagen).subscribe(res => console.log(res));
           this.refresh();
         });
       }
@@ -98,6 +101,7 @@ export class ItemComponent implements OnInit {
   }
   submit(form: NgForm) {
     if (!this.isEdit) {
+
       this.item.Nombre = form.value.Nombre;
       this.item.Descripcion = form.value.Descripcion;
       if (this.selectedImage != null) {
@@ -106,17 +110,20 @@ export class ItemComponent implements OnInit {
       else {
         this.item.Imagen = ""
       }
-      this.item.EsValido = parseInt(form.value.EsValido);
+      this.item.EsValido = 2;
 
       this.item.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
       this.item.Material_oid = parseInt(form.value.Material);
-      this.item.Niveles_oid = parseInt(form.value.Nivel);
+      var nivelId = parseInt(this.route.snapshot.queryParamMap.get("Niveles_oid"));
+       if (nivelId != null)
+        this.item.Niveles_oid = nivelId;
 
-
+      console.log(this.item);
       this.itemService.setItem(this.item).subscribe(res => {
         if (res != null) {
           if (this.selectedImage != null) {
             this.uploadImage(res.Id)
+
           }
           this.closebutton.nativeElement.click();
           this.refresh();
@@ -126,8 +133,13 @@ export class ItemComponent implements OnInit {
     }
     else {
       console.log("n", this.item)
+      if (this.selectedImage != null) {
+        this.item.Imagen = this.selectedImage.name;
+      }
       this.itemService.updateItem(this.item).subscribe(res => {
         if (res != null) {
+          this.uploadImage(res.Id)
+
           this.closebutton.nativeElement.click();
           this.refresh();
           this.toaster.info("item modificado");
@@ -143,6 +155,7 @@ export class ItemComponent implements OnInit {
   }
   uploadImage(id) {
     const fd = new FormData();
+    console.log("img name:", this.selectedImage.name)
     fd.append('img', this.selectedImage, this.selectedImage.name);
     this.itemService.uploadImage(fd, id).subscribe(res => {
       console.log(res)
@@ -164,9 +177,13 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  getImage(imageName) {
-    this.itemService.GetImage(imageName).subscribe(res => {
+  getImage(id, imageName) {
+    this.itemService.GetImage(id, imageName).subscribe(res => {
       this.imageToDisplay = "data:image/bmp;base64," + res
     });
+  }
+  getNivel(id) {
+   
+    return ""
   }
 }
