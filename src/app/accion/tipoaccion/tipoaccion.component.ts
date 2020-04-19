@@ -36,25 +36,6 @@ export class TipoaccionComponent implements OnInit, OnDestroy {
     });
   }
 
-  crearTipoAccion() {
-    const tipoaccionPrueba: TipoAccion = {Puntuacion: 300 , Nombre: 'Tipo 14'};
-    this.tipoaccionservice.crear(tipoaccionPrueba).subscribe(accion => {
-      console.log('Tipo de accion creada:' + accion);
-    });
-  }
-
-  modificarTipoAccion() {
-    this.tipoaccionservice.obtenerTipoAccionPorId(655361).subscribe(accion => {
-      this.tipoAccion = accion;
-      console.log('Tipo de accion:' + accion);
-    });
-
-    const tipoaccionPrueba: TipoAccion = {Id: this.tipoAccion.Id , Puntuacion: 1000 , Nombre: 'Tipo 14 Modificada'};
-    this.tipoaccionservice.modificar(tipoaccionPrueba).subscribe(res => {
-      console.log(res);
-    });
-  }
-
   public borrarTipoAccion(tipoAccion: TipoAccion): void {
     Swal.fire({
       title: '¿Estás seguro de que deseas borrar el tipo de acción ' + tipoAccion.Id + '?',

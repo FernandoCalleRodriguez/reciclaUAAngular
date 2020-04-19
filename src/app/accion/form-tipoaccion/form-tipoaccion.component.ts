@@ -34,9 +34,6 @@ export class FormTipoaccionComponent implements OnInit {
   onSubmit() {
     this.tipoAccion.Nombre = this.nombre().value;
     this.tipoAccion.Puntuacion = this.puntuacion().value;
-
-    console.log(this.tipoAccion);
-
     this.tipoaccionservice.crear(this.tipoAccion).subscribe(id => {
       this.router.navigate(['/tipoaccion']);
     });

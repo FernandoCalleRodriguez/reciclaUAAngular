@@ -51,7 +51,7 @@ export class ModalNotaComponent implements OnInit {
       this.nota.Titulo = this.titulo().value;
       this.nota.Cuerpo = this.cuerpo().value;
       this.nota.Fecha = new Date();
-      this.nota.UsuarioAdministrador_oid = 32768; //Se tiene que conseguir el oid del usuario admin
+      this.nota.UsuarioAdministrador_oid = this.usuarioService.obtenerUsuarioActual();
 
       if (this.edit) {
         return this.notaService.modificar(this.nota);

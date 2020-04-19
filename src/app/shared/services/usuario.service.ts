@@ -10,6 +10,7 @@ export class UsuarioService {
   private currentUserSubject: BehaviorSubject<string>;
   SERVER = 'http://localhost:16209/api/';
   private token: string;
+  private user: Usuario;
   private email: string;
   private id: number;
 
@@ -137,7 +138,6 @@ export class UsuarioService {
       this.token = localStorage.getItem('ACESS_TOKEN');
     }
     return this.token;
-
   }
 
 
@@ -158,6 +158,13 @@ export class UsuarioService {
       headers: new HttpHeaders(header),
     };
     return requestOptions;
+  }
+
+  public obtenerUsuarioActual() {
+    if (!this.token) {
+      this.user = JSON.parse(localStorage.getItem('DATA_USER'));
+    }
+    return this.user.Id;
   }
 
 
