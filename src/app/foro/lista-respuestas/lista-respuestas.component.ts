@@ -98,13 +98,14 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   }
 
   crearSubmit(formRespuesta: FormRespuestaModalComponent, modal: NgbModalRef) {
-    formRespuesta.onSubmit().subscribe(d => {
+    formRespuesta.onSubmit().subscribe(r => {
       if (!this.respuestas) {
         this.respuestas = [];
       }
-      this.respuestas.push(d);
+      this.respuestas.push(r);
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Respuesta ' + r.Id + ' creada');
     });
   }
 
@@ -118,14 +119,15 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   }
 
   editarSubmit(formRespuesta: FormRespuestaModalComponent, modal: NgbModalRef) {
-    formRespuesta.onSubmit().subscribe(d => {
+    formRespuesta.onSubmit().subscribe(r => {
       this.respuestas.forEach((element, i, array) => {
-        if (element.Id === d.Id) {
-          array[i] = d;
+        if (element.Id === r.Id) {
+          array[i] = r;
         }
       });
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Respuesta ' + r.Id + ' modificada');
     });
   }
 }

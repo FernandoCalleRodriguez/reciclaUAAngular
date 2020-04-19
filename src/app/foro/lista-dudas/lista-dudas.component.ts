@@ -100,6 +100,7 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       this.dudas.push(d);
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Duda ' + d.Id + ' creada');
     });
   }
 
@@ -118,6 +119,7 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       });
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Duda ' + d.Id + ' modificada');
     });
   }
 }
