@@ -3,6 +3,8 @@ import {Punto} from '../../shared/models/punto';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {ValidacionService} from '../../shared/services/validacion.service';
+import Swal from "sweetalert2";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tabla-puntos',
@@ -15,7 +17,7 @@ export class TablaPuntosComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
-  constructor(protected validacionService: ValidacionService) {
+  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService) {
     validacionService.getAllPuntosSinValidar().subscribe(m => {
       this.puntos = m;
       this.dtTrigger.next();
@@ -30,15 +32,29 @@ export class TablaPuntosComponent implements OnInit, OnDestroy {
   }
 
 
-  validarPunto(material: Punto) {
-    this.validacionService.validarPunto(material).subscribe(() => {
-      this.deleteFromArray(this.puntos, material);
+  validarPunto(punto: Punto) {
+    this.validacionService.validarPunto(punto).subscribe(() => {
+      this.deleteFromArray(this.puntos, punto);
+      this.toaster.success('Punto ' + punto.Id + ' validado');
     });
   }
 
-  descartarPunto(material: Punto) {
-    this.validacionService.descartarPunto(material).subscribe(() => {
-      this.deleteFromArray(this.puntos, material);
+  descartarPunto(punto: Punto) {
+    Swal.fire({
+      title: '¿Estás seguro de que deseas descartar el punto ' + punto.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.validacionService.descartarPunto(punto).subscribe(() => {
+          this.deleteFromArray(this.puntos, punto);
+          this.toaster.error('Punto ' + punto.Id + ' descartado');
+        });
+      }
     });
   }
 

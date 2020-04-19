@@ -5,6 +5,8 @@ import {DataTableDirective} from 'angular-datatables';
 import {ValidacionService} from '../../shared/services/validacion.service';
 import {TipoContenedorService} from '../../shared/services/tipo-contenedor.service';
 import {TipoContenedor} from '../../shared/models/contenedor';
+import Swal from "sweetalert2";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tabla-items',
@@ -17,7 +19,7 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
-  constructor(protected validacionService: ValidacionService) {
+  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService) {
     validacionService.getAllItemsSinValidar().subscribe(m => {
       this.items = m;
       this.dtTrigger.next();
@@ -32,15 +34,29 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   }
 
 
-  validarItem(material: Item) {
-    this.validacionService.validarItem(material).subscribe(() => {
-      this.deleteFromArray(this.items, material);
+  validarItem(item: Item) {
+    this.validacionService.validarItem(item).subscribe(() => {
+      this.deleteFromArray(this.items, item);
+      this.toaster.success('Item ' + item.Id + ' validado');
     });
   }
 
-  descartarItem(material: Item) {
-    this.validacionService.descartarItem(material).subscribe(() => {
-      this.deleteFromArray(this.items, material);
+  descartarItem(item: Item) {
+    Swal.fire({
+      title: '¿Estás seguro de que deseas descartar el item ' + item.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.validacionService.descartarItem(item).subscribe(() => {
+          this.deleteFromArray(this.items, item);
+          this.toaster.error('Item ' + item.Id + ' descartado');
+        });
+      }
     });
   }
 
