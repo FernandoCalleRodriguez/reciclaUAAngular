@@ -8,4 +8,6 @@ export class Punto {
   EsValido?: number; // Estado
   Contenedores?: Contenedor[];
   EstanciaPunto?: Estancia;
+  Usuario_oid?: number;
+  Estancia_oid?: string;
 }

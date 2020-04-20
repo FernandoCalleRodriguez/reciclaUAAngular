@@ -38,6 +38,17 @@ import {BnNgIdleService} from 'bn-ng-idle';
 import {FormUsuarioModalComponent} from './usuario/form-usuario-modal/form-usuario-modal.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RouterModule} from '@angular/router';
+import {PuntoService} from './shared/services/punto.service';
+import {EstanciaService} from './shared/services/estancia.service';
+import {PlantaService} from './shared/services/planta.service';
+import {EdificioService} from './shared/services/edificio.service';
+import {PlantaComponent} from './planta/planta.component';
+import {EstanciaComponent} from './estancia/estancia.component';
+import {EdificioComponent} from './edificio/edificio.component';
+import {PuntoComponent} from './punto/punto.component';
+
+import {ContenedorComponent} from './contenedor/contenedor.component';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +75,12 @@ import {RouterModule} from '@angular/router';
     VerificacionComponent,
     CambiarcontrasenaComponent,
     FormUsuarioModalComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    PlantaComponent,
+    EstanciaComponent,
+    EdificioComponent,
+    PuntoComponent,
+    ContenedorComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +101,12 @@ import {RouterModule} from '@angular/router';
     ValidacionService,
     UsuarioService,
     AutenticacionService,
-    BnNgIdleService
+    BnNgIdleService,
+    UsuarioService,
+    EdificioService,
+    PlantaService,
+    EstanciaService,
+    PuntoService,
   ],
   exports: [],
   bootstrap: [AppComponent]
