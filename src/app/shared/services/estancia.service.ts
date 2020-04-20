@@ -16,7 +16,8 @@ export class EstanciaService {
     return this.http.get<Estancia[]>(this.SERVER + "BuscarTodos")
   }
   public setEstancia(estancia: Estancia): Observable<Estancia> {
-    return this.http.post<Estancia>(this.SERVER + "Crear", JSON.stringify(estancia))
+    //console.log(JSON.stringify(estancia));
+    return this.http.post<Estancia>(this.SERVER + "Crear", estancia)
   }
 
   //public setEstancia(estancia: Estancia): Observable<Estancia> {

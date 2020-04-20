@@ -15,6 +15,11 @@ export class PuntoService {
     return this.http.get<Punto[]>(this.SERVER + "BuscarTodos")
   }
   public setPunto(punto: Punto): Observable<Punto> {
+
+    //punto.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
+    punto.Usuario_oid = -1;
+
+    console.log(localStorage.getItem("ID_USER"));
     return this.http.post<Punto>(this.SERVER + "Crear", punto);
   }
   public removePunto(id: number) {
@@ -26,10 +31,22 @@ export class PuntoService {
   public getPuntoById(id: number) {
     return this.http.get<Punto>(this.SERVER + id);
   }
-  public getPuntoByPlanta(idPlanta: number,idEdificio:number) {
-    return this.http.get<Punto[]>(this.SERVER +"BuscarPuntosPorPlanta?id_edificio="+idEdificio+"&num_planta="+idPlanta);
+
+  //NO SE HAN UTILIZADO AUN
+  public getPuntoByPlanta(idPlanta: number, idEdificio: number) {
+    return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorPlanta?id_edificio=" + idEdificio + "&num_planta=" + idPlanta);
+  }
+  public getPuntoByEstancia(idEstancia: number) {
+    return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorPlanta?id_estancia=" + idEstancia);
   }
 
-  
- 
+  public getPuntoByValidar() {
+    return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorValidar");
+  }
+  public getPuntoByValidados() {
+    return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosValidados");
+  }
+  public getPuntoByUsuario(ID_USER: number) {
+    return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorUsuario?id_usuario=" + ID_USER);
+  }
 }

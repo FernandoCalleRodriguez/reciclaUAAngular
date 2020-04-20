@@ -15,7 +15,7 @@ export class PlantaService {
     return this.http.get<Planta[]>(this.SERVER + "BuscarTodos")
   }
   public setPlanta(planta: Planta) :Observable<Planta>{
-    return this.http.post<Planta>(this.SERVER + "Crear", JSON.stringify(planta))
+    return this.http.post<Planta>(this.SERVER + "Crear", planta)
   }
 
   public getPlantaById(id:number):Observable<Planta>{
@@ -27,7 +27,7 @@ export class PlantaService {
   }
   
   public updatePlanta(planta: Planta) {
-    return this.http.put<Planta>(this.SERVER + "Modificar?idPlanta=" + planta.IdPlanta, planta);
+    return this.http.put<Planta>(this.SERVER + "Modificar?idPlanta=" + planta.Id, planta);
   }
 
 }

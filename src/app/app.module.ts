@@ -32,6 +32,10 @@ import { EstanciaComponent } from './estancia/estancia.component';
 import { EdificioComponent } from './edificio/edificio.component';
 import { PuntoComponent } from './punto/punto.component';
 
+import { DataTablesModule } from 'angular-datatables';
+import { ContenedorComponent } from './contenedor/contenedor.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +57,7 @@ import { PuntoComponent } from './punto/punto.component';
     EstanciaComponent,
     EdificioComponent,
     PuntoComponent,
+    ContenedorComponent,
     ],
   imports: [
     BrowserModule,
@@ -62,6 +67,9 @@ import { PuntoComponent } from './punto/punto.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
+    DataTablesModule,
+    
+    
   ],
   providers: [
     UsuarioService,

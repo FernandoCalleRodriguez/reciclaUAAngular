@@ -12,6 +12,7 @@ import {EdificioComponent} from "./edificio/edificio.component";
 import {PlantaComponent} from './planta/planta.component';
 import {EstanciaComponent} from './estancia/estancia.component';
 import {PuntoComponent} from './punto/punto.component';
+import { ContenedorComponent } from './contenedor/contenedor.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'estancia/listar', component: EstanciaComponent},
   {path: 'planta/listar', component: PlantaComponent},
   {path: 'punto/listar', component: PuntoComponent},
+  {path: 'contenedor/listar', component: ContenedorComponent},
 
   {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
 

@@ -2,24 +2,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-9">
             <h1>Lista de Plantas</h1>
         </div>
-        <div class="col-md-1">
-            <h1><button class="btn btn-outline-primary" (click)="add()" data-toggle="modal" #showModel
-                    data-target="#exampleModal"><i class="fa fa-plus"></i></button></h1>
+        <div class="col-md-3">
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nueva planta </button></h1>
         </div>
     </div>
 
-
-
-    <!-- tabla de plantas ([dtTrigger]="dtTrigger")  *ngIf="plantas !=null"-->
+    <!-- tabla de plantas ([dtTrigger]="dtTrigger")  -->
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable>
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" *ngIf="plantas !=null">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Número de Planta</th>
 
                         <th>Acciones</th>
@@ -31,12 +29,14 @@
                         <td>{{item.Planta}}</td>
 
                         <td>
-                            <button class="btn btn-outline-success" (click)="getPlantaById(item.Id)">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            <button class="btn btn-outline-danger" (click)="delete(item.Id)">
-                                <i class="fa fa-trash"></i>
-                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-success" (click)="getPlantaById(item.Id)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -45,45 +45,68 @@
     </div>
 </div>
 
-    <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Agregar Planta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Planta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="col-1">
+            </div>
+
+            <div class="col-10">
                 <div class="modal-body">
                     <form #form="ngForm">
-                        <div class="form-group row">
-                            <label for="IdPlanta" class="col-sm-2 col-form-label">IdPlanta</label>
-                            <div class="col-sm-10">
-                                <input type="text" ngModel required class="form-control" [(ngModel)]="planta.Id"
-                                    id="IdPlanta" name="IdPlanta" #IdPlanta>
-                                <div *ngIf="IdPlanta.touched && !IdPlanta.valid">
-                                    <small class="text-danger">IdPlanta es obligatorio</small>
-                                </div>
+
+                        <div class="form-group">
+
+                            <div class="row">
+                                <label for="Planta" class="col-form-label">Número de Planta:</label>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="NumeroPlanta" class="col-sm-2 col-form-label">Número de Planta</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="NumeroPlanta" name="NumeroPlanta"
-                                    #NumeroPlanta [(ngModel)]="planta.Planta" ngModel required>
-                                <div *ngIf="NumeroPlanta.touched && !NumeroPlanta.valid">
+
+                            <div class="row">
+                                <input type="text" class="form-control" id="Planta" name="Planta" #Planta
+                                    [(ngModel)]="planta.Planta" ngModel required>
+                                <div *ngIf="Planta.touched && !Planta.valid">
                                     <small class="text-danger">Número de Planta es obligatorio</small>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="Edificio" class="col-form-label">Edificio:</label>
+                            </div>
+                            <div class="row">
+
+                                <select class="form-control" id="Edificio" required name="Edificio" #Edificio="ngModel"
+                                    [(ngModel)]="planta.Edificio_oid">
+                                    <option value="">Elije una Edificio</option>
+                                    <option *ngFor="let item of edificio" [value]="item.Id">{{item.Nombre}}</option>
+                                </select>
+
+                                <div *ngIf="Edificio.touched && !Edificio.valid">
+                                    <small class="text-danger">Edificio es obligatorio</small>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="submit(form)"
-                        [disabled]="!form.valid">Guardar
-                        Cambios</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
+            </div>
+
+            <div class="col-1">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
+                    Planta
+                </button>
             </div>
         </div>
     </div>
+</div>
