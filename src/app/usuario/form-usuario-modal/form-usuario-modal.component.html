@@ -25,8 +25,8 @@
           id="pwd"
           formControlName="pwd"
           placeholder="Enter password">
-        <span class="help-block" style="color: red;"
-              *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
+        <div class="invalid-feedback"
+              *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </div>
 
       </div>
       <!-- NOMBRE DEL USUARIO -->

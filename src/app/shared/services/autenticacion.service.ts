@@ -79,8 +79,7 @@ export class AutenticacionService {
     } else {
       this.router.navigate(['']);
     }
-
-
+    
   }
 
   noEstaAutenticado() {
@@ -90,7 +89,6 @@ export class AutenticacionService {
     } else {
       console.log('me quedo');
     }
-
 
   }
 
