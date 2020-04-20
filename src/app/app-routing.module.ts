@@ -5,6 +5,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
+
 import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
 import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
@@ -24,6 +25,13 @@ import {PlantaComponent} from './planta/planta.component';
 import {PuntoComponent} from './punto/punto.component';
 import {ContenedorComponent} from './contenedor/contenedor.component';
 
+import {NotaComponent} from './notainfo/nota/nota.component';
+import {AccionwebComponent} from './accion/accionweb/accionweb.component';
+import {AccionreciclarComponent} from './accion/accionreciclar/accionreciclar.component';
+import {TipoaccionComponent} from './accion/tipoaccion/tipoaccion.component';
+import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
+import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
+
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
@@ -38,6 +46,16 @@ const routes: Routes = [
   {path: 'modificarusuario/:tipousuario/:usuarioId', component: ModificarusuarioComponent},
   {path: 'usuario/cambiarcontrasena/:usuarioId', component: CambiarcontrasenaComponent},
   {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
+
+  {path: 'nota', component: NotaComponent},
+  {path: 'nota/crear', component: FormNotaComponent},
+
+  {path: 'accionweb', component: AccionwebComponent},
+  {path: 'accionreciclar', component: AccionreciclarComponent},
+
+  {path: 'tipoaccion', component: TipoaccionComponent},
+  {path: 'tipoaccion/crear', component: FormTipoaccionComponent},
+
 
   {path: 'usuario/:usuarioId', component: UsuarioComponent},
 

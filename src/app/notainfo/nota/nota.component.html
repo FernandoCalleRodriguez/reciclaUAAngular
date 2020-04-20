@@ -1,0 +1,85 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de notas informativas</h1>
+    </div>
+    <div class="col">
+      <button class="btn btn-outline-primary float-right mt-2" (click)="modalCrearNota(modalForm)"><i class="fa fa-plus"></i>
+        Añadir nueva nota
+      </button>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col"> Titulo</th>
+          <th scope="col" class="d-none d-md-table-cell">Fecha</th>
+          <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let nota of Notas ">
+          <th scope="row">{{ nota.Id }}</th>
+          <td>{{ nota.Titulo}}</td>
+          <td class="d-none d-md-table-cell">{{nota.Fecha | date: 'dd/MM/yyyy - hh:mm' }}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="modalDetalleNota(nota,modalDetail)"><i class="fa fa-info-circle"></i>
+              </button>
+              <button class="btn btn-outline-success" (click)="modalModificarNota(nota,modalForm)"><i
+                class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-danger" (click)="borrarNota(nota)"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODALES -->
+<ng-template #modalDetail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ Nota?.Titulo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ Nota?.Cuerpo }}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+    {{ Nota?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+  </div>
+  </div>
+</ng-template>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ edit? 'Modificar nota informativa' : 'Añadir nota informativa' }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss(modalForm)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-modal-nota #form [IdNota]= "edit? Nota.Id : null" ></app-modal-nota>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)" [disabled]="form.formulario.invalid">
+        {{ edit? 'Modificar' : 'Añadir' }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+
+
+

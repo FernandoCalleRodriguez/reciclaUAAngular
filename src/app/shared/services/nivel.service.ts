@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Nivel } from '../models/Nivel';
+import { Nivel } from '../models/nivel';
 
 @Injectable({
   providedIn: 'root'

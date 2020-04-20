@@ -53,6 +53,15 @@ import {MaterielComponent} from './materiel/materiel.component';
 import {ItemComponent} from './item/item.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { NotaComponent } from './notainfo/nota/nota.component';
+import { AccionwebComponent } from './accion/accionweb/accionweb.component';
+import { AccionreciclarComponent } from './accion/accionreciclar/accionreciclar.component';
+import { TipoaccionComponent } from './accion/tipoaccion/tipoaccion.component';
+import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
+import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
+import { FormTipoaccionComponent } from './accion/form-tipoaccion/form-tipoaccion.component';
+import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoaccion.component';
+
 
 @NgModule({
   declarations: [
@@ -87,7 +96,15 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ContenedorComponent,
     NivelComponent,
     MaterielComponent,
-    ItemComponent
+    ItemComponent,
+    NotaComponent,
+    AccionwebComponent,
+    AccionreciclarComponent,
+    TipoaccionComponent,
+    FormNotaComponent,
+    ModalNotaComponent,
+    FormTipoaccionComponent,
+    ModalTipoaccionComponent
   ],
   imports: [
     BrowserModule,
@@ -115,6 +132,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     PlantaService,
     EstanciaService,
     PuntoService,
+    UsuarioService,
     NgbModule
   ],
   exports: [],
