@@ -37,19 +37,26 @@ export class ItemComponent implements OnInit {
   isEdit = false;
   selectedImage: File = null;
   dtOptions: DataTables.Settings = {};
-
+  it = [1, 2, 3]
   ngOnInit(): void {
-
-    this.itemService.getItems().subscribe(res => {
-      this.items = res;
-      this.dtTrigger.next();
-    }, error => {
-      this.router.navigate(['/']);
-    });
+    var nivelId = this.route.snapshot.queryParamMap.get("Niveles_oid");
+    if (nivelId != null) {
+      this.itemService.BuscarItemsPorNivel(nivelId).subscribe(res => {
+        this.items = res;
+        this.dtTrigger.next();
+      });
+    }
+    else {
+      this.itemService.getItems().subscribe(res => {
+        this.items = res;
+        this.dtTrigger.next();
+      }, error => {
+        this.router.navigate(['/']);
+      });
+    }
 
     this.nivelService.getNivel().subscribe(res => {
       this.nivels = res;
-
     })
     this.materialService.getMaterial().subscribe(res => {
       this.materials = res;
@@ -57,17 +64,17 @@ export class ItemComponent implements OnInit {
     this.dtOptions = {
       "language": {
         "decimal": "",
-        "emptyTable": "No hay nivel disponibles en la tabla",
-        "info": "Mostrando _START_ hasta _END_ de _TOTAL_ niveles en total",
+        "emptyTable": "No hay item disponibles en la tabla",
+        "info": "Mostrando _START_ hasta _END_ de _TOTAL_ items en total",
         "infoEmpty": "Mostrando 0 hasta 0 de 0 niveles",
-        "infoFiltered": "(filtrado de _MAX_ niveles en total)",
+        "infoFiltered": "(filtrado de _MAX_ items en total)",
         "infoPostFix": "",
         "thousands": ",",
-        "lengthMenu": "Mostar _MENU_ niveles por página",
+        "lengthMenu": "Mostar _MENU_ items por página",
         "loadingRecords": "Cargando...",
         "processing": "Procesando...",
         "search": "Buscar: ",
-        "zeroRecords": "No se encontraron niveles",
+        "zeroRecords": "No se encontraron items",
         "paginate": {
           "first": "Primero",
           "last": "Último",
@@ -87,7 +94,6 @@ export class ItemComponent implements OnInit {
       this.item = res
       this.item.Material_oid = res.MaterialItem.Id
     });
-    console.log("item2", this.item)
     this.showModel.nativeElement.click();
     this.isEdit = true;
 
@@ -135,9 +141,6 @@ export class ItemComponent implements OnInit {
 
       this.item.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
       this.item.Material_oid = parseInt(form.value.Material);
-      var nivelId = parseInt(this.route.snapshot.queryParamMap.get("Niveles_oid"));
-      if (nivelId != null)
-        this.item.Niveles_oid = nivelId;
 
       if (!this.items) {
         this.items = [];
@@ -156,7 +159,6 @@ export class ItemComponent implements OnInit {
       });
     }
     else {
-      console.log("n", this.item)
       if (this.selectedImage != null) {
         this.item.Imagen = this.selectedImage.name;
       }
@@ -189,7 +191,6 @@ export class ItemComponent implements OnInit {
   }
   uploadImage(id) {
     const fd = new FormData();
-    console.log("img name:", this.selectedImage.name)
     fd.append('img', this.selectedImage, this.selectedImage.name);
     this.itemService.uploadImage(fd, id).subscribe(res => {
       this.refresh();
@@ -216,5 +217,8 @@ export class ItemComponent implements OnInit {
       this.imageToDisplay = "data:image/bmp;base64," + res
     });
   }
-
+  getItemNivel(id) {
+    console.log(id)
+    return id;
+  }
 }

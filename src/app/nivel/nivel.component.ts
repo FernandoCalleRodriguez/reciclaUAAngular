@@ -1,3 +1,4 @@
+import { ItemService } from './../shared/services/item.service';
 import Swal from 'sweetalert2';
 import { Nivel } from '../shared/models/Nivel';
 import { NivelService } from '../shared/services/nivel.service';
@@ -7,6 +8,11 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
+import { Item } from '../shared/models/Item';
+
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { mergeMap, map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-nivel',
   templateUrl: './nivel.component.html',
@@ -16,14 +22,19 @@ export class NivelComponent implements OnInit, OnDestroy {
   niveles: Nivel[];
   nivel: Nivel;
   @ViewChild('closebutton') closebutton;
+  @ViewChild('AssignClosebutton') AssignClosebutton;
   @ViewChild('showModel') showModel;
-  constructor(private router: Router, private nivelService: NivelService, private toaster: ToastrService) { }
+  constructor(private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) { }
   isEdit = false;
   modelTitle = "";
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  isAssignar = false;
+  items: Item[];
+  selectedItems: Item[];
+  dropdownSettings: IDropdownSettings = {};
   ngOnInit(): void {
     this.nivelService.getNivel().subscribe(res => {
       this.niveles = res;
@@ -31,7 +42,7 @@ export class NivelComponent implements OnInit, OnDestroy {
     }, error => {
       this.router.navigate(['/']);
     });
-
+    this.itemService.getItems().subscribe(res => this.items = res);
 
     this.nivel = new Nivel();
     this.dtOptions = {
@@ -60,6 +71,15 @@ export class NivelComponent implements OnInit, OnDestroy {
         }
       }
     }
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'Id',
+      textField: 'Nombre',
+      selectAllText: 'Elijir todos los items',
+      unSelectAllText: 'Quitar todos los items',
+      allowSearchFilter: true,
+      searchPlaceholderText: "Buscar"
+    };
   }
 
   getNivelById(id) {
@@ -148,6 +168,26 @@ export class NivelComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+  setAssignedNivel(nivel) {
+    this.nivel = nivel;
+    this.itemService.BuscarItemsPorNivel(nivel.Id).subscribe(res => this.selectedItems = res);
+  }
+  assignar(form) {
 
+    this.itemService.BuscarItemsPorNivel(this.nivel.Id).subscribe(res => {
+      if (res != null) {
+        this.nivelService.desassignarItems(this.nivel.Id, res.map((item: Item) => item.Id)).subscribe(s=>{
+          this.nivelService.assignItem(this.nivel.Id, this.selectedItems.map((item: Item) => item.Id)).subscribe();
+
+        });
+      }else{
+        this.nivelService.assignItem(this.nivel.Id, this.selectedItems.map((item: Item) => item.Id)).subscribe();
+      }
+    });
+
+    console.log("tt", this.selectedItems.map((item: Item) => item.Id));
+    this.AssignClosebutton.nativeElement.click();
+  
+  }
 
 }

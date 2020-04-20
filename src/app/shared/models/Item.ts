@@ -1,3 +1,4 @@
+import { Nivel } from './Nivel';
 import { Material } from './Material';
  import { Usuario } from './usuario';
 import { Estado } from './Estado';
@@ -8,7 +9,6 @@ import { Estado } from './Estado';
     Imagen: string;
     EsValido: Estado;
     Usuario_oid:number;
-    Niveles_oid:number;
     Material_oid:number;
     MaterialItem:Material
 }

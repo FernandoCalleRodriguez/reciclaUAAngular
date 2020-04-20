@@ -27,6 +27,13 @@ export class NivelService {
     return this.http.put<Nivel>(this.SERVER + "Modificar?idNivel=" + nivel.Id, nivel);
   }
   public getNivelByItem(id) {
-    return this.http.get<Nivel>(this.SERVER +"NivelItem?idItem="+ id);
+    return this.http.get<Nivel>(this.SERVER + "NivelItem?idItem=" + id);
   }
+  public assignItem(idNivel, items: number[]) {
+    return this.http.put("http://localhost:16209/api/AccionReciclar/294912/ItemAccion/" + items[0] + "/NivelItem/AsignarItems?p_nivel_oid="+idNivel, items)
+  }
+  public desassignarItems(idNivel,items:number[]){
+    return this.http.put("http://localhost:16209/api/AccionReciclar/294912/ItemAccion/" + items[0] + "/NivelItem/DesasignarItems?p_nivel_oid="+idNivel,items);
+  }
+
 }

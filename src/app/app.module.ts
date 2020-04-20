@@ -27,6 +27,7 @@ import { NivelComponent } from './nivel/nivel.component';
 import { ItemComponent } from './item/item.component';
 import { MaterielComponent } from './materiel/materiel.component';
 import { DataTablesModule } from 'angular-datatables';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { DataTablesModule } from 'angular-datatables';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
-    DataTablesModule
+    DataTablesModule,
+    NgMultiSelectDropDownModule.forRoot()
+
   ],
   providers: [
     UsuarioService,
