@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from './shared/services/usuario.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {BnNgIdleService} from 'bn-ng-idle';
+// import {BnNgIdleService} from 'bn-ng-idle';
 import {AutenticacionService} from './shared/services/autenticacion.service';
 
 @Component({
@@ -14,14 +14,14 @@ import {AutenticacionService} from './shared/services/autenticacion.service';
 export class AppComponent {
   title = 'reciclaUA';
 
-  constructor(private bnIdle: BnNgIdleService,
+  constructor(/* private bnIdle: BnNgIdleService, */
               private autenticacionService: AutenticacionService) {
-    this.bnIdle.startWatching(600).subscribe((res) => {
+    /* this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.autenticacionService.Logout();
       }
     });
-
+*/
   }
 
 }

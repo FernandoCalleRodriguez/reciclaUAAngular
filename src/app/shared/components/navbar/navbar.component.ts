@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AutenticacionService} from '../../services/autenticacion.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -9,6 +10,7 @@ import {AutenticacionService} from '../../services/autenticacion.service';
 })
 export class NavbarComponent implements OnInit {
   idusuario;
+
 
   constructor(private autenticacionService: AutenticacionService,
               protected  router: Router) {
@@ -21,6 +23,5 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.autenticacionService.Logout();
-
   }
 }

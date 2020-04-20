@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de validaciones</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ul class="nav nav-tabs" id="validaciones" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="puntos-tab" data-toggle="tab" href="#puntos" role="tab"
+             aria-controls="puntos"
+             aria-selected="true">Puntos de reciclaje <span
+            class="badge badge-dark">{{ puntos.count() }}</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="items-tab" data-toggle="tab" href="#items" role="tab" aria-controls="items"
+             aria-selected="false">Items <span class="badge badge-dark">{{ items.count() }}</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="materiales-tab" data-toggle="tab" href="#materiales" role="tab"
+             aria-controls="materiales"
+             aria-selected="false">Materiales <span class="badge badge-dark">{{ materiales.count() }}</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="tab-content" id="contenido">
+        <div class="mt-3 tab-pane fade show active" id="puntos" role="tabpanel" aria-labelledby="puntos-tab">
+          <app-tabla-puntos #puntos></app-tabla-puntos>
+        </div>
+        <div class="mt-3 tab-pane fade" id="items" role="tabpanel" aria-labelledby="items-tab">
+          <app-tabla-items #items></app-tabla-items>
+        </div>
+        <div class="mt-3 tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
+          <app-tabla-materiales #materiales></app-tabla-materiales>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

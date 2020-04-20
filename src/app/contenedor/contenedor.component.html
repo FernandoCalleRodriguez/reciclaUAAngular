@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Listado de contenedores</h1>
+        </div>
+        <div class="col-md-3">
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo contenedor</button></h1>
+        </div>
+    </div>
+
+    <!-- tabla de contenedores ([dtTrigger]="dtTrigger")  -->
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tipo de contenedor</th>
+
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of contenedores">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Tipo}}</td>
+
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-success" (click)="getContenedorById(item.Id)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar contenedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+                <form #form="ngForm">
+
+                    <div class="form-group">
+
+                        <label for="Tipo" class="col-form-label">Tipo de contenedor:</label>
+
+                        <input type="text" class="form-control" id="Tipo" name="Tipo" #Tipo
+                            [(ngModel)]="contenedor.Tipo" ngModel required>
+                        <div *ngIf="Tipo.touched && !Tipo.valid">
+                            <small class="text-danger">Tipo de contenedor es obligatorio</small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="Punto" class="col-form-label">Punto:</label>
+
+                        <select class="form-control" id="Punto" required name="Punto" #Punto="ngModel"
+                            [(ngModel)]="contenedor.Punto_oid">
+                            <option value="">Elije una Punto:</option>
+                            <option *ngFor="let item of punto" [value]="item.Id">{{item.Id}}</option>
+                        </select>
+
+                        <div *ngIf="Punto.touched && !Punto.valid">
+                            <small class="text-danger">Punto es obligatorio</small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
+                    Guardar Contenedor
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

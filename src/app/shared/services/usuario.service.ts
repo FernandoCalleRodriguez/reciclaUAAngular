@@ -37,7 +37,6 @@ export class UsuarioService {
       url = 'UsuarioWeb/BuscarNoBorrados';
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
-    } else {
     }
 
     return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
@@ -52,7 +51,6 @@ export class UsuarioService {
       url = 'UsuarioWeb/';
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/';
-    } else {
     }
 
     return this.http.get<Usuario>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
@@ -61,7 +59,6 @@ export class UsuarioService {
   }
 
   obtenerUsuarioPorEmail(email) {
-
     return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminNoAutenticado/BuscarPorCorreo?p_correo=' + email).pipe(res => {
       return res;
     });
@@ -74,9 +71,7 @@ export class UsuarioService {
       url = 'UsuarioWeb/Modificar?idUsuarioWeb=';
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/Modificar?idUsuarioAdminAutenticado=';
-    } else {
     }
-
     return this.http.put<any>(this.SERVER + url + usuario.Id, usuario, this.getHeaderToken()).pipe(res => {
       return res;
     });
@@ -89,7 +84,6 @@ export class UsuarioService {
       url = 'UsuarioWeb/Borrar/?p_usuarioweb_oid=';
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/Borrar?p_usuarioadministrador_oid=';
-    } else {
     }
     return this.http.delete<any>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
       return res;
@@ -103,21 +97,19 @@ export class UsuarioService {
   }
 
   obtenerPuntuaciones() {
-
     return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(res => {
       return res;
     });
   }
 
   verificarEmail(id) {
-
     return this.http.post<any>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(res => {
       return res;
     });
   }
 
   recuperarPass(usuario: Usuario) {
-
+    // tslint:disable-next-line:max-line-length
     return this.http.put<any>(this.SERVER + 'UsuarioAdminRecuperarPass/CambiarPassword?idUsuarioAdminRecuperarPass=' + usuario.Id, usuario).pipe(map(res => {
       return res;
     }, error1 => {
@@ -127,7 +119,7 @@ export class UsuarioService {
   }
 
   cambiarPass(usuario: Usuario) {
-
+    // tslint:disable-next-line:max-line-length
     return this.http.put<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/CambiarPassword?idUsuarioAdminAutenticado=' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }, error1 => {
@@ -145,5 +137,12 @@ export class UsuarioService {
       headers: new HttpHeaders(header),
     };
     return requestOptions;
+  }
+
+  // MIRAR
+  public getLoggedUser(): Usuario {
+    const u = new Usuario();
+    u.Id = JSON.parse(localStorage.getItem('ID_USER'));
+    return u;
   }
 }

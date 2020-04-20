@@ -3,7 +3,7 @@ import {Usuario} from '../models/usuario';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {BnNgIdleService} from 'bn-ng-idle';
+// import {BnNgIdleService} from 'bn-ng-idle';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,7 +19,7 @@ export class AutenticacionService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private bnIdle: BnNgIdleService) {
+              /* private bnIdle: BnNgIdleService */) {
 
   }
 
@@ -33,7 +33,7 @@ export class AutenticacionService {
   }
 
   Logout(): void {
-    localStorage.removeItem('ACESS_TOKEN');
+    localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID_USER');
     localStorage.clear();
     this.router.navigate(['login/si']);
@@ -42,20 +42,19 @@ export class AutenticacionService {
   }
 
   private saveToken(token: string): void {
-    localStorage.setItem('ACESS_TOKEN', token);
+    localStorage.setItem('ACCESS_TOKEN', token);
     localStorage.setItem('ID_USER', this.parseJwt(token).id);
-
   }
 
   private parseJwt(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace('-', '+').replace('_', '/');
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   }
 
   getToken(): string {
     if (!this.token) {
-      this.token = localStorage.getItem('ACESS_TOKEN');
+      this.token = localStorage.getItem('ACCESS_TOKEN');
     }
     return this.token;
 
@@ -70,22 +69,21 @@ export class AutenticacionService {
   }
 
   estaAutenticado() {
-
     if (this.getToken() != null || this.getID() != null) {
       if (this.getID() != this.parseJwt(this.getToken()).id) {
-        this.router.navigate(['']);
-
+        this.router.navigate(['/login']);
       }
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
     }
     
   }
 
   noEstaAutenticado() {
     if (this.getToken() != null && this.getID() != null) {
-      console.log('Voy a home' + this.getToken() + this.getID());
-      this.router.navigate(['/home']);
+      if (this.getID() == this.parseJwt(this.getToken()).id) {
+        this.router.navigate(['/home']);
+      }
     } else {
       console.log('me quedo');
     }
@@ -101,14 +99,12 @@ export class AutenticacionService {
     return contraseña;
   }
 
-  controlSesion() {
+  controlSesion() { /*
     this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.Logout();
       }
     });
-
+*/
   }
-
-
 }

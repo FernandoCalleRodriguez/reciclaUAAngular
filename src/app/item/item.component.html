@@ -1,0 +1,148 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de items</h1>
+    </div>
+    <div class="col">
+      <button class="btn btn-outline-primary float-right mt-2" data-toggle="modal" data-target="#exampleModal"
+        (click)="add()" #showModel><i class="fa fa-plus"></i>Añadir nuevo item</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th scope="col">Id </th>
+            <th scope="col">Nombre </th>
+            <th scope="col">Descripcion </th>
+            <th scope="col">Imagen </th>
+            <th scope="col">Estado </th>
+            <th scope="col">Material </th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{item.Id}}</td>
+            <td>{{item.Nombre}}</td>
+            <td>{{item.Descripcion}}</td>
+            <td><a (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''" data-toggle="modal"
+                data-target="#imageModel">Mostrar imagen <i class="fa fa-eye"></i></a></td>
+            <td>{{getEstado(item.EsValido)}}</td>
+            <td>{{item.MaterialItem?.Nombre}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-outline-success" title="Editar" (click)="getItemById(item.Id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger" title="Borrar" (click)="delete(item)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo item</h5>
+        <ng-template #EditTitle>
+          <h5 class="modal-title">Modificar item</h5>
+        </ng-template>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm">
+          <div class="form-group ">
+            <label for="Nombre" class="">Nombre</label>
+
+            <input type="text" [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}"
+              [(ngModel)]="item.Nombre" required class="form-control" id="Nombre" name="Nombre" #Nombre="ngModel">
+            <div *ngIf="Nombre.touched && !Nombre.valid">
+              <small class="text-danger">Nombre es obligatorio</small>
+            </div>
+
+          </div>
+          <div class="form-group  ">
+            <label for="Descripcion" class="">Descripcion</label>
+
+            <input [ngClass]="{'is-invalid': Descripcion.touched && !Descripcion.valid,'is-valid': Descripcion.valid}"
+              type="text" class="form-control" id="Descripcion" name="Descripcion" placeholder="Descripcion"
+              #Descripcion="ngModel" [(ngModel)]="item.Descripcion" required>
+            <div *ngIf="Descripcion.touched && !Descripcion.valid">
+              <small class="text-danger">Descripcion es obligatorio</small>
+            </div>
+
+          </div>
+          <div class="form-group ">
+            <label for="Imagen" class="">Imagen</label>
+            <div class="">
+              <input type="file" ngModel (change)="showImage($event)" class="form-control" name="Imagen" id="Imagen"
+                placeholder="Imagen" ngModel>
+            </div>
+          </div>
+
+          <div class="form-group ">
+            <label for="Material" class="">Material</label>
+            <select [ngClass]="{'is-invalid': Material.touched && !Material.valid,'is-valid': Material.valid}"
+              class="form-control" id="Material" required name="Material" #Material="ngModel"
+              [(ngModel)]="item.Material_oid">
+              <option value="">Elije Material</option>
+              <option *ngFor="let material of materials" [value]="material.Id">{{material.Nombre}}</option>
+            </select>
+            <div *ngIf="Material.touched && !Material.valid">
+              <small class="text-danger">Material es obligatorio</small>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
+          (click)="submit(form)" [disabled]="!form.valid">
+          Crear
+        </button>
+        <ng-template #EditTitleBtn>
+          <button type="button" class="btn btn-primary float-right" (click)="submit(form)" [disabled]="!form.valid">
+            Modificar
+          </button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="imageModel" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md 12">
+            <img src="{{imageToDisplay}}" style="width:100%; height:100%" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <!-- titulo -->
+  <div class="row">
+    <div class="col">
+      <h1>Listado de dudas</h1>
+    </div>
+    <div class="col">
+      <!--button class="btn btn-success float-right mt-2" [routerLink]="'/foro/duda/crear'">Añadir nueva duda</button-->
+      <button class="btn btn-outline-primary float-right mt-2" (click)="addDuda(modalForm)"><i class="fa fa-plus"></i>
+        Añadir nueva duda
+      </button>
+    </div>
+  </div>
+  <hr/>
+  <!-- tabla de dudas -->
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col" class="text-left">Título</th>
+          <th scope="col" class="d-none d-md-table-cell">Tema</th>
+          <th scope="col" class="d-none d-md-table-cell">Usuario</th>
+          <!--th scope="col" class="d-none d-md-table-cell">Fecha</th-->
+          <th scope="col">Respuestas</th>
+          <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let duda of dudas">
+          <th scope="row">{{ duda.Id }}</th>
+          <td class="text-left">{{ duda.Titulo }}</td>
+          <td class="d-none d-md-table-cell">{{ getTema(duda?.Tema) }}</td>
+          <td class="d-none d-md-table-cell">{{ duda.UsuarioDuda ? duda.UsuarioDuda.Email : 'Null' }}</td>
+          <!--td class="d-none d-md-table-cell">{{ duda.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td-->
+          <td>
+            <button class="icon btn btn-outline-dark" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
+              <i class="fa fa-eye"></i>
+              &nbsp;
+              <span class="badge badge-dark">{{ duda.ObtenerNumeroDeRespuestas }}</span>
+            </button>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-info" (click)="showDuda(duda, modalDetail)"><i
+                class="fa fa-info-circle"></i>
+              </button>
+              <button class="btn btn-outline-success" (click)="modDuda(duda, modalForm)"><i
+                class="fa fa-edit"></i></button>
+              <button class="btn btn-outline-danger" (click)="deleteDuda(duda)"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- div *ngIf="!dudas || !dudas.length" class="alert alert-info">
+        No hay dudas actualmente
+      </div-->
+    </div>
+  </div>
+</div>
+
+<!-- MODALES -->
+<ng-template #modalDetail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ duda?.Titulo }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-wrap text-break">
+      <p>{{ duda?.Cuerpo }}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+      {{ duda.UsuarioDuda?.Nombre }}
+      <br>
+      {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ edit ? 'Modificar duda' : 'Añadir duda' }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-form-duda-modal #form [dudaId]="edit? duda.Id : null"></app-form-duda-modal>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary"
+              (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)" [disabled]="form.formulario.invalid">
+        {{ edit ? 'Modificar' : 'Añadir' }}
+      </button>
+    </div>
+  </div>
+</ng-template>
