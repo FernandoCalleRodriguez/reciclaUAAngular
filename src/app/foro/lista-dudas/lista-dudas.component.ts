@@ -32,8 +32,6 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
-    }, error => {
-      router.navigate(['/']);
     });
   }
 

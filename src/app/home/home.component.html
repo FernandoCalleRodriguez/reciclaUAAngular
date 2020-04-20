@@ -1,21 +1,123 @@
 <app-navbar></app-navbar>
-<div class="container">
-
-  <div>
-    <button type="button" class="btn btn-danger">Borrar usuario</button>
-
+<div class="container pt-2 pb-2">
+  <div class="row ">
+    <div class="col-md-3 col-xs-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3"><i class="fa fa-users fa-3x"></i></div>
+            <div class="col"><h6 class="card-subtitle text-muted"> Número de usuarios:</h6>
+              <h2 class="card-title text-center">100</h2></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3"><i class="fa fa-trash fa-3x"></i></div>
+            <div class="col">
+              <h6 class="card-subtitle text-muted"> Número de puntos:</h6>
+              <h2 class="card-title text-center">357</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3"><i class="fa fa-level-up fa-3x"></i></div>
+            <div class="col">
+              <h6 class="card-subtitle text-muted"> Número de niveles:</h6>
+              <h2 class="card-title text-center">20</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3"><i class="fa fa-question fa-3x"></i></div>
+            <div class="col">
+              <h6 class="card-subtitle text-muted"> Número de dudas:</h6>
+              <h2 class="card-title text-center">249</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <a [routerLink]="['usuarioweb/crear']"> Crear admin</a>
+  <br>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h4 class="card-title">Elementos por validar:</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <ul>
+                <li>
+                  <a href="#">3 Puntos de reciclaje por validar</a>
+                </li>
+                <li>
+                  <a href="#">0 Items por validar por validar</a>
+                </li>
+                <li>
+                  <a href="#">5 Materiales por validar por validar</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
 
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h4 class="card-title">Última nota informativa</h4>
+            </div>
+            <div class="col-offset right-folat">
+              <button class="btn btn-outline-primary float-right"><i
+                class="fa fa-plus"></i> Añadir nueva nota
+              </button>
+            </div>
+
+          </div>
+          <h6 class="card-subtitle mb-2 text-muted">Titulo nota informativa</h6>
+          <p class="card-text">Esto es el contenido de la nota informativa.Esto es el contenido de la nota
+            informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.</p>
+          <div class="row">
+            <div class="col">
+              <p class="card-text"> 16:50 18/04/2020 ></p>
+            </div>
+            <div class="col">
+              <div class="btn-group float-right">
+                <button class="btn btn-outline-success"><i
+                  class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger"><i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <a [routerLink]="['usuarioweb/listar']"> Lista admin</a>
-
-  </div>
-  <div>
-    <a [routerLink]="['/usuarioweb/listar']"> Lista web</a>
-
-  </div>
-
 </div>

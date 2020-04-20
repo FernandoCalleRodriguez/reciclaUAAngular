@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../shared/models/usuario';
 import {UsuarioService} from '../shared/services/usuario.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AutenticacionService} from '../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-login',
@@ -10,49 +11,52 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('frmLogin', {static: false}) singupForm: NgForm;
   user: Usuario;
-  private postData;
+  cerrarsesion;
+  formularioLogin: FormGroup;
+  error = false;
 
-  constructor(private userService: UsuarioService,
-              private router: Router) {
+  constructor(private autenticacionService: AutenticacionService,
+              private router: Router,
+              private route: ActivatedRoute) {
+
+    this.route.params.subscribe(param => {
+
+      this.cerrarsesion = param['cerrarsesion'];
+
+      console.log(this.cerrarsesion);
+      if (this.cerrarsesion === '' || this.cerrarsesion === undefined) {
+        this.autenticacionService.noEstaAutenticado();
+
+      }
+
+    });
   }
 
   ngOnInit(): void {
 
+    this.formularioLogin = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      pwd: new FormControl(null, [Validators.required]),
+    });
   }
 
   onLogin() {
 
     this.user = {
-      Id: -1,
-      Email: this.singupForm.value.email,
-      Pass: this.singupForm.value.contrasena,
-      Nombre: '',
-      Apellidos: '',
+      Email: this.formularioLogin.value.email,
+      Pass: this.formularioLogin.value.pwd,
+
     };
 
-    this.userService.Login(this.user).subscribe(
+    this.autenticacionService.Login(this.user).subscribe(
       data => {
-        this.router.navigate(['home']);
+        this.router.navigate(['/home']);
       }, error => {
         console.log('Autenticación fallida', error);
+        this.error  = true;
       }
     );
   }
 
-  /*onSubmit() {
-    console.log(this.singupForm);
-    this.postData = {
-      DNI: this.singupForm.value.email,
-      Pass: this.singupForm.value.contrasena,
-    };
-    console.log(this.postData);
-    this.userService.Login(this.postData);
-  }*/
-
-  /*getAllUsers() {
-    this.usuarios = this.userService.getAllUsers().subscribe((res: any) => {
-    });
-  }*/
 }

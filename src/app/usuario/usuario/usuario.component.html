@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h3>Perfil usuario: {{usuario?.Id}}</h3>
+        </div>
+        <div class="col" *ngIf="perfil">
+          <div class="btn-group float-right">
+            <button type="button" class="btn btn-outline-dark"
+                    [routerLink]="['/usuario/cambiarcontrasena/' + usuarioId]">
+              Cambiar contraseña
+            </button>
+            <button class="btn btn-outline-success"
+                    (click)="modUsuario(usuario,content)"><i
+              class="fa fa-edit"></i></button>
+            <button class="btn btn-outline-danger" (click)="borrarUsuario()"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">
+            <b>Nombre: </b>
+
+            {{usuario?.Nombre}}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class=" col">
+            <b>Apellidos: </b>
+            {{usuario?.Apellidos}}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class=" col">
+            <b>Email: </b>
+            {{usuario?.Email}}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class=" col">
+            <b>Fecha de creación: </b>
+            {{usuario?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class=" col">
+            <b>Email verificado: </b>
+            {{true == usuario?.EmailVerificado ? 'Si' : 'No' }}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item" *ngIf="usuario?.Puntuacion >= 0">
+        <div class="row">
+          <div class=" col">
+            <b>Puntuación: </b>
+            {{usuario?.Puntuacion}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <ng-template #content let-modal>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf="isEdit" class="modal-title">Modificar usuario {{tipousuario}}</h5>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <app-form-usuario-modal #form [usuarioId]="usuario.Id" [isEdit]="isEdit"
+                                  [tipousuario]="tipousuario"></app-form-usuario-modal>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="modificarUsuario(form, modal)" >Modificar
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+

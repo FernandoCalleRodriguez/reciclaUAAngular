@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div class="registro" *ngIf="usuario != null">
+  <div class="container">
+    <h4 class="text-center">Modificar usuario </h4>
+    <form (ngSubmit)="onUpdate()" [formGroup]="formularioModificar">
+      <!-- EMAIL DEL USUARIO -->
+      <div>
+        <label for="email">Correo electrónico:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('email').invalid && formularioModificar.get('email').touched,
+              'is-valid' : formularioModificar.get('email').valid && formularioModificar.get('email').touched}"
+               type="email"
+               id="email"
+               formControlName="email"
+               placeholder="fdlc4@alu.ua.es"
+               class="form-control"
+               [(ngModel)]="usuario.Email">
+      </div>
+
+      <!-- NOMBRE DEL USUARIO -->
+      <div>
+        <label for="name">Nombre:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('name').invalid && formularioModificar.get('name').touched,
+              'is-valid' : formularioModificar.get('name').valid && formularioModificar.get('name').touched}"
+               type="text"
+               class="form-control"
+               id="name"
+               formControlName="name"
+               [(ngModel)]="usuario.Nombre"
+        >
+      </div>
+
+      <!-- APELLIDOS DEL USUARIO -->
+      <div>
+        <label for="surname">Apellidos:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('surname').invalid && formularioModificar.get('surname').touched,
+              'is-valid' : formularioModificar.get('surname').valid && formularioModificar.get('surname').touched}"
+               type="text"
+               class="form-control"
+               id="surname"
+               formControlName="surname"
+               [(ngModel)]="usuario.Apellidos"
+
+        >
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="formularioModificar.invalid">Modificar</button>
+    </form>
+  </div>
+</div>

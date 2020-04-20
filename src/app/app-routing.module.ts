@@ -2,31 +2,36 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
-import {CrearComponent} from './admin/crear/crear.component';
-import {ListadminComponent} from './admin/listadmin/listadmin.component';
-import {ListwebComponent} from './web/listweb/listweb.component';
-import {CrearwebComponent} from './web/crearweb/crearweb.component';
-import {ModificarwebComponent} from './web/modificarweb/modificarweb.component';
-import {UsuarioComponent} from './usuario/usuario.component';
 import {ListaDudasComponent} from './foro/lista-dudas/lista-dudas.component';
 import {ListaRespuestasComponent} from './foro/lista-respuestas/lista-respuestas.component';
 import {FormDudaComponent} from './foro/form-duda/form-duda.component';
 import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.component';
 import {ListaValidacionesComponent} from './validacion/lista-validaciones/lista-validaciones.component';
+import {UsuariolistarComponent} from './usuario/listarusuario/usuariolistar.component';
+import {CrearusuarioComponent} from './usuario/crearusuario/crearusuario.component';
+import {ModificarusuarioComponent} from './usuario/modificarusuario/modificarusuario.component';
+import {RecuperarcontrasenaComponent} from './recuperarcontrasena/recuperarcontrasena.component';
+import {UsuarioComponent} from './usuario/usuario/usuario.component';
+import {RankingComponent} from './ranking/ranking.component';
+import {VerificacionComponent} from './verificacion/verificacion.component';
+import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
-  {path: '', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'login/:cerrarsesion', component: LoginComponent},
+  {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
+  {path: 'ranking', component: RankingComponent},
+  {path: 'verificacion/:usuarioId', component: VerificacionComponent},
 
-  {path: 'usuarioadmin/crear', component: CrearComponent},
-  {path: 'usuarioadmin/listar', component: ListadminComponent},
+  {path: 'listarusuario/:tipousuario', component: UsuariolistarComponent},
+  {path: 'usuariocrear/:tipousuario', component: CrearusuarioComponent},
+  {path: 'modificarusuario/:tipousuario/:usuarioId', component: ModificarusuarioComponent},
+  {path: 'usuario/cambiarcontrasena/:usuarioId', component: CambiarcontrasenaComponent},
+  {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
 
-  {path: 'usuarioweb/listar', component: ListwebComponent},
-  {path: 'usuarioweb/crear', component: CrearwebComponent},
-  {path: 'usuarioweb/modificar/:usuarioId', component: ModificarwebComponent},
-
-  {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
+  {path: 'usuario/:usuarioId', component: UsuarioComponent},
 
   {path: 'foro/duda/listar', component: ListaDudasComponent},
   {path: 'foro/duda/:dudaId/respuestas', component: ListaRespuestasComponent},
@@ -37,10 +42,10 @@ const routes: Routes = [
   {path: 'foro/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
   {path: 'foro/duda/:dudaId/respuesta/crear', component: FormRespuestaComponent},
   {path: 'foro/duda/:dudaId/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
-
   {path: 'validaciones', component: ListaValidacionesComponent},
 
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'home'}
+
 ];
 
 @NgModule({

@@ -1,157 +1,136 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Usuario} from '../models/usuario';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {error} from '@angular/compiler/src/util';
+import {AutenticacionService} from './autenticacion.service';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UsuarioService {
-  private currentUserSubject: BehaviorSubject<string>;
   SERVER = 'http://localhost:16209/api/';
-  private token: string;
-  private email: string;
-  private id: number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private autenticacionService: AutenticacionService) {
   }
 
+  CrearUsuario(usuario: Usuario, tipo: string) {
+    let url;
 
-  Login(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminNoAutenticado/Login', usuario).pipe(map(
-      res => {
-        this.saveToken(res, usuario.Email);
-        return res;
-      })
-    );
-  }
-
-  Logout(): void {
-    this.token = '';
-    localStorage.removeItem('ACCESS_TOKEN');
-
-  }
-
-  CrearAdmin(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminAutenticado/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
+    if (tipo === 'web') {
+      url = 'UsuarioWeb/Crear';
+    } else if (tipo === 'administrador') {
+      url = 'UsuarioAdminAutenticado/Crear';
+    } else {
+      console.log('Crear usuario error tipo usuario no valido');
+    }
+    return this.http.post<Usuario>(this.SERVER + url, usuario, this.getHeaderToken()).pipe(map(res => {
       return res;
     }, error1 => {
-      console.log(error1);
+      console.log('Crear usuario fallida' + error1);
     }));
 
   }
 
-  CrearWeb(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioWeb/Crear', usuario, this.getHeaderToken()).pipe(map(res => {
+  obtenerUsuarios(tipo: string) {
+    let url;
+
+    if (tipo === 'web') {
+      url = 'UsuarioWeb/BuscarNoBorrados';
+    } else if (tipo === 'administrador') {
+      url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
+    }
+
+    return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
       return res;
-    }));
-
-  }
-
-
-  obtenerTodosAdmin() {
-    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioAdminAutenticado/BuscarTodos', this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  obtenerTodosWeb() {
-    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/BuscarTodos', this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  obtenerAdminPorId(id) {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/' + id, this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  public obtenerWebPorId(id) {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/' + id, this.getHeaderToken()).pipe(map((res: Usuario) => {
-      return res;
-    }));
-  }
-
-  modificarAdmin(usuario: Usuario) {
-    return this.http.put<any>(this.SERVER + 'UsuarioAdminAutenticado/Modificar?idUsuarioAdminAutenticado=' + usuario.Id,
-      usuario, this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  modificarWeb(usuario: Usuario) {
-    return this.http.put<any>(this.SERVER + 'UsuarioWeb/Modificar?idUsuarioWeb=' + usuario.Id,
-      usuario, this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  borrarAdmin(id) {
-    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Borrar/?p_usuario_oid=' + id, this.getHeaderToken())
-      .pipe(map(res => {
-        this.saveToken(null, null);
-        return res;
-      }));
-  }
-
-  borrarWeb(id) {
-    return this.http.delete<any>(this.SERVER + 'UsuarioWeb/Borrar?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(map(res => {
-      return res;
-    }));
-  }
-
-  obtenerRanking() {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe(map((res: Usuario) => {
-      return res;
-    }));
-  }
-
-  obtenerPuntuaciones() {
-
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(map((res: Usuario) => {
-      return res;
-    }));
-  }
-
-  private saveToken(token: string, email: string): void {
-    localStorage.setItem('ACCESS_TOKEN', token);
-
-    this.token = token;
-    console.log();
-    this.obtenerAdminPorId(this.parseJwt(token).id).subscribe(usuario => {
-      localStorage.setItem('DATA_USER', JSON.stringify(usuario));
-      localStorage.setItem('ID_USER', usuario.Id.toString());
-
     });
   }
 
-  private parseJwt(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
+  obtenerUsuarioPorId(id, tipo: string) {
+    let url;
+
+    if (tipo === 'web') {
+      url = 'UsuarioWeb/';
+    } else if (tipo === 'administrador') {
+      url = 'UsuarioAdminAutenticado/';
+    }
+
+    return this.http.get<Usuario>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  private getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('ACCESS_TOKEN');
+  obtenerUsuarioPorEmail(email) {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminNoAutenticado/BuscarPorCorreo?p_correo=' + email).pipe(res => {
+      return res;
+    });
+  }
+
+  modificarUsuario(usuario: Usuario, tipo: string) {
+    let url;
+
+    if (tipo === 'web') {
+      url = 'UsuarioWeb/Modificar?idUsuarioWeb=';
+    } else if (tipo === 'administrador') {
+      url = 'UsuarioAdminAutenticado/Modificar?idUsuarioAdminAutenticado=';
     }
-    return this.token;
+    return this.http.put<any>(this.SERVER + url + usuario.Id, usuario, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  borrarUsuario(id, tipo: string) {
+    let url;
+
+    if (tipo === 'web') {
+      url = 'UsuarioWeb/Borrar/?p_usuarioweb_oid=';
+    } else if (tipo === 'administrador') {
+      url = 'UsuarioAdminAutenticado/Borrar?p_usuarioadministrador_oid=';
+    }
+    return this.http.delete<any>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  obtenerRanking() {
+    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  obtenerPuntuaciones() {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  verificarEmail(id) {
+    return this.http.post<any>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  recuperarPass(usuario: Usuario) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<any>(this.SERVER + 'UsuarioAdminRecuperarPass/CambiarPassword?idUsuarioAdminRecuperarPass=' + usuario.Id, usuario).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Crear usuario fallida' + error1);
+    }));
 
   }
 
-
-  /*private getId(): number {
-    if (!this.id) {
-      this.id = parseInt(localStorage.getItem('ID'));
-    }
-    return this.id;
-
-  }*/
+  cambiarPass(usuario: Usuario) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/CambiarPassword?idUsuarioAdminAutenticado=' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Cambiar contraseña fallida' + error1);
+    }));
+  }
 
   private getHeaderToken() {
+
     const header = {
-      Authorization: this.getToken(),
+      Authorization: this.autenticacionService.getToken(),
     };
 
     const requestOptions = {
@@ -160,8 +139,10 @@ export class UsuarioService {
     return requestOptions;
   }
 
+  // MIRAR
   public getLoggedUser(): Usuario {
-    return JSON.parse(localStorage.getItem('DATA_USER'));
+    const u = new Usuario();
+    u.Id = JSON.parse(localStorage.getItem('ID_USER'));
+    return u;
   }
-
 }

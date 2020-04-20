@@ -114,6 +114,7 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       this.duda = d;
       this.respuesta = respuesta;
       this.edit = true;
+      this.dudaId = d.Id;
       this.modalService.open(modal, {size: 'xl'});
     });
   }
