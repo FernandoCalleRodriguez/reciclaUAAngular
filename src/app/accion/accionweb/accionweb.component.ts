@@ -27,22 +27,13 @@ export class AccionwebComponent implements OnInit, OnDestroy {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private accionwebservice: AccionwebService, protected usuarioservice: UsuarioService, protected modalService: NgbModal,
-              protected toaster: ToastrService, protected router: Router) { }
+  constructor(private accionwebservice: AccionwebService, protected usuarioservice: UsuarioService,
+              protected modalService: NgbModal, protected toaster: ToastrService, protected router: Router) { }
 
   ngOnInit(): void {
     this.accionwebservice.obtenerTodosAccionWeb().subscribe(acciones => {
       this.accionesWeb = acciones;
       this.texto = (JSON.stringify(acciones));
-      console.log('Detalle de la carga de acciones ' + this.texto);
-      this.dtTrigger.next();
-    }, error => {
-      this.router.navigate(['/']);
-    });
-
-    this.usuarioservice.obtenerTodosWeb().subscribe(usuarios => {
-      this.usuarios = usuarios;
-      this.texto = (JSON.stringify(usuarios));
       console.log('Detalle de la carga de acciones ' + this.texto);
       this.dtTrigger.next();
     }, error => {

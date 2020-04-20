@@ -17,14 +17,13 @@
       </div>
       <div class="form-group">
         <label>Puntuación</label>
-        <textarea
+        <input
           type="number"
           id="puntuacion"
           formControlName="puntuacion"
           class="form-control"
-          rows="12"
-          [ngClass]="{'is-invalid' : puntuacion().invalid && puntuacion().touched, 'is-valid':puntuacion().valid}">
-          </textarea>
+          rows="1"
+          [ngClass]="{'is-invalid' : puntuacion().invalid && puntuacion().touched, 'is-valid':puntuacion().valid}"/>
         <div class="invalid-feedback" *ngIf="puntuacion().errors?.required && puntuacion().touched">
           Campo requerido
         </div>

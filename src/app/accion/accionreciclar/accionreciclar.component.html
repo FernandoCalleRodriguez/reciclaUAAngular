@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Acción Reciclar</h1>
+      <h1>Listado de acciones de reciclaje</h1>
     </div>
   </div>
   <hr/>
@@ -22,12 +22,12 @@
         </thead>
         <tbody>
         <tr *ngFor="let accion of accionesRec ">
-          <th scope="row">{{accion.Id}}</th>
+          <th scope="row">{{accion?.Id}}</th>
           <td>{{getContenedor(accion?.ContenedorAccion?.Tipo)}}</td>
-          <td class="d-none d-md-table-cell">{{accion.ItemAccion.Nombre ? accion.ItemAccion.Nombre : 'Null'}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Cantidad}}</td>
-          <td class="d-none d-md-table-cell">{{''}}</td>
-          <td class="d-none d-md-table-cell">{{accion.Fecha}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.ItemAccion.Nombre ? accion.ItemAccion.Nombre : 'Null'}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.Cantidad}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.UsuarioAccionReciclar?.Email}}</td>
+          <td class="d-none d-md-table-cell">{{accion?.Fecha}}</td>
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-info" (click)="modalDetalleAccionRec(accion,modalDetail)"><i class="fa fa-info-circle"></i>
@@ -46,19 +46,22 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Acción Reciclar: {{ accionRec?.Id }}</h5>
+      <h5 class="modal-title">Acción: {{ accionRec?.Id }}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>{{ accionRec?.ContenedorAccion.Tipo }}</p>
+      <p> <b>Tipo Contenedor:</b> {{ accionRec?.ContenedorAccion.Tipo }}</p>
+      <br>
+      <p> <b>Item:</b> {{ accionRec?.ItemAccion.Nombre }}</p>
+      <br>
+      <p> <b>Cantidad:</b> {{ accionRec?.Cantidad }}</p>
     </div>
-    <div class="modal-body">
-      <p>{{ accionRec?.ItemAccion.Nombre }}</p>
-    </div>
-    <div class="modal-body">
-      <p>{{ accionRec?.Cantidad }}</p>
+    <div class="modal-footer text-muted text-right">
+      {{ accionRec?.UsuarioAccionReciclar.Email }}
+      <br>
+      {{ accionRec?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
 </ng-template>

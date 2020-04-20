@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Nota} from '../../shared/models/nota';
 import {NotaService} from '../../shared/services/nota.service';
 import {Subject} from 'rxjs';
-import {DataTableDirective} from 'angular-datatables';
+import {DataTableDirective, DataTablesModule} from 'angular-datatables';
 import Swal from 'sweetalert2';
 import {not} from 'rxjs/internal-compatibility';
 import {ToastrService} from 'ngx-toastr';
@@ -24,6 +24,7 @@ export class NotaComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTablesModule;
 
   constructor(private notaservice: NotaService, protected modalService: NgbModal,
               protected toaster: ToastrService, protected router: Router) { }
@@ -35,6 +36,34 @@ export class NotaComponent implements OnInit, OnDestroy {
     }, error => {
       this.router.navigate(['/']);
     });
+
+    this.dtOptions = {
+      language: {
+        decimal: '',
+        emptyTable: 'No hay puntos disponibles en la tabla',
+        info: 'Mostrando START hasta END de TOTAL puntos en total',
+        infoEmpty: 'Mostrando 0 hasta 0 de 0 puntos',
+        infoFiltered: '(filtrado de MAX puntos en total)',
+        infoPostFix: '',
+        thousands: ',',
+        lengthMenu: 'Mostar MENU puntos por página',
+        loadingRecords: 'Cargando...',
+        processing: 'Procesando...',
+        search: 'Buscar: ',
+        zeroRecords: 'No se encontraron puntos',
+        paginate: {
+          first: 'Primero',
+          last: 'Último',
+          next: 'Próximo',
+          previous: 'Anterior'
+        },
+        aria: {
+          sortAscending: ': activar ordenamiento de columnas ascendentemente',
+          sortDescending: ': activar ordenamiento de columnas descendentemente'
+        }
+      }
+    };
+
   }
   public borrarNota(nota: Nota): void {
       Swal.fire({
@@ -43,8 +72,8 @@ export class NotaComponent implements OnInit, OnDestroy {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        cancelButtonText: 'No',
-        confirmButtonText: 'Sí'
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
       }).then((result) => {
         if (result.value) {
           this.notaservice.borrar(nota).subscribe(() => {

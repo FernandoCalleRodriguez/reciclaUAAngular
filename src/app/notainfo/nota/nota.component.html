@@ -2,10 +2,12 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Notas informativas</h1>
+      <h1>Listado de notas informativas</h1>
     </div>
     <div class="col">
-      <button class="btn btn-success float-right mt-2" (click)="modalCrearNota(modalForm)">Añadir nueva nota informativa</button>
+      <button class="btn btn-outline-primary float-right mt-2" (click)="modalCrearNota(modalForm)"><i class="fa fa-plus"></i>
+        Añadir nueva nota
+      </button>
     </div>
   </div>
   <hr/>
@@ -15,8 +17,7 @@
         <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">Titulo</th>
-          <th scope="col" class="d-none d-md-table-cell">Cuerpo</th>
+          <th scope="col"> Titulo</th>
           <th scope="col" class="d-none d-md-table-cell">Fecha</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -25,7 +26,6 @@
         <tr *ngFor="let nota of Notas ">
           <th scope="row">{{ nota.Id }}</th>
           <td>{{ nota.Titulo}}</td>
-          <td class="d-none d-md-table-cell">{{nota.Cuerpo}}</td>
           <td class="d-none d-md-table-cell">{{nota.Fecha | date: 'dd/MM/yyyy - hh:mm' }}</td>
           <td>
             <div class="btn-group">
@@ -47,7 +47,7 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Nota informativa: {{ Nota?.Titulo }}</h5>
+      <h5 class="modal-title">{{ Nota?.Titulo }}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -55,9 +55,9 @@
     <div class="modal-body">
       <p>{{ Nota?.Cuerpo }}</p>
     </div>
-    <div class="modal-footer">
-      {{ Nota?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
-    </div>
+    <div class="modal-footer text-muted text-right">
+    {{ Nota?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
+  </div>
   </div>
 </ng-template>
 
@@ -73,7 +73,7 @@
       <app-modal-nota #form [IdNota]= "edit? Nota.Id : null" ></app-modal-nota>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)" [disabled]="form.formulario.invalid">
         {{ edit? 'Modificar' : 'Añadir' }}
       </button>
     </div>

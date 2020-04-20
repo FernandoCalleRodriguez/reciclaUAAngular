@@ -6,16 +6,16 @@ export class AccionWeb {
   Id?: number;
   Fecha?: Date;
   Tipo?: TipoAccion;
-  Usuario?: Usuario;
+  UsuarioAccionWeb?: Usuario;
 }
 
 export class AccionReciclar {
   Id?: number;
-  Usuario?: Usuario;
   ItemAccion?: Item;
   ContenedorAccion?: Contenedor;
   Cantidad?: number;
   Fecha?: Date;
+  UsuarioAccionReciclar?: Usuario;
 }
 
 export class TipoAccion {

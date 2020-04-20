@@ -2,10 +2,12 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Tipo de acción</h1>
+      <h1>Listado de tipos de acción</h1>
     </div>
     <div class="col">
-      <button class="btn btn-success float-right mt-2" (click)="modalCrearTipoAccion(modalForm)">Añadir nuevo tipo de acción</button>
+      <button class="btn btn-outline-primary float-right mt-2"(click)="modalCrearTipoAccion(modalForm)"><i class="fa fa-plus"></i>
+        Añadir nuevo tipo de acción
+      </button>
     </div>
   </div>
   <hr/>
@@ -45,13 +47,13 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Tipo de acción: {{ tipoAccion?.Nombre }}</h5>
+      <h5 class="modal-title">{{ tipoAccion?.Nombre }}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>{{ tipoAccion?.Puntuacion }}</p>
+      <p> <b>Puntuación: </b>{{ tipoAccion?.Puntuacion }}</p>
     </div>
   </div>
 </ng-template>
@@ -68,7 +70,7 @@
       <app-modal-tipoaccion #form [IdTipoAccion]= "edit? tipoAccion.Id : null" ></app-modal-tipoaccion>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)">
+      <button type="button" class="btn btn-primary" (click)="edit? editarSubmit(form, modal) : crearSubmit(form, modal)" [disabled]="form.formulario.invalid">
         {{ edit? 'Modificar' : 'Añadir' }}
       </button>
     </div>

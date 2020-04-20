@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col text-center">
-      <h1>Nuevo Tipo de Acción</h1>
+      <h1>Nuevo tipo de acción</h1>
     </div>
   </div>
   <div class="row">
@@ -24,14 +24,13 @@
         </div>
         <div class="form-group">
           <label >Puntuación</label>
-          <textarea
-            type="text"
+          <input
+            type="number"
             id="puntuacion"
             formControlName="puntuacion"
             class="form-control"
-            rows="12"
-            [ngClass]="{'is-invalid' : puntuacion().invalid && puntuacion().touched, 'is-valid':puntuacion().valid}">>
-          </textarea>
+            rows="1"
+            [ngClass]="{'is-invalid' : puntuacion().invalid && puntuacion().touched, 'is-valid':puntuacion().valid}"/>
           <div class="invalid-feedback" *ngIf="puntuacion().errors?.required && puntuacion().touched">
             Campo requerido
           </div>

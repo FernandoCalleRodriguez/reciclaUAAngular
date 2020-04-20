@@ -11,23 +11,22 @@ import {Usuario} from '../models/usuario';
 })
 export class AccionwebService {
   server = 'http://localhost:16209/api/';
-  private token = localStorage.getItem('ACCESS_TOKEN');
+  private token = localStorage.getItem('ACESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});
   AccionWeb: AccionWeb;
   constructor(private http: HttpClient) { }
 
   public obtenerTodosAccionWeb(): Observable<AccionWeb[]> {
-    return this.http.get<AccionWeb[]>(this.server + 'AccionWeb/BuscarTodos').pipe(map(res => {
-      return res;
-    }));
+    console.log()
+    return this.http.get<AccionWeb[]>(this.server + 'AccionWeb/BuscarTodos', {headers: this.headers});
   }
 
   public obtenerAccionWebPorId(id: number): Observable<AccionWeb> {
-    return this.http.get<AccionWeb>(this.server + 'AccionWeb/' + id);
+    return this.http.get<AccionWeb>(this.server + 'AccionWeb/' + id,{headers: this.headers});
   }
 
   public borrar(accion: AccionWeb): Observable<void> {
-    return this.http.delete<void>(this.server + 'AccionWeb/Borrar?p_accionweb_oid=' + accion.Id);
+    return this.http.delete<void>(this.server + 'AccionWeb/Borrar?p_accionweb_oid=' + accion.Id,{headers: this.headers});
   }
 
 }

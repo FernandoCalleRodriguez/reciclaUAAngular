@@ -22,7 +22,7 @@ export class AccionreciclarComponent implements OnInit, OnDestroy {
   accionRec: AccionReciclar;
   usuario: Usuario;
   item: Item;
-  texto: String;
+  texto: string;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -71,11 +71,6 @@ export class AccionreciclarComponent implements OnInit, OnDestroy {
     this.accionRec = accion;
     console.log('Detalle de la carga de acciones ' + (JSON.stringify(this.texto)));
     this.modalService.open(detail, {size: 'xl'});
-  }
-
-  // Metodos auxiliares
-  public getUsuario(id: number): Observable<Usuario> {
-    return this.usuarioService.obtenerWebPorId(id);
   }
 
   public getContenedor(id: number) {

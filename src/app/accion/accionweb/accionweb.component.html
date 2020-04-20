@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Acción Web</h1>
+      <h1>Listado de acciones web</h1>
     </div>
   </div>
   <hr/>
@@ -21,8 +21,8 @@
         <tbody>
         <tr *ngFor="let accion of accionesWeb ">
           <th scope="row">{{ accion?.Id}}</th>
-          <td>{{ accion?.Tipo?.Nombre}}</td>
-          <td class="d-none d-md-table-cell">{{accion?.Usuario}}</td>
+          <td>{{ accion?.Tipo.Nombre}}</td>
+          <td class="d-none d-md-table-cell">{{ accion.UsuarioAccionWeb.Email}}</td>
           <td class="d-none d-md-table-cell">{{accion?.Fecha}}</td>
           <td>
             <div class="btn-group">
@@ -42,13 +42,18 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Accion Web: {{ accionWeb?.Tipo }}</h5>
+      <h5 class="modal-title">Acción: {{ accionWeb?.Id}}</h5>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <p>{{ accionWeb?.Usuario }}</p>
+      <p> <b>Tipo:</b> {{ accionWeb?.Tipo.Nombre}}</p>
+    </div>
+    <div class="modal-footer text-muted text-right">
+      {{ accionWeb?.UsuarioAccionWeb.Email }}
+      <br>
+      {{ accionWeb?.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
   </div>
 </ng-template>
