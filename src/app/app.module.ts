@@ -34,7 +34,7 @@ import {RecuperarcontrasenaComponent} from './recuperarcontrasena/recuperarcontr
 import {RankingComponent} from './ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
-import {BnNgIdleService} from 'bn-ng-idle';
+// import {BnNgIdleService} from 'bn-ng-idle';
 import {FormUsuarioModalComponent} from './usuario/form-usuario-modal/form-usuario-modal.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RouterModule} from '@angular/router';
@@ -48,6 +48,10 @@ import {EdificioComponent} from './edificio/edificio.component';
 import {PuntoComponent} from './punto/punto.component';
 
 import {ContenedorComponent} from './contenedor/contenedor.component';
+import {NivelComponent} from './nivel/nivel.component';
+import {MaterielComponent} from './materiel/materiel.component';
+import {ItemComponent} from './item/item.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -81,6 +85,9 @@ import {ContenedorComponent} from './contenedor/contenedor.component';
     EdificioComponent,
     PuntoComponent,
     ContenedorComponent,
+    NivelComponent,
+    MaterielComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +99,8 @@ import {ContenedorComponent} from './contenedor/contenedor.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     SweetAlert2Module.forRoot(),
-    NgbModule
+    NgbModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     UsuarioService,
@@ -101,12 +109,13 @@ import {ContenedorComponent} from './contenedor/contenedor.component';
     ValidacionService,
     UsuarioService,
     AutenticacionService,
-    BnNgIdleService,
+    // BnNgIdleService,
     UsuarioService,
     EdificioService,
     PlantaService,
     EstanciaService,
     PuntoService,
+    NgbModule
   ],
   exports: [],
   bootstrap: [AppComponent]

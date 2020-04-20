@@ -1,3 +1,6 @@
+import {MaterielComponent} from './materiel/materiel.component';
+import {ItemComponent} from './item/item.component';
+import {NivelComponent} from './nivel/nivel.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
@@ -55,8 +58,13 @@ const routes: Routes = [
   {path: 'punto/listar', component: PuntoComponent},
   {path: 'contenedor/listar', component: ContenedorComponent},
 
-  {path: '**', redirectTo: 'home'}
+  {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
+  {path: 'juego/nivel', component: NivelComponent, pathMatch: 'full'},
+  {path: 'juego/item', component: ItemComponent, pathMatch: 'full'},
+  {path: 'juego/material', component: MaterielComponent, pathMatch: 'full'},
+  {path: 'juego/item/:id', component: ItemComponent, pathMatch: 'full'},
 
+  {path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
