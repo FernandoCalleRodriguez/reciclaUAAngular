@@ -7,13 +7,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Punto } from '../shared/models/Punto';
 import { PuntoService } from '../shared/services/punto.service';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-contenedor',
   templateUrl: './contenedor.component.html',
   styleUrls: ['./contenedor.component.css']
 })
-export class ContenedorComponent implements OnInit {
+export class ContenedorComponent implements OnInit, OnDestroy {
 
   dtOptions: DataTables.Settings = {};
 
@@ -34,13 +35,16 @@ export class ContenedorComponent implements OnInit {
       click: () => void;
     };
   };
-  //public dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private contenedorService: ContenedorService, private puntoService: PuntoService, private toaster: ToastrService) { }
   isEdit = false;
   ngOnInit(): void {
     this.contenedorService.getContenedor().subscribe(res => {
       this.contenedores = res;
+      this.dtTrigger.next();
       //console.log(this.contenedores);
     });
     this.contenedor = new Contenedor();
@@ -100,7 +104,7 @@ export class ContenedorComponent implements OnInit {
 
           this.toaster.error("Contenedor borrado");
           this.refresh();
-          //this.dtTrigger.next();
+
         });
       }
     });
@@ -131,6 +135,17 @@ export class ContenedorComponent implements OnInit {
     }
   }
   refresh() {
-    this.contenedorService.getContenedor().subscribe(res => this.contenedores = res);
+    this.contenedorService.getContenedor().subscribe(res => {
+      this.contenedores = res;
+    });
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+    });
   }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
 }

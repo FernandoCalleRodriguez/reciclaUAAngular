@@ -56,46 +56,35 @@
                 </button>
             </div>
 
-            <div class="col-1">
-            </div>
 
-            <div class="col-10">
 
-                <div class="modal-body">
-                    <form #form="ngForm">
+            <div class="modal-body">
+                <form #form="ngForm">
 
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="Id" class="col-form-label">ID</label>
-                            </div>
-                            <div class="row">
-                                <input type="text" [disabled]="isEdit" ngModel required class="form-control"
-                                    [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
-                                <div *ngIf="Id.touched && !Id.valid">
-                                    <small class="text-danger">ID es obligatorio</small>
-                                </div>
-                            </div>
+                    <div class="form-group">
+
+                        <label for="Id" class="col-form-label">ID</label>
+
+                        <input type="text" [disabled]="isEdit" ngModel required class="form-control"
+                            [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
+                        <div *ngIf="Id.touched && !Id.valid">
+                            <small class="text-danger">ID es obligatorio</small>
                         </div>
 
-                        <div class="form-group">
+                    </div>
 
-                            <div class="row">
-                                <label for="Nombre" class="col-form-label">Nombre</label>
-                            </div>
+                    <div class="form-group">
 
-                            <div class="row">
-                                <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
-                                    [(ngModel)]="edificio.Nombre" ngModel required>
-                                <div *ngIf="Nombre.touched && !Nombre.valid">
-                                    <small class="text-danger">Nombre es obligatorio</small>
-                                </div>
-                            </div>
+                        <label for="Nombre" class="col-form-label">Nombre</label>
+
+                        <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
+                            [(ngModel)]="edificio.Nombre" ngModel required>
+                        <div *ngIf="Nombre.touched && !Nombre.valid">
+                            <small class="text-danger">Nombre es obligatorio</small>
                         </div>
 
-                    </form>
-                </div>
-            </div>
-            <div class="col-1">
+                    </div>
+                </form>
             </div>
 
             <div class="modal-footer">

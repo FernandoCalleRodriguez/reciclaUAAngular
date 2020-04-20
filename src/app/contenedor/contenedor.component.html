@@ -3,22 +3,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <h1>Lista de Contenedores</h1>
+            <h1>Listado de contenedores</h1>
         </div>
         <div class="col-md-3">
             <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
-                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo contenedor </button></h1>
+                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo contenedor</button></h1>
         </div>
     </div>
 
     <!-- tabla de contenedores ([dtTrigger]="dtTrigger")  -->
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" *ngIf="contenedores !=null">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Tipo de Contenedor</th>
+                        <th scope="col">Tipo de contenedor</th>
 
                         <th>Acciones</th>
                     </tr>
@@ -49,62 +49,48 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Contenedor</h5>
+                <h5 class="modal-title">Agregar contenedor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <div class="col-1">
-            </div>
 
-            <div class="col-10">
-                <div class="modal-body">
-                    <form #form="ngForm">
+            <div class="modal-body">
+                <form #form="ngForm">
 
-                        <div class="form-group">
+                    <div class="form-group">
 
-                            <div class="row">
-                                <label for="Tipo" class="col-form-label">Tipo de contenedor:</label>
-                            </div>
+                        <label for="Tipo" class="col-form-label">Tipo de contenedor:</label>
 
-                            <div class="row">
-                                <input type="text" class="form-control" id="Tipo" name="Tipo" #Tipo
-                                    [(ngModel)]="contenedor.Tipo" ngModel required>
-                                <div *ngIf="Tipo.touched && !Tipo.valid">
-                                    <small class="text-danger">Tipo de contenedor es obligatorio</small>
-                                </div>
-                            </div>
+                        <input type="text" class="form-control" id="Tipo" name="Tipo" #Tipo
+                            [(ngModel)]="contenedor.Tipo" ngModel required>
+                        <div *ngIf="Tipo.touched && !Tipo.valid">
+                            <small class="text-danger">Tipo de contenedor es obligatorio</small>
                         </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="Punto" class="col-form-label">Punto:</label>
-                            </div>
-                            <div class="row">
+                    </div>
 
-                                <select class="form-control" id="Punto" required name="Punto" #Punto="ngModel"
-                                    [(ngModel)]="contenedor.Punto_oid">
-                                    <option value="">Elije una Punto:</option>
-                                    <option *ngFor="let item of punto" [value]="item.Id">{{item.Id}}</option>
-                                </select>
+                    <div class="form-group">
 
-                                <div *ngIf="Punto.touched && !Punto.valid">
-                                    <small class="text-danger">Punto es obligatorio</small>
-                                </div>
-                            </div>
+                        <label for="Punto" class="col-form-label">Punto:</label>
+
+                        <select class="form-control" id="Punto" required name="Punto" #Punto="ngModel"
+                            [(ngModel)]="contenedor.Punto_oid">
+                            <option value="">Elije una Punto:</option>
+                            <option *ngFor="let item of punto" [value]="item.Id">{{item.Id}}</option>
+                        </select>
+
+                        <div *ngIf="Punto.touched && !Punto.valid">
+                            <small class="text-danger">Punto es obligatorio</small>
                         </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-1">
+                    </div>
+                </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
-                    Contenedor
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
+                    Guardar Contenedor
                 </button>
             </div>
         </div>

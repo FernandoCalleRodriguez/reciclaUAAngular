@@ -14,7 +14,8 @@
     <!-- tabla de plantas ([dtTrigger]="dtTrigger")  -->
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" *ngIf="plantas !=null">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                *ngIf="plantas !=null">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -55,51 +56,35 @@
                 </button>
             </div>
 
-            <div class="col-1">
-            </div>
+            <div class="modal-body">
+                <form #form="ngForm">
 
-            <div class="col-10">
-                <div class="modal-body">
-                    <form #form="ngForm">
+                    <div class="form-group">
 
-                        <div class="form-group">
+                        <label for="Planta" class="col-form-label">Número de Planta:</label>
 
-                            <div class="row">
-                                <label for="Planta" class="col-form-label">Número de Planta:</label>
-                            </div>
-
-                            <div class="row">
-                                <input type="text" class="form-control" id="Planta" name="Planta" #Planta
-                                    [(ngModel)]="planta.Planta" ngModel required>
-                                <div *ngIf="Planta.touched && !Planta.valid">
-                                    <small class="text-danger">Número de Planta es obligatorio</small>
-                                </div>
-                            </div>
+                        <input type="text" class="form-control" id="Planta" name="Planta" #Planta
+                            [(ngModel)]="planta.Planta" ngModel required>
+                        <div *ngIf="Planta.touched && !Planta.valid">
+                            <small class="text-danger">Número de Planta es obligatorio</small>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="Edificio" class="col-form-label">Edificio:</label>
-                            </div>
-                            <div class="row">
+                    <div class="form-group">
 
-                                <select class="form-control" id="Edificio" required name="Edificio" #Edificio="ngModel"
-                                    [(ngModel)]="planta.Edificio_oid">
-                                    <option value="">Elije una Edificio</option>
-                                    <option *ngFor="let item of edificio" [value]="item.Id">{{item.Nombre}}</option>
-                                </select>
+                        <label for="Edificio" class="col-form-label">Edificio:</label>
 
-                                <div *ngIf="Edificio.touched && !Edificio.valid">
-                                    <small class="text-danger">Edificio es obligatorio</small>
-                                </div>
-                            </div>
+                        <select class="form-control" id="Edificio" required name="Edificio" #Edificio="ngModel"
+                            [(ngModel)]="planta.Edificio_oid">
+                            <option value="">Elije una Edificio</option>
+                            <option *ngFor="let item of edificio" [value]="item.Id">{{item.Nombre}}</option>
+                        </select>
+
+                        <div *ngIf="Edificio.touched && !Edificio.valid">
+                            <small class="text-danger">Edificio es obligatorio</small>
                         </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-1">
+                    </div>
+                </form>
             </div>
 
             <div class="modal-footer">
