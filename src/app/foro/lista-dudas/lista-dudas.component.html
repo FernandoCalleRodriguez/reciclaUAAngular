@@ -32,7 +32,7 @@
           <th scope="row">{{ duda.Id }}</th>
           <td class="text-left">{{ duda.Titulo }}</td>
           <td class="d-none d-md-table-cell">{{ getTema(duda?.Tema) }}</td>
-          <td class="d-none d-md-table-cell">{{ duda.UsuarioDuda ? duda.UsuarioDuda.Email : 'Null' }}</td>
+          <td class="d-none d-md-table-cell">{{ duda.UsuarioDuda?.Email ? duda.UsuarioDuda?.Email : 'Usuario borrado'  }}</td>
           <!--td class="d-none d-md-table-cell">{{ duda.Fecha | date: 'dd/MM/yyyy - hh:mm'}}</td-->
           <td>
             <button class="icon btn btn-outline-dark" [routerLink]="'/foro/duda/' + duda.Id + '/respuestas'">
@@ -74,7 +74,7 @@
       <p>{{ duda?.Cuerpo }}</p>
     </div>
     <div class="modal-footer text-muted text-right">
-      {{ duda.UsuarioDuda?.Nombre }}
+      {{ duda.UsuarioDuda?.Nombre ? duda.UsuarioDuda.Nombre : 'Usuario borrado' }}
       <br>
       {{ duda.Fecha | date: 'hh:mm, dd/MM/yyyy'}}
     </div>
