@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de materiales</h1>
+    </div>
+    <div class="col">
+      <button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+        data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo material</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row ">
+    <div class="col">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Contenedor</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of materiales">
+            <td>{{item.Id}}</td>
+            <td>{{item.Nombre}}</td>
+            <td>{{item.Contenedor}}</td>
+            <td>{{getEstado(item.EsValido)}}</td>
+
+            <td>
+              <button class="btn btn-outline-success" (click)="getMaterialById(item.Id)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="delete(item)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo material</h5>
+        <ng-template #EditTitle>
+          <h5 class="modal-title">Editar material</h5>
+        </ng-template>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm">
+          <div class="form-group ">
+            <label for="Nombre" class="">Nombre</label>
+
+            <input [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}" type="text"
+              [(ngModel)]="material.Nombre" required class="form-control" id="Nombre" name="Nombre" #Nombre="ngModel">
+            <div *ngIf="Nombre.touched && !Nombre.valid">
+              <small class="text-danger">Nombre es obligatorio</small>
+            </div>
+
+          </div>
+          <div class="form-group ">
+            <label for="Contenedor" class="">Contenedor</label>
+
+
+              <input type="number" [ngClass]="{'is-invalid': Contenedor.touched && !Contenedor.valid,'is-valid': Contenedor.valid}" class="form-control" id="Contenedor" name="Contenedor" #Contenedor="ngModel"
+                [(ngModel)]="material.Contenedor" required>
+              <div *ngIf="Contenedor.touched && !Contenedor.valid">
+                <small class="text-danger">Contenedor es obligatorio</small>
+              </div>
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
+          (click)="submit(form)" [disabled]="!form.valid">
+          Crear
+        </button>
+        <ng-template #EditTitleBtn>
+          <button type="button" class="btn btn-primary float-right" (click)="submit(form)" [disabled]="!form.valid">
+            Modificar
+          </button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

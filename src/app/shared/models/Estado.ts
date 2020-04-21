@@ -1,3 +1,4 @@
-export enum Estado{
-    verificado=1, enProceso=2, descartado=3
+export class Estado {
+  Id?: number;
+  Estado?: string;
 }

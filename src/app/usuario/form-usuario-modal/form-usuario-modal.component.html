@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col">
+
+    <form [formGroup]="formulario">
+      <!-- EMAIL DEL USUARIO -->
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input [ngClass]="{'is-invalid' : formulario.get('email').invalid && formulario.get('email').touched,
+              'is-valid' : formulario.get('email').valid }"
+               type="email"
+               id="email"
+               formControlName="email"
+               placeholder="fdlc4@alu.ua.es"
+               class="form-control">
+      </div>
+      <!-- CONTRASEÑA DEL USUARIO -->
+      <div *ngIf="isCreate" class="form-group">
+        <label for="pwd">Contraseña:</label>
+
+        <input
+          [ngClass]="{'is-invalid' : formulario.get('pwd').invalid && formulario.get('pwd').touched,
+              'is-valid' : formulario.get('pwd').valid}"
+          type="password"
+          class="form-control"
+          id="pwd"
+          formControlName="pwd"
+          placeholder="Enter password">
+        <div class="invalid-feedback"
+              *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </div>
+
+      </div>
+      <!-- NOMBRE DEL USUARIO -->
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input [ngClass]="{'is-invalid' : formulario.get('name').invalid && formulario.get('name').touched,
+              'is-valid' : formulario.get('name').valid }"
+               type="text"
+               class="form-control"
+               id="name"
+               formControlName="name"
+        >
+      </div>
+
+      <!-- APELLIDOS DEL USUARIO -->
+      <div class="form-group">
+        <label for="surname">Apellidos:</label>
+        <input [ngClass]="{'is-invalid' : formulario.get('surname').invalid && formulario.get('surname').touched,
+              'is-valid' : formulario.get('surname').valid }"
+               type="text"
+               class="form-control"
+               id="surname"
+               formControlName="surname"
+        >
+      </div>
+      <!-- FECHA DEL USUARIO -->
+      <div *ngIf="!isCreate && !isEdit" class="form-group">
+        <label for="date">Fecha de creación:</label>
+        <input type="text"
+               class="form-control"
+               id="date"
+               formControlName="date"
+        >
+      </div>
+      <!-- FECHA DEL USUARIO -->
+      <div *ngIf="!isCreate && !isEdit" class="form-group">
+        <label for="verificado">Email verificado:</label>
+        <input type="text"
+               class="form-control"
+               id="verificado"
+               formControlName="verificado"
+        >
+      </div>
+    </form>
+  </div>
+</div>

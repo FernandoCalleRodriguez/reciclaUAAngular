@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {AutenticacionService} from '../../services/autenticacion.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,15 +9,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  idusuario;
 
-  constructor(/*protected  userService: UsuarioService,*/
-              protected  router: Router) { }
+
+  constructor(private autenticacionService: AutenticacionService,
+              protected  router: Router) {
+    this.autenticacionService.estaAutenticado();
+    this.idusuario = this.autenticacionService.getID();
+  }
 
   ngOnInit(): void {
   }
 
   logout() {
-    localStorage.removeItem('ACESS_TOKEN');
-    this.router.navigate(['']);
+    this.autenticacionService.Logout();
   }
 }

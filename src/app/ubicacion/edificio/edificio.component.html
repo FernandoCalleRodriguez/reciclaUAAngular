@@ -1,0 +1,96 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Lista de Edificios</h1>
+        </div>
+        <div class="col-md-3">
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo edificio</button></h1>
+        </div>
+
+    </div>
+
+    <!-- tabla de edificios ([dtTrigger]="dtTrigger")  -->
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" *ngIf="edificios !=null">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of edificios">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Nombre}}</td>
+
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-success" (click)="getEdificioById(item.Id)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modales-->
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Edificio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+
+            <div class="modal-body">
+                <form #form="ngForm">
+
+                    <div class="form-group">
+
+                        <label for="Id" class="col-form-label">ID</label>
+
+                        <input type="text" [disabled]="isEdit" ngModel required class="form-control"
+                            [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
+                        <div *ngIf="Id.touched && !Id.valid">
+                            <small class="text-danger">ID es obligatorio</small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="Nombre" class="col-form-label">Nombre</label>
+
+                        <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
+                            [(ngModel)]="edificio.Nombre" ngModel required>
+                        <div *ngIf="Nombre.touched && !Nombre.valid">
+                            <small class="text-danger">Nombre es obligatorio</small>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
+                    Guardar Edificio </button>
+            </div>
+        </div>
+    </div>
+</div>

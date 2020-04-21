@@ -1,0 +1,149 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de niveles</h1>
+    </div>
+    <div class="col">
+      <button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+        data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo nivel</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped text-center" [dtOptions]="dtOptions" datatable [dtTrigger]="dtTrigger">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Número</th>
+            <th scope="col">Puntuación</th>
+            <th scope="col">Items</th>
+            <th scope="col">Asignar items</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of niveles">
+            <td>{{item.Id}}</td>
+            <td>{{item.Numero}}</td>
+            <td>{{item.Puntuacion}}</td>
+            <td>
+              <a [routerLink]="['/juego/item']"class="btn btn-default" [queryParams]={Niveles_oid:item.Id}
+                routerLinkActive="router-link-active"><i class="fa fa-eye"></i> </a></td>
+            <td>
+              <p (click)="setAssignedNivel(item)" data-toggle="modal" data-target="#assignarItems">assiganar
+                Items</p>
+            </td>
+            <td>
+
+              <div class="btn-group">
+                <button class="btn btn-outline-success" (click)="getNivelById(item.Id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+
+                <button class="btn btn-outline-danger" (click)="delete(item)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo nivel</h5>
+        <ng-template #EditTitle>
+          <h5 class="modal-title">Modificar nivel</h5>
+        </ng-template>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm">
+          <div class="form-group ">
+            <label for="Numero">Numero</label>
+            <input [ngClass]="{'is-invalid': Numero.touched && !Numero.valid,'is-valid': Numero.valid}" type="number"
+              required class="form-control" [(ngModel)]="nivel.Numero" id="Numero" name="Numero" #Numero="ngModel">
+            <div class="" *ngIf="Numero.touched && !Numero.valid">
+              <small class="text-danger">Numero es obligatorio</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="Puntuacion">Puntuacion</label>
+
+            <input [ngClass]="{'is-invalid': Puntuacion.touched && !Puntuacion.valid,'is-valid': Puntuacion.valid}"
+              type="text" class="form-control" id="Puntuacion" name="Puntuacion" #Puntuacion="ngModel"
+              [(ngModel)]="nivel.Puntuacion" required>
+            <div *ngIf="Puntuacion.touched && !Puntuacion.valid">
+              <small class="text-danger">Puntuacion es obligatorio</small>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
+          (click)="submit(form)" [disabled]="!form.valid">
+          Crear
+        </button>
+        <ng-template #EditTitleBtn>
+          <button type="button" class="btn btn-primary float-right" (click)="submit(form)" [disabled]="!form.valid">
+            Modificar
+          </button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="assignarItems" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assignar items</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #AssignClosebutton>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #AssignForm="ngForm">
+          <div class="form-group ">
+            <label for="Numero">Item</label>
+            <!-- <select class="form-control">
+              <option [value]="">Elije item</option>
+              <option *ngFor="let item of items" [value]="item.Id">{{item.Nombre}}</option>
+            </select> -->
+
+            <ng-multiselect-dropdown [placeholder]="'Elije los items'" [data]="items" name="selectedItems" required
+              [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary float-right" (click)="assignar(AssignForm)"
+          [disabled]="!AssignForm.valid">
+          Assignar
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>

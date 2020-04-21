@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {Router} from '@angular/router';
 import {Usuario} from '../shared/models/usuario';
+import {AutenticacionService} from '../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,12 @@ import {Usuario} from '../shared/models/usuario';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() {
+  idusuario: string;
+  constructor(private autenticacionService: AutenticacionService) {
   }
 
   ngOnInit(): void {
+
   }
 
 
