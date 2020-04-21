@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {UsuarioService} from '../shared/services/usuario.service';
-import {Usuario} from '../shared/models/usuario';
+import {UsuarioService} from '../../shared/services/usuario.service';
+import {Usuario} from '../../shared/models/usuario';
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 

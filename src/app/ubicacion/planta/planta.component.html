@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <h1>Lista de Plantas</h1>
+            <h1>Lista de plantas</h1>
         </div>
         <div class="col-md-3">
             <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
@@ -14,8 +14,7 @@
     <!-- tabla de plantas ([dtTrigger]="dtTrigger")  -->
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-                *ngIf="plantas !=null">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>

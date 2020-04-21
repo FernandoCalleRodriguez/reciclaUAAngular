@@ -1,11 +1,11 @@
 import Swal from 'sweetalert2';
-import { Planta } from '../shared/models/planta';
-import { PlantaService } from '../shared/services/planta.service';
+import { Planta } from '../../shared/models/planta';
+import { PlantaService } from '../../shared/services/planta.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Edificio } from '../shared/models/edificio';
-import { EdificioService } from '../shared/services/edificio.service';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
   templateUrl: './planta.component.html',
   styleUrls: ['./planta.component.css']
 })
-export class PlantaComponent implements OnInit {
+export class PlantaComponent implements OnInit, OnDestroy {
 
   dtOptions: DataTables.Settings = {};
 
@@ -43,6 +43,8 @@ export class PlantaComponent implements OnInit {
     this.plantaService.getPlanta().subscribe(res => {
       this.plantas = res;
       //console.log(this.plantas);
+      this.dtTrigger.next();
+
     });
     this.planta = new Planta();
     this.edificioService.getEdificio().subscribe(res => this.edificio = res)
@@ -86,6 +88,11 @@ export class PlantaComponent implements OnInit {
     this.isEdit = false;
     this.planta = new Planta();
   }
+
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
   delete(id) {
     Swal.fire({
       title: '¿Está seguro de borrar la planta con ID "' + id + '" ?',
@@ -99,7 +106,6 @@ export class PlantaComponent implements OnInit {
       if (result.value) {
         this.plantaService.removePlanta(id).subscribe(res => {
           this.refresh();
-          this.dtTrigger.next();
           this.toaster.error("Planta borrada");
         });
       }
@@ -131,6 +137,9 @@ export class PlantaComponent implements OnInit {
     }
   }
   refresh() {
-    this.plantaService.getPlanta().subscribe(res => this.plantas = res);
+    this.plantaService.getPlanta().subscribe(res => {
+      this.plantas = res;
+      this.dtTrigger.next();
+    });
   }
 }

@@ -1,11 +1,11 @@
-import { Planta } from '../shared/models/planta';
-import { Edificio } from '../shared/models/edificio';
-import { EdificioService } from './../shared/services/edificio.service';
-import { PlantaService } from './../shared/services/planta.service';
+import { Planta } from '../../shared/models/planta';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
+import { PlantaService } from '../../shared/services/planta.service';
 
 import Swal from 'sweetalert2';
-import { Estancia } from '../shared/models/estancia';
-import { EstanciaService } from '../shared/services/estancia.service';
+import { Estancia } from '../../shared/models/estancia';
+import { EstanciaService } from '../../shared/services/estancia.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';

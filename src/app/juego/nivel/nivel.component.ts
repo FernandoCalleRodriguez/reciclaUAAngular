@@ -1,14 +1,14 @@
-import {ItemService} from './../shared/services/item.service';
+import {ItemService} from '../../shared/services/item.service';
 import Swal from 'sweetalert2';
-import {Nivel} from '../shared/models/nivel';
-import {NivelService} from '../shared/services/nivel.service';
+import {Nivel} from '../../shared/models/nivel';
+import {NivelService} from '../../shared/services/nivel.service';
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {Router} from '@angular/router';
-import {Item} from '../shared/models/Item';
+import {Item} from '../../shared/models/item';
 
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import {mergeMap, map} from 'rxjs/operators';

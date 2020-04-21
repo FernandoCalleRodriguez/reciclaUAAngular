@@ -1,20 +1,20 @@
-import {Material} from './../shared/models/Material';
-import {NivelService} from './../shared/services/nivel.service';
-import {MaterialService} from './../shared/services/materiel.service';
-import {Estado} from '../shared/models/estado';
+import {Material} from '../../shared/models/material';
+import {NivelService} from '../../shared/services/nivel.service';
+import {MaterialService} from '../../shared/services/materiel.service';
+import {Estado} from '../../shared/models/estado';
 import {map} from 'rxjs/operators';
-import {Item} from '../shared/models/Item';
-import {ItemService} from '../shared/services/item.service';
+import {Item} from '../../shared/models/item';
+import {ItemService} from '../../shared/services/item.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import {Nivel} from '../shared/models/nivel';
+import {Nivel} from '../../shared/models/nivel';
 import {stringify} from 'querystring';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
-import {ValidacionService} from '../shared/services/validacion.service';
+import {ValidacionService} from '../../shared/services/validacion.service';
 
 @Component({
   selector: 'app-item',

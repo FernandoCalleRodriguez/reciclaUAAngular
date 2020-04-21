@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
-import { Edificio } from '../shared/models/edificio';
-import { EdificioService } from '../shared/services/edificio.service';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';

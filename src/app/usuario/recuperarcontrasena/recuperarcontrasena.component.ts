@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UsuarioService} from '../shared/services/usuario.service';
-import {AutenticacionService} from '../shared/services/autenticacion.service';
+import {UsuarioService} from '../../shared/services/usuario.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Usuario} from '../shared/models/usuario';
+import {Usuario} from '../../shared/models/usuario';
 
 @Component({
   selector: 'app-recuperarcontrasena',

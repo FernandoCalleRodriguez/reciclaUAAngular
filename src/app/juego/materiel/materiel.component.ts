@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Material} from '../shared/models/Material';
+import {Material} from '../../shared/models/material';
 import {ToastrService} from 'ngx-toastr';
-import {MaterialService} from '../shared/services/materiel.service';
+import {MaterialService} from '../../shared/services/materiel.service';
 import Swal from 'sweetalert2';
 import {NgForm} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {Router} from '@angular/router';
-import {ValidacionService} from '../shared/services/validacion.service';
+import {ValidacionService} from '../../shared/services/validacion.service';
 
 @Component({
   selector: 'app-materiel',
