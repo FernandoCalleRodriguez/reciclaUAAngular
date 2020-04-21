@@ -10,12 +10,12 @@
                     data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nueva estancia</button></h1>
         </div>
     </div>
-
+  <hr>
     <!-- tabla de estancias ([dtTrigger]="dtTrigger")  *ngIf="estancias !=null"-->
 
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" *ngIf="estancias !=null">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -23,7 +23,6 @@
                         <th scope="col" class="d-none d-md-table-cell">Latitud</th>
                         <th scope="col" class="d-none d-md-table-cell">Longitud</th>
                         <th scope="col">Nombre</th>
-
                         <th scope="col">Acciones</th>
 
                     </tr>
