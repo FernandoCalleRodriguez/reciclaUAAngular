@@ -31,6 +31,7 @@ import {AccionreciclarComponent} from './accion/accionreciclar/accionreciclar.co
 import {TipoaccionComponent} from './accion/tipoaccion/tipoaccion.component';
 import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
 import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
+import {ValidarElementoComponent} from './validacion/validar-elemento/validar-elemento.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -64,6 +65,9 @@ const routes: Routes = [
   {path: 'foro/duda/:dudaId/respuesta/crear', component: FormRespuestaComponent},
   {path: 'foro/duda/:dudaId/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
   {path: 'validaciones', component: ListaValidacionesComponent},
+  {path: 'validar/puntos', component: ValidarElementoComponent, data: {Id: 1, Element: 'puntos'}},
+  {path: 'validar/items', component: ValidarElementoComponent, data: {Id: 2, Element: 'items'}},
+  {path: 'validar/materiales', component: ValidarElementoComponent, data: {Id: 3, Element: 'materiales'}},
 
   {path: 'ubicacion/edificio/listar', component: EdificioComponent},
   {path: 'ubicacion/estancia/listar', component: EstanciaComponent},
