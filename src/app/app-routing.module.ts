@@ -35,6 +35,7 @@ import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
+  {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/:cerrarsesion', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
