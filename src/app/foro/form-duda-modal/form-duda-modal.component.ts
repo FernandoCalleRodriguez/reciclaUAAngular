@@ -23,7 +23,9 @@ export class FormDudaModalComponent implements OnInit {
 
   constructor(protected temaService: TemaService, protected dudaService: DudaService, protected usuarioService: UsuarioService) {
     this.temas = temaService.getTemas();
-    this.user = this.usuarioService.getLoggedUser();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.user = u;
+    });
   }
 
   ngOnInit(): void {

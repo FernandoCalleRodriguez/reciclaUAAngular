@@ -39,8 +39,9 @@ export class FormNotaComponent implements OnInit {
     this.nota.Titulo = this.titulo().value;
     this.nota.Cuerpo = this.cuerpo().value;
     this.nota.Fecha = new Date();
-    this.nota.UsuarioAdministrador_oid = this.usuarioService.getLoggedUser().Id;
-
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.nota.UsuarioAdministrador_oid = u.Id;
+    });
     this.notaservice.crear(this.nota).subscribe(id => {
         console.log(this.nota);
         this.router.navigate(['/nota']);

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AutenticacionService} from '../../services/autenticacion.service';
+import {Usuario} from '../../models/usuario';
+import {UsuarioService} from '../../services/usuario.service';
 
 
 @Component({
@@ -9,16 +11,17 @@ import {AutenticacionService} from '../../services/autenticacion.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  idusuario;
+  public usuario: Usuario = new Usuario();
 
-
-  constructor(private autenticacionService: AutenticacionService,
-              protected  router: Router) {
+  constructor(private autenticacionService: AutenticacionService, protected usuarioService: UsuarioService, public router: Router) {
     this.autenticacionService.estaAutenticado();
-    this.idusuario = this.autenticacionService.getID();
+    this.usuario.Id = parseInt(this.autenticacionService.getID());
   }
 
   ngOnInit(): void {
+    this.usuarioService.getLoggedUser()?.subscribe(u => {
+      this.usuario = u;
+    });
   }
 
   logout() {

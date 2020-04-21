@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content" *ngIf="!router.url.includes('login')">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
             </li>
             <li><a [routerLink]="['/usuario/web/listar']" class="dropdown-item">Usuarios web</a></li>
             <li><a [routerLink]="['/usuario/ranking']" class="dropdown-item">Ranking de usuarios</a></li>
-            <li><a [routerLink]="['/usuario/administrador/' + idusuario]" class="dropdown-item">Perfil</a></li>
+            <li><a [routerLink]="['/usuario/administrador/' + usuario?.Id]" class="dropdown-item">Perfil</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -89,7 +89,6 @@
       <ul class="nav navbar-nav navbar-right">
         <a type="button" (click)="logout()" class="btn btn-danger"><i class="fa fa-power-off"></i></a>
       </ul>
-
     </div>
   </nav>
 </div>
