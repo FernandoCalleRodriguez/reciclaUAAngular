@@ -1,6 +1,6 @@
-import {MaterielComponent} from './materiel/materiel.component';
-import {ItemComponent} from './item/item.component';
-import {NivelComponent} from './nivel/nivel.component';
+import {MaterielComponent} from './juego/materiel/materiel.component';
+import {ItemComponent} from './juego/item/item.component';
+import {NivelComponent} from './juego/nivel/nivel.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
@@ -14,14 +14,14 @@ import {ListaValidacionesComponent} from './validacion/lista-validaciones/lista-
 import {UsuariolistarComponent} from './usuario/listarusuario/usuariolistar.component';
 import {CrearusuarioComponent} from './usuario/crearusuario/crearusuario.component';
 import {ModificarusuarioComponent} from './usuario/modificarusuario/modificarusuario.component';
-import {RecuperarcontrasenaComponent} from './recuperarcontrasena/recuperarcontrasena.component';
+import {RecuperarcontrasenaComponent} from './usuario/recuperarcontrasena/recuperarcontrasena.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
-import {RankingComponent} from './ranking/ranking.component';
+import {RankingComponent} from './usuario/ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
-import {EdificioComponent} from './edificio/edificio.component';
-import {EstanciaComponent} from './estancia/estancia.component';
-import {PlantaComponent} from './planta/planta.component';
+import {EdificioComponent} from './ubicacion/edificio/edificio.component';
+import {EstanciaComponent} from './ubicacion/estancia/estancia.component';
+import {PlantaComponent} from './ubicacion/planta/planta.component';
 import {PuntoComponent} from './punto/punto.component';
 import {ContenedorComponent} from './contenedor/contenedor.component';
 
@@ -38,26 +38,20 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'login/:cerrarsesion', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
-  {path: 'ranking', component: RankingComponent},
-  {path: 'verificacion/:usuarioId', component: VerificacionComponent},
-
-  {path: 'listarusuario/:tipousuario', component: UsuariolistarComponent},
-  {path: 'usuariocrear/:tipousuario', component: CrearusuarioComponent},
-  {path: 'modificarusuario/:tipousuario/:usuarioId', component: ModificarusuarioComponent},
+  {path: 'usuario/ranking', component: RankingComponent},
+  /*{path: 'usuario/verificacion/:usuarioId', component: VerificacionComponent},*/
+  {path: 'usuario/:tipousuario/listar', component: UsuariolistarComponent},
+  {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
+  {path: 'usuario/:tipousuario/:usuarioId/modificar', component: ModificarusuarioComponent},
   {path: 'usuario/cambiarcontrasena/:usuarioId', component: CambiarcontrasenaComponent},
   {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
 
-  {path: 'nota', component: NotaComponent},
+  {path: 'nota/listar', component: NotaComponent},
   {path: 'nota/crear', component: FormNotaComponent},
-
-  {path: 'accionweb', component: AccionwebComponent},
-  {path: 'accionreciclar', component: AccionreciclarComponent},
-
-  {path: 'tipoaccion', component: TipoaccionComponent},
-  {path: 'tipoaccion/crear', component: FormTipoaccionComponent},
-
-
-  {path: 'usuario/:usuarioId', component: UsuarioComponent},
+  {path: 'accion/web/listar', component: AccionwebComponent},
+  {path: 'accion/reciclar/listar', component: AccionreciclarComponent},
+  {path: 'accion/tipo/listar', component: TipoaccionComponent},
+  {path: 'accion/tipo/crear', component: FormTipoaccionComponent},
 
   {path: 'foro/duda/listar', component: ListaDudasComponent},
   {path: 'foro/duda/:dudaId/respuestas', component: ListaRespuestasComponent},
@@ -70,17 +64,16 @@ const routes: Routes = [
   {path: 'foro/duda/:dudaId/respuesta/:respuestaId/modificar', component: FormRespuestaComponent},
   {path: 'validaciones', component: ListaValidacionesComponent},
 
-  {path: 'edificio/listar', component: EdificioComponent},
-  {path: 'estancia/listar', component: EstanciaComponent},
-  {path: 'planta/listar', component: PlantaComponent},
+  {path: 'ubicacion/edificio/listar', component: EdificioComponent},
+  {path: 'ubicacion/estancia/listar', component: EstanciaComponent},
+  {path: 'ubicacion/planta/listar', component: PlantaComponent},
   {path: 'punto/listar', component: PuntoComponent},
   {path: 'contenedor/listar', component: ContenedorComponent},
 
-  {path: 'usuario/:usuarioId', component: UsuarioComponent, pathMatch: 'full'},
-  {path: 'juego/nivel', component: NivelComponent, pathMatch: 'full'},
-  {path: 'juego/item', component: ItemComponent, pathMatch: 'full'},
-  {path: 'juego/material', component: MaterielComponent, pathMatch: 'full'},
+  {path: 'juego/nivel/listar', component: NivelComponent, pathMatch: 'full'},
+  {path: 'juego/item/listar', component: ItemComponent, pathMatch: 'full'},
   {path: 'juego/item/:id', component: ItemComponent, pathMatch: 'full'},
+  {path: 'juego/material/listar', component: MaterielComponent, pathMatch: 'full'},
 
   {path: '**', redirectTo: 'home'}
 ];

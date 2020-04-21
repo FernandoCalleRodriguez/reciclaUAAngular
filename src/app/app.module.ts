@@ -30,8 +30,8 @@ import {UsuariolistarComponent} from './usuario/listarusuario/usuariolistar.comp
 import {CrearusuarioComponent} from './usuario/crearusuario/crearusuario.component';
 import {ModificarusuarioComponent} from './usuario/modificarusuario/modificarusuario.component';
 import {AutenticacionService} from './shared/services/autenticacion.service';
-import {RecuperarcontrasenaComponent} from './recuperarcontrasena/recuperarcontrasena.component';
-import {RankingComponent} from './ranking/ranking.component';
+import {RecuperarcontrasenaComponent} from './usuario/recuperarcontrasena/recuperarcontrasena.component';
+import {RankingComponent} from './usuario/ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
 // import {BnNgIdleService} from 'bn-ng-idle';
@@ -42,15 +42,15 @@ import {PuntoService} from './shared/services/punto.service';
 import {EstanciaService} from './shared/services/estancia.service';
 import {PlantaService} from './shared/services/planta.service';
 import {EdificioService} from './shared/services/edificio.service';
-import {PlantaComponent} from './planta/planta.component';
-import {EstanciaComponent} from './estancia/estancia.component';
-import {EdificioComponent} from './edificio/edificio.component';
+import {PlantaComponent} from './ubicacion/planta/planta.component';
+import {EstanciaComponent} from './ubicacion/estancia/estancia.component';
+import {EdificioComponent} from './ubicacion/edificio/edificio.component';
 import {PuntoComponent} from './punto/punto.component';
 
 import {ContenedorComponent} from './contenedor/contenedor.component';
-import {NivelComponent} from './nivel/nivel.component';
-import {MaterielComponent} from './materiel/materiel.component';
-import {ItemComponent} from './item/item.component';
+import {NivelComponent} from './juego/nivel/nivel.component';
+import {MaterielComponent} from './juego/materiel/materiel.component';
+import {ItemComponent} from './juego/item/item.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { NotaComponent } from './notainfo/nota/nota.component';

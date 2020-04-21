@@ -1,5 +1,5 @@
 <div id="content">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,12 +19,13 @@
              aria-haspopup="true" aria-expanded="false">
             Usuarios
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['/listarusuario/administrador']" class="dropdown-item">Usuarios administrador</a>
-            <a [routerLink]="['/listarusuario/web']" class="dropdown-item">Usuarios web</a>
-            <a [routerLink]="['/ranking']" class="dropdown-item">Ranking de usuarios</a>
-            <a [routerLink]="['/usuario/administrador/' + idusuario]" class="dropdown-item">Perfil</a>
-          </div>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['/usuario/administrador/listar']" class="dropdown-item">Usuarios administrador</a>
+            </li>
+            <li><a [routerLink]="['/usuario/web/listar']" class="dropdown-item">Usuarios web</a></li>
+            <li><a [routerLink]="['/usuario/ranking']" class="dropdown-item">Ranking de usuarios</a></li>
+            <li><a [routerLink]="['/usuario/administrador/' + idusuario]" class="dropdown-item">Perfil</a></li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="ForonavbarDropdown" role="button" data-toggle="dropdown"
@@ -32,8 +33,8 @@
             Foro
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['']" class="dropdown-item">Dudas</a>
-            <a [routerLink]="['']" class="dropdown-item">Respuestas</a>
+            <a [routerLink]="['/foro/duda/listar']" class="dropdown-item">Dudas</a>
+            <a [routerLink]="['/foro/respuesta/listar']" class="dropdown-item">Respuestas</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -42,9 +43,9 @@
             Juego
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['']" class="dropdown-item">Items</a>
-            <a [routerLink]="['']" class="dropdown-item">Materiales</a>
-            <a [routerLink]="['']" class="dropdown-item">Niveles</a>
+            <a [routerLink]="['/juego/item/listar']" class="dropdown-item">Items</a>
+            <a [routerLink]="['/juego/material/listar']" class="dropdown-item">Materiales</a>
+            <a [routerLink]="['/juego/nivel/listar']" class="dropdown-item">Niveles</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -53,9 +54,9 @@
             Estancias
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['']" class="dropdown-item">Estancias</a>
-            <a [routerLink]="['']" class="dropdown-item">Edificios</a>
-            <a [routerLink]="['']" class="dropdown-item">Plantas</a>
+            <a [routerLink]="['/ubicacion/estancia/listar']" class="dropdown-item">Estancias</a>
+            <a [routerLink]="['/ubicacion/edificio/listar']" class="dropdown-item">Edificios</a>
+            <a [routerLink]="['/ubicacion/planta/listar']" class="dropdown-item">Plantas</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -64,8 +65,8 @@
             Puntos
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['']" class="dropdown-item">Puntos de reciclaje</a>
-            <a [routerLink]="['']" class="dropdown-item">Contenedores</a>
+            <a [routerLink]="['/punto/listar']" class="dropdown-item">Puntos de reciclaje</a>
+            <a [routerLink]="['/contenedor/listar']" class="dropdown-item">Contenedores</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -74,13 +75,13 @@
             Acciones
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['']" class="dropdown-item">Acciones reciclaje</a>
-            <a [routerLink]="['']" class="dropdown-item">Acciones web</a>
-            <a [routerLink]="['']" class="dropdown-item">Tipos de acciones web</a>
+            <a [routerLink]="['/accion/reciclar/listar']" class="dropdown-item">Acciones reciclaje</a>
+            <a [routerLink]="['/accion/web/listar']" class="dropdown-item">Acciones web</a>
+            <a [routerLink]="['/accion/tipo/listar']" class="dropdown-item">Tipos de acciones web</a>
           </div>
         </li>
         <li>
-          <a class="nav-link" [routerLink]="['']">
+          <a class="nav-link" [routerLink]="['/nota/listar']">
             Notas
           </a>
         </li>
