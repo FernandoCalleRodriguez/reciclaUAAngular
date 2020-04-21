@@ -138,8 +138,9 @@ export class EdificioComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    this.edificioService.getEdificio().subscribe(res => this.edificios = res);
-    this.dtTrigger.next();
-
+    this.edificioService.getEdificio().subscribe(res => {
+      this.edificios = res;
+      this.dtTrigger.next();
+    });
   }
 }

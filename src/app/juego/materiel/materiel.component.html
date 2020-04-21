@@ -30,12 +30,15 @@
             <td>{{getEstado(item.EsValido)}}</td>
 
             <td>
-              <button class="btn btn-outline-success" (click)="getMaterialById(item.Id)">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button class="btn btn-outline-danger" (click)="delete(item)">
-                <i class="fa fa-trash"></i>
-              </button>
+              <div class="btn-group">
+                <button class="btn btn-outline-success" (click)="getMaterialById(item.Id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger" (click)="delete(item)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+
             </td>
           </tr>
         </tbody>

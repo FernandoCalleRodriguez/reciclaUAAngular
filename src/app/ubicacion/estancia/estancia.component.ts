@@ -158,8 +158,9 @@ export class EstanciaComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    this.estanciaService.getEstancia().subscribe(res => this.estancias = res);
-    this.dtTrigger.next();
-
+    this.estanciaService.getEstancia().subscribe(res => {
+      this.estancias = res;
+      this.dtTrigger.next();
+    });
   }
 }
