@@ -44,7 +44,7 @@ const routes: Routes = [
   {path: 'usuario/:tipousuario/listar', component: UsuariolistarComponent},
   {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
   {path: 'usuario/:tipousuario/:usuarioId/modificar', component: ModificarusuarioComponent},
-  {path: 'usuario/cambiarcontrasena/:usuarioId', component: CambiarcontrasenaComponent},
+  {path: 'usuario/cambiarcontrasena', component: CambiarcontrasenaComponent},
   {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
 
   {path: 'nota/listar', component: NotaComponent},

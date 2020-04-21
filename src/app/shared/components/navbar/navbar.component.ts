@@ -15,13 +15,15 @@ export class NavbarComponent implements OnInit {
 
   constructor(private autenticacionService: AutenticacionService, protected usuarioService: UsuarioService, public router: Router) {
     this.autenticacionService.estaAutenticado();
-    this.usuario.Id = parseInt(this.autenticacionService.getID());
+    this.router.events.subscribe(value => {
+      this.usuarioService.getLoggedUser()?.subscribe(u => {
+        this.usuario = u;
+      });
+    });
   }
 
   ngOnInit(): void {
-    this.usuarioService.getLoggedUser()?.subscribe(u => {
-      this.usuario = u;
-    });
+
   }
 
   logout() {

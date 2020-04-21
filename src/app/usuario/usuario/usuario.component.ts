@@ -42,6 +42,9 @@ export class UsuarioComponent implements OnInit {
                 if (this.autenticacionService.getID() == this.usuarioId) {
                     this.perfil = true;
                 }
+            }, error => {
+              this.toaster.error('Usuario no encontrado');
+              this.router.navigate(['/usuario/administrador/' + this.autenticacionService.getID()]);
             });
         });
 
