@@ -12,6 +12,9 @@
                formControlName="email"
                placeholder="fdlc4@alu.ua.es"
                class="form-control">
+        <div class="invalid-feedback" *ngIf="email().errors?.required && email().touched">
+          Campo requerido
+        </div>
       </div>
       <!-- CONTRASEÑA DEL USUARIO -->
       <div *ngIf="isCreate" class="form-group">
@@ -27,7 +30,9 @@
           placeholder="Enter password">
         <div class="invalid-feedback"
               *ngIf="!formulario.get('pwd').valid && formulario.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </div>
-
+        <div class="invalid-feedback" *ngIf="formulario.get('pwd').errors?.required && formulario.get('pwd').touched">
+          Campo requerido
+        </div>
       </div>
       <!-- REPETIR CONTRASEÑA -->
       <div *ngIf="isCreate" class="form-group">
@@ -41,9 +46,11 @@
           id="pwd2"
           formControlName="pwd2"
           placeholder="Enter password">
-        <span class="help-block" style="color: red;"
+        <span class="invalid-feedback"
               *ngIf="formulario.get('pwd').value != formulario.get('pwd2').value && formulario.get('pwd2').touched && formulario.get('pwd').touched "> Las contraseñas no coinciden</span>
-
+        <div class="invalid-feedback" *ngIf="formulario.get('pwd2').errors?.required && formulario.get('pwd2').touched">
+          Campo requerido
+        </div>
       </div>
       <!-- NOMBRE DEL USUARIO -->
       <div class="form-group">
@@ -55,6 +62,9 @@
                id="name"
                formControlName="name"
         >
+        <div class="invalid-feedback" *ngIf="formulario.get('name').errors?.required && formulario.get('name').touched">
+          Campo requerido
+        </div>
       </div>
 
       <!-- APELLIDOS DEL USUARIO -->
@@ -67,6 +77,9 @@
                id="surname"
                formControlName="surname"
         >
+        <div class="invalid-feedback" *ngIf="formulario.get('surname').errors?.required && formulario.get('surname').touched">
+          Campo requerido
+        </div>
       </div>
       <!-- FECHA DEL USUARIO -->
       <div *ngIf="!isCreate && !isEdit" class="form-group">
