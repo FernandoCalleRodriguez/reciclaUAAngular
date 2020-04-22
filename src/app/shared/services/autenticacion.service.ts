@@ -3,7 +3,7 @@ import {Usuario} from '../models/usuario';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-// import {BnNgIdleService} from 'bn-ng-idle';
+import {BnNgIdleService} from 'bn-ng-idle';
 import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {UsuarioService} from './usuario.service';
@@ -20,8 +20,8 @@ export class AutenticacionService {
   usuario: Usuario;
 
   constructor(private http: HttpClient,
-              private router: Router
-              /* private bnIdle: BnNgIdleService */) {
+              private router: Router,
+              private bnIdle: BnNgIdleService ) {
 
   }
 
@@ -93,12 +93,11 @@ export class AutenticacionService {
     return contraseña;
   }
 
-  controlSesion() { /*
+  controlSesion() {
     this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.Logout();
       }
     });
-*/
   }
 }

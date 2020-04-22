@@ -34,7 +34,7 @@ import {RecuperarcontrasenaComponent} from './usuario/recuperarcontrasena/recupe
 import {RankingComponent} from './usuario/ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
-// import {BnNgIdleService} from 'bn-ng-idle';
+import {BnNgIdleService} from 'bn-ng-idle';
 import {FormUsuarioModalComponent} from './usuario/form-usuario-modal/form-usuario-modal.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RouterModule} from '@angular/router';
@@ -132,7 +132,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     ValidacionService,
     UsuarioService,
     AutenticacionService,
-    // BnNgIdleService,
+    BnNgIdleService,
     UsuarioService,
     EdificioService,
     PlantaService,
