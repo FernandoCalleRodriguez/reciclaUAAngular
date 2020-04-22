@@ -4,6 +4,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: '<app-form-usuario-modal',
@@ -18,7 +19,8 @@ export class FormUsuarioModalComponent implements OnInit {
   @Input() isEdit: boolean;
   @Input() tipousuario: string;
 
-  constructor(protected usuarioService: UsuarioService) {
+  constructor(protected usuarioService: UsuarioService,
+              private toaster: ToastrService) {
   }
 
   ngOnInit(): void {
