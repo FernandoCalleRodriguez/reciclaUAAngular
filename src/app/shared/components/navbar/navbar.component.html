@@ -18,7 +18,6 @@
             </li>
             <li><a [routerLink]="['/usuario/web/listar']" class="dropdown-item">Usuarios web</a></li>
             <li><a [routerLink]="['/usuario/ranking']" class="dropdown-item">Ranking de usuarios</a></li>
-            <li><a [routerLink]="['/usuario/administrador/' + usuario?.Id]" class="dropdown-item">Perfil</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -105,7 +104,7 @@
     </div>
     <ul *ngIf="!toggle" class="nav justify-content-end">
       <li class="nav-item">
-        <a [routerLink]="['/usuario/administrador/' + usuario?.Id]"
+        <a [routerLink]="['/perfil']"
            class="nav-link text-light">{{ usuario?.Nombre }}</a>
       </li>
       <li>

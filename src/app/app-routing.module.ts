@@ -46,7 +46,7 @@ const routes: Routes = [
   {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
   {path: 'usuario/:tipousuario/:usuarioId/modificar', component: ModificarusuarioComponent},
   {path: 'usuario/cambiarcontrasena', component: CambiarcontrasenaComponent},
-  {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
+  {path: 'perfil', component: UsuarioComponent},
 
   {path: 'nota/listar', component: NotaComponent},
   {path: 'nota/crear', component: FormNotaComponent},
