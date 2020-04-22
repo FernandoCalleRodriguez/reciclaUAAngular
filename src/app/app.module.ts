@@ -64,6 +64,7 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
 import { ValidarElementoComponent } from './validacion/validar-elemento/validar-elemento.component';
 import { MapaComponent } from './ubicacion/mapa/mapa.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {TestComponent} from './test/test.component';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     FormTipoaccionComponent,
     ModalTipoaccionComponent,
     ValidarElementoComponent,
-    MapaComponent
+    MapaComponent,
+    TestComponent // test
   ],
   imports: [
     BrowserModule,
@@ -124,7 +126,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     NgbModule,
     NgMultiSelectDropDownModule.forRoot(),
     LeafletModule,
-    NgbCollapseModule
+    NgbCollapseModule,
   ],
   providers: [
     UsuarioService,
