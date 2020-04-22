@@ -11,6 +11,7 @@ import {DataTableDirective} from 'angular-datatables';
 import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
 import {Tema} from '../../shared/models/tema';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -102,6 +103,8 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear la duda');
     });
   }
 
@@ -121,6 +124,8 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar la duda');
     });
   }
 }

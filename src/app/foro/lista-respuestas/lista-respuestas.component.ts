@@ -109,6 +109,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Respuesta ' + r.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear la respuesta');
     });
   }
 
@@ -132,6 +134,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Respuesta ' + r.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar la respuesta');
     });
   }
 }
