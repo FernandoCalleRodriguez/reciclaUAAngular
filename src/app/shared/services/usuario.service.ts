@@ -35,9 +35,9 @@ export class UsuarioService {
     let url;
 
     if (tipo === 'web') {
-      url = 'UsuarioWeb/BuscarNoBorrados';
+      url = 'UsuarioWeb/BuscarTodos';
     } else if (tipo === 'administrador') {
-      url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
+      url = 'UsuarioAdminAutenticado/BuscarTodos';
     }
 
     return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
