@@ -31,6 +31,8 @@ export class CrearusuarioComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       pwd: new FormControl(null, [Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+      pwd2: new FormControl(null, [Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
       name: new FormControl(null, [Validators.required]),
       surname: new FormControl(null, [Validators.required]),
     });
@@ -51,7 +53,7 @@ export class CrearusuarioComponent implements OnInit {
           this.error = true;
         } else {
           console.log(this.usuario);
-          this.router.navigate(['/listarusuario/' + this.tipousuario]);
+          this.router.navigate(['/usuario/' + this.tipousuario + '/listar']);
         }
 
       }, error => {

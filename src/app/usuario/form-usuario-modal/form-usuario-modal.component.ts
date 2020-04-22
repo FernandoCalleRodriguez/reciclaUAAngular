@@ -27,7 +27,7 @@ export class FormUsuarioModalComponent implements OnInit {
     if (this.usuarioId != null) {
       this.formulario = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
-        pwd: new FormControl(null,),
+        pwd: new FormControl(null),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),
         date: new FormControl(null),
@@ -49,6 +49,8 @@ export class FormUsuarioModalComponent implements OnInit {
       this.formulario = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
         pwd: new FormControl(null, [Validators.required,
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+        pwd2: new FormControl(null, [Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),

@@ -34,7 +34,22 @@
           <span class="help-block" style="color: red;"
                 *ngIf="!formularioCrear.get('pwd').valid && formularioCrear.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
         </div>
+        <!-- REPETIR CONTRASEÑA DEL USUARIO -->
 
+        <div class="form-group">
+          <label for="pwd2">Repetir contraseña:</label>
+          <input
+            [ngClass]="{'is-invalid' : formularioCrear.get('pwd2').invalid && formularioCrear.get('pwd2').touched,
+              'is-valid' : formularioCrear.get('pwd2').valid }"
+            type="password"
+            class="form-control"
+            id="pwd2"
+            formControlName="pwd2"
+            placeholder="Enter password">
+          <span class="help-block" style="color: red;"
+                *ngIf="formularioCrear.get('pwd').value != formularioCrear.get('pwd2').value && formularioCrear.get('pwd2').touched && formularioCrear.get('pwd').touched "> Las contraseñas no coinciden</span>
+
+        </div>
         <!-- NOMBRE DEL USUARIO -->
         <div class="form-group">
           <label for="name">Nombre:</label>
