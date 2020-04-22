@@ -19,20 +19,12 @@ export class CambiarcontrasenaComponent implements OnInit {
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
-              protected  usuarioService: UsuarioService) {
+              protected usuarioService: UsuarioService) {
   }
 
   ngOnInit(): void {
-
-    this.route.params.subscribe(param => {
-
-      this.usuarioId = param['usuarioId'];
-
-      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, 'administrador').subscribe(usuario => {
-        this.usuario = usuario;
-
-      });
-
+    this.usuarioService.getLoggedUser().subscribe(usuario => {
+      this.usuario = usuario;
     });
 
     this.formularioCambiar = new FormGroup({

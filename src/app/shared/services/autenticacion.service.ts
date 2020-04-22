@@ -5,7 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 // import {BnNgIdleService} from 'bn-ng-idle';
 import Swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
+import {UsuarioService} from './usuario.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class AutenticacionService {
   usuario: Usuario;
 
   constructor(private http: HttpClient,
-              private router: Router,
+              private router: Router
               /* private bnIdle: BnNgIdleService */) {
 
   }
@@ -37,8 +39,6 @@ export class AutenticacionService {
     localStorage.removeItem('ID_USER');
     localStorage.clear();
     this.router.navigate(['login/si']);
-
-
   }
 
   private saveToken(token: string): void {
@@ -68,26 +68,22 @@ export class AutenticacionService {
 
   }
 
+  isLogged(): boolean {
+    return this.getToken() && this.getID() && this.getID() == this.parseJwt(this.getToken()).id;
+  }
+
   estaAutenticado() {
-    if (this.getToken() != null || this.getID() != null) {
-      if (this.getID() != this.parseJwt(this.getToken()).id) {
-        this.router.navigate(['/login']);
-      }
-    } else {
+    if (!this.isLogged()) {
       this.router.navigate(['/login']);
     }
-    
   }
 
   noEstaAutenticado() {
-    if (this.getToken() != null && this.getID() != null) {
-      if (this.getID() == this.parseJwt(this.getToken()).id) {
-        this.router.navigate(['/home']);
-      }
+    if (this.isLogged()) {
+      this.router.navigate(['/home']);
     } else {
       console.log('me quedo');
     }
-
   }
 
   generarContrasena(): string {

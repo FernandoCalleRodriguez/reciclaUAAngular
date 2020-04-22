@@ -30,7 +30,9 @@ export class FormRespuestaModalComponent implements OnInit {
   public respuestaId: number;
 
   constructor(protected dudaService: DudaService, protected respuestaService: RespuestaService, protected usuarioService: UsuarioService) {
-    this.user = this.usuarioService.getLoggedUser();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.user = u;
+    });
   }
 
   ngOnInit(): void {

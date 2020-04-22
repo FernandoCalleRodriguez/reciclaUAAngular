@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from './shared/services/usuario.service';
 import {ToastrService} from 'ngx-toastr';
@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'reciclaUA';
 
   constructor(/* private bnIdle: BnNgIdleService, */
-              private autenticacionService: AutenticacionService) {
+              public autenticacionService: AutenticacionService) {
     /* this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.autenticacionService.Logout();
@@ -24,4 +24,7 @@ export class AppComponent {
 */
   }
 
+  isLogged(): boolean {
+    return this.autenticacionService.isLogged();
+  }
 }

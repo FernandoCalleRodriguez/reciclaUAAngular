@@ -23,7 +23,9 @@ export class FormDudaComponent implements OnInit {
   constructor(protected temaService: TemaService, protected dudaService: DudaService,
               protected router: Router, protected usuarioService: UsuarioService, protected route: ActivatedRoute) {
     this.temas = temaService.getTemas();
-    this.user = this.usuarioService.getLoggedUser();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.user = u;
+    });
     this.route.params.subscribe(params => {
       if (params.dudaId) {
         this.edit = true;

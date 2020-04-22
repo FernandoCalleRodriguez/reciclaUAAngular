@@ -51,7 +51,9 @@ export class ModalNotaComponent implements OnInit {
       this.nota.Titulo = this.titulo().value;
       this.nota.Cuerpo = this.cuerpo().value;
       this.nota.Fecha = new Date();
-      this.nota.UsuarioAdministrador_oid = this.usuarioService.getLoggedUser().Id;
+      this.usuarioService.getLoggedUser().subscribe(u => {
+        this.nota.UsuarioAdministrador_oid = u.Id;
+      });
 
       console.log(JSON.stringify(this.nota));
 

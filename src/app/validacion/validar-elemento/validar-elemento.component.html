@@ -1,0 +1,15 @@
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de {{ data.Element }} por validar</h1>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <app-tabla-puntos *ngIf="data.Id == 1"></app-tabla-puntos>
+      <app-tabla-items *ngIf="data.Id == 2"></app-tabla-items>
+      <app-tabla-materiales *ngIf="data.Id == 3"></app-tabla-materiales>
+    </div>
+  </div>
+</div>
