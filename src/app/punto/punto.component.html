@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2">
     <div class="row">
         <div class="col-md-9">
-            <h1>Lista de Puntos</h1>
+            <h1>Listado de puntos de reciclaje</h1>
         </div>
         <div class="col-md-3">
             <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col">
-            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" *ngIf="puntos !=null">
+            <table class="table table-striped text-center" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -52,7 +52,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Punto de Reciclaje</h5>
+                <h5 class="modal-title">Añadir punto de reciclaje</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -102,8 +102,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">Guardar
-                    Punto</button>
+                <button type="button" class="btn btn-primary" (click)="submit(form)"
+                    [disabled]="!form.valid">Añadir</button>
             </div>
         </div>
     </div>

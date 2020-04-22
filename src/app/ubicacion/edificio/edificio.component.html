@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2">
     <div class="row">
         <div class="col-md-9">
-            <h1>Lista de Edificios</h1>
+            <h1>Listado de edificios</h1>
         </div>
         <div class="col-md-3">
             <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
@@ -9,7 +9,7 @@
         </div>
 
     </div>
-  <hr>
+    <hr>
 
     <!-- tabla de edificios ([dtTrigger]="dtTrigger")  -->
     <div class="row">
@@ -49,20 +49,18 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Edificio</h5>
+                <h5 class="modal-title">Añadir edificio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
 
             <div class="modal-body">
                 <form #form="ngForm">
 
                     <div class="form-group">
 
-                        <label for="Id" class="col-form-label">ID</label>
+                        <label for="Id" class="col-form-label">ID:</label>
 
                         <input type="text" [disabled]="isEdit" ngModel required class="form-control"
                             [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
@@ -74,7 +72,7 @@
 
                     <div class="form-group">
 
-                        <label for="Nombre" class="col-form-label">Nombre</label>
+                        <label for="Nombre" class="col-form-label">Nombre:</label>
 
                         <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
                             [(ngModel)]="edificio.Nombre" ngModel required>
@@ -87,8 +85,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
-                    Guardar Edificio </button>
+                <button type="button" class="btn btn-primary" (click)="submit(form)"
+                    [disabled]="!form.valid">Añadir</button>
             </div>
         </div>
     </div>

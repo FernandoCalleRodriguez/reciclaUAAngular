@@ -42,7 +42,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
     this.edificioService.getEdificio().subscribe(res => {
       this.edificios = res;
       this.dtTrigger.next();
-      console.log(this.edificios);
+      //console.log(this.edificios);
     });
     this.edificio = new Edificio();
 
@@ -131,7 +131,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
         if (res != null) {
           this.closebutton.nativeElement.click();
           this.refresh();
-          this.toaster.info('Edificio modificado');
+          this.toaster.success('Edificio modificado');
         }
       });
     }

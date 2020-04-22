@@ -47,12 +47,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar contenedor</h5>
+                <h5 class="modal-title">Añadir contenedor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
 
             <div class="modal-body">
                 <form #form="ngForm">
@@ -87,9 +86,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
-                    Guardar Contenedor
-                </button>
+                <button type="button" class="btn btn-primary" (click)="submit(form)"
+                    [disabled]="!form.valid">Añadir</button>
             </div>
         </div>
     </div>

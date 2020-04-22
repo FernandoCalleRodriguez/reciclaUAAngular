@@ -1,14 +1,14 @@
 <div class="container-fluid mt-2">
     <div class="row">
         <div class="col-md-9">
-            <h1>Lista de estancias</h1>
+            <h1>Listado de estancias</h1>
         </div>
         <div class="col-md-3">
             <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
                     data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nueva estancia</button></h1>
         </div>
     </div>
-  <hr>
+    <hr>
     <!-- tabla de estancias ([dtTrigger]="dtTrigger")  *ngIf="estancias !=null"-->
 
     <div class="row">
@@ -156,8 +156,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)" [disabled]="!form.valid">
-                    Guardar EStancia </button>
+                <button type="button" class="btn btn-primary" (click)="submit(form)"
+                    [disabled]="!form.valid">Añadir</button>
             </div>
         </div>
     </div>

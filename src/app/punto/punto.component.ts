@@ -4,16 +4,17 @@ import { LoginComponent } from './../login/login.component';
 import Swal from 'sweetalert2';
 import { Punto } from '../shared/models/punto';
 import { PuntoService } from '../shared/services/punto.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { EstanciaService } from '../shared/services/estancia.service';
+import { Subject } from 'rxjs';
 @Component({
     selector: 'app-punto',
     templateUrl: './punto.component.html',
     styleUrls: ['./punto.component.css']
 })
-export class PuntoComponent implements OnInit {
+export class PuntoComponent implements OnInit, OnDestroy {
 
     dtOptions: DataTables.Settings = {};
 
@@ -33,11 +34,16 @@ export class PuntoComponent implements OnInit {
             click: () => void;
         };
     };
-    constructor(private puntoService: PuntoService, private estanciaService: EstanciaService, private toaster: ToastrService) { }
+
+    public dtTrigger: Subject<any> = new Subject();
+
+    constructor(private puntoService: PuntoService, private estanciaService: EstanciaService, 
+        private toaster: ToastrService) { }
     isEdit = false;
     ngOnInit(): void {
         this.puntoService.getPunto().subscribe(res => {
             this.puntos = res;
+            this.dtTrigger.next();
             //console.log(this.puntos);
         });
 
@@ -84,6 +90,11 @@ export class PuntoComponent implements OnInit {
         this.isEdit = false;
         this.punto = new Punto();
     }
+
+    ngOnDestroy(): void {
+        this.dtTrigger.unsubscribe();
+    }
+
     delete(id) {
         Swal.fire({
             title: '¿Está seguro de borrar el punto con ID "' + id + '" ?',
@@ -96,7 +107,7 @@ export class PuntoComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.puntoService.removePunto(id).subscribe(res => {
-                    this.toaster.error("Punto borrado");
+                    this.toaster.error('Punto borrado');
                     this.refresh();
                 });
             }
@@ -113,7 +124,7 @@ export class PuntoComponent implements OnInit {
                 if (res != null) {
                     this.closebutton.nativeElement.click();
                     this.refresh();
-                    this.toaster.success("Punto creado");
+                    this.toaster.success('Punto creado');
                 }
             });
         }
@@ -123,12 +134,16 @@ export class PuntoComponent implements OnInit {
                 if (res != null) {
                     this.closebutton.nativeElement.click();
                     this.refresh();
-                    this.toaster.info("Punto modificado");
+                    this.toaster.success('Punto modificado');
                 }
             });
         }
     }
+
     refresh() {
-        this.puntoService.getPunto().subscribe(res => this.puntos = res);
+        this.puntoService.getPunto().subscribe(res => {
+            this.puntos = res;
+            this.dtTrigger.next();
+        });
     }
 }
