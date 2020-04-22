@@ -52,7 +52,7 @@
             id="pwd2"
             formControlName="pwd2"
             placeholder="Enter password">
-          <span class="help-block" style="color: red;"
+          <span class="invalid-feedback"
                 *ngIf="formularioCrear.get('pwd').value != formularioCrear.get('pwd2').value && formularioCrear.get('pwd2').touched && formularioCrear.get('pwd').touched "> Las contraseñas no coinciden</span>
           <div class="invalid-feedback" *ngIf="formularioCrear.get('pwd2').errors?.required && formularioCrear.get('pwd2').touched">
             Campo requerido

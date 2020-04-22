@@ -17,7 +17,7 @@
             id="pwd"
             formControlName="pwd"
             placeholder="Enter password">
-          <span class="help-block" style="color: red;"
+          <span class="invalid-feedback"
                 *ngIf="!formularioCambiar.get('pwd').valid && formularioCambiar.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
         </div>
         <div class="form-group">
@@ -30,7 +30,7 @@
           id="pwd2"
           formControlName="pwd2"
           placeholder="Enter password">
-        <span class="help-block" style="color: red;"
+        <span class="invalid-feedback"
               *ngIf="formularioCambiar.get('pwd').value != formularioCambiar.get('pwd2').value && formularioCambiar.get('pwd2').touched && formularioCambiar.get('pwd').touched "> Las contraseñas no coinciden</span>
 
       </div>
