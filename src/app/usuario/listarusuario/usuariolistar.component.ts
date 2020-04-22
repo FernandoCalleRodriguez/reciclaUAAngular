@@ -9,6 +9,7 @@ import {NgbModal, NgbModalModule, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -25,12 +26,15 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
 
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
               private router: Router,
               private toaster: ToastrService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private  dtoptionsService: DtoptionsService) {
     this.isEdit = false;
     this.isCreate = false;
 
@@ -38,6 +42,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.dtOptions = this.dtoptionsService.getDtoptions('usuarios');
 
     this.route.params.subscribe(param => {
 
@@ -62,6 +67,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
     this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
       this.usuarios = usuarios;
       this.dtTrigger.next();
+
     });
   }
 
