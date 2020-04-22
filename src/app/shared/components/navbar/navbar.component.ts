@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit {
   public notificacionesPuntos = 0;
   public notificacionesMateriales = 0;
 
-  constructor(private autenticacionService: AutenticacionService, protected usuarioService: UsuarioService,
+  constructor(private autenticacionService: AutenticacionService,
+              protected usuarioService: UsuarioService,
               protected validacionService: ValidacionService, public router: Router) {
     this.autenticacionService.estaAutenticado();
     this.router.events.subscribe(value => {
