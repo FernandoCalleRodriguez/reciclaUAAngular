@@ -80,7 +80,6 @@ export class AutenticacionService {
     if (this.isLogged()) {
       this.router.navigate(['/home']);
     } else {
-      console.log('me quedo');
     }
   }
 
