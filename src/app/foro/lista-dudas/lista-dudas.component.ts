@@ -10,6 +10,7 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
 import {Tema} from '../../shared/models/tema';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -26,13 +27,15 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
 
   public edit = false;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
-              protected modalService: NgbModal, protected toaster: ToastrService) {
+              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService) {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
     });
+    this.dtOptions = dtoptionsService.getDtoptions('dudas');
   }
 
   public getTema(id: number): string {

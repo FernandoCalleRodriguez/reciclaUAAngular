@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormRespuestaModalComponent} from '../form-respuesta-modal/form-respuesta-modal.component';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-respuestas',
@@ -27,9 +28,10 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
 
   public edit = false;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
-              protected router: Router, protected route: ActivatedRoute,
+              protected router: Router, protected route: ActivatedRoute, protected dtoptionsService: DtoptionsService,
               protected modalService: NgbModal, protected toaster: ToastrService) {
     this.route.params.subscribe(params => {
       if (params.dudaId) {
@@ -45,6 +47,7 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.dtOptions = dtoptionsService.getDtoptions('respuestas');
   }
 
   ngOnInit(): void {
