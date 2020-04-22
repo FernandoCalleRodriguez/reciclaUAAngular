@@ -18,6 +18,7 @@ export class RecuperarcontrasenaComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private autenticacionService: AutenticacionService) {
+    this.autenticacionService.noEstaAutenticado();
   }
 
   ngOnInit(): void {

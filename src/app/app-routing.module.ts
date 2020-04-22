@@ -39,7 +39,6 @@ const routes: Routes = [
 
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'login/:cerrarsesion', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
   {path: 'usuario/ranking', component: RankingComponent},
   /*{path: 'usuario/verificacion/:usuarioId', component: VerificacionComponent},*/

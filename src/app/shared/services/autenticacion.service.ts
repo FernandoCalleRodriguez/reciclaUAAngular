@@ -38,7 +38,7 @@ export class AutenticacionService {
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID_USER');
     localStorage.clear();
-    this.router.navigate(['login/si']);
+    this.router.navigate(['/login']);
   }
 
   private saveToken(token: string): void {
@@ -53,17 +53,15 @@ export class AutenticacionService {
   }
 
   getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('ACCESS_TOKEN');
-    }
+    this.token = localStorage.getItem('ACCESS_TOKEN');
+
     return this.token;
 
   }
 
   getID(): string {
-    if (!this.id) {
-      this.id = localStorage.getItem('ID_USER');
-    }
+    this.id = localStorage.getItem('ID_USER');
+
     return this.id;
 
   }
