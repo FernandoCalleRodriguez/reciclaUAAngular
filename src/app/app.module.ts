@@ -62,6 +62,8 @@ import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
 import { FormTipoaccionComponent } from './accion/form-tipoaccion/form-tipoaccion.component';
 import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoaccion.component';
 import { ValidarElementoComponent } from './validacion/validar-elemento/validar-elemento.component';
+import { MapaComponent } from './ubicacion/mapa/mapa.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 
 @NgModule({
@@ -106,7 +108,8 @@ import { ValidarElementoComponent } from './validacion/validar-elemento/validar-
     ModalNotaComponent,
     FormTipoaccionComponent,
     ModalTipoaccionComponent,
-    ValidarElementoComponent
+    ValidarElementoComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +123,7 @@ import { ValidarElementoComponent } from './validacion/validar-elemento/validar-
     SweetAlert2Module.forRoot(),
     NgbModule,
     NgMultiSelectDropDownModule.forRoot(),
+    LeafletModule
   ],
   providers: [
     UsuarioService,

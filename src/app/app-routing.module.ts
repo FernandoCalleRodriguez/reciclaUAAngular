@@ -32,6 +32,7 @@ import {TipoaccionComponent} from './accion/tipoaccion/tipoaccion.component';
 import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
 import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
 import {ValidarElementoComponent} from './validacion/validar-elemento/validar-elemento.component';
+import {MapaComponent} from './ubicacion/mapa/mapa.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -79,6 +80,8 @@ const routes: Routes = [
   {path: 'juego/item/listar', component: ItemComponent, pathMatch: 'full'},
   {path: 'juego/item/:id', component: ItemComponent, pathMatch: 'full'},
   {path: 'juego/material/listar', component: MaterielComponent, pathMatch: 'full'},
+
+  {path: 'mapa', component: MapaComponent, pathMatch: 'full'},
 
   {path: '**', redirectTo: 'home'}
 ];
