@@ -103,6 +103,10 @@ export class UsuarioService {
     });
   }
 
+  public countUsuariosWeb(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'UsuarioWeb/BuscarTodosCount', this.getHeaderToken());
+  }
+
   verificarEmail(id) {
     return this.http.post<any>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(res => {
       return res;
