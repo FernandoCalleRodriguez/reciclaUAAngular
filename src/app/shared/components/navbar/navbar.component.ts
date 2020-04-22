@@ -23,10 +23,12 @@ export class NavbarComponent implements OnInit {
   constructor(private autenticacionService: AutenticacionService,
               protected usuarioService: UsuarioService,
               protected validacionService: ValidacionService, public router: Router) {
-    this.autenticacionService.estaAutenticado();
+    //this.autenticacionService.estaAutenticado();
     this.router.events.subscribe(value => {
       this.usuarioService.getLoggedUser()?.subscribe(u => {
         this.usuario = u;
+      }, error => {
+        this.autenticacionService.Logout();
       });
     });
   }
