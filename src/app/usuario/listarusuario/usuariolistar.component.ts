@@ -154,7 +154,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
             this.usuarios.push(usuario);
             modal.dismiss();
             this.refresh();
-            this.toaster.success('El Usuario se ha creado con éxito');
+            this.toaster.success('Usuario ' + usuario.Id + ' creado');
           }
         });
       }
