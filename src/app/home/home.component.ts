@@ -12,6 +12,7 @@ import {AutenticacionService} from '../shared/services/autenticacion.service';
 export class HomeComponent implements OnInit {
   idusuario: string;
   constructor(private autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
   }
 
   ngOnInit(): void {

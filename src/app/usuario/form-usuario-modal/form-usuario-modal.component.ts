@@ -5,6 +5,7 @@ import {UsuarioService} from '../../shared/services/usuario.service';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: '<app-form-usuario-modal',

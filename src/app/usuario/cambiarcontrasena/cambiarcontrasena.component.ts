@@ -3,6 +3,7 @@ import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-cambiarcontrasena',
@@ -19,7 +20,10 @@ export class CambiarcontrasenaComponent implements OnInit {
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
-              protected usuarioService: UsuarioService) {
+              protected usuarioService: UsuarioService,
+              private autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
+
   }
 
   ngOnInit(): void {

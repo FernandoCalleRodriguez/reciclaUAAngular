@@ -3,6 +3,7 @@ import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-ranking',
@@ -15,7 +16,9 @@ export class RankingComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private usuarioService: UsuarioService) {
+  constructor(private usuarioService: UsuarioService,
+              private autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
     this.usuarioService.obtenerRanking().subscribe(usuarios => {
       this.usuarios = usuarios;
       this.dtTrigger.next();

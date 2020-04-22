@@ -10,6 +10,7 @@ import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -34,7 +35,9 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
               private router: Router,
               private toaster: ToastrService,
               private modalService: NgbModal,
-              private  dtoptionsService: DtoptionsService) {
+              private  dtoptionsService: DtoptionsService,
+              private autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
     this.isEdit = false;
     this.isCreate = false;
 

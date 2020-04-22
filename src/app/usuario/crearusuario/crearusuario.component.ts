@@ -5,6 +5,7 @@ import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../../shared/models/usuario';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-crearusuario',
@@ -21,7 +22,9 @@ export class CrearusuarioComponent implements OnInit {
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
               private router: Router,
-              private toaster: ToastrService) {
+              private toaster: ToastrService,
+              private  autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
   }
 
   ngOnInit(): void {
