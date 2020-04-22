@@ -121,5 +121,8 @@
       }
     }
   },
-  "defaultProject": "reciclaUA"
+  "defaultProject": "reciclaUA",
+  "cli": {
+    "analytics": "c642dac3-013e-4101-91f5-ba06ea0abea8"
+  }
 }
