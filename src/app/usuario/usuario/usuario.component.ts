@@ -32,22 +32,18 @@ export class UsuarioComponent implements OnInit {
               private modalService: NgbModal,
   ) {
     this.autenticacionService.estaAutenticado();
-    this.route.params.subscribe(param => {
+    this.tipousuario = 'administrador';
 
-      this.tipousuario = param['tipousuario'];
-      this.usuarioId = param['usuarioId'];
+    this.usuarioService.obtenerUsuarioPorId(this.autenticacionService.getID(), this.tipousuario).subscribe(usuario => {
+      this.usuario = usuario;
 
-      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, this.tipousuario).subscribe(usuario => {
-        this.usuario = usuario;
-
-        if (this.autenticacionService.getID() == this.usuarioId) {
-          this.perfil = true;
-        }
-      }, error => {
-        this.toaster.error('Usuario no encontrado');
-        this.router.navigate(['/usuario/administrador/' + this.autenticacionService.getID()]);
-      });
+      if (this.autenticacionService.getID() == this.usuarioId) {
+        this.perfil = true;
+      }
+    }, error => {
+      this.router.navigate(['/']);
     });
+
 
     this.formulario = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -70,7 +66,7 @@ export class UsuarioComponent implements OnInit {
     form.onSubmit().subscribe(usuario => {
       this.usuario = usuario;
       modal.dismiss();
-      this.toaster.success('Usuario ' + this.usuarioId + ' modificado');
+      this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
 
     });
 
