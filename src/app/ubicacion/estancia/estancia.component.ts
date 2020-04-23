@@ -101,7 +101,8 @@ export class EstanciaComponent implements OnInit, OnDestroy {
     this.isEdit = true;
   }
 
-  add() {
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.estancia = new Estancia();
   }

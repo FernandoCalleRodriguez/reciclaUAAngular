@@ -5,6 +5,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-edificio',
@@ -30,10 +31,15 @@ export class EdificioComponent implements OnInit, OnDestroy {
     };
   };
 
-  public dtTrigger: Subject<any> = new Subject();
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+
   isEdit = false;
 
-  constructor(private edificioService: EdificioService, private toaster: ToastrService) { }
+  constructor(private edificioService: EdificioService, private toaster: ToastrService) {
+
+  }
 
   ngOnInit(): void {
     this.edificioService.getEdificio().subscribe(res => {
@@ -81,7 +87,8 @@ export class EdificioComponent implements OnInit, OnDestroy {
     this.isEdit = true;
   }
 
-  add() {
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.edificio = new Edificio();
   }
@@ -139,6 +146,11 @@ export class EdificioComponent implements OnInit, OnDestroy {
     this.edificioService.getEdificio().subscribe(res => {
       this.edificios = res;
       this.dtTrigger.next();
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
+
   }
 }

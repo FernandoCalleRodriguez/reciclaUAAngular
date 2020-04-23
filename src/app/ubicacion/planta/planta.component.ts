@@ -89,7 +89,8 @@ export class PlantaComponent implements OnInit, OnDestroy {
     this.isEdit = true;
   }
 
-  add() {
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.planta = new Planta();
   }

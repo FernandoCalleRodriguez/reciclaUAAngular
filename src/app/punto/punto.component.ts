@@ -89,7 +89,8 @@ export class PuntoComponent implements OnInit, OnDestroy {
         this.showModel.nativeElement.click();
         this.isEdit = true;
     }
-    add() {
+    add(form) {
+        form.reset();
         this.isEdit = false;
         this.punto = new Punto();
 
@@ -155,5 +156,5 @@ export class PuntoComponent implements OnInit, OnDestroy {
             this.dtTrigger.next();
         });
     }
-  
+
 }

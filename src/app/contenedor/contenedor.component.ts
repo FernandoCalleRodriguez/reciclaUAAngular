@@ -87,7 +87,8 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
-  add() {
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.contenedor = new Contenedor();
   }

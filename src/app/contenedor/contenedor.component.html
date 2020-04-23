@@ -4,8 +4,9 @@
             <h1>Listado de contenedores</h1>
         </div>
         <div class="col-md-3">
-            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
-                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo contenedor</button></h1>
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add(form)" data-toggle="modal"
+                    #showModel data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo contenedor</button>
+            </h1>
         </div>
     </div>
 
@@ -60,14 +61,16 @@
             <div class="modal-body">
                 <form #form="ngForm">
 
-                    <div class="form-group">
-                        <label for="Tipo" class="col-form-label">Tipo de contenedor</label>
-                        <input type="text"
-                            [ngClass]="{'is-invalid': Tipo.touched && !Tipo.valid,'is-valid': Tipo.valid}"
-                            [(ngModel)]="contenedor.Tipo" required class="form-control" id="Tipo" name="Tipo"
+                    <div class="form-group ">
+                        <label for="Tipo" class="">Tipo contenedor</label>
+                        <select [ngClass]="{'is-invalid': Tipo.touched && !Tipo.valid,'is-valid': Tipo.valid}"
+                            [(ngModel)]="contenedor.Tipo" class="form-control" id="Tipo" required name="Tipo"
                             #Tipo="ngModel">
+                            <option hidden [value]="" selected>Elije tipo de contenedor</option>
+                            <option *ngFor="let item of contenedores" [value]="item.Id">{{item.Tipo}}</option>
+                        </select>
                         <div *ngIf="Tipo.touched && !Tipo.valid">
-                            <small class="text-danger">Campo requerido</small>
+                            <small class="text-danger"> Campo requerido</small>
                         </div>
                     </div>
 
