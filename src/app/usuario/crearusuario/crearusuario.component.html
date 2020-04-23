@@ -16,7 +16,7 @@
                  type="email"
                  id="email"
                  formControlName="email"
-                 placeholder="fdlc4@alu.ua.es"
+                 placeholder="ejemplo@ua.es"
                  class="form-control">
           <div class="invalid-feedback" *ngIf="formularioCrear.get('email').errors?.required && formularioCrear.get('email').touched">
             Campo requerido
@@ -32,8 +32,7 @@
             type="password"
             class="form-control"
             id="pwd"
-            formControlName="pwd"
-            placeholder="Enter password">
+            formControlName="pwd">
           <span class="invalid-feedback"
                 *ngIf="!formularioCrear.get('pwd').valid && formularioCrear.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
           <div class="invalid-feedback" *ngIf="formularioCrear.get('pwd').errors?.required && formularioCrear.get('pwd').touched">
@@ -50,8 +49,7 @@
             type="password"
             class="form-control"
             id="pwd2"
-            formControlName="pwd2"
-            placeholder="Enter password">
+            formControlName="pwd2">
           <span class="invalid-feedback"
                 *ngIf="formularioCrear.get('pwd').value != formularioCrear.get('pwd2').value && formularioCrear.get('pwd2').touched && formularioCrear.get('pwd').touched "> Las contraseñas no coinciden</span>
           <div class="invalid-feedback" *ngIf="formularioCrear.get('pwd2').errors?.required && formularioCrear.get('pwd2').touched">
