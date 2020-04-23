@@ -4,8 +4,8 @@
             <h1>Listado de puntos de reciclaje</h1>
         </div>
         <div class="col-md-3">
-            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add(form)" data-toggle="modal" #showModel
-                    data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo punto</button></h1>
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add(form)" data-toggle="modal"
+                    #showModel data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo punto</button></h1>
         </div>
     </div>
 
@@ -69,8 +69,8 @@
                         <label for="Latitud">Latitud:</label>
                         <input type="text"
                             [ngClass]="{'is-invalid': Latitud.touched && !Latitud.valid,'is-valid': Latitud.valid}"
-                            [(ngModel)]="punto.Latitud" required class="form-control" id="Latitud" name="Latitud"
-                            #Latitud="ngModel">
+                            type="number" [(ngModel)]="punto.Latitud" required class="form-control" id="Latitud"
+                            name="Latitud" #Latitud="ngModel">
                         <div *ngIf="Latitud.touched && !Latitud.valid">
                             <small class="text-danger">Campo requerido</small>
                         </div>
@@ -80,8 +80,8 @@
                         <label for="Longitud">Longitud:</label>
                         <input type="text"
                             [ngClass]="{'is-invalid': Longitud.touched && !Longitud.valid,'is-valid': Longitud.valid}"
-                            [(ngModel)]="punto.Longitud" required class="form-control" id="Longitud" name="Longitud"
-                            #Longitud="ngModel">
+                            type="number" [(ngModel)]="punto.Longitud" required class="form-control" id="Longitud"
+                            name="Longitud" #Longitud="ngModel">
                         <div *ngIf="Longitud.touched && !Longitud.valid">
                             <small class="text-danger">Campo requerido</small>
                         </div>

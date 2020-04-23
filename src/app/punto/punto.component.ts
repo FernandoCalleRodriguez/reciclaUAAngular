@@ -22,12 +22,14 @@ import { UsuarioService } from '../shared/services/usuario.service';
 })
 export class PuntoComponent implements OnInit, OnDestroy {
 
-    dtOptions: DataTables.Settings = {};
+    puntos: Punto[];
+    punto: Punto;
+
+
 
     estancia: Estancia[];
 
-    puntos: Punto[];
-    punto: Punto;
+
     @ViewChild('closebutton')
     closebutton: {
         nativeElement: {
@@ -40,11 +42,13 @@ export class PuntoComponent implements OnInit, OnDestroy {
             click: () => void;
         };
     };
+
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
-
-    public dtTrigger: Subject<any> = new Subject();
-    public user: Usuario = new Usuario();
+    dtOptions: DataTables.Settings = {};
+    dtTrigger: Subject<any> = new Subject();
+    user: Usuario = new Usuario();
+    isEdit = false;
 
     constructor(private puntoService: PuntoService, private estanciaService: EstanciaService,
         private autenticacionService: AutenticacionService, protected usuarioService: UsuarioService,
@@ -55,7 +59,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
             this.user = u;
         });
     }
-    isEdit = false;
+
     ngOnInit(): void {
 
         this.puntoService.getPunto().subscribe(res => {
@@ -64,10 +68,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
         });
 
         this.punto = new Punto();
-        this.estanciaService.getEstancia().subscribe(res => {
-            this.estancia = res;
-            this.dtTrigger.next();
-        });
+        this.estanciaService.getEstancia().subscribe(res => this.estancia = res);
 
         this.dtOptions = {
             "language": {
@@ -124,19 +125,20 @@ export class PuntoComponent implements OnInit, OnDestroy {
         }).then((result) => {
             if (result.value) {
                 this.puntoService.removePunto(id).subscribe(res => {
-                    this.toaster.error('Punto borrado');
                     this.refresh();
+                    this.toaster.error('Punto borrado');
                 });
             }
         });
     }
+
     submit(form: NgForm) {
         if (!this.isEdit) {
             //this.punto.Id = form.value.Id;
             this.punto.Latitud = form.value.Latitud;
             this.punto.Longitud = form.value.Longitud;
             //console.log(this.user.Id);
-            this.punto.Usuario_oid = this.user.Id;
+            this.punto.Usuario_oid = -1;
             this.punto.Estancia_oid = form.value.Estancia;
 
             this.puntoService.setPunto(this.punto).subscribe(res => {
@@ -159,7 +161,6 @@ export class PuntoComponent implements OnInit, OnDestroy {
         }
         form.reset();
     }
-
 
     refresh() {
         this.puntoService.getPunto().subscribe(res => {

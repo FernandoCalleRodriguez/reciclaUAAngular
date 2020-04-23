@@ -17,8 +17,6 @@ import { DataTableDirective } from 'angular-datatables';
 })
 export class PlantaComponent implements OnInit, OnDestroy {
 
-  dtOptions: DataTables.Settings = {};
-
   plantas: Planta[];
   planta: Planta;
 
@@ -39,9 +37,10 @@ export class PlantaComponent implements OnInit, OnDestroy {
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-
   isEdit = false;
+
   constructor(private plantaService: PlantaService, private autenticacionService: AutenticacionService, private edificioService: EdificioService, private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
   }
@@ -50,8 +49,8 @@ export class PlantaComponent implements OnInit, OnDestroy {
     this.plantaService.getPlanta().subscribe(res => {
       this.plantas = res;
       this.dtTrigger.next();
-
     });
+
     this.planta = new Planta();
     this.edificioService.getEdificio().subscribe(res => this.edificio = res);
 
@@ -87,7 +86,7 @@ export class PlantaComponent implements OnInit, OnDestroy {
     this.plantaService.getPlantaById(id).subscribe(res => {
       this.planta = res;
     });
-    console.log(this.planta);
+    //console.log(this.planta);
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -134,7 +133,8 @@ export class PlantaComponent implements OnInit, OnDestroy {
           this.toaster.success('Planta creada');
         }
       });
-    } else {
+    }
+    else {
       //console.log("n", this.planta);
       this.plantaService.updatePlanta(this.planta).subscribe(res => {
         if (res != null) {

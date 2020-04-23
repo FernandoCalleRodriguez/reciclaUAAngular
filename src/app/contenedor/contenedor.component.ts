@@ -36,16 +36,15 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   };
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  isEdit = false;
 
   constructor(private contenedorService: ContenedorService, private puntoService: PuntoService,
     private autenticacionService: AutenticacionService, private toaster: ToastrService) {
 
     autenticacionService.estaAutenticado();
   }
-
-  isEdit = false;
-  dtOptions: DataTables.Settings = {};
 
   ngOnInit(): void {
     this.contenedorService.getContenedor().subscribe(res => {
@@ -87,7 +86,7 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     this.contenedorService.getContenedorById(id).subscribe(res => {
       this.contenedor = res;
     });
-    console.log(this.contenedor);
+    //console.log(this.contenedor);
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -96,6 +95,11 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     this.isEdit = false;
     this.contenedor = new Contenedor();
   }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
   delete(id) {
     Swal.fire({
       title: '¿Está seguro de borrar el contenedor con ID "' + id + '" ?',
@@ -108,10 +112,10 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         this.contenedorService.removeContenedor(id).subscribe(res => {
+          this.refresh();
+          this.toaster.error("Contenedor borrado");
         });
       }
-      this.toaster.error("Contenedor borrado");
-      this.refresh();
     });
   }
   submit(form: NgForm) {
@@ -123,8 +127,8 @@ export class ContenedorComponent implements OnInit, OnDestroy {
       this.contenedorService.setContenedor(this.contenedor).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+          this.refresh();
           this.toaster.success("Contenedor creado");
-          //this.refresh();
         }
       });
     }
@@ -133,12 +137,12 @@ export class ContenedorComponent implements OnInit, OnDestroy {
       this.contenedorService.updateContenedor(this.contenedor).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
-          //this.refresh();
+          this.refresh();
           this.toaster.success("Contenedor modificado");
         }
       });
     }
-    this.refresh();
+    form.reset();
   }
   refresh() {
     this.contenedorService.getContenedor().subscribe(res => {
@@ -150,10 +154,6 @@ export class ContenedorComponent implements OnInit, OnDestroy {
       });
     });
 
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
   }
 
 }
