@@ -79,9 +79,8 @@ export class UsuarioComponent implements OnInit {
     Swal.fire(this.dtoptionsService.getSwalWarningOptions('el usuario', this.usuario.Id)).then((result) => {
       if (result.value) {
         this.usuarioService.borrarUsuario(this.usuario.Id, this.tipousuario).subscribe(res => {
-          this.toaster.error('Usuario ' + this.usuarioId + ' borrado');
-          this.router.navigate(['/listarusuario/' + this.tipousuario]);
-
+          this.toaster.error('Usuario borrado');
+          this.autenticacionService.Logout();
         });
       }
     }, error => {
