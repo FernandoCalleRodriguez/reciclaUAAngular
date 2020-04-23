@@ -98,6 +98,8 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
           this.toaster.error('Usuario ' + usuario.Id + ' borrado');
         });
       }
+    }, error => {
+      this.toaster.error(' Error al borrar usuario');
     });
 
   }
@@ -130,6 +132,8 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
         });
       }
+    }, error => {
+      this.toaster.error(' Error al modificar usuario');
     });
 
   }
@@ -159,8 +163,9 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
         });
       }
 
+    }, error => {
+      this.toaster.error(' Error al crear usuario');
     });
-
 
   }
 
