@@ -20,7 +20,11 @@ export class ModalNotaComponent implements OnInit {
   @Input('IdNota')
   public Id: number;
 
-  constructor(protected notaService: NotaService, protected usuarioService: UsuarioService) { }
+  constructor(protected notaService: NotaService, protected usuarioService: UsuarioService) {
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.nota.UsuarioAdministrador_oid = u.Id;
+    });
+  }
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
@@ -50,10 +54,6 @@ export class ModalNotaComponent implements OnInit {
     if (this.formulario.valid ) {
       this.nota.Titulo = this.titulo().value;
       this.nota.Cuerpo = this.cuerpo().value;
-      this.nota.Fecha = new Date();
-      this.usuarioService.getLoggedUser().subscribe(u => {
-        this.nota.UsuarioAdministrador_oid = u.Id;
-      });
 
       console.log(JSON.stringify(this.nota));
 
