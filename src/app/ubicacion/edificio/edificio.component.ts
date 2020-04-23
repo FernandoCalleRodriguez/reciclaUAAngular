@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
-import {Edificio} from '../../shared/models/edificio';
-import {EdificioService} from '../../shared/services/edificio.service';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {Subject} from 'rxjs';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-edificio',
@@ -31,12 +31,9 @@ export class EdificioComponent implements OnInit, OnDestroy {
   };
 
   public dtTrigger: Subject<any> = new Subject();
-
-
-  constructor(private edificioService: EdificioService, private toaster: ToastrService) {
-  }
-
   isEdit = false;
+
+  constructor(private edificioService: EdificioService, private toaster: ToastrService) { }
 
   ngOnInit(): void {
     this.edificioService.getEdificio().subscribe(res => {
@@ -135,6 +132,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
         }
       });
     }
+    form.reset();
   }
 
   refresh() {

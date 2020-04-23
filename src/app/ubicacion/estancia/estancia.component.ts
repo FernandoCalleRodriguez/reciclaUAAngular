@@ -1,15 +1,15 @@
-import {Planta} from '../../shared/models/planta';
-import {Edificio} from '../../shared/models/edificio';
-import {EdificioService} from '../../shared/services/edificio.service';
-import {PlantaService} from '../../shared/services/planta.service';
+import { Planta } from '../../shared/models/planta';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
+import { PlantaService } from '../../shared/services/planta.service';
 
 import Swal from 'sweetalert2';
-import {Estancia} from '../../shared/models/estancia';
-import {EstanciaService} from '../../shared/services/estancia.service';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {Subject} from 'rxjs';
+import { Estancia } from '../../shared/models/estancia';
+import { EstanciaService } from '../../shared/services/estancia.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-estancia',
@@ -39,20 +39,19 @@ export class EstanciaComponent implements OnInit, OnDestroy {
     };
   };
   public dtTrigger: Subject<any> = new Subject();
+  isEdit = false;
 
   constructor(private estanciaService: EstanciaService,
-              private plantaService: PlantaService, private edificioService: EdificioService,
-              private toaster: ToastrService) {
+    private plantaService: PlantaService, private edificioService: EdificioService,
+    private toaster: ToastrService) {
   }
-
-  isEdit = false;
 
   ngOnInit(): void {
     this.estanciaService.getEstancia().subscribe(res => {
       this.estancias = res;
       this.dtTrigger.next();
 
-      console.log(this.estancias);
+      //console.log(this.estancias);
     }, error => {
       this.estancias = null;
       this.dtTrigger.next();
@@ -151,10 +150,11 @@ export class EstanciaComponent implements OnInit, OnDestroy {
         if (res != null) {
           this.closebutton.nativeElement.click();
           this.refresh();
-          this.toaster.info('Estancia modificada');
+          this.toaster.success('Estancia modificada');
         }
       });
     }
+    form.reset();
   }
 
   refresh() {

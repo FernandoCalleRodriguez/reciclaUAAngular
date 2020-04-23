@@ -1,12 +1,12 @@
 import Swal from 'sweetalert2';
-import {Planta} from '../../shared/models/planta';
-import {PlantaService} from '../../shared/services/planta.service';
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {Edificio} from '../../shared/models/edificio';
-import {EdificioService} from '../../shared/services/edificio.service';
-import {Subject} from 'rxjs';
+import { Planta } from '../../shared/models/planta';
+import { PlantaService } from '../../shared/services/planta.service';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-planta',
@@ -94,7 +94,6 @@ export class PlantaComponent implements OnInit, OnDestroy {
     this.planta = new Planta();
   }
 
-
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
@@ -137,10 +136,11 @@ export class PlantaComponent implements OnInit, OnDestroy {
         if (res != null) {
           this.closebutton.nativeElement.click();
           this.refresh();
-          this.toaster.info('Planta modificada');
+          this.toaster.success('Planta modificada');
         }
       });
     }
+    form.reset();
   }
 
   refresh() {

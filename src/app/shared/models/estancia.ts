@@ -1,3 +1,5 @@
+import { Planta } from './planta';
+import { Edificio } from './edificio';
 export class Estancia {
     Id: number;
     Actividad: string;
@@ -7,4 +9,6 @@ export class Estancia {
     Edificio_oid: number;
     Planta_oid: number;
     Puntos_oid: number[];
+    EdificioEstancia: Edificio;
+    PlantaEstancia: Planta;
 }

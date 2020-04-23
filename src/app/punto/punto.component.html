@@ -19,7 +19,7 @@
                         <th scope="col">ID</th>
                         <th scope="col" class="d-none d-md-table-cell">Latitud</th>
                         <th scope="col" class="d-none d-md-table-cell">Longitud</th>
-                        <th scope="col">Validez</th>
+                        <th scope="col">Estado</th>
 
                         <th scope="col">Acciones</th>
                     </tr>
@@ -51,8 +51,12 @@
 <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title">Añadir punto de reciclaje</h5>
+                <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir punto de reciclaje</h5>
+                <ng-template #EditTitle>
+                    <h5 class="modal-title">Modificar punto de reciclaje</h5>
+                </ng-template>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -62,49 +66,52 @@
                 <form #form="ngForm">
 
                     <div class="form-group">
-
                         <label for="Latitud" class="col-form-label">Latitud:</label>
-
-                        <input type="text" class="form-control" id="Latitud" name="Latitud" #Latitud
-                            [(ngModel)]="punto.Latitud" ngModel required>
+                        <input type="text"
+                            [ngClass]="{'is-invalid': Latitud.touched && !Latitud.valid,'is-valid': Latitud.valid}"
+                            [(ngModel)]="punto.Latitud" required class="form-control" id="Latitud" name="Latitud"
+                            #Latitud="ngModel">
                         <div *ngIf="Latitud.touched && !Latitud.valid">
                             <small class="text-danger">Latitud es obligatorio</small>
                         </div>
-
                     </div>
+
                     <div class="form-group">
-
                         <label for="Longitud" class="col-form-label">Longitud:</label>
-
-                        <input type="text" class="form-control" id="Longitud" name="Longitud" #Longitud
-                            [(ngModel)]="punto.Longitud" ngModel required>
+                        <input type="text"
+                            [ngClass]="{'is-invalid': Longitud.touched && !Longitud.valid,'is-valid': Longitud.valid}"
+                            [(ngModel)]="punto.Longitud" required class="form-control" id="Longitud" name="Longitud"
+                            #Longitud="ngModel">
                         <div *ngIf="Longitud.touched && !Longitud.valid">
                             <small class="text-danger">Longitud es obligatorio</small>
                         </div>
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="Estancia" class="col-form-label">Estancia:</label>
-
-                        <select class="form-control" id="Estancia" required name="Estancia" #Estancia="ngModel"
-                            [(ngModel)]="punto.Estancia_oid">
-                            <option value="" selected>Elije una Estancia</option>
+                        <label for="Estancia">Estancia</label>
+                        <select class="browser-default custom-select" id="Estancia" required name="Estancia"
+                            [ngClass]="{'is-invalid': Estancia.touched && !Estancia.valid,'is-valid': Estancia.valid}"
+                            #Estancia="ngModel" [(ngModel)]="punto.Estancia_oid">
+                            <option value="" disabled selected>Elije una estancia</option>
                             <option *ngFor="let item of estancia" [value]="item.Id">{{item.Nombre}}</option>
                         </select>
-
                         <div *ngIf="Estancia.touched && !Estancia.valid">
-                            <small class="text-danger">Estancia es obligatorio</small>
+                            <small class="text-danger">Campo requerido</small>
                         </div>
                     </div>
+
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)"
-                    [disabled]="!form.valid">Añadir</button>
+                <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
+                    (click)="submit(form)" [disabled]="!form.valid">Añadir</button>
+                <ng-template #EditTitleBtn>
+                    <button type="button" class="btn btn-primary float-right" (click)="submit(form)"
+                        [disabled]="!form.valid">Modificar</button>
+                </ng-template>
             </div>
+
         </div>
     </div>
 </div>

@@ -48,8 +48,12 @@
 <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title">Añadir edificio</h5>
+                <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir edificio</h5>
+                <ng-template #EditTitle>
+                    <h5 class="modal-title">Modificar edificio</h5>
+                </ng-template>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -59,34 +63,36 @@
                 <form #form="ngForm">
 
                     <div class="form-group">
-
-                        <label for="Id" class="col-form-label">ID:</label>
-
-                        <input type="text" [disabled]="isEdit" ngModel required class="form-control"
-                            [(ngModel)]="edificio.Id" id="Id" name="Id" #Id>
+                        <label for="Id">ID</label>
+                        <input type="text" [disabled]="isEdit"
+                            [ngClass]="{'is-invalid': Id.touched && !Id.valid,'is-valid': Id.valid}"
+                            [(ngModel)]="edificio.Id" required class="form-control" id="Id" name="Id" #Id="ngModel">
                         <div *ngIf="Id.touched && !Id.valid">
-                            <small class="text-danger">ID es obligatorio</small>
+                            <small class="text-danger">Campo requerido</small>
                         </div>
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="Nombre" class="col-form-label">Nombre:</label>
-
-                        <input type="text" class="form-control" id="Nombre" name="Nombre" #Nombre
-                            [(ngModel)]="edificio.Nombre" ngModel required>
+                        <label for="Nombre">Nombre</label>
+                        <input type="text"
+                            [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}"
+                            [(ngModel)]="edificio.Nombre" required class="form-control" id="Nombre" name="Nombre"
+                            #Nombre="ngModel">
                         <div *ngIf="Nombre.touched && !Nombre.valid">
-                            <small class="text-danger">Nombre es obligatorio</small>
+                            <small class="text-danger">Campo requerido</small>
                         </div>
-
                     </div>
+
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="submit(form)"
-                    [disabled]="!form.valid">Añadir</button>
+                <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
+                    (click)="submit(form)" [disabled]="!form.valid">Añadir</button>
+                <ng-template #EditTitleBtn>
+                    <button type="button" class="btn btn-primary float-right" (click)="submit(form)"
+                        [disabled]="!form.valid">Modificar</button>
+                </ng-template>
             </div>
         </div>
     </div>

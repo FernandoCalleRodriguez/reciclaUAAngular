@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { EstanciaService } from '../shared/services/estancia.service';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 @Component({
     selector: 'app-punto',
     templateUrl: './punto.component.html',
@@ -34,10 +35,12 @@ export class PuntoComponent implements OnInit, OnDestroy {
             click: () => void;
         };
     };
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
 
     public dtTrigger: Subject<any> = new Subject();
 
-    constructor(private puntoService: PuntoService, private estanciaService: EstanciaService, 
+    constructor(private puntoService: PuntoService, private estanciaService: EstanciaService,
         private toaster: ToastrService) { }
     isEdit = false;
     ngOnInit(): void {
@@ -89,6 +92,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
     add() {
         this.isEdit = false;
         this.punto = new Punto();
+
     }
 
     ngOnDestroy(): void {
@@ -138,6 +142,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
                 }
             });
         }
+        form.reset();
     }
 
     refresh() {
@@ -145,5 +150,10 @@ export class PuntoComponent implements OnInit, OnDestroy {
             this.puntos = res;
             this.dtTrigger.next();
         });
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.dtTrigger.next();
+        });
     }
+  
 }
