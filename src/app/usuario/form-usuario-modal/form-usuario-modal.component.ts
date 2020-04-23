@@ -79,7 +79,6 @@ export class FormUsuarioModalComponent implements OnInit {
       this.email().setValue(usuario.Email);
       this.nombre().setValue(usuario.Nombre);
       this.apellidos().setValue(usuario.Apellidos);
-      this.formulario.get('date').setValue(usuario.Fecha.toLocaleString());
       this.formulario.get('verificado').setValue(usuario.EmailVerificado ? 'Si' : 'No');
     }
 
