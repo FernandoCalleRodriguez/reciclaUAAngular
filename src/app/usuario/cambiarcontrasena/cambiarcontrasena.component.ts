@@ -3,6 +3,8 @@ import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-cambiarcontrasena',
@@ -14,25 +16,19 @@ export class CambiarcontrasenaComponent implements OnInit {
   formularioCambiar: FormGroup;
   usuarioId: string;
   usuario: Usuario;
-  cambiado = false;
-  error = false;
 
   constructor(protected route: ActivatedRoute,
               protected router: Router,
-              protected  usuarioService: UsuarioService) {
+              protected usuarioService: UsuarioService,
+              private autenticacionService: AutenticacionService,
+              private toaster: ToastrService) {
+    this.autenticacionService.estaAutenticado();
+
   }
 
   ngOnInit(): void {
-
-    this.route.params.subscribe(param => {
-
-      this.usuarioId = param['usuarioId'];
-
-      this.usuarioService.obtenerUsuarioPorId(this.usuarioId, 'administrador').subscribe(usuario => {
-        this.usuario = usuario;
-
-      });
-
+    this.usuarioService.getLoggedUser().subscribe(usuario => {
+      this.usuario = usuario;
     });
 
     this.formularioCambiar = new FormGroup({
@@ -48,14 +44,16 @@ export class CambiarcontrasenaComponent implements OnInit {
     this.usuarioService.cambiarPass(this.usuario).subscribe(usuario => {
       if (usuario != null) {
         console.log(usuario);
-        this.cambiado = true;
+        this.toaster.success('La contraseña se ha cambiado, revisa el correo electrónico ' + this.usuario.Email);
+
       } else {
-        this.error = true;
+        this.toaster.error('La contraseña NO se ha podido cambiar. Revise si el correo es correcto');
 
       }
 
     }, error => {
-      this.error = true;
+      this.toaster.error('La contraseña NO se ha podido cambiar. Revise si el correo es correcto');
+
 
     });
   }

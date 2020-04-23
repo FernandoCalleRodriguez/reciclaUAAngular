@@ -24,7 +24,9 @@ export class FormRespuestaComponent implements OnInit {
 
   constructor(protected temaService: TemaService, protected dudaService: DudaService, protected respuestaService: RespuestaService,
               protected router: Router, protected usuarioService: UsuarioService, protected route: ActivatedRoute) {
-    this.user = this.usuarioService.getLoggedUser();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.user = u;
+    });
     this.route.params.subscribe(params => {
       if (params.respuestaId) {
         this.edit = true;

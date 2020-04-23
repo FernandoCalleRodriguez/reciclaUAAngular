@@ -34,7 +34,7 @@ import {RecuperarcontrasenaComponent} from './usuario/recuperarcontrasena/recupe
 import {RankingComponent} from './usuario/ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
-// import {BnNgIdleService} from 'bn-ng-idle';
+import {BnNgIdleService} from 'bn-ng-idle';
 import {FormUsuarioModalComponent} from './usuario/form-usuario-modal/form-usuario-modal.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RouterModule} from '@angular/router';
@@ -61,6 +61,9 @@ import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
 import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
 import { FormTipoaccionComponent } from './accion/form-tipoaccion/form-tipoaccion.component';
 import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoaccion.component';
+import { ValidarElementoComponent } from './validacion/validar-elemento/validar-elemento.component';
+import { MapaComponent } from './ubicacion/mapa/mapa.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 
 @NgModule({
@@ -104,7 +107,9 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
     FormNotaComponent,
     ModalNotaComponent,
     FormTipoaccionComponent,
-    ModalTipoaccionComponent
+    ModalTipoaccionComponent,
+    ValidarElementoComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +123,7 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
     SweetAlert2Module.forRoot(),
     NgbModule,
     NgMultiSelectDropDownModule.forRoot(),
+    LeafletModule
   ],
   providers: [
     UsuarioService,
@@ -126,7 +132,7 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
     ValidacionService,
     UsuarioService,
     AutenticacionService,
-    // BnNgIdleService,
+    BnNgIdleService,
     UsuarioService,
     EdificioService,
     PlantaService,

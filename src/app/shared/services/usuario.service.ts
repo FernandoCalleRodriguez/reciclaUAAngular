@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Usuario} from '../models/usuario';
 import {AutenticacionService} from './autenticacion.service';
 import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class UsuarioService {
@@ -34,9 +35,9 @@ export class UsuarioService {
     let url;
 
     if (tipo === 'web') {
-      url = 'UsuarioWeb/BuscarNoBorrados';
+      url = 'UsuarioWeb/BuscarTodos';
     } else if (tipo === 'administrador') {
-      url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
+      url = 'UsuarioAdminAutenticado/BuscarTodos';
     }
 
     return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
@@ -139,10 +140,10 @@ export class UsuarioService {
     return requestOptions;
   }
 
-  // MIRAR
-  public getLoggedUser(): Usuario {
-    const u = new Usuario();
-    u.Id = JSON.parse(localStorage.getItem('ID_USER'));
-    return u;
+  public getLoggedUser(): Observable<Usuario> {
+    if (this.autenticacionService.isLogged()) {
+      return this.obtenerUsuarioPorId(this.autenticacionService.getID(), 'administrador');
+    }
+    return null;
   }
 }

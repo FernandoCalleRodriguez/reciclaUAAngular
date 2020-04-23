@@ -1,19 +1,13 @@
-<div id="content">
+<div id="content" *ngIf="!router.url.includes('login')">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon" (click)="toggle=!toggle"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <a class="navbar-brand" [routerLink]="['/home']">ReciclaUA</a>
-
+      <a *ngIf="!toggle" class="navbar-brand" [routerLink]="['/home']">ReciclaUA</a>
       <ul class="navbar-nav mr-auto">
-        <li>
-          <a class="nav-link" [routerLink]="['/home']">
-            Inicio
-          </a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="UsuariosnavbarDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
@@ -24,7 +18,6 @@
             </li>
             <li><a [routerLink]="['/usuario/web/listar']" class="dropdown-item">Usuarios web</a></li>
             <li><a [routerLink]="['/usuario/ranking']" class="dropdown-item">Ranking de usuarios</a></li>
-            <li><a [routerLink]="['/usuario/administrador/' + idusuario]" class="dropdown-item">Perfil</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -80,16 +73,43 @@
             <a [routerLink]="['/accion/tipo/listar']" class="dropdown-item">Tipos de acciones web</a>
           </div>
         </li>
-        <li>
+        <li class="nav-item">
           <a class="nav-link" [routerLink]="['/nota/listar']">
             Notas
           </a>
         </li>
+        <li class="nav-item dropdown" *ngIf="checkValidations">
+          <a class="nav-link dropdown-toggle" href="#" id="ValidacionesDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Validaciones
+            <span class="badge badge-pill badge-dark">
+              {{ notificacionesItems + notificacionesMateriales + notificacionesPuntos }}
+            </span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a [routerLink]="['/validar/items']" class="dropdown-item">
+              Items <span *ngIf="notificacionesItems > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesItems }}</span>
+            </a>
+            <a [routerLink]="['/validar/puntos']" class="dropdown-item">
+              Puntos <span *ngIf="notificacionesPuntos > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesPuntos }}</span>
+            </a>
+            <a [routerLink]="['/validar/materiales']" class="dropdown-item">
+              Materiales <span *ngIf="notificacionesMateriales > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesMateriales }}</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a [routerLink]="['/validaciones']" class="dropdown-item">Todas</a>
+          </div>
+        </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <a type="button" (click)="logout()" class="btn btn-danger"><i class="fa fa-power-off"></i></a>
-      </ul>
-
     </div>
+    <ul *ngIf="!toggle" class="nav justify-content-end">
+      <li class="nav-item">
+        <a [routerLink]="['/perfil']"
+           class="nav-link text-light">{{ usuario?.Nombre }}</a>
+      </li>
+      <li>
+        <a type="button" (click)="logout()" class="btn btn-danger nav-link"><i class="fa fa-power-off"></i></a>
+      </li>
+    </ul>
   </nav>
 </div>

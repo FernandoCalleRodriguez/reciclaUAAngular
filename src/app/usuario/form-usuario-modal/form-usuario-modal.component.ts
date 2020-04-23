@@ -4,6 +4,8 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: '<app-form-usuario-modal',
@@ -18,7 +20,8 @@ export class FormUsuarioModalComponent implements OnInit {
   @Input() isEdit: boolean;
   @Input() tipousuario: string;
 
-  constructor(protected usuarioService: UsuarioService) {
+  constructor(protected usuarioService: UsuarioService,
+              private toaster: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -27,7 +30,7 @@ export class FormUsuarioModalComponent implements OnInit {
     if (this.usuarioId != null) {
       this.formulario = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
-        pwd: new FormControl(null,),
+        pwd: new FormControl(null),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),
         date: new FormControl(null),
@@ -49,6 +52,8 @@ export class FormUsuarioModalComponent implements OnInit {
       this.formulario = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
         pwd: new FormControl(null, [Validators.required,
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+        pwd2: new FormControl(null, [Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),

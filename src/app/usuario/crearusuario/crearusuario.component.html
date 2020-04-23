@@ -1,5 +1,4 @@
-<app-navbar></app-navbar>
-<div class="container">
+<div class="container-fluid mt-2">
   <div class="row">
     <div class="col">
       <h4 class="text-center">Crear usuario {{tipousuario}}</h4>
@@ -19,6 +18,9 @@
                  formControlName="email"
                  placeholder="fdlc4@alu.ua.es"
                  class="form-control">
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('email').errors?.required && formularioCrear.get('email').touched">
+            Campo requerido
+          </div>
         </div>
 
         <!-- CONTRASEÑA DEL USUARIO -->
@@ -32,10 +34,30 @@
             id="pwd"
             formControlName="pwd"
             placeholder="Enter password">
-          <span class="help-block" style="color: red;"
+          <span class="invalid-feedback"
                 *ngIf="!formularioCrear.get('pwd').valid && formularioCrear.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('pwd').errors?.required && formularioCrear.get('pwd').touched">
+            Campo requerido
+          </div>
         </div>
+        <!-- REPETIR CONTRASEÑA DEL USUARIO -->
 
+        <div class="form-group">
+          <label for="pwd2">Repetir contraseña:</label>
+          <input
+            [ngClass]="{'is-invalid' : formularioCrear.get('pwd2').invalid && formularioCrear.get('pwd2').touched,
+              'is-valid' : formularioCrear.get('pwd2').valid }"
+            type="password"
+            class="form-control"
+            id="pwd2"
+            formControlName="pwd2"
+            placeholder="Enter password">
+          <span class="invalid-feedback"
+                *ngIf="formularioCrear.get('pwd').value != formularioCrear.get('pwd2').value && formularioCrear.get('pwd2').touched && formularioCrear.get('pwd').touched "> Las contraseñas no coinciden</span>
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('pwd2').errors?.required && formularioCrear.get('pwd2').touched">
+            Campo requerido
+          </div>
+        </div>
         <!-- NOMBRE DEL USUARIO -->
         <div class="form-group">
           <label for="name">Nombre:</label>
@@ -46,6 +68,9 @@
                  id="name"
                  formControlName="name"
           >
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('name').errors?.required && formularioCrear.get('name').touched">
+            Campo requerido
+          </div>
         </div>
 
         <!-- APELLIDOS DEL USUARIO -->
@@ -58,6 +83,9 @@
                  id="surname"
                  formControlName="surname"
           >
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('surname').errors?.required && formularioCrear.get('surname').touched">
+            Campo requerido
+          </div>
         </div>
         <div class="row">
           <div class="col">

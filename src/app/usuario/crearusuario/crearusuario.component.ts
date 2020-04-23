@@ -3,6 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Usuario} from '../../shared/models/usuario';
+import {ToastrService} from 'ngx-toastr';
+import {Observable} from 'rxjs';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-crearusuario',
@@ -18,7 +21,10 @@ export class CrearusuarioComponent implements OnInit {
 
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
-              private router: Router) {
+              private router: Router,
+              private toaster: ToastrService,
+              private  autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
   }
 
   ngOnInit(): void {
@@ -31,6 +37,8 @@ export class CrearusuarioComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       pwd: new FormControl(null, [Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
+      pwd2: new FormControl(null, [Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
       name: new FormControl(null, [Validators.required]),
       surname: new FormControl(null, [Validators.required]),
     });
@@ -39,24 +47,33 @@ export class CrearusuarioComponent implements OnInit {
   onRegister() {
 
     this.usuario = {
-      Email:      this.formularioCrear.value.email,
-      Pass:       this.formularioCrear.value.pwd,
-      Nombre:     this.formularioCrear.value.name,
-      Apellidos:  this.formularioCrear.value.surname,
+      Email: this.formularioCrear.value.email,
+      Pass: this.formularioCrear.value.pwd,
+      Nombre: this.formularioCrear.value.name,
+      Apellidos: this.formularioCrear.value.surname,
     };
+    this.usuarioService.obtenerUsuarioPorEmail(this.usuario.Email).subscribe(result => {
+      if (!result) {
+        this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
+          data => {
+            if (data === null) {
+              this.error = true;
+              this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
 
-    this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
-      data => {
-        if (data === null) {
-          this.error = true;
-        } else {
-          console.log(this.usuario);
-          this.router.navigate(['/listarusuario/' + this.tipousuario]);
-        }
+            } else {
+              this.toaster.success(' El Usuario se ha creado con éxito');
+              this.router.navigate(['/usuario/' + this.tipousuario + '/listar']);
 
-      }, error => {
-        console.log('Crear usuario ' + this.tipousuario + ' fallido', error);
+            }
+
+          }, error => {
+            this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
+
+          }
+        );
+      } else {
+        this.toaster.error(' El Correo electrónico utilizado ya existe');
       }
-    );
+    });
   }
 }

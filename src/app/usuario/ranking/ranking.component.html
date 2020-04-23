@@ -1,5 +1,4 @@
-<app-navbar></app-navbar>
-<div class="container">
+<div class="container-fluid mt-2">
   <div class="row">
     <div class="col-9">
       <h1>Ranking de usuarios</h1>
@@ -9,7 +8,7 @@
   <hr>
   <div class="row">
     <div class="col">
-      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
         <tr>
           <th scope="col">#</th>
