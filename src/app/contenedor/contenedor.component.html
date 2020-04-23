@@ -62,7 +62,7 @@
                 <form #form="ngForm">
 
                     <div class="form-group ">
-                        <label for="Tipo" class="">Tipo contenedor</label>
+                        <label for="Tipo" class="">Tipo contenedor:</label>
                         <select [ngClass]="{'is-invalid': Tipo.touched && !Tipo.valid,'is-valid': Tipo.valid}"
                             [(ngModel)]="contenedor.Tipo" class="form-control" id="Tipo" required name="Tipo"
                             #Tipo="ngModel">
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Punto">Punto</label>
+                        <label for="Punto">Punto:</label>
                         <select class="browser-default custom-select" id="Punto" required name="Punto"
                             [ngClass]="{'is-invalid': Punto.touched && !Punto.valid,'is-valid': Punto.valid}"
                             #Punto="ngModel" [(ngModel)]="contenedor.Punto_oid">

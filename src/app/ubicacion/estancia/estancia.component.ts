@@ -1,3 +1,4 @@
+import { AutenticacionService } from './../../shared/services/autenticacion.service';
 import { Planta } from '../../shared/models/planta';
 import { Edificio } from '../../shared/models/edificio';
 import { EdificioService } from '../../shared/services/edificio.service';
@@ -10,6 +11,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-estancia',
@@ -38,12 +40,18 @@ export class EstanciaComponent implements OnInit, OnDestroy {
       click: () => void;
     };
   };
-  public dtTrigger: Subject<any> = new Subject();
+
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+
+  dtTrigger: Subject<any> = new Subject();
+
   isEdit = false;
 
   constructor(private estanciaService: EstanciaService,
-    private plantaService: PlantaService, private edificioService: EdificioService,
+    private plantaService: PlantaService, private edificioService: EdificioService, private autenticacionService: AutenticacionService,
     private toaster: ToastrService) {
+    autenticacionService.estaAutenticado();
   }
 
   ngOnInit(): void {
@@ -51,10 +59,6 @@ export class EstanciaComponent implements OnInit, OnDestroy {
       this.estancias = res;
       this.dtTrigger.next();
 
-      //console.log(this.estancias);
-    }, error => {
-      this.estancias = null;
-      this.dtTrigger.next();
     });
     this.estancia = new Estancia();
     this.edificioService.getEdificio().subscribe(res => this.edificio = res);
@@ -161,7 +165,12 @@ export class EstanciaComponent implements OnInit, OnDestroy {
   refresh() {
     this.estanciaService.getEstancia().subscribe(res => {
       this.estancias = res;
-      this.dtTrigger.next();
+
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
   }
+
 }

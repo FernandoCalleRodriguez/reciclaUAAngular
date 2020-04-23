@@ -1,3 +1,4 @@
+import { AutenticacionService } from './../../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
 import { Planta } from '../../shared/models/planta';
 import { PlantaService } from '../../shared/services/planta.service';
@@ -7,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Edificio } from '../../shared/models/edificio';
 import { EdificioService } from '../../shared/services/edificio.service';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-planta',
@@ -35,17 +37,18 @@ export class PlantaComponent implements OnInit, OnDestroy {
     };
   };
 
-  public dtTrigger: Subject<any> = new Subject();
-
-  constructor(private plantaService: PlantaService, private edificioService: EdificioService, private toaster: ToastrService) {
-  }
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   isEdit = false;
+  constructor(private plantaService: PlantaService, private autenticacionService: AutenticacionService, private edificioService: EdificioService, private toaster: ToastrService) {
+    autenticacionService.estaAutenticado();
+  }
 
   ngOnInit(): void {
     this.plantaService.getPlanta().subscribe(res => {
       this.plantas = res;
-      //console.log(this.plantas);
       this.dtTrigger.next();
 
     });
@@ -147,7 +150,12 @@ export class PlantaComponent implements OnInit, OnDestroy {
   refresh() {
     this.plantaService.getPlanta().subscribe(res => {
       this.plantas = res;
-      this.dtTrigger.next();
+
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
   }
+
 }

@@ -1,3 +1,4 @@
+import { AutenticacionService } from './../../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
 import { Edificio } from '../../shared/models/edificio';
 import { EdificioService } from '../../shared/services/edificio.service';
@@ -37,8 +38,8 @@ export class EdificioComponent implements OnInit, OnDestroy {
 
   isEdit = false;
 
-  constructor(private edificioService: EdificioService, private toaster: ToastrService) {
-
+  constructor(private edificioService: EdificioService, private autenticacionService: AutenticacionService, private toaster: ToastrService) {
+    autenticacionService.estaAutenticado();
   }
 
   ngOnInit(): void {
@@ -145,12 +146,12 @@ export class EdificioComponent implements OnInit, OnDestroy {
   refresh() {
     this.edificioService.getEdificio().subscribe(res => {
       this.edificios = res;
-      this.dtTrigger.next();
+
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
         this.dtTrigger.next();
       });
     });
-
   }
+
 }

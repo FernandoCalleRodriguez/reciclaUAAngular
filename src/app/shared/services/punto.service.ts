@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PuntoService {
   SERVER = 'http://localhost:16209/api/PuntoReciclaje/';
   private token = localStorage.getItem('ACCESS_TOKEN');
@@ -20,9 +21,9 @@ export class PuntoService {
   public setPunto(punto: Punto): Observable<Punto> {
 
     //punto.Usuario_oid = parseInt(localStorage.getItem("ID_USER"));
-    punto.Usuario_oid = -1;
+    //punto.Usuario_oid = -1;
+    //console.log(localStorage.getItem("ID_USER"));
 
-    console.log(localStorage.getItem("ID_USER"));
     return this.http.post<Punto>(this.SERVER + "Crear", punto, { headers: this.headers });
   }
   public removePunto(id: number) {

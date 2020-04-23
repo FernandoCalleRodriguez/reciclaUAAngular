@@ -1,3 +1,4 @@
+import { AutenticacionService } from './../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
 import { Contenedor } from '../shared/models/contenedor';
 import { ContenedorService } from '../shared/services/contenedor.service';
@@ -37,7 +38,10 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private contenedorService: ContenedorService, private puntoService: PuntoService, private toaster: ToastrService) {
+  constructor(private contenedorService: ContenedorService, private puntoService: PuntoService,
+    private autenticacionService: AutenticacionService, private toaster: ToastrService) {
+
+    autenticacionService.estaAutenticado();
   }
 
   isEdit = false;
@@ -139,11 +143,13 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   refresh() {
     this.contenedorService.getContenedor().subscribe(res => {
       this.contenedores = res;
+
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next();
-    });
+
   }
 
   ngOnDestroy(): void {
