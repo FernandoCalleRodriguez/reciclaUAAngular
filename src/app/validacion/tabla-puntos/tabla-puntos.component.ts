@@ -3,8 +3,9 @@ import {Punto} from '../../shared/models/punto';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {ValidacionService} from '../../shared/services/validacion.service';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-tabla-puntos',
@@ -16,12 +17,15 @@ export class TablaPuntosComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  public dtOptions: DataTables.Settings = {};
 
-  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService) {
+  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService,
+              protected dtoptionsService: DtoptionsService) {
     validacionService.getAllPuntosSinValidar().subscribe(m => {
       this.puntos = m;
       this.dtTrigger.next();
     });
+    this.dtOptions = dtoptionsService.getDtoptions('puntos');
   }
 
   ngOnInit(): void {

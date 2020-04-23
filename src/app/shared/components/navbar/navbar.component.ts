@@ -14,7 +14,7 @@ import {ValidacionService} from '../../services/validacion.service';
 })
 export class NavbarComponent implements OnInit {
   public usuario: Usuario = new Usuario();
-  public toggle = false;
+  public isCollapsed = true;
   private notifier = timer(1000);
   public notificacionesItems = 0;
   public notificacionesPuntos = 0;
@@ -23,18 +23,16 @@ export class NavbarComponent implements OnInit {
   constructor(private autenticacionService: AutenticacionService,
               protected usuarioService: UsuarioService,
               protected validacionService: ValidacionService, public router: Router) {
-    //this.autenticacionService.estaAutenticado();
-    this.router.events.subscribe(value => {
-      this.usuarioService.getLoggedUser()?.subscribe(u => {
-        this.usuario = u;
-      }, error => {
-        this.autenticacionService.Logout();
-      });
+    // this.autenticacionService.estaAutenticado();
+    this.usuarioService.getLoggedUser()?.subscribe(u => {
+      this.usuario = u;
+    }, error => {
+      this.autenticacionService.Logout();
     });
   }
 
   ngOnInit(): void {
-    this.toggle = false;
+    this.isCollapsed = true;
     this.notifier = timer(0);
     this.notify();
   }
