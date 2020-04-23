@@ -25,8 +25,8 @@ export class AutenticacionService {
 
   }
 
-  Login(usuario: Usuario) {
-    return this.http.post<any>(this.SERVER + 'UsuarioAdminNoAutenticado/Login', usuario).pipe(map(
+  Login(usuario: Usuario): Observable<string> {
+    return this.http.post<string>(this.SERVER + 'UsuarioAdminNoAutenticado/Login', usuario).pipe(map(
       res => {
         this.saveToken(res);
         this.controlSesion();
