@@ -15,7 +15,7 @@ import {FormRespuestaComponent} from './foro/form-respuesta/form-respuesta.compo
 import {ListaValidacionesComponent} from './validacion/lista-validaciones/lista-validaciones.component';
 import {DataTablesModule} from 'angular-datatables';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCollapseModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrModule} from 'ngx-toastr';
 import {DudaService} from './shared/services/duda.service';
 import {RespuestaService} from './shared/services/respuesta.service';
@@ -34,7 +34,7 @@ import {RecuperarcontrasenaComponent} from './usuario/recuperarcontrasena/recupe
 import {RankingComponent} from './usuario/ranking/ranking.component';
 import {VerificacionComponent} from './verificacion/verificacion.component';
 import {CambiarcontrasenaComponent} from './usuario/cambiarcontrasena/cambiarcontrasena.component';
-// import {BnNgIdleService} from 'bn-ng-idle';
+import {BnNgIdleService} from 'bn-ng-idle';
 import {FormUsuarioModalComponent} from './usuario/form-usuario-modal/form-usuario-modal.component';
 import {UsuarioComponent} from './usuario/usuario/usuario.component';
 import {RouterModule} from '@angular/router';
@@ -64,6 +64,7 @@ import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoac
 import { ValidarElementoComponent } from './validacion/validar-elemento/validar-elemento.component';
 import { MapaComponent } from './ubicacion/mapa/mapa.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {TestComponent} from './test/test.component';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     FormTipoaccionComponent,
     ModalTipoaccionComponent,
     ValidarElementoComponent,
-    MapaComponent
+    MapaComponent,
+    TestComponent // test
   ],
   imports: [
     BrowserModule,
@@ -123,7 +125,8 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     SweetAlert2Module.forRoot(),
     NgbModule,
     NgMultiSelectDropDownModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    NgbCollapseModule,
   ],
   providers: [
     UsuarioService,
@@ -132,7 +135,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     ValidacionService,
     UsuarioService,
     AutenticacionService,
-    // BnNgIdleService,
+    BnNgIdleService,
     UsuarioService,
     EdificioService,
     PlantaService,

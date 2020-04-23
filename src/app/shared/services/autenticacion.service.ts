@@ -3,7 +3,7 @@ import {Usuario} from '../models/usuario';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-// import {BnNgIdleService} from 'bn-ng-idle';
+import {BnNgIdleService} from 'bn-ng-idle';
 import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {UsuarioService} from './usuario.service';
@@ -20,8 +20,8 @@ export class AutenticacionService {
   usuario: Usuario;
 
   constructor(private http: HttpClient,
-              private router: Router
-              /* private bnIdle: BnNgIdleService */) {
+              private router: Router,
+              private bnIdle: BnNgIdleService ) {
 
   }
 
@@ -38,7 +38,7 @@ export class AutenticacionService {
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('ID_USER');
     localStorage.clear();
-    this.router.navigate(['login/si']);
+    this.router.navigate(['/login']);
   }
 
   private saveToken(token: string): void {
@@ -53,23 +53,21 @@ export class AutenticacionService {
   }
 
   getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('ACCESS_TOKEN');
-    }
+    this.token = localStorage.getItem('ACCESS_TOKEN');
+
     return this.token;
 
   }
 
   getID(): string {
-    if (!this.id) {
-      this.id = localStorage.getItem('ID_USER');
-    }
+    this.id = localStorage.getItem('ID_USER');
+
     return this.id;
 
   }
 
   isLogged(): boolean {
-    return this.getToken() && this.getID() && this.getID() == this.parseJwt(this.getToken()).id;
+    return this.getToken() != null && this.getID() != null && this.getID() == this.parseJwt(this.getToken()).id;
   }
 
   estaAutenticado() {
@@ -82,7 +80,6 @@ export class AutenticacionService {
     if (this.isLogged()) {
       this.router.navigate(['/home']);
     } else {
-      console.log('me quedo');
     }
   }
 
@@ -95,12 +92,11 @@ export class AutenticacionService {
     return contraseña;
   }
 
-  controlSesion() { /*
+  controlSesion() {
     this.bnIdle.startWatching(600).subscribe((res) => {
       if (res) {
         this.Logout();
       }
     });
-*/
   }
 }

@@ -9,6 +9,7 @@ import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
 import {RespuestaService} from '../../shared/services/respuesta.service';
 import {Respuesta} from '../../shared/models/respuesta';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-form-respuesta',
@@ -23,7 +24,9 @@ export class FormRespuestaComponent implements OnInit {
   public edit = false;
 
   constructor(protected temaService: TemaService, protected dudaService: DudaService, protected respuestaService: RespuestaService,
-              protected router: Router, protected usuarioService: UsuarioService, protected route: ActivatedRoute) {
+              protected router: Router, protected usuarioService: UsuarioService, protected route: ActivatedRoute,
+              protected autenticacionService: AutenticacionService) {
+    autenticacionService.estaAutenticado();
     this.usuarioService.getLoggedUser().subscribe(u => {
       this.user = u;
     });

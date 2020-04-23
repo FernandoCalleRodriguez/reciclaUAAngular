@@ -9,6 +9,8 @@ import {NgbModal, NgbModalModule, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-usuariolistar',
@@ -19,19 +21,23 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   tipousuario: string; // web o admin
   usuarios: Usuario[];
   usuario: Usuario;
-  error = false;
   isEdit: boolean;
   isCreate: boolean;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+  dtOptions: DataTables.Settings = {};
+
 
   constructor(protected route: ActivatedRoute,
               private usuarioService: UsuarioService,
               private router: Router,
               private toaster: ToastrService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private  dtoptionsService: DtoptionsService,
+              private autenticacionService: AutenticacionService) {
+    this.autenticacionService.estaAutenticado();
     this.isEdit = false;
     this.isCreate = false;
 
@@ -39,6 +45,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.dtOptions = this.dtoptionsService.getDtoptions('usuarios');
 
     this.route.params.subscribe(param => {
 
@@ -63,6 +70,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
     this.usuarioService.obtenerUsuarios(this.tipousuario).subscribe(usuarios => {
       this.usuarios = usuarios;
       this.dtTrigger.next();
+
     });
   }
 
@@ -102,20 +110,26 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
-    form.onSubmit().subscribe(usuario => {
-      if (usuario) {
-        this.usuarios.forEach((element, i, array) => {
-          if (element.Id === usuario.Id) {
-            array[i] = usuario;
-          }
-        });
-        modal.dismiss();
-        this.refresh();
-      } else {
-        this.error = true;
-      }
+    this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
+      if (result && result.Id != this.usuario.Id) {
 
-      this.toaster.success('Usuario ' + usuario.Id + ' modificado');
+        this.toaster.error('  El Correo electrónico utilizado ya existe');
+
+      } else {
+        form.onSubmit().subscribe(usuario => {
+          if (usuario) {
+            this.usuarios.forEach((element, i, array) => {
+              if (element.Id === usuario.Id) {
+                array[i] = usuario;
+              }
+            });
+            modal.dismiss();
+            this.refresh();
+            this.toaster.success('Usuario ' + usuario.Id + ' modificado');
+          }
+
+        });
+      }
     });
 
   }
@@ -127,22 +141,27 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   crearUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
+    this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
+      if (result) {
+        this.toaster.error('  El Correo electrónico utilizado ya existe');
 
-    form.onSubmit().subscribe(usuario => {
-      if (usuario) {
-        if (!this.usuarios) {
-          this.usuarios = [];
-        }
-        this.usuarios.push(usuario);
-        modal.dismiss();
-        this.refresh();
-        this.toaster.success('Usuario ' + usuario.Id + ' creado');
       } else {
-        this.error = true;
+        form.onSubmit().subscribe(usuario => {
+          if (usuario) {
+            if (!this.usuarios) {
+              this.usuarios = [];
+            }
+            this.usuarios.push(usuario);
+            modal.dismiss();
+            this.refresh();
+            this.toaster.success('Usuario ' + usuario.Id + ' creado');
+          }
+        });
       }
 
-
     });
+
+
   }
 
   mostrarUsuario(usuario: Usuario, modal) {

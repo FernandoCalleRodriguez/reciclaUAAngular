@@ -5,8 +5,9 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {TipoContenedor} from '../../shared/models/contenedor';
 import {TipoContenedorService} from '../../shared/services/tipo-contenedor.service';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-tabla-materiales',
@@ -18,13 +19,15 @@ export class TablaMaterialesComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(protected validacionService: ValidacionService, protected tipoContenedorService: TipoContenedorService,
-              protected toaster: ToastrService) {
+              protected toaster: ToastrService, protected dtoptionsService: DtoptionsService) {
     validacionService.getAllMaterialesSinValidar().subscribe(m => {
       this.materiales = m;
       this.dtTrigger.next();
     });
+    this.dtOptions = dtoptionsService.getDtoptions('materiales');
   }
 
   ngOnInit(): void {
@@ -46,22 +49,15 @@ export class TablaMaterialesComponent implements OnInit, OnDestroy {
   }
 
   descartarMaterial(material: Material) {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas descartar el material ' + material.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.validacionService.descartarMaterial(material).subscribe(() => {
-          this.deleteFromArray(this.materiales, material);
-          this.toaster.error('Material ' + material.Id + ' descartado');
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el material', material.Id, false, 'descartar'))
+      .then((result) => {
+        if (result.value) {
+          this.validacionService.descartarMaterial(material).subscribe(() => {
+            this.deleteFromArray(this.materiales, material);
+            this.toaster.error('Material ' + material.Id + ' descartado');
+          });
+        }
+      });
   }
 
   deleteFromArray(array: any[], element: any): void {

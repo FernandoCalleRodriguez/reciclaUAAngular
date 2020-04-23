@@ -4,6 +4,7 @@ import {Usuario} from '../shared/models/usuario';
 import {UsuarioService} from '../shared/services/usuario.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutenticacionService} from '../shared/services/autenticacion.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,23 +15,15 @@ export class LoginComponent implements OnInit {
   user: Usuario;
   cerrarsesion;
   formularioLogin: FormGroup;
-  error = false;
 
   constructor(private autenticacionService: AutenticacionService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private toaster: ToastrService
+  ) {
 
-    this.route.params.subscribe(param => {
+    this.autenticacionService.noEstaAutenticado();
 
-      this.cerrarsesion = param['cerrarsesion'];
-
-      console.log(this.cerrarsesion);
-      if (this.cerrarsesion === '' || this.cerrarsesion === undefined) {
-        this.autenticacionService.noEstaAutenticado();
-
-      }
-
-    });
   }
 
   ngOnInit(): void {
@@ -53,8 +46,7 @@ export class LoginComponent implements OnInit {
       data => {
         this.router.navigate(['/home']);
       }, error => {
-        console.log('Autenticación fallida', error);
-        this.error  = true;
+        this.toaster.error(' Las ceredenciales introducidas no son correctas');
       }
     );
   }

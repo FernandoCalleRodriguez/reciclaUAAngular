@@ -42,4 +42,8 @@ export class DudaService {
   public searchDudasByTerm(term: string): Observable<Duda[]> {
     return this.http.get<Duda[]>(this.SERVER + 'Duda/BuscarDudaPorTitulo?p_titulo=' + term, {headers: this.headers});
   }
+
+  public countDudas(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'Duda/BuscarDudasCount');
+  }
 }

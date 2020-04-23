@@ -17,39 +17,29 @@
             id="pwd"
             formControlName="pwd"
             placeholder="Enter password">
-          <span class="help-block" style="color: red;"
+          <span class="invalid-feedback"
                 *ngIf="!formularioCambiar.get('pwd').valid && formularioCambiar.get('pwd').touched"> Contraseña demasiado sencilla debe contener : mayúscula, minúscula, número, caracter especial (@$!%*?&-_) y 8 caracteres </span>
         </div>
         <div class="form-group">
-          <label for="pwd2">Repetir contraseña:</label>
-          <input
-            [ngClass]="{'is-invalid' : formularioCambiar.get('pwd2').invalid && formularioCambiar.get('pwd2').touched,
-              'is-valid' : formularioCambiar.get('pwd2').valid && formularioCambiar.get('pwd2').touched}"
-            type="password"
-            class="form-control"
-            id="pwd2"
-            formControlName="pwd2"
-            placeholder="Enter password">
-          <span class="help-block" style="color: red;"
-                *ngIf="formularioCambiar.get('pwd').value != formularioCambiar.get('pwd2').value && formularioCambiar.get('pwd2').touched && formularioCambiar.get('pwd').touched "> Las contraseñas no coinciden</span>
+        <label for="pwd2">Repetir contraseña:</label>
+        <input
+          [ngClass]="{'is-invalid' : formularioCambiar.get('pwd2').invalid && formularioCambiar.get('pwd2').touched,
+              'is-valid' : formularioCambiar.get('pwd2').valid}"
+          type="password"
+          class="form-control"
+          id="pwd2"
+          formControlName="pwd2"
+          placeholder="Enter password">
+        <span class="invalid-feedback"
+              *ngIf="formularioCambiar.get('pwd').value != formularioCambiar.get('pwd2').value && formularioCambiar.get('pwd2').touched && formularioCambiar.get('pwd').touched "> Las contraseñas no coinciden</span>
 
-        </div>
+      </div>
         <div class="row">
           <div class="col">
             <button type="submit" class="btn btn-primary float-right"
                     [disabled]="formularioCambiar.invalid || formularioCambiar.get('pwd2').value != formularioCambiar.get('pwd').value">
               Cambiar
             </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="alert alert-success" *ngIf="cambiado">
-              <strong>Exito!</strong> La contraseña se ha cambiado, revisa el correo electrónico {{usuario?.Email}}.
-            </div>
-            <div class="alert alert-danger" *ngIf="error">
-              <strong>Error!</strong> La contraseña NO se ha podido cambiar. Revise si el correo es correcto.
-            </div>
           </div>
         </div>
       </form>

@@ -10,6 +10,9 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
 import {Tema} from '../../shared/models/tema';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -26,13 +29,17 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
 
   public edit = false;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
-              protected modalService: NgbModal, protected toaster: ToastrService) {
+              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService,
+              protected autenticacionService: AutenticacionService) {
+    autenticacionService.estaAutenticado();
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
     });
+    this.dtOptions = dtoptionsService.getDtoptions('dudas');
   }
 
   public getTema(id: number): string {
@@ -52,26 +59,19 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   }
 
   deleteDuda(duda: Duda) {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar la duda ' + duda.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.dudaService.borrar(duda).subscribe(() => {
-          const index = this.dudas.indexOf(duda);
-          if (index > -1) {
-            this.dudas.splice(index, 1);
-          }
-          this.toaster.error('Duda ' + duda.Id + ' borrada');
-          this.refresh();
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la duda', duda.Id))
+      .then((result) => {
+        if (result.value) {
+          this.dudaService.borrar(duda).subscribe(() => {
+            const index = this.dudas.indexOf(duda);
+            if (index > -1) {
+              this.dudas.splice(index, 1);
+            }
+            this.toaster.error('Duda ' + duda.Id + ' borrada');
+            this.refresh();
+          });
+        }
+      });
   }
 
   refresh() {
@@ -99,6 +99,8 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear la duda');
     });
   }
 
@@ -118,6 +120,8 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar la duda');
     });
   }
 }

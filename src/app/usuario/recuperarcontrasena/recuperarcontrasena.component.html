@@ -20,20 +20,12 @@
         </div>
         <div class="row">
           <div class="col-7">
-            <a [routerLink]="['']"> ¿Ya tienes tu contraseña? Accede aquí!</a>
+            <a [routerLink]="['/']"> ¿Ya tienes tu contraseña? Accede aquí!</a>
           </div>
           <div class="col">
             <button type="submit" class="btn btn-primary float-right" [disabled]="formularioRecuperar.invalid">Recuperar
               contraseña
             </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="alert alert-success" *ngIf="cambiado">
-            <strong>Exito!</strong> La contraseña se ha cambiado.
-          </div>
-          <div class="alert alert-danger" *ngIf="error">
-            <strong>Error!</strong> La contraseña NO se ha podido cambiar. Pruebe en otro momento.
           </div>
         </div>
       </form>

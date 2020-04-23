@@ -33,13 +33,13 @@ import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
 import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
 import {ValidarElementoComponent} from './validacion/validar-elemento/validar-elemento.component';
 import {MapaComponent} from './ubicacion/mapa/mapa.component';
+import {TestComponent} from './test/test.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
 
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'login/:cerrarsesion', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
   {path: 'usuario/ranking', component: RankingComponent},
   /*{path: 'usuario/verificacion/:usuarioId', component: VerificacionComponent},*/
@@ -47,7 +47,7 @@ const routes: Routes = [
   {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
   {path: 'usuario/:tipousuario/:usuarioId/modificar', component: ModificarusuarioComponent},
   {path: 'usuario/cambiarcontrasena', component: CambiarcontrasenaComponent},
-  {path: 'usuario/:tipousuario/:usuarioId', component: UsuarioComponent},
+  {path: 'perfil', component: UsuarioComponent},
 
   {path: 'nota/listar', component: NotaComponent},
   {path: 'nota/crear', component: FormNotaComponent},
@@ -81,7 +81,7 @@ const routes: Routes = [
   {path: 'juego/item/:id', component: ItemComponent, pathMatch: 'full'},
   {path: 'juego/material/listar', component: MaterielComponent, pathMatch: 'full'},
 
-  {path: 'mapa', component: MapaComponent, pathMatch: 'full'},
+  {path: 'mapa', component: TestComponent, pathMatch: 'full'},
 
   {path: '**', redirectTo: 'home'}
 ];

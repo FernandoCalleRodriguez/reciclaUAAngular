@@ -18,7 +18,7 @@
   <!-- tabla de lista-usuarios -->
   <div class="row">
     <div class="col">
-      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
         <tr>
           <th scope="col">ID</th>
@@ -31,11 +31,11 @@
         <tbody>
         <tr *ngFor="let usuario of usuarios">
           <th scope="row">{{usuario.Id}}</th>
-          <td class="d-none d-md-table-cell">{{usuario.Email}}</td>
-          <td class="d-none d-md-table-cell">{{usuario.Nombre | titlecase}}</td>
-          <td class="d-none d-md-table-cell">{{usuario.Apellidos}}</td>
+          <td class="d-none d-md-table-cell">{{usuario.Email ? usuario.Email : 'Usuario borrado'}}</td>
+          <td class="d-none d-md-table-cell">{{usuario.Nombre ? usuario.Nombre : 'Usuario borrado'}}</td>
+          <td class="d-none d-md-table-cell">{{usuario.Apellidos ? usuario.Apellidos : 'Usuario borrado'}}</td>
           <td>
-            <div class="btn-group">
+            <div class="btn-group" *ngIf="usuario.Email">
               <button class="btn btn-outline-info" (click)="mostrarUsuario(usuario,content)"><i
                 class="fa fa-info-circle"></i></button>
               <button class="btn btn-outline-success" (click)="modUsuario(usuario,content)"><i
@@ -66,13 +66,6 @@
                                   [tipousuario]="tipousuario"></app-form-usuario-modal>
         </div>
 
-        <div class="row">
-          <div class="col">
-            <div class="alert alert-danger" *ngIf="error">
-              <strong>Error!</strong> El usuario no se ha podido crear.
-            </div>
-          </div>
-        </div>
         <div class="modal-footer">
 
           <div class="row">

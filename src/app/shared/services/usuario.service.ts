@@ -35,9 +35,9 @@ export class UsuarioService {
     let url;
 
     if (tipo === 'web') {
-      url = 'UsuarioWeb/BuscarNoBorrados';
+      url = 'UsuarioWeb/BuscarTodos';
     } else if (tipo === 'administrador') {
-      url = 'UsuarioAdminAutenticado/BuscarNoBorrados';
+      url = 'UsuarioAdminAutenticado/BuscarTodos';
     }
 
     return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
@@ -101,6 +101,10 @@ export class UsuarioService {
     return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(res => {
       return res;
     });
+  }
+
+  public countUsuariosWeb(): Observable<number> {
+    return this.http.get<number>(this.SERVER + 'UsuarioWeb/BuscarTodosCount', this.getHeaderToken());
   }
 
   verificarEmail(id) {

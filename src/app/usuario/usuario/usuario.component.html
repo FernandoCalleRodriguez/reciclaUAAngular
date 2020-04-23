@@ -5,7 +5,7 @@
         <div class="col">
           <h3>Perfil usuario: {{usuario?.Id}}</h3>
         </div>
-        <div class="col" *ngIf="perfil">
+        <div class="col">
           <div class="btn-group float-right">
             <button type="button" class="btn btn-outline-dark"
                     [routerLink]="['/usuario/cambiarcontrasena']">
@@ -81,8 +81,7 @@
             <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <app-form-usuario-modal #form [usuarioId]="usuario.Id" [isEdit]="isEdit"
-                                  [tipousuario]="tipousuario"></app-form-usuario-modal>
+          <app-form-usuario-modal #form [usuarioId]="usuario.Id" [isEdit]="isEdit"  [tipousuario]="tipousuario"></app-form-usuario-modal>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="modificarUsuario(form, modal)" >Modificar

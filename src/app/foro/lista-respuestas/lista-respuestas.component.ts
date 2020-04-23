@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormRespuestaModalComponent} from '../form-respuesta-modal/form-respuesta-modal.component';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-respuestas',
@@ -27,10 +29,12 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
 
   public edit = false;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
-              protected router: Router, protected route: ActivatedRoute,
-              protected modalService: NgbModal, protected toaster: ToastrService) {
+              protected router: Router, protected route: ActivatedRoute, protected dtoptionsService: DtoptionsService,
+              protected modalService: NgbModal, protected toaster: ToastrService, protected autenticacionService: AutenticacionService) {
+    autenticacionService.estaAutenticado();
     this.route.params.subscribe(params => {
       if (params.dudaId) {
         this.dudaId = params.dudaId;
@@ -45,6 +49,7 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.dtOptions = dtoptionsService.getDtoptions('respuestas');
   }
 
   ngOnInit(): void {
@@ -59,26 +64,19 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
   }
 
   deleteRespuesta(respuesta: Respuesta) {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar la respuesta ' + respuesta.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.respuestaService.borrar(respuesta).subscribe(() => {
-          const index = this.respuestas.indexOf(respuesta);
-          if (index > -1) {
-            this.respuestas.splice(index, 1);
-          }
-          this.refresh();
-          this.toaster.error('Respuesta ' + respuesta.Id + ' borrada');
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la respuesta', respuesta.Id))
+      .then((result) => {
+        if (result.value) {
+          this.respuestaService.borrar(respuesta).subscribe(() => {
+            const index = this.respuestas.indexOf(respuesta);
+            if (index > -1) {
+              this.respuestas.splice(index, 1);
+            }
+            this.refresh();
+            this.toaster.error('Respuesta ' + respuesta.Id + ' borrada');
+          });
+        }
+      });
   }
 
   refresh() {
@@ -106,6 +104,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Respuesta ' + r.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear la respuesta');
     });
   }
 
@@ -129,6 +129,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Respuesta ' + r.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar la respuesta');
     });
   }
 }

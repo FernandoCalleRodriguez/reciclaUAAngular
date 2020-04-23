@@ -1,12 +1,13 @@
-<div id="content" *ngIf="!router.url.includes('login')">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon" (click)="toggle=!toggle"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <a *ngIf="!toggle" class="navbar-brand" [routerLink]="['/home']">ReciclaUA</a>
+<div id="content">
+  <nav class="navbar navbar-expand-xl navbar-dark bg-primary">
+    <div>
+      <button class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
+              [attr.aria-expanded]="!isCollapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand ml-2" [routerLink]="['/home']">ReciclaUA</a>
+    </div>
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="UsuariosnavbarDropdown" role="button" data-toggle="dropdown"
@@ -18,7 +19,6 @@
             </li>
             <li><a [routerLink]="['/usuario/web/listar']" class="dropdown-item">Usuarios web</a></li>
             <li><a [routerLink]="['/usuario/ranking']" class="dropdown-item">Ranking de usuarios</a></li>
-            <li><a [routerLink]="['/usuario/administrador/' + usuario?.Id]" class="dropdown-item">Perfil</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -89,13 +89,16 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a [routerLink]="['/validar/items']" class="dropdown-item">
-              Items <span *ngIf="notificacionesItems > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesItems }}</span>
+              Items <span *ngIf="notificacionesItems > 0"
+                          class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesItems }}</span>
             </a>
             <a [routerLink]="['/validar/puntos']" class="dropdown-item">
-              Puntos <span *ngIf="notificacionesPuntos > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesPuntos }}</span>
+              Puntos <span *ngIf="notificacionesPuntos > 0"
+                           class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesPuntos }}</span>
             </a>
             <a [routerLink]="['/validar/materiales']" class="dropdown-item">
-              Materiales <span *ngIf="notificacionesMateriales > 0" class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesMateriales }}</span>
+              Materiales <span *ngIf="notificacionesMateriales > 0"
+                               class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesMateriales }}</span>
             </a>
             <div class="dropdown-divider"></div>
             <a [routerLink]="['/validaciones']" class="dropdown-item">Todas</a>
@@ -103,13 +106,18 @@
         </li>
       </ul>
     </div>
-    <ul *ngIf="!toggle" class="nav justify-content-end">
-      <li class="nav-item">
-        <a [routerLink]="['/usuario/administrador/' + usuario?.Id]"
-           class="nav-link text-light">{{ usuario?.Nombre }}</a>
-      </li>
-      <li>
-        <a type="button" (click)="logout()" class="btn btn-danger nav-link"><i class="fa fa-power-off"></i></a>
+    <ul *ngIf="isCollapsed" class="navbar-nav dropdown-menu-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="UserDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          {{ usuario?.Nombre }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a [routerLink]="['/perfil']" class="dropdown-item">Perfil</a>
+          <a [routerLink]="['/usuario/cambiarcontrasena']" class="dropdown-item">Cambiar contraseña</a>
+          <div class="dropdown-divider"></div>
+          <button href="#" (click)="logout()" class="dropdown-item">Cerrar sesión</button>
+        </div>
       </li>
     </ul>
   </nav>
