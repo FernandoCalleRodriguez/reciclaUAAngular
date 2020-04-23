@@ -51,4 +51,72 @@
       </div>
     </div>
   </div>
+  <br>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h4 class="card-title">Elementos por validar:</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <ul>
+                <li>
+                  <a [routerLink]="['/validar/puntos']">{{countPuntosV}} Puntos de reciclaje por validar</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/validar/items']">{{countItemsV}} Items por validar por validar</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/validar/materiales']">{{countMaterialesV}} Materiales por validar por validar</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h4 class="card-title">Última nota informativa</h4>
+            </div>
+            <div class="col-offset right-folat">
+              <button class="btn btn-outline-primary float-right"><i
+                class="fa fa-plus"></i> Añadir nueva nota
+              </button>
+            </div>
+
+          </div>
+          <h6 class="card-subtitle mb-2 text-muted">Titulo nota informativa</h6>
+          <p class="card-text">Esto es el contenido de la nota informativa.Esto es el contenido de la nota
+            informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.
+            Esto es el contenido de la nota informativa.Esto es el contenido de la nota informativa.</p>
+          <div class="row">
+            <div class="col">
+              <p class="card-text"> 16:50 18/04/2020 ></p>
+            </div>
+            <div class="col">
+              <div class="btn-group float-right">
+                <button class="btn btn-outline-success"><i
+                  class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger"><i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

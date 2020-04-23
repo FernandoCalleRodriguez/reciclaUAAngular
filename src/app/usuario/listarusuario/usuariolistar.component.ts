@@ -79,8 +79,15 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   borrarUsuario(usuario: Usuario) {
-
-    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el usuario', usuario.Id)).then((result) => {
+    Swal.fire({
+      title: '¿Estás seguro de que quieres borrar al usuario ' + usuario.Id + ' ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
       if (result.value) {
         this.usuarioService.borrarUsuario(usuario.Id, this.tipousuario).subscribe(res => {
           const index = this.usuarios.indexOf(usuario);
@@ -91,8 +98,6 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
           this.toaster.error('Usuario ' + usuario.Id + ' borrado');
         });
       }
-    }, error => {
-      this.toaster.error(' Error al borrar usuario');
     });
 
   }
@@ -125,8 +130,6 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
 
         });
       }
-    }, error => {
-      this.toaster.error(' Error al modificar usuario');
     });
 
   }
@@ -156,9 +159,8 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
         });
       }
 
-    }, error => {
-      this.toaster.error(' Error al crear usuario');
     });
+
 
   }
 

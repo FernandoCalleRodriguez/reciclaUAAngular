@@ -11,32 +11,36 @@ import {UsuarioService} from '../../shared/services/usuario.service';
 import {Usuario} from '../../shared/models/usuario';
 import {Item} from '../../shared/models/item';
 import {TipoContenedorService} from '../../shared/services/tipo-contenedor.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-accionreciclar',
   templateUrl: './accionreciclar.component.html',
   styleUrls: ['./accionreciclar.component.css']
 })
-export class AccionreciclarComponent implements OnInit, OnDestroy {
+export class AccionreciclarComponent implements OnDestroy {
   accionesRec: AccionReciclar[];
   accionRec: AccionReciclar;
   usuario: Usuario;
   item: Item;
-  texto: string;
+
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
+
+  public dtOptions: DataTables.Settings = {};
+
   constructor(private accionrecservice: AccionreciclarService, protected modalService: NgbModal,
               protected toaster: ToastrService, protected router: Router, protected  usuarioService: UsuarioService,
-              protected  tipocontenedorservice: TipoContenedorService) { }
-
-  ngOnInit(): void {
+              protected  tipocontenedorservice: TipoContenedorService, protected  autenticationService: AutenticacionService,
+              protected  dtoptionsService: DtoptionsService) {
+    this.autenticationService.estaAutenticado();
+    this.dtOptions = this.dtoptionsService.getDtoptions('acciones de reciclaje');
     this.accionrecservice.obtenerTodosAccionReciclar().subscribe((res: AccionReciclar[]) => {
       this.accionesRec = res;
-      this.texto = (JSON.stringify(res));
-      console.log('Detalle de la carga de acciones ' + this.texto);
       this.dtTrigger.next();
     }, error => {
       this.router.navigate(['/']);
@@ -44,22 +48,15 @@ export class AccionreciclarComponent implements OnInit, OnDestroy {
   }
 
   public borrarAccionRec(accion: AccionReciclar): void {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el tipo de acción ' + accion.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'No',
-      confirmButtonText: 'Sí'
-    }).then((result) => {
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la acción de reciclaje', accion.Id))
+    .then((result) => {
       if (result.value) {
         this.accionrecservice.borrar(accion).subscribe(() => {
           const index = this.accionesRec.indexOf(accion);
           if (index > -1) {
             this.accionesRec.splice(index, 1);
           }
-          this.toaster.error('Tipo de acción ' + accion.Id + ' borrada');
+          this.toaster.error('Acción de reciclaje ' + accion.Id + ' borrada');
           this.refresh();
         });
       }
@@ -69,7 +66,6 @@ export class AccionreciclarComponent implements OnInit, OnDestroy {
   // Metodos base de los modales
   public modalDetalleAccionRec(accion: AccionReciclar, detail) {
     this.accionRec = accion;
-    console.log('Detalle de la carga de acciones ' + (JSON.stringify(this.texto)));
     this.modalService.open(detail, {size: 'xl'});
   }
 

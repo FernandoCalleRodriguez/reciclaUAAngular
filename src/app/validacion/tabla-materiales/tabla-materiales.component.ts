@@ -49,15 +49,22 @@ export class TablaMaterialesComponent implements OnInit, OnDestroy {
   }
 
   descartarMaterial(material: Material) {
-    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el material', material.Id, false, 'descartar'))
-      .then((result) => {
-        if (result.value) {
-          this.validacionService.descartarMaterial(material).subscribe(() => {
-            this.deleteFromArray(this.materiales, material);
-            this.toaster.error('Material ' + material.Id + ' descartado');
-          });
-        }
-      });
+    Swal.fire({
+      title: '¿Estás seguro de que deseas descartar el material ' + material.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.validacionService.descartarMaterial(material).subscribe(() => {
+          this.deleteFromArray(this.materiales, material);
+          this.toaster.error('Material ' + material.Id + ' descartado');
+        });
+      }
+    });
   }
 
   deleteFromArray(array: any[], element: any): void {

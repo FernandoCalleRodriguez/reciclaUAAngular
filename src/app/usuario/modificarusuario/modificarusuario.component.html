@@ -1,54 +1,47 @@
-<div class="container">
-  <div class="row justify-content-center mt-5">
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col">
-          <h4 class="text-center">Modificar usuario </h4>
-        </div>
+<div class="registro" *ngIf="usuario != null">
+  <div class="container">
+    <h4 class="text-center">Modificar usuario </h4>
+    <form (ngSubmit)="onUpdate()" [formGroup]="formularioModificar">
+      <!-- EMAIL DEL USUARIO -->
+      <div>
+        <label for="email">Correo electrónico:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('email').invalid && formularioModificar.get('email').touched,
+              'is-valid' : formularioModificar.get('email').valid && formularioModificar.get('email').touched}"
+               type="email"
+               id="email"
+               formControlName="email"
+               placeholder="fdlc4@alu.ua.es"
+               class="form-control"
+               [(ngModel)]="usuario.Email">
       </div>
-      <div class="row">
-        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-          <form (ngSubmit)="onUpdate()" [formGroup]="formularioModificar">
-            <!-- EMAIL DEL USUARIO -->
-            <div class="form-group">
-              <label for="email">Correo electrónico:</label>
-              <input [ngClass]="{'is-invalid' : formularioModificar.get('email').invalid && formularioModificar.get('email').touched,
-              'is-valid' : formularioModificar.get('email').valid }"
-                     type="email"
-                     id="email"
-                     formControlName="email"
-                     placeholder="ejemplo@ua.es"
-                     class="form-control">
-            </div>
 
-            <!-- NOMBRE DEL USUARIO -->
-            <div class="form-group">
-              <label for="name">Nombre:</label>
-              <input [ngClass]="{'is-invalid' : formularioModificar.get('name').invalid && formularioModificar.get('name').touched,
-              'is-valid' : formularioModificar.get('name').valid }"
-                     type="text"
-                     class="form-control"
-                     id="name"
-                     formControlName="name"
-              >
-            </div>
-
-            <!-- APELLIDOS DEL USUARIO -->
-            <div class="form-group">
-              <label for="surname">Apellidos:</label>
-              <input [ngClass]="{'is-invalid' : formularioModificar.get('surname').invalid && formularioModificar.get('surname').touched,
-              'is-valid' : formularioModificar.get('surname').valid}"
-                     type="text"
-                     class="form-control"
-                     id="surname"
-                     formControlName="surname"
-              >
-            </div>
-            <button type="submit" class="btn btn-primary float-right" [disabled]="formularioModificar.invalid">Modificar
-            </button>
-          </form>
-        </div>
+      <!-- NOMBRE DEL USUARIO -->
+      <div>
+        <label for="name">Nombre:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('name').invalid && formularioModificar.get('name').touched,
+              'is-valid' : formularioModificar.get('name').valid && formularioModificar.get('name').touched}"
+               type="text"
+               class="form-control"
+               id="name"
+               formControlName="name"
+               [(ngModel)]="usuario.Nombre"
+        >
       </div>
-    </div>
+
+      <!-- APELLIDOS DEL USUARIO -->
+      <div>
+        <label for="surname">Apellidos:</label>
+        <input [ngClass]="{'is-invalid' : formularioModificar.get('surname').invalid && formularioModificar.get('surname').touched,
+              'is-valid' : formularioModificar.get('surname').valid && formularioModificar.get('surname').touched}"
+               type="text"
+               class="form-control"
+               id="surname"
+               formControlName="surname"
+               [(ngModel)]="usuario.Apellidos"
+
+        >
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="formularioModificar.invalid">Modificar</button>
+    </form>
   </div>
 </div>

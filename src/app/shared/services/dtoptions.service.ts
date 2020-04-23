@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {SweetAlertOptions} from 'sweetalert2';
 
 @Injectable({
@@ -52,4 +53,7 @@ export class DtoptionsService {
       cancelButtonText: 'No'
     };
   }
+
 }
+
+

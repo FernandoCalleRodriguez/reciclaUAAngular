@@ -12,7 +12,6 @@ import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.compone
 import {Tema} from '../../shared/models/tema';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -32,9 +31,7 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   public dtOptions: DataTables.Settings = {};
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
-              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService,
-              protected autenticacionService: AutenticacionService) {
-    autenticacionService.estaAutenticado();
+              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService) {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
@@ -59,19 +56,26 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   }
 
   deleteDuda(duda: Duda) {
-    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la duda', duda.Id))
-      .then((result) => {
-        if (result.value) {
-          this.dudaService.borrar(duda).subscribe(() => {
-            const index = this.dudas.indexOf(duda);
-            if (index > -1) {
-              this.dudas.splice(index, 1);
-            }
-            this.toaster.error('Duda ' + duda.Id + ' borrada');
-            this.refresh();
-          });
-        }
-      });
+    Swal.fire({
+      title: '¿Estás seguro de que deseas borrar la duda ' + duda.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.dudaService.borrar(duda).subscribe(() => {
+          const index = this.dudas.indexOf(duda);
+          if (index > -1) {
+            this.dudas.splice(index, 1);
+          }
+          this.toaster.error('Duda ' + duda.Id + ' borrada');
+          this.refresh();
+        });
+      }
+    });
   }
 
   refresh() {

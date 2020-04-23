@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Nota} from '../models/nota';
@@ -16,25 +16,25 @@ export class NotaService {
   }
 
   public obtenerNotaPorId(id) {
-    return this.http.get<Nota>(this.server + 'NotaInformativa/' + id,{headers: this.headers});
+    return this.http.get<Nota>(this.server + 'NotaInformativa/' + id, {headers: this.headers});
   }
 
   public obtenerTodasNotas() {
-    return this.http.get<Nota[]>(this.server + 'NotaInformativa/BuscarTodos',{headers: this.headers});
+    return this.http.get<Nota[]>(this.server + 'NotaInformativa/BuscarTodos', {headers: this.headers});
   }
 
   public crear(nota: Nota): Observable<any> {
-    return this.http.post<any>(this.server + 'NotaInformativa/Crear', nota,{headers: this.headers});
+    return this.http.post<any>(this.server + 'NotaInformativa/Crear', nota, {headers: this.headers});
   }
 
   public borrar(nota: Nota): Observable<void> {
-    return this.http.delete<void>(this.server + 'NotaInformativa/Borrar?p_notainformativa_oid=' + nota.Id,{headers: this.headers});
+    return this.http.delete<void>(this.server + 'NotaInformativa/Borrar?p_notainformativa_oid=' + nota.Id, {headers: this.headers});
   }
 
 
   public modificar(nota: Nota): Observable<any> {
     console.log(nota);
-    return this.http.put<Nota>(this.server + 'NotaInformativa/Modificar?idNotaInformativa=' + nota.Id, nota,{headers: this.headers});
+    return this.http.put<Nota>(this.server + 'NotaInformativa/Modificar?idNotaInformativa=' + nota.Id, nota, {headers: this.headers});
   }
 
 }

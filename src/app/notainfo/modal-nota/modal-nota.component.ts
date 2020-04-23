@@ -5,6 +5,7 @@ import {UsuarioService} from '../../shared/services/usuario.service';
 import {Nota} from '../../shared/models/nota';
 import {Observable} from 'rxjs';
 import {NotaService} from '../../shared/services/nota.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-modal-nota',
@@ -20,7 +21,13 @@ export class ModalNotaComponent implements OnInit {
   @Input('IdNota')
   public Id: number;
 
-  constructor(protected notaService: NotaService, protected usuarioService: UsuarioService) { }
+  constructor(protected notaService: NotaService, protected usuarioService: UsuarioService,
+              protected  autenticationService: AutenticacionService) {
+    this.autenticationService.estaAutenticado();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.nota.UsuarioAdministrador_oid = u.Id;
+    });
+  }
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
@@ -50,13 +57,6 @@ export class ModalNotaComponent implements OnInit {
     if (this.formulario.valid ) {
       this.nota.Titulo = this.titulo().value;
       this.nota.Cuerpo = this.cuerpo().value;
-      this.nota.Fecha = new Date();
-      this.usuarioService.getLoggedUser().subscribe(u => {
-        this.nota.UsuarioAdministrador_oid = u.Id;
-      });
-
-      console.log(JSON.stringify(this.nota));
-
       if (this.edit) {
         return this.notaService.modificar(this.nota);
       } else {

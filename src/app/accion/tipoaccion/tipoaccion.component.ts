@@ -9,43 +9,39 @@ import {Subject} from 'rxjs';
 import Swal from "sweetalert2";
 import {ModalNotaComponent} from '../../notainfo/modal-nota/modal-nota.component';
 import {ModalTipoaccionComponent} from '../modal-tipoaccion/modal-tipoaccion.component';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-tipoaccion',
   templateUrl: './tipoaccion.component.html',
   styleUrls: ['./tipoaccion.component.css']
 })
-export class TipoaccionComponent implements OnInit, OnDestroy {
+export class TipoaccionComponent implements OnDestroy {
   tipoAcciones: TipoAccion[];
   tipoAccion: TipoAccion;
-  edit = false;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private  tipoaccionservice: TipoaccionService, protected modalService: NgbModal,
-              protected toaster: ToastrService, protected router: Router) { }
+  edit = false;
+  public dtOptions: DataTables.Settings = {};
 
-  ngOnInit(): void {
+  constructor(private  tipoaccionservice: TipoaccionService, protected modalService: NgbModal,
+              protected toaster: ToastrService, protected router: Router, protected  autenticationService: AutenticacionService,
+              protected  dtoptionsService: DtoptionsService) {
+    this.autenticationService.estaAutenticado();
+    this.dtOptions = this.dtoptionsService.getDtoptions('tipos de acciones web');
     this.tipoaccionservice.obtenerTodosTipoAccion().subscribe(res => {
       this.tipoAcciones = res;
       this.dtTrigger.next();
-    }, error => {
-      this.router.navigate(['/']);
     });
   }
 
   public borrarTipoAccion(tipoAccion: TipoAccion): void {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el tipo de acción ' + tipoAccion.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'No',
-      confirmButtonText: 'Sí'
-    }).then((result) => {
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el tipo de acción web', tipoAccion.Id)).
+    then((result) => {
       if (result.value) {
         this.tipoaccionservice.borrar(tipoAccion).subscribe(() => {
           const index = this.tipoAcciones.indexOf(tipoAccion);
@@ -86,6 +82,9 @@ export class TipoaccionComponent implements OnInit, OnDestroy {
       });
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Tipo de acción web ' + d.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar el tipo de acción web');
     });
   }
 
@@ -97,6 +96,9 @@ export class TipoaccionComponent implements OnInit, OnDestroy {
       this.tipoAcciones.push(d);
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Tipo de acción web ' + d.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear el tipo de acción web');
     });
   }
 

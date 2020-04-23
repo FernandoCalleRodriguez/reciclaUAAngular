@@ -7,7 +7,6 @@ import {Duda} from '../../shared/models/duda';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
-import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-form-duda',
@@ -21,9 +20,8 @@ export class FormDudaComponent implements OnInit {
   public duda: Duda = new Duda();
   public edit = false;
 
-  constructor(protected temaService: TemaService, protected dudaService: DudaService, protected autenticacionService: AutenticacionService,
+  constructor(protected temaService: TemaService, protected dudaService: DudaService,
               protected router: Router, protected usuarioService: UsuarioService, protected route: ActivatedRoute) {
-    autenticacionService.estaAutenticado();
     this.temas = temaService.getTemas();
     this.usuarioService.getLoggedUser().subscribe(u => {
       this.user = u;

@@ -12,11 +12,11 @@
   <hr/>
   <div class="row">
     <div class="col">
-      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger">
+      <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col"> Titulo</th>
+          <th scope="col" class="text-left"> Titulo</th>
           <th scope="col" class="d-none d-md-table-cell">Fecha</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -24,7 +24,7 @@
         <tbody>
         <tr *ngFor="let nota of Notas ">
           <th scope="row">{{ nota.Id }}</th>
-          <td>{{ nota.Titulo}}</td>
+          <td class="text-left">{{ nota.Titulo}}</td>
           <td class="d-none d-md-table-cell">{{nota.Fecha | date: 'dd/MM/yyyy - hh:mm' }}</td>
           <td>
             <div class="btn-group">

@@ -13,7 +13,7 @@ export class UsuarioService {
               private autenticacionService: AutenticacionService) {
   }
 
-  CrearUsuario(usuario: Usuario, tipo: string): Observable<Usuario> {
+  CrearUsuario(usuario: Usuario, tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -23,11 +23,15 @@ export class UsuarioService {
     } else {
       console.log('Crear usuario error tipo usuario no valido');
     }
-    return this.http.post<Usuario>(this.SERVER + url, usuario, this.getHeaderToken());
+    return this.http.post<Usuario>(this.SERVER + url, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Crear usuario fallida' + error1);
+    }));
 
   }
 
-  obtenerUsuarios(tipo: string): Observable<Usuario[]> {
+  obtenerUsuarios(tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -36,10 +40,12 @@ export class UsuarioService {
       url = 'UsuarioAdminAutenticado/BuscarTodos';
     }
 
-    return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken());
+    return this.http.get<Usuario[]>(this.SERVER + url, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  obtenerUsuarioPorId(id, tipo: string): Observable<Usuario> {
+  obtenerUsuarioPorId(id, tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -48,14 +54,18 @@ export class UsuarioService {
       url = 'UsuarioAdminAutenticado/';
     }
 
-    return this.http.get<Usuario>(this.SERVER + url + id, this.getHeaderToken());
+    return this.http.get<Usuario>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  obtenerUsuarioPorEmail(email): Observable<Usuario> {
-    return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminNoAutenticado/BuscarPorCorreo?p_correo=' + email);
+  obtenerUsuarioPorEmail(email) {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioAdminNoAutenticado/BuscarPorCorreo?p_correo=' + email).pipe(res => {
+      return res;
+    });
   }
 
-  modificarUsuario(usuario: Usuario, tipo: string): Observable<Usuario> {
+  modificarUsuario(usuario: Usuario, tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -63,10 +73,12 @@ export class UsuarioService {
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/Modificar?idUsuarioAdminAutenticado=';
     }
-    return this.http.put<Usuario>(this.SERVER + url + usuario.Id, usuario, this.getHeaderToken());
+    return this.http.put<any>(this.SERVER + url + usuario.Id, usuario, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  borrarUsuario(id, tipo: string): Observable<void> {
+  borrarUsuario(id, tipo: string) {
     let url;
 
     if (tipo === 'web') {
@@ -74,30 +86,50 @@ export class UsuarioService {
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/Borrar?p_usuarioadministrador_oid=';
     }
-    return this.http.delete<void>(this.SERVER + url + id, this.getHeaderToken());
+    return this.http.delete<any>(this.SERVER + url + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  obtenerRanking(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken());
+  obtenerRanking() {
+    return this.http.get<Usuario[]>(this.SERVER + 'UsuarioWeb/ObtenerRanking', this.getHeaderToken()).pipe(res => {
+      return res;
+    });
+  }
+
+  obtenerPuntuaciones() {
+    return this.http.get<Usuario>(this.SERVER + 'UsuarioWeb/ObtenerPuntuaciones', this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
   public countUsuariosWeb(): Observable<number> {
     return this.http.get<number>(this.SERVER + 'UsuarioWeb/BuscarTodosCount', this.getHeaderToken());
   }
 
-  verificarEmail(id): Observable<void> {
-    return this.http.post<void>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken());
+  verificarEmail(id) {
+    return this.http.post<any>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken()).pipe(res => {
+      return res;
+    });
   }
 
-  recuperarPass(usuario: Usuario): Observable<void> {
+  recuperarPass(usuario: Usuario) {
     // tslint:disable-next-line:max-line-length
-    return this.http.put<void>(this.SERVER + 'UsuarioAdminRecuperarPass/CambiarPassword?idUsuarioAdminRecuperarPass=' + usuario.Id, usuario);
+    return this.http.put<any>(this.SERVER + 'UsuarioAdminRecuperarPass/CambiarPassword?idUsuarioAdminRecuperarPass=' + usuario.Id, usuario).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Crear usuario fallida' + error1);
+    }));
 
   }
 
-  cambiarPass(usuario: Usuario): Observable<Usuario> {
+  cambiarPass(usuario: Usuario) {
     // tslint:disable-next-line:max-line-length
-    return this.http.put<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/CambiarPassword?idUsuarioAdminAutenticado=' + usuario.Id, usuario, this.getHeaderToken());
+    return this.http.put<Usuario>(this.SERVER + 'UsuarioAdminAutenticado/CambiarPassword?idUsuarioAdminAutenticado=' + usuario.Id, usuario, this.getHeaderToken()).pipe(map(res => {
+      return res;
+    }, error1 => {
+      console.log('Cambiar contraseña fallida' + error1);
+    }));
   }
 
   private getHeaderToken() {

@@ -45,7 +45,7 @@ const routes: Routes = [
   /*{path: 'usuario/verificacion/:usuarioId', component: VerificacionComponent},*/
   {path: 'usuario/:tipousuario/listar', component: UsuariolistarComponent},
   {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
-  {path: 'perfil/modificar', component: ModificarusuarioComponent},
+  {path: 'usuario/:tipousuario/:usuarioId/modificar', component: ModificarusuarioComponent},
   {path: 'usuario/cambiarcontrasena', component: CambiarcontrasenaComponent},
   {path: 'perfil', component: UsuarioComponent},
 
