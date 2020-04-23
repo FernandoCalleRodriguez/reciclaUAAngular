@@ -59,26 +59,19 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   }
 
   deleteDuda(duda: Duda) {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar la duda ' + duda.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.dudaService.borrar(duda).subscribe(() => {
-          const index = this.dudas.indexOf(duda);
-          if (index > -1) {
-            this.dudas.splice(index, 1);
-          }
-          this.toaster.error('Duda ' + duda.Id + ' borrada');
-          this.refresh();
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la duda', duda.Id))
+      .then((result) => {
+        if (result.value) {
+          this.dudaService.borrar(duda).subscribe(() => {
+            const index = this.dudas.indexOf(duda);
+            if (index > -1) {
+              this.dudas.splice(index, 1);
+            }
+            this.toaster.error('Duda ' + duda.Id + ' borrada');
+            this.refresh();
+          });
+        }
+      });
   }
 
   refresh() {
