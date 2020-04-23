@@ -10,8 +10,6 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.component';
 import {Tema} from '../../shared/models/tema';
-import {DtoptionsService} from '../../shared/services/dtoptions.service';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -28,15 +26,13 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
 
   public edit = false;
-  public dtOptions: DataTables.Settings = {};
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
-              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService) {
+              protected modalService: NgbModal, protected toaster: ToastrService) {
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
     });
-    this.dtOptions = dtoptionsService.getDtoptions('dudas');
   }
 
   public getTema(id: number): string {
@@ -103,8 +99,6 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' creada');
-    }, error => {
-      this.toaster.error('Error al crear la duda');
     });
   }
 
@@ -124,8 +118,6 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
       modal.dismiss();
       this.refresh();
       this.toaster.success('Duda ' + d.Id + ' modificada');
-    }, error => {
-      this.toaster.error('Error al modificar la duda');
     });
   }
 }
