@@ -11,6 +11,7 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import {FormRespuestaModalComponent} from '../form-respuesta-modal/form-respuesta-modal.component';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-respuestas',
@@ -32,7 +33,8 @@ export class ListaRespuestasComponent implements OnInit, OnDestroy {
 
   constructor(protected respuestaService: RespuestaService, protected dudaService: DudaService,
               protected router: Router, protected route: ActivatedRoute, protected dtoptionsService: DtoptionsService,
-              protected modalService: NgbModal, protected toaster: ToastrService) {
+              protected modalService: NgbModal, protected toaster: ToastrService, protected autenticacionService: AutenticacionService) {
+    autenticacionService.estaAutenticado();
     this.route.params.subscribe(params => {
       if (params.dudaId) {
         this.dudaId = params.dudaId;

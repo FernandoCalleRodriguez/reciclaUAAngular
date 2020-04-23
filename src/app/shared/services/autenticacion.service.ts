@@ -67,7 +67,7 @@ export class AutenticacionService {
   }
 
   isLogged(): boolean {
-    return this.getToken() && this.getID() && this.getID() == this.parseJwt(this.getToken()).id;
+    return this.getToken() != null && this.getID() != null && this.getID() == this.parseJwt(this.getToken()).id;
   }
 
   estaAutenticado() {

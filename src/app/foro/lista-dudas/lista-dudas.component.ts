@@ -12,6 +12,7 @@ import {FormDudaModalComponent} from '../form-duda-modal/form-duda-modal.compone
 import {Tema} from '../../shared/models/tema';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-lista-dudas',
@@ -31,7 +32,9 @@ export class ListaDudasComponent implements OnInit, OnDestroy {
   public dtOptions: DataTables.Settings = {};
 
   constructor(protected dudaService: DudaService, protected  temaService: TemaService, protected router: Router,
-              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService) {
+              protected modalService: NgbModal, protected toaster: ToastrService, protected dtoptionsService: DtoptionsService,
+              protected autenticacionService: AutenticacionService) {
+    autenticacionService.estaAutenticado();
     dudaService.getAllDudas().subscribe(d => {
       this.dudas = d;
       this.dtTrigger.next();
