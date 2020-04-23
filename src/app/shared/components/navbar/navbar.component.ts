@@ -15,7 +15,7 @@ import {ValidacionService} from '../../services/validacion.service';
 export class NavbarComponent implements OnInit {
   public usuario: Usuario = new Usuario();
   public isCollapsed = true;
-  private notifier = timer(1000);
+  private notifier = timer(10000);
   public notificacionesItems = 0;
   public notificacionesPuntos = 0;
   public notificacionesMateriales = 0;
@@ -42,6 +42,7 @@ export class NavbarComponent implements OnInit {
   }
 
   notify() {
+
     this.notifier.subscribe(value => {
       this.validacionService.countAllItemsSinValidar().subscribe(c => {
         this.notificacionesItems = c;
@@ -52,7 +53,7 @@ export class NavbarComponent implements OnInit {
       this.validacionService.countAllMaterialesSinValidar().subscribe(c => {
         this.notificacionesMateriales = c;
       });
-      this.notifier = timer(1000);
+      this.notifier = timer(10000);
       this.notify();
     });
   }
