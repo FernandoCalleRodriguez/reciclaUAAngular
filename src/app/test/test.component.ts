@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MapaComponent} from '../ubicacion/mapa/mapa.component';
 import * as L from 'leaflet';
+import {PuntoService} from '../shared/services/punto.service';
+import {Punto} from '../shared/models/punto';
 
 @Component({
   selector: 'app-test',
@@ -11,11 +13,15 @@ import * as L from 'leaflet';
 export class TestComponent implements OnInit {
 
   public formulario: FormGroup;
+  public puntos: Punto[] = null;
 
   @ViewChild(MapaComponent)
   mapa: MapaComponent;
 
-  constructor() {
+  constructor(protected puntoService: PuntoService) {
+    puntoService.getPunto().subscribe(p => {
+      this.puntos = p;
+    });
   }
 
   ngOnInit(): void {

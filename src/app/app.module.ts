@@ -65,6 +65,7 @@ import { ValidarElementoComponent } from './validacion/validar-elemento/validar-
 import { MapaComponent } from './ubicacion/mapa/mapa.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {TestComponent} from './test/test.component';
+import { MapaPuntosComponent } from './ubicacion/mapa-puntos/mapa-puntos.component';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import {TestComponent} from './test/test.component';
     ModalTipoaccionComponent,
     ValidarElementoComponent,
     MapaComponent,
-    TestComponent // test
+    TestComponent,
+    MapaPuntosComponent // test
   ],
   imports: [
     BrowserModule,
