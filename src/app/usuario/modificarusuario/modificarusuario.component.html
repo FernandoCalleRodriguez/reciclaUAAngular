@@ -18,8 +18,7 @@
                      id="email"
                      formControlName="email"
                      placeholder="ejemplo@ua.es"
-                     class="form-control"
-                     [(ngModel)]="usuario.Email">
+                     class="form-control">
             </div>
 
             <!-- NOMBRE DEL USUARIO -->
@@ -31,7 +30,6 @@
                      class="form-control"
                      id="name"
                      formControlName="name"
-                     [(ngModel)]="usuario.Nombre"
               >
             </div>
 
@@ -44,8 +42,6 @@
                      class="form-control"
                      id="surname"
                      formControlName="surname"
-                     [(ngModel)]="usuario.Apellidos"
-
               >
             </div>
             <button type="submit" class="btn btn-primary float-right" [disabled]="formularioModificar.invalid">Modificar

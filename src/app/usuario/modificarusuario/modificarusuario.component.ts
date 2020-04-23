@@ -21,35 +21,36 @@ export class ModificarusuarioComponent implements OnInit {
               protected  usuarioService: UsuarioService,
               protected autenticacionService: AutenticacionService,
               private toaster: ToastrService) {
-    this.usuarioService.getLoggedUser().subscribe(u => {
-      this.usuario = u;
-    }, error => {
-      this.autenticacionService.Logout();
-    });
   }
 
   ngOnInit(): void {
-
     this.formularioModificar = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       name: new FormControl(null, [Validators.required]),
       surname: new FormControl(null, [Validators.required]),
     });
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.usuario = u;
+      this.formularioModificar.get('email').setValue(u.Email);
+      this.formularioModificar.get('name').setValue(u.Nombre);
+      this.formularioModificar.get('surname').setValue(u.Apellidos);
+    }, error => {
+      this.autenticacionService.Logout();
+    });
   }
 
   onUpdate() {
-
     this.usuario.Nombre = this.formularioModificar.value.name;
     this.usuario.Apellidos = this.formularioModificar.value.surname;
     this.usuario.Email = this.formularioModificar.value.email;
     console.log(this.usuario);
     this.usuarioService.modificarUsuario(this.usuario, 'administrador').subscribe(
       data => {
-        this.toaster.success(' Usuario' + this.usuario.Id + ' modificado');
+        this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
 
         this.router.navigate(['/perfil']);
       }, error => {
-        this.toaster.error(' Error al modificar el usuario');
+        this.toaster.error('Error al modificar el usuario');
 
       }
     );
