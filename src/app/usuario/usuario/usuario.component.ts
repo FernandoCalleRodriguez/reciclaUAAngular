@@ -8,6 +8,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-usuario',
@@ -30,7 +31,7 @@ export class UsuarioComponent implements OnInit {
               private router: Router,
               private toaster: ToastrService,
               private modalService: NgbModal,
-  ) {
+              private dtoptionsService: DtoptionsService) {
     this.autenticacionService.estaAutenticado();
     this.tipousuario = 'administrador';
 
@@ -74,15 +75,8 @@ export class UsuarioComponent implements OnInit {
 
 
   borrarUsuario() {
-    Swal.fire({
-      title: '¿Estas Seguro de que quieres borrar al usuario ' + this.usuario.Id + ' ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí!',
-      cancelButtonText: 'No'
-    }).then((result) => {
+
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el usuario', this.usuario.Id)).then((result) => {
       if (result.value) {
         this.usuarioService.borrarUsuario(this.usuario.Id, this.tipousuario).subscribe(res => {
           this.toaster.error('Usuario ' + this.usuarioId + ' borrado');
@@ -90,8 +84,9 @@ export class UsuarioComponent implements OnInit {
 
         });
       }
+    }, error => {
+      this.toaster.error(' Error al borrar usuario');
     });
-
 
   }
 

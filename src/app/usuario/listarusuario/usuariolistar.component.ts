@@ -79,15 +79,8 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   borrarUsuario(usuario: Usuario) {
-    Swal.fire({
-      title: '¿Estás seguro de que quieres borrar al usuario ' + usuario.Id + ' ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
+
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el usuario', usuario.Id)).then((result) => {
       if (result.value) {
         this.usuarioService.borrarUsuario(usuario.Id, this.tipousuario).subscribe(res => {
           const index = this.usuarios.indexOf(usuario);
