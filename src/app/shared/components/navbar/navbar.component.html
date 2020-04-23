@@ -1,7 +1,7 @@
 <div id="content">
   <nav class="navbar navbar-expand-xl navbar-dark bg-primary">
     <div>
-      <button #toggler class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
+      <button class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
               [attr.aria-expanded]="!isCollapsed">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -106,13 +106,18 @@
         </li>
       </ul>
     </div>
-    <ul *ngIf="isCollapsed" class="nav justify-content-end">
-      <li class="nav-item">
-        <a [routerLink]="['/perfil']"
-           class="nav-link text-light">{{ usuario?.Nombre }}</a>
-      </li>
-      <li>
-        <a type="button" (click)="logout()" class="btn btn-danger nav-link"><i class="fa fa-power-off"></i></a>
+    <ul *ngIf="isCollapsed" class="navbar-nav dropdown-menu-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="UserDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          {{ usuario?.Nombre }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a [routerLink]="['/perfil']" class="dropdown-item">Perfil</a>
+          <a [routerLink]="['/usuario/cambiarcontrasena']" class="dropdown-item">Cambiar contraseña</a>
+          <div class="dropdown-divider"></div>
+          <button href="#" (click)="logout()" class="dropdown-item">Cerrar sesión</button>
+        </div>
       </li>
     </ul>
   </nav>
