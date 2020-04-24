@@ -16,6 +16,9 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ValidacionService } from '../../shared/services/validacion.service';
 import { DtoptionsService } from 'src/app/shared/services/dtoptions.service';
+import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
+import { Usuario } from 'src/app/shared/models/usuario';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-item',
@@ -34,9 +37,14 @@ export class ItemComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  user: Usuario = new Usuario();
 
-  constructor(private dtOptionsService:DtoptionsService,private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService,
+  constructor(private userService: UsuarioService, private authService: AutenticacionService, private dtOptionsService: DtoptionsService, private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService,
     private nivelService: NivelService, private toaster: ToastrService, private validacionService: ValidacionService) {
+    this.authService.estaAutenticado();
+    this.userService.getLoggedUser().subscribe(res => {
+      this.user = res
+    });
   }
 
   isEdit = false;
@@ -68,7 +76,7 @@ export class ItemComponent implements OnInit {
     this.materialService.getMaterial().subscribe(res => {
       this.materials = res;
     });
-    this.dtOptions= this.dtOptionsService.getDtoptions("item");
+    this.dtOptions = this.dtOptionsService.getDtoptions("item");
     this.item = new Item();
     this.itemNivel = this.nivelService.load();
   }
@@ -91,7 +99,7 @@ export class ItemComponent implements OnInit {
 
   delete(item: Item) {
     var tempItem: Item;
-    Swal.fire(this.dtOptionsService.getSwalWarningOptions("item",item.Id)).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions("item", item.Id)).then((result) => {
       if (result.value) {
         this.itemService.removeItem(item.Id).subscribe(res => {
           const index = this.items.indexOf(item);
@@ -119,13 +127,13 @@ export class ItemComponent implements OnInit {
         this.item.Imagen = '';
       }
 
-      this.item.Usuario_oid = parseInt(localStorage.getItem('ID_USER'));
+      this.item.Usuario_oid = this.user.Id;
       this.item.Material_oid = parseInt(form.value.Material);
 
       if (!this.items) {
         this.items = [];
       }
- 
+
 
       this.itemService.setItem(this.item).subscribe(res => {
         if (res != null) {

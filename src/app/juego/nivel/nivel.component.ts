@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 import { Item } from '../../shared/models/item';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { mergeMap, map } from 'rxjs/operators';
+ import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
+ 
 
 @Component({
   selector: 'app-nivel',
@@ -26,7 +27,9 @@ export class NivelComponent implements OnInit, OnDestroy {
   @ViewChild('AssignClosebutton') AssignClosebutton;
   @ViewChild('showModel') showModel;
 
-  constructor(private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+  constructor(private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+  this.authService.estaAutenticado();
+  
   }
 
   isEdit = false;

@@ -11,6 +11,9 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { ValidacionService } from '../../shared/services/validacion.service';
+import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
+import { Usuario } from 'src/app/shared/models/usuario';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-materiel',
@@ -28,10 +31,16 @@ export class MaterielComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  user: Usuario = new Usuario();
 
-  constructor(private dtOptionsService:DtoptionsService,private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
+  constructor(private userService: UsuarioService, private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
     private validacionService: ValidacionService) {
-  }
+  this.authService.estaAutenticado();
+  this.userService.getLoggedUser().subscribe(res => {
+    this.user = res
+  });
+    }
+  
 
   isEdit = false;
   dtOptions: DataTables.Settings = {};
@@ -87,7 +96,7 @@ export class MaterielComponent implements OnInit {
     if (!this.isEdit) {
       this.material.Nombre = form.value.Nombre;
       this.material.Contenedor = form.value.Contenedor;
-      this.material.Usuario_oid = parseInt(localStorage.getItem('ID_USER'));
+      this.material.Usuario_oid = this.user.Id;
       if (!this.materiales) {
         this.materiales = [];
       }
