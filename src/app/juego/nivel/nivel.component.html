@@ -4,7 +4,7 @@
       <h1>Listado de niveles</h1>
     </div>
     <div class="col">
-      <button class="btn btn-outline-primary float-right mt-2" (click)="add()" data-toggle="modal" #showModel
+      <button class="btn btn-outline-primary float-right mt-2" (click)="add(form)" data-toggle="modal" #showModel
         data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo nivel</button>
     </div>
   </div>
@@ -29,7 +29,7 @@
             <td>{{item.Puntuacion}}</td>
             <td>
               <a [routerLink]="['/juego/item']"class="btn btn-default" [queryParams]={Niveles_oid:item.Id}
-                routerLinkActive="router-link-active"><i class="fa fa-eye"></i> </a></td>
+                routerLinkActive="router-link-active">ver items</a></td>
             <td>
               <p (click)="setAssignedNivel(item)" data-toggle="modal" data-target="#assignarItems">assiganar
                 Items</p>
@@ -70,22 +70,22 @@
         <form #form="ngForm">
           <div class="form-group ">
             <label for="Numero">Numero</label>
-            <input [ngClass]="{'is-invalid': Numero.touched && !Numero.valid,'is-valid': Numero.valid}" type="number"
+            <input min="0" [ngClass]="{'is-invalid': Numero.touched && !Numero.valid,'is-valid': Numero.valid}" type="number"
               required class="form-control" [(ngModel)]="nivel.Numero" id="Numero" name="Numero" #Numero="ngModel">
             <div class="" *ngIf="Numero.touched && !Numero.valid">
-              <small class="text-danger">Numero es obligatorio</small>
+              <small class="text-danger"> Campo requerido</small>
             </div>
           </div>
 
           <div class="form-group">
             <label for="Puntuacion">Puntuacion</label>
 
-            <input [ngClass]="{'is-invalid': Puntuacion.touched && !Puntuacion.valid,'is-valid': Puntuacion.valid}"
-              type="text" class="form-control" id="Puntuacion" name="Puntuacion" #Puntuacion="ngModel"
+            <input min="0" [ngClass]="{'is-invalid': Puntuacion.touched && !Puntuacion.valid,'is-valid': Puntuacion.valid}"
+              type="number" class="form-control" id="Puntuacion" name="Puntuacion" #Puntuacion="ngModel"
               [(ngModel)]="nivel.Puntuacion" required>
             <div *ngIf="Puntuacion.touched && !Puntuacion.valid">
-              <small class="text-danger">Puntuacion es obligatorio</small>
-            </div>
+              <small class="text-danger" *ngIf="Puntuacion.errors.required"> Campo requerido</small>
+           </div>
 
           </div>
         </form>
@@ -93,7 +93,7 @@
       <div class="modal-footer">
         <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
           (click)="submit(form)" [disabled]="!form.valid">
-          Crear
+          Añadir
         </button>
         <ng-template #EditTitleBtn>
           <button type="button" class="btn btn-primary float-right" (click)="submit(form)" [disabled]="!form.valid">

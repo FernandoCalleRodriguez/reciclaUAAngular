@@ -1,17 +1,19 @@
-import {ItemService} from '../../shared/services/item.service';
+import { DtoptionsService } from './../../shared/services/dtoptions.service';
+import { ItemService } from '../../shared/services/item.service';
 import Swal from 'sweetalert2';
-import {Nivel} from '../../shared/models/nivel';
-import {NivelService} from '../../shared/services/nivel.service';
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {Subject} from 'rxjs';
-import {DataTableDirective} from 'angular-datatables';
-import {Router} from '@angular/router';
-import {Item} from '../../shared/models/item';
+import { Nivel } from '../../shared/models/nivel';
+import { NivelService } from '../../shared/services/nivel.service';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
+import { Item } from '../../shared/models/item';
 
-import {IDropdownSettings} from 'ng-multiselect-dropdown';
-import {mergeMap, map} from 'rxjs/operators';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+ import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
+ 
 
 @Component({
   selector: 'app-nivel',
@@ -25,7 +27,9 @@ export class NivelComponent implements OnInit, OnDestroy {
   @ViewChild('AssignClosebutton') AssignClosebutton;
   @ViewChild('showModel') showModel;
 
-  constructor(private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+  constructor(private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+  this.authService.estaAutenticado();
+  
   }
 
   isEdit = false;
@@ -49,32 +53,7 @@ export class NivelComponent implements OnInit, OnDestroy {
     this.itemService.getItems().subscribe(res => this.items = res);
 
     this.nivel = new Nivel();
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay nivel disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ niveles en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 niveles',
-        'infoFiltered': '(filtrado de _MAX_ niveles en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ niveles por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron niveles',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
+    this.dtOptions = this.dtOptionsService.getDtoptions("nivel");
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'Id',
@@ -97,23 +76,15 @@ export class NivelComponent implements OnInit, OnDestroy {
     console.log(this.modelTitle);
   }
 
-  add() {
-
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.nivel = new Nivel();
   }
 
   delete(nivel: Nivel) {
 
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el nivel ' + nivel.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions("nivel",nivel.Id)).then((result) => {
       if (result.value) {
         this.nivelService.removeNivel(nivel.Id).subscribe(res => {
           const index = this.niveles.indexOf(nivel);
@@ -122,6 +93,8 @@ export class NivelComponent implements OnInit, OnDestroy {
           }
           this.toaster.error('Nivel ' + nivel.Id + ' borrado');
           this.refresh();
+        }, err => {
+          this.toaster.error("Error dell servidor")
         });
       }
     });
@@ -136,16 +109,18 @@ export class NivelComponent implements OnInit, OnDestroy {
       }
       this.nivel.Numero = form.value.Numero;
       this.nivel.Puntuacion = form.value.Puntuacion;
-      this.niveles.push(this.nivel);
+     
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
-
-
           console.log('add', res);
           this.closebutton.nativeElement.click();
+           this.niveles.push(this.nivel);
           this.refresh();
           this.toaster.success('nivel creado');
         }
+      }, err => {
+        console.log(err)
+        this.toaster.error("Error ")
       });
     } else {
       console.log('n', this.nivel);
@@ -155,6 +130,8 @@ export class NivelComponent implements OnInit, OnDestroy {
           this.refresh();
           this.toaster.info('Nivel modificado');
         }
+      }, err => {
+        this.toaster.error("Error dell servidor")
       });
     }
     form.reset();

@@ -5,9 +5,8 @@ import {DataTableDirective} from 'angular-datatables';
 import {ValidacionService} from '../../shared/services/validacion.service';
 import {TipoContenedorService} from '../../shared/services/tipo-contenedor.service';
 import {TipoContenedor} from '../../shared/models/contenedor';
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import {ToastrService} from 'ngx-toastr';
-import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-tabla-items',
@@ -19,15 +18,12 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  public dtOptions: DataTables.Settings = {};
 
-  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService,
-              protected dtoptionsService: DtoptionsService) {
+  constructor(protected validacionService: ValidacionService, protected toaster: ToastrService) {
     validacionService.getAllItemsSinValidar().subscribe(m => {
       this.items = m;
       this.dtTrigger.next();
     });
-    this.dtOptions = dtoptionsService.getDtoptions('items');
   }
 
   ngOnInit(): void {
@@ -46,15 +42,22 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   }
 
   descartarItem(item: Item) {
-    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el item', item.Id, false, 'descartar'))
-      .then((result) => {
-        if (result.value) {
-          this.validacionService.descartarItem(item).subscribe(() => {
-            this.deleteFromArray(this.items, item);
-            this.toaster.error('Item ' + item.Id + ' descartado');
-          });
-        }
-      });
+    Swal.fire({
+      title: '¿Estás seguro de que deseas descartar el item ' + item.Id + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.validacionService.descartarItem(item).subscribe(() => {
+          this.deleteFromArray(this.items, item);
+          this.toaster.error('Item ' + item.Id + ' descartado');
+        });
+      }
+    });
   }
 
   deleteFromArray(array: any[], element: any): void {

@@ -5,7 +5,7 @@
     </div>
     <div class="col">
       <button class="btn btn-outline-primary float-right mt-2" data-toggle="modal" data-target="#exampleModal"
-        (click)="add()" #showModel><i class="fa fa-plus"></i>Añadir nuevo item</button>
+        (click)="add(form)" #showModel><i class="fa fa-plus"></i> Añadir nuevo item</button>
     </div>
   </div>
   <hr>
@@ -20,18 +20,20 @@
             <th scope="col">Imagen </th>
             <th scope="col">Estado </th>
             <th scope="col">Material </th>
+            <th scope="col">Nivel </th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of items">
-            <td>{{item.Id}}</td>
-            <td>{{item.Nombre}}</td>
-            <td>{{item.Descripcion}}</td>
+            <td>{{item?.Id}}</td>
+            <td>{{item?.Nombre}}</td>
+            <td>{{item?.Descripcion}}</td>
             <td><a (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''" data-toggle="modal"
-                data-target="#imageModel">Mostrar imagen <i class="fa fa-eye"></i></a></td>
-            <td>{{getEstado(item.EsValido)}}</td>
-            <td>{{item.MaterialItem?.Nombre}}</td>
+                data-target="#imageModel">Mostrar imagen </a></td>
+            <td>{{getEstado(item?.EsValido)}}</td>
+            <td>{{item?.MaterialItem?.Nombre }} </td>
+            <td>{{getItemNivel(item?.Id)}} </td>
             <td>
               <div class="btn-group">
                 <button class="btn btn-outline-success" title="Editar" (click)="getItemById(item.Id)">
@@ -70,7 +72,7 @@
             <input type="text" [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}"
               [(ngModel)]="item.Nombre" required class="form-control" id="Nombre" name="Nombre" #Nombre="ngModel">
             <div *ngIf="Nombre.touched && !Nombre.valid">
-              <small class="text-danger">Nombre es obligatorio</small>
+              <small class="text-danger"> Campo requerido</small>
             </div>
 
           </div>
@@ -78,10 +80,10 @@
             <label for="Descripcion" class="">Descripcion</label>
 
             <input [ngClass]="{'is-invalid': Descripcion.touched && !Descripcion.valid,'is-valid': Descripcion.valid}"
-              type="text" class="form-control" id="Descripcion" name="Descripcion" placeholder="Descripcion"
+              type="text" class="form-control" id="Descripcion" name="Descripcion" 
               #Descripcion="ngModel" [(ngModel)]="item.Descripcion" required>
             <div *ngIf="Descripcion.touched && !Descripcion.valid">
-              <small class="text-danger">Descripcion es obligatorio</small>
+              <small class="text-danger"> Campo requerido</small>
             </div>
 
           </div>
@@ -102,7 +104,7 @@
               <option *ngFor="let material of materials" [value]="material.Id">{{material.Nombre}}</option>
             </select>
             <div *ngIf="Material.touched && !Material.valid">
-              <small class="text-danger">Material es obligatorio</small>
+              <small class="text-danger"> Campo requerido</small>
             </div>
           </div>
         </form>
@@ -110,7 +112,7 @@
       <div class="modal-footer">
         <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
           (click)="submit(form)" [disabled]="!form.valid">
-          Crear
+          Añadir
         </button>
         <ng-template #EditTitleBtn>
           <button type="button" class="btn btn-primary float-right" (click)="submit(form)" [disabled]="!form.valid">
@@ -136,7 +138,10 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md 12">
-            <img src="{{imageToDisplay}}" style="width:100%; height:100%" alt="">
+            <img src="{{imageToDisplay}}" style="width:100%; height:100%" alt="" *ngIf="imageToDisplay!=null;else noImage">
+         <ng-template #noImage> 
+           <p>El imagen no esta disponible</p>
+         </ng-template>
           </div>
         </div>
       </div>
