@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Planta } from '../models/planta';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -9,25 +9,28 @@ import { Observable } from 'rxjs';
 })
 export class PlantaService {
   SERVER = 'http://localhost:16209/api/Planta/';
+  private token = localStorage.getItem('ACCESS_TOKEN');
+  private headers: HttpHeaders = new HttpHeaders({ Authorization: this.token });
+
   constructor(private http: HttpClient) { }
 
   public getPlanta(): Observable<Planta[]> {
-    return this.http.get<Planta[]>(this.SERVER + "BuscarTodos")
+    return this.http.get<Planta[]>(this.SERVER + "BuscarTodos", { headers: this.headers })
   }
-  public setPlanta(planta: Planta) :Observable<Planta>{
-    return this.http.post<Planta>(this.SERVER + "Crear", planta)
+  public setPlanta(planta: Planta): Observable<Planta> {
+    return this.http.post<Planta>(this.SERVER + "Crear", planta, { headers: this.headers })
   }
 
-  public getPlantaById(id:number):Observable<Planta>{
-    return this.http.get<Planta>(this.SERVER + id)
+  public getPlantaById(id: number): Observable<Planta> {
+    return this.http.get<Planta>(this.SERVER + id, { headers: this.headers })
   }
 
   public removePlanta(id: number) {
-    return this.http.delete<Planta>(this.SERVER + "Borrar?p_planta_oid=" + id);
+    return this.http.delete<Planta>(this.SERVER + "Borrar?p_planta_oid=" + id, { headers: this.headers });
   }
 
   public updatePlanta(planta: Planta) {
-    return this.http.put<Planta>(this.SERVER + "Modificar?idPlanta=" + planta.Id, planta);
+    return this.http.put<Planta>(this.SERVER + "Modificar?idPlanta=" + planta.Id, planta, { headers: this.headers });
   }
 
 }

@@ -1,10 +1,13 @@
+import { AutenticacionService } from './../../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
-import {Edificio} from '../../shared/models/edificio';
-import {EdificioService} from '../../shared/services/edificio.service';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {Subject} from 'rxjs';
+import { Edificio } from '../../shared/models/edificio';
+import { EdificioService } from '../../shared/services/edificio.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { DtoptionsService } from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-edificio',
@@ -30,48 +33,24 @@ export class EdificioComponent implements OnInit, OnDestroy {
     };
   };
 
-  public dtTrigger: Subject<any> = new Subject();
-
-
-  constructor(private edificioService: EdificioService, private toaster: ToastrService) {
-  }
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   isEdit = false;
+
+  constructor(private edificioService: EdificioService, protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService, private toaster: ToastrService) {
+    autenticacionService.estaAutenticado();
+    this.dtOptions = dtoptionsService.getDtoptions('edificio');
+  }
 
   ngOnInit(): void {
     this.edificioService.getEdificio().subscribe(res => {
       this.edificios = res;
       this.dtTrigger.next();
-      console.log(this.edificios);
+      //console.log(this.edificios);
     });
     this.edificio = new Edificio();
-
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay edificios disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ edificios en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 edificios',
-        'infoFiltered': '(filtrado de _MAX_ edificios en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ edificios por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron edificios',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
 
   }
 
@@ -84,7 +63,8 @@ export class EdificioComponent implements OnInit, OnDestroy {
     this.isEdit = true;
   }
 
-  add() {
+  add(form) {
+    form.reset();
     this.isEdit = false;
     this.edificio = new Edificio();
   }
@@ -94,53 +74,55 @@ export class EdificioComponent implements OnInit, OnDestroy {
   }
 
   delete(id) {
-    Swal.fire({
-      title: '¿Está seguro de borrar el edificio con ID "' + id + '" ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.edificioService.removeEdificio(id).subscribe(res => {
-          this.toaster.error('Edificio borrado');
-          this.refresh();
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el edificio', id))
+      .then((result) => {
+        if (result.value) {
+          this.edificioService.removeEdificio(id).subscribe(res => {
+            this.toaster.error('Edificio ' + id + ' borrado');
+            this.refresh();
+          });
+        }
+      });
   }
 
   submit(form: NgForm) {
     if (!this.isEdit) {
 
-      this.edificio.Id = parseInt(form.value.Id);
+      //this.edificio.Id = parseInt(form.value.Id);
+      this.edificio.Id = form.value.Id;
       this.edificio.Nombre = form.value.Nombre;
 
       this.edificioService.setEdificio(this.edificio).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+
+          this.toaster.success('Edificio ' + res.Id + ' creado');
           this.refresh();
-          this.toaster.success('Edificio creado');
         }
       });
     } else {
-
       this.edificioService.updateEdificio(this.edificio).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+
+          //this.toaster.success('Edificio ' + this.edificio.Id + ' modificado');
+          this.toaster.success('Edificio modificado');
           this.refresh();
-          this.toaster.info('Edificio modificado');
         }
       });
     }
+    form.reset();
   }
 
   refresh() {
     this.edificioService.getEdificio().subscribe(res => {
       this.edificios = res;
-      this.dtTrigger.next();
+
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
     });
   }
+
 }
