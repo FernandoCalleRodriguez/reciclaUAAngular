@@ -18,26 +18,18 @@ export class PuntoService {
 
   public getPunto(): Observable<Punto[]> {
     return this.http.get<Punto[]>(this.SERVER + "BuscarTodos", { headers: this.headers })
-
   }
 
   public setPunto(punto: Punto): Observable<Punto> {
-
-
     return this.http.post<Punto>(this.SERVER + "Crear", punto, { headers: this.headers });
-
   }
 
   public removePunto(id: number) {
-
     return this.http.delete<Punto>(this.SERVER + "Borrar?p_puntoreciclaje_oid=" + id, { headers: this.headers });
-
   }
 
   public updatePunto(punto: Punto) {
-
     return this.http.put<Punto>(this.SERVER + "Modificar?idPuntoReciclaje=" + punto.Id, punto, { headers: this.headers });
-
   }
 
   public getPuntoById(id: number) {
@@ -50,19 +42,15 @@ export class PuntoService {
 
   //NO SE HAN UTILIZADO AUN
   public getPuntoByPlanta(idPlanta: number, idEdificio: number) {
-
     return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorPlanta?id_edificio=" + idEdificio + "&num_planta=" + idPlanta, { headers: this.headers });
-
   }
 
   public getPuntoByEstancia(idEstancia: number) {
-
     return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorPlanta?id_estancia=" + idEstancia, { headers: this.headers });
   }
 
   public getPuntoByValidar() {
     return this.http.get<Punto[]>(this.SERVER + "BuscarPuntosPorValidar", { headers: this.headers });
-
   }
 
   public getPuntoByValidados() {

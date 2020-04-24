@@ -1,3 +1,5 @@
+import { TipoContenedorService } from './../shared/services/tipo-contenedor.service';
+import { TipoContenedor } from './../shared/models/contenedor';
 import { AutenticacionService } from './../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
 import { Contenedor } from '../shared/models/contenedor';
@@ -9,6 +11,7 @@ import { Punto } from '../shared/models/punto';
 import { PuntoService } from '../shared/services/punto.service';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { DtoptionsService } from '../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-contenedor',
@@ -21,6 +24,8 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   contenedor: Contenedor;
 
   punto: Punto[];
+
+  public tipos: TipoContenedor[] = null;
 
   @ViewChild('closebutton')
   closebutton: {
@@ -36,14 +41,16 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   };
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  public dtOptions: DataTables.Settings = {};
+
   dtTrigger: Subject<any> = new Subject<any>();
   isEdit = false;
 
   constructor(private contenedorService: ContenedorService, private puntoService: PuntoService,
-    private autenticacionService: AutenticacionService, private toaster: ToastrService) {
-
+    private autenticacionService: AutenticacionService, public tipoService: TipoContenedorService, protected dtoptionsService: DtoptionsService, private toaster: ToastrService) {
+    this.tipos = tipoService.getTipos();
     autenticacionService.estaAutenticado();
+    this.dtOptions = dtoptionsService.getDtoptions('contenedor');
   }
 
   ngOnInit(): void {
@@ -55,38 +62,12 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     this.contenedor = new Contenedor();
     this.puntoService.getPunto().subscribe(res => this.punto = res)
 
-    this.dtOptions = {
-      "language": {
-        "decimal": "",
-        "emptyTable": "No hay contenedores disponibles en la tabla",
-        "info": "Mostrando _START_ hasta _END_ de _TOTAL_ contenedores en total",
-        "infoEmpty": "Mostrando 0 hasta 0 de 0 contenedores",
-        "infoFiltered": "(filtrado de _MAX_ contenedores en total)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostar _MENU_ contenedores por página",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar: ",
-        "zeroRecords": "No se encontraron contenedores",
-        "paginate": {
-          "first": "Primero",
-          "last": "Último",
-          "next": "Próximo",
-          "previous": "Anterior"
-        },
-        "aria": {
-          "sortAscending": ": activar ordenamiento de columnas ascendentemente",
-          "sortDescending": ": activar ordenamiento de columnas descendentemente"
-        }
-      }
-    }
   }
   getContenedorById(id) {
     this.contenedorService.getContenedorById(id).subscribe(res => {
       this.contenedor = res;
     });
-    //console.log(this.contenedor);
+    console.log("contenedor;", this.contenedor);
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -101,34 +82,28 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   }
 
   delete(id) {
-    Swal.fire({
-      title: '¿Está seguro de borrar el contenedor con ID "' + id + '" ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No'
-    }).then((result) => {
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('el contenedor', id)).then((result) => {
       if (result.value) {
         this.contenedorService.removeContenedor(id).subscribe(res => {
           this.refresh();
-          this.toaster.error("Contenedor borrado");
+          this.toaster.error('Contenedor ' + id + ' borrado');
         });
       }
     });
   }
+
   submit(form: NgForm) {
     if (!this.isEdit) {
 
       this.contenedor.Tipo = form.value.Tipo;
-      this.contenedor.Punto_oid = form.value.Punto;
 
+      this.contenedor.Punto_oid = form.value.Punto;
       this.contenedorService.setContenedor(this.contenedor).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+
+          this.toaster.success('Contenedor ' + res.Id + ' creado');
           this.refresh();
-          this.toaster.success("Contenedor creado");
         }
       });
     }
@@ -137,8 +112,9 @@ export class ContenedorComponent implements OnInit, OnDestroy {
       this.contenedorService.updateContenedor(this.contenedor).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+
+          this.toaster.success('Contenedor ' + this.contenedor.Id + ' modificado');
           this.refresh();
-          this.toaster.success("Contenedor modificado");
         }
       });
     }

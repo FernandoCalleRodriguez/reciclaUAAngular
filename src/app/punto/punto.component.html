@@ -29,14 +29,15 @@
                         <td>{{item.Id}}</td>
                         <td>{{item.Latitud}}</td>
                         <td>{{item.Longitud}}</td>
-                        <td>{{item.EsValido}}</td>
+                        <td>{{validacionService.getEstadoById(item.EsValido).Estado}}</td>
 
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-outline-success" (click)="getPuntoById(item.Id)">
+                                <button class="btn btn-outline-success" title="Editar" (click)="getPuntoById(item.Id)">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button class="btn btn-outline-danger" (click)="delete(item.Id)">
+
+                                <button class="btn btn-outline-danger" title="Borrar" (click)="delete(item.Id)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>

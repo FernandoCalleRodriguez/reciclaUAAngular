@@ -64,7 +64,7 @@
                 <form #form="ngForm">
 
                     <div class="form-group">
-                        <label for="Id">ID</label>
+                        <label for="Id">ID:</label>
                         <input type="text" [disabled]="isEdit"
                             [ngClass]="{'is-invalid': Id.touched && !Id.valid,'is-valid': Id.valid}" type="number"
                             [(ngModel)]="edificio.Id" required class="form-control" id="Id" name="Id" #Id="ngModel">
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="Nombre">Nombre</label>
+                        <label for="Nombre">Nombre:</label>
                         <input type="text"
                             [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}"
                             [(ngModel)]="edificio.Nombre" required class="form-control" id="Nombre" name="Nombre"

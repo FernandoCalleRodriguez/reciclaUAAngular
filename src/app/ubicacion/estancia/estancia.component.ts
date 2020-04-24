@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { DtoptionsService } from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-estancia',
@@ -49,9 +50,11 @@ export class EstanciaComponent implements OnInit, OnDestroy {
   isEdit = false;
 
   constructor(private estanciaService: EstanciaService,
-    private plantaService: PlantaService, private edificioService: EdificioService, private autenticacionService: AutenticacionService,
+    private plantaService: PlantaService, private edificioService: EdificioService,
+    protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService,
     private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
+    this.dtOptions = dtoptionsService.getDtoptions('estancia');
   }
 
   ngOnInit(): void {
@@ -64,32 +67,6 @@ export class EstanciaComponent implements OnInit, OnDestroy {
     this.edificioService.getEdificio().subscribe(res => this.edificio = res);
     this.plantaService.getPlanta().subscribe(res => this.planta = res);
 
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay estancias disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ estancias en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 estancias',
-        'infoFiltered': '(filtrado de _MAX_ estancias en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ estancias por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron estancias',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
   }
 
   ngOnDestroy(): void {
@@ -98,9 +75,12 @@ export class EstanciaComponent implements OnInit, OnDestroy {
 
   getEstanciaById(id) {
     this.estanciaService.getEstanciaById(id).subscribe(res => {
+      
       this.estancia = res;
+      this.estancia.Edificio_oid = res?.EdificioEstancia.Id
+      this.estancia.Planta_oid = res?.PlantaEstancia.Id
     });
-    console.log(this.estancia);
+  
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -112,22 +92,15 @@ export class EstanciaComponent implements OnInit, OnDestroy {
   }
 
   delete(id) {
-    Swal.fire({
-      title: '¿Está seguro de borrar la estancia con ID "' + id + '" ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No'
-    }).then((result) => {
-      if (result.value) {
-        this.estanciaService.removeEstancia(id).subscribe(res => {
-          this.toaster.error('Estancia borrada');
-          this.refresh();
-        });
-      }
-    });
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la estancia', id))
+      .then((result) => {
+        if (result.value) {
+          this.estanciaService.removeEstancia(id).subscribe(res => {
+            this.toaster.error('Estancia ' + id + ' borrada');
+            this.refresh();
+          });
+        }
+      });
   }
 
   submit(form: NgForm) {
@@ -145,17 +118,20 @@ export class EstanciaComponent implements OnInit, OnDestroy {
       this.estanciaService.setEstancia(this.estancia).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
+
           this.refresh();
-          this.toaster.success('Estancia creada');
+          this.toaster.success('Estancia ' + res.Id + ' creada');
         }
       });
-    } else {
+    }
+    else {
       //console.log("n", this.estancia);
       this.estanciaService.updateEstancia(this.estancia).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
-          this.refresh();
           this.toaster.success('Estancia modificada');
+          this.refresh();
+          //this.toaster.success('Estancia ' + this.estancia.Id + ' modificada');
         }
       });
     }
