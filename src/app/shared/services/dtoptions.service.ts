@@ -67,7 +67,7 @@ export class DtoptionsService {
         }
 
       }, error => {
-        resolve(null);
+        return resolve(null);
       });
 
     });

@@ -19,10 +19,14 @@
                      formControlName="email"
                      placeholder="ejemplo@ua.es"
                      class="form-control">
+
               <div class="invalid-feedback" *ngIf="formularioModificar.get('email').errors?.required && formularioModificar.get('email').touched">
                 Campo requerido
               </div>
-              <div class="invalid-feedback" *ngIf="formularioModificar.get('email').invalid">
+              <div class="invalid-feedback" *ngIf="formularioModificar.get('email').errors?.email">
+                Formato correo electrónico invalido.
+              </div>
+              <div class="invalid-feedback" *ngIf="formularioModificar.get('email').invalid && !formularioModificar.get('email').errors?.email && !formularioModificar.get('email').errors?.required">
                 El correo electrónico utilizado ya existe.
               </div>
             </div>
