@@ -61,11 +61,12 @@ export class ContenedorComponent implements OnInit, OnDestroy {
     });
     this.contenedor = new Contenedor();
     this.puntoService.getPunto().subscribe(res => this.punto = res)
-
+    
   }
   getContenedorById(id) {
     this.contenedorService.getContenedorById(id).subscribe(res => {
       this.contenedor = res;
+      //this.contenedor.Punto_oid = res?.PuntoContenedor.Id;
     });
     console.log("contenedor;", this.contenedor);
     this.showModel.nativeElement.click();

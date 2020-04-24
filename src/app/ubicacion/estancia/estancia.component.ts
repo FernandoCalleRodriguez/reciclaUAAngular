@@ -75,12 +75,12 @@ export class EstanciaComponent implements OnInit, OnDestroy {
 
   getEstanciaById(id) {
     this.estanciaService.getEstanciaById(id).subscribe(res => {
-      
+
       this.estancia = res;
-      this.estancia.Edificio_oid = res?.EdificioEstancia.Id
-      this.estancia.Planta_oid = res?.PlantaEstancia.Id
+      this.estancia.Edificio_oid = res?.EdificioEstancia.Id;
+      this.estancia.Planta_oid = res?.PlantaEstancia.Id;
     });
-  
+
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -125,13 +125,11 @@ export class EstanciaComponent implements OnInit, OnDestroy {
       });
     }
     else {
-      //console.log("n", this.estancia);
       this.estanciaService.updateEstancia(this.estancia).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
           this.toaster.success('Estancia modificada');
           this.refresh();
-          //this.toaster.success('Estancia ' + this.estancia.Id + ' modificada');
         }
       });
     }

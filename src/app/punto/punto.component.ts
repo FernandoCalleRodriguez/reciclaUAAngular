@@ -114,7 +114,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
             this.punto.Latitud = form.value.Latitud;
             this.punto.Longitud = form.value.Longitud;
             //console.log(this.user.Id);
-            this.punto.Usuario_oid = -1;
+            this.punto.Usuario_oid = this.user.Id;
             this.punto.Estancia_oid = form.value.Estancia;
 
             this.puntoService.setPunto(this.punto).subscribe(res => {
