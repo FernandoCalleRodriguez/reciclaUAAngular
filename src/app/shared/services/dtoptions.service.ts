@@ -61,13 +61,9 @@ export class DtoptionsService {
     return new Promise<{ [p: string]: boolean }>(resolve => {
       this.usuarioService.obtenerUsuarioPorEmail(email).subscribe(result => {
         if ((result && !usuario) || (result && usuario && result.Id != usuario.Id)) {
-          console.log('No Valido');
           return resolve({emailEsNoValido: true});
-
         } else {
-          console.log('Valido');
           return resolve(null);
-
         }
 
       }, error => {
