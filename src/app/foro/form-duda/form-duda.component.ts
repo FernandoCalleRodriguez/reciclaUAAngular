@@ -44,7 +44,7 @@ export class FormDudaComponent implements OnInit {
   ngOnInit(): void {
     this.formulario = new FormGroup({
       titulo: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
-      cuerpo: new FormControl(null, [Validators.required]),
+      cuerpo: new FormControl(null, [Validators.required, Validators.maxLength(1500)]),
       tema: new FormControl(1, [Validators.required])
     });
   }
