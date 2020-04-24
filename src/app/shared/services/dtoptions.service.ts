@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {SweetAlertOptions} from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,19 @@ export class DtoptionsService {
           sortDescending: ': activar ordenamiento de columnas descendentemente'
         }
       }
+    };
+  }
+
+  getSwalWarningOptions(elemento: string, id, isString: boolean = false, accion: string = 'borrar'): SweetAlertOptions {
+    const printId = isString ? '"' + id + '"' : id;
+    return {
+      title: '¿Estás seguro de que deseas ' + accion + ' ' + elemento + ' ' + printId + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
     };
   }
 }

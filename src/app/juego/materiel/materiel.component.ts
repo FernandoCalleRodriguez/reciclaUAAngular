@@ -67,15 +67,7 @@ export class MaterielComponent implements OnInit {
   }
 
   delete(material: Material) {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el material ' + material.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions("material",material.Id)).then((result) => {
       if (result.value) {
         this.materialService.removeMaterial(material.Id).subscribe(res => {
           const index = this.materiales.indexOf(material);
@@ -99,10 +91,9 @@ export class MaterielComponent implements OnInit {
       if (!this.materiales) {
         this.materiales = [];
       }
-      this.materiales.push(this.material);
-
       this.materialService.setMaterial(this.material).subscribe(res => {
         if (res != null) {
+          this.materiales.push(this.material);
           this.closebutton.nativeElement.click();
           this.refresh();
           this.toaster.success('material creado');

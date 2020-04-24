@@ -81,15 +81,7 @@ export class NivelComponent implements OnInit, OnDestroy {
 
   delete(nivel: Nivel) {
 
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el nivel ' + nivel.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions("nivel",nivel.Id)).then((result) => {
       if (result.value) {
         this.nivelService.removeNivel(nivel.Id).subscribe(res => {
           const index = this.niveles.indexOf(nivel);
@@ -114,11 +106,12 @@ export class NivelComponent implements OnInit, OnDestroy {
       }
       this.nivel.Numero = form.value.Numero;
       this.nivel.Puntuacion = form.value.Puntuacion;
-      this.niveles.push(this.nivel);
+     
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
           console.log('add', res);
           this.closebutton.nativeElement.click();
+           this.niveles.push(this.nivel);
           this.refresh();
           this.toaster.success('nivel creado');
         }

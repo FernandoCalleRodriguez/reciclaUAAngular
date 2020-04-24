@@ -91,15 +91,7 @@ export class ItemComponent implements OnInit {
 
   delete(item: Item) {
     var tempItem: Item;
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar el item ' + item.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'No'
-    }).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions("item",item.Id)).then((result) => {
       if (result.value) {
         this.itemService.removeItem(item.Id).subscribe(res => {
           const index = this.items.indexOf(item);
@@ -133,11 +125,12 @@ export class ItemComponent implements OnInit {
       if (!this.items) {
         this.items = [];
       }
-      this.items.push(this.item);
+ 
 
       this.itemService.setItem(this.item).subscribe(res => {
         if (res != null) {
           if (this.selectedImage != null) {
+            this.items.push(this.item);
             this.uploadImage(res.Id);
           }
           this.closebutton.nativeElement.click();
