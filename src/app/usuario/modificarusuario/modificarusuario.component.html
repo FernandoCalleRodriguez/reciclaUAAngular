@@ -12,13 +12,19 @@
             <!-- EMAIL DEL USUARIO -->
             <div class="form-group">
               <label for="email">Correo electrónico:</label>
-              <input [ngClass]="{'is-invalid' : formularioModificar.get('email').invalid && formularioModificar.get('email').touched,
+              <input [ngClass]="{'is-invalid' : formularioModificar.get('email').invalid,
               'is-valid' : formularioModificar.get('email').valid }"
                      type="email"
                      id="email"
                      formControlName="email"
                      placeholder="ejemplo@ua.es"
                      class="form-control">
+              <div class="invalid-feedback" *ngIf="formularioModificar.get('email').errors?.required && formularioModificar.get('email').touched">
+                Campo requerido
+              </div>
+              <div class="invalid-feedback" *ngIf="formularioModificar.get('email').invalid">
+                El correo electrónico utilizado ya existe.
+              </div>
             </div>
 
             <!-- NOMBRE DEL USUARIO -->

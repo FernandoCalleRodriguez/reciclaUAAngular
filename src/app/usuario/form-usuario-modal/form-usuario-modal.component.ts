@@ -6,6 +6,7 @@ import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: '<app-form-usuario-modal',
@@ -21,7 +22,8 @@ export class FormUsuarioModalComponent implements OnInit {
   @Input() tipousuario: string;
 
   constructor(protected usuarioService: UsuarioService,
-              private toaster: ToastrService) {
+              private toaster: ToastrService,
+              private dtoptionsService: DtoptionsService) {
   }
 
   ngOnInit(): void {
@@ -29,7 +31,7 @@ export class FormUsuarioModalComponent implements OnInit {
 
     if (this.usuarioId != null) {
       this.formulario = new FormGroup({
-        email: new FormControl(null, [Validators.required, Validators.email]),
+        email: new FormControl(null, [Validators.required, Validators.email], this.esEmailRepetido.bind(this)),
         pwd: new FormControl(null),
         name: new FormControl(null, [Validators.required]),
         surname: new FormControl(null, [Validators.required]),
@@ -50,7 +52,7 @@ export class FormUsuarioModalComponent implements OnInit {
       }
     } else {
       this.formulario = new FormGroup({
-        email: new FormControl(null, [Validators.required, Validators.email]),
+        email: new FormControl(null, [Validators.required, Validators.email], this.esEmailRepetido.bind(this)),
         pwd: new FormControl(null, [Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
         pwd2: new FormControl(null, [Validators.required,
@@ -67,6 +69,11 @@ export class FormUsuarioModalComponent implements OnInit {
     }
   }
 
+  esEmailRepetido(nombre: FormGroup) {
+
+    return this.dtoptionsService.esEmailRepetido(nombre.value, this.usuario);
+
+  }
 
   rellenarFormulario(usuario: Usuario) {
     if (usuario == null) {

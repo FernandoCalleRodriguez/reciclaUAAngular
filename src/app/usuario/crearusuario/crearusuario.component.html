@@ -21,6 +21,9 @@
           <div class="invalid-feedback" *ngIf="formularioCrear.get('email').errors?.required && formularioCrear.get('email').touched">
             Campo requerido
           </div>
+          <div class="invalid-feedback" *ngIf="formularioCrear.get('email').invalid">
+            El correo electrónico utilizado ya existe.
+          </div>
         </div>
 
         <!-- CONTRASEÑA DEL USUARIO -->

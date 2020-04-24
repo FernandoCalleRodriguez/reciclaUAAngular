@@ -15,6 +15,9 @@
         <div class="invalid-feedback" *ngIf="email().errors?.required && email().touched">
           Campo requerido
         </div>
+        <div class="invalid-feedback" *ngIf="email().invalid">
+          El correo electrónico utilizado ya existe.
+        </div>
       </div>
       <!-- CONTRASEÑA DEL USUARIO -->
       <div *ngIf="isCreate" class="form-group">

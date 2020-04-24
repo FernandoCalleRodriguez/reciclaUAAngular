@@ -78,6 +78,7 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
+
   borrarUsuario(usuario: Usuario) {
 
     Swal.fire(this.dtoptionsService.getSwalWarningOptions('el usuario', usuario.Id)).then((result) => {
@@ -105,28 +106,19 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
-    this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
-      if (result && result.Id != this.usuario.Id) {
 
-        this.toaster.error('  El Correo electrónico utilizado ya existe');
-
-      } else {
-        form.onSubmit().subscribe(usuario => {
-          if (usuario) {
-            this.usuarios.forEach((element, i, array) => {
-              if (element.Id === usuario.Id) {
-                array[i] = usuario;
-              }
-            });
-            modal.dismiss();
-            this.refresh();
-            this.toaster.success('Usuario ' + usuario.Id + ' modificado');
+    form.onSubmit().subscribe(usuario => {
+      if (usuario) {
+        this.usuarios.forEach((element, i, array) => {
+          if (element.Id === usuario.Id) {
+            array[i] = usuario;
           }
-
         });
+        modal.dismiss();
+        this.refresh();
+        this.toaster.success('Usuario ' + usuario.Id + ' modificado');
       }
-    }, error => {
-      this.toaster.error(' Error al modificar usuario');
+
     });
 
   }
@@ -138,26 +130,16 @@ export class UsuariolistarComponent implements OnInit, OnDestroy {
   }
 
   crearUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
-    this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
-      if (result) {
-        this.toaster.error('  El Correo electrónico utilizado ya existe');
-
-      } else {
-        form.onSubmit().subscribe(usuario => {
-          if (usuario) {
-            if (!this.usuarios) {
-              this.usuarios = [];
-            }
-            this.usuarios.push(usuario);
-            modal.dismiss();
-            this.refresh();
-            this.toaster.success('Usuario ' + usuario.Id + ' creado');
-          }
-        });
+    form.onSubmit().subscribe(usuario => {
+      if (usuario) {
+        if (!this.usuarios) {
+          this.usuarios = [];
+        }
+        this.usuarios.push(usuario);
+        modal.dismiss();
+        this.refresh();
+        this.toaster.success('Usuario ' + usuario.Id + ' creado');
       }
-
-    }, error => {
-      this.toaster.error(' Error al crear usuario');
     });
 
   }

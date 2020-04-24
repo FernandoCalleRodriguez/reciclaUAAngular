@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {SweetAlertOptions} from 'sweetalert2';
+import {FormControl, FormGroup} from '@angular/forms';
+import {UsuarioService} from './usuario.service';
+import {Usuario} from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +10,7 @@ import {SweetAlertOptions} from 'sweetalert2';
 export class DtoptionsService {
   dtOptions: DataTables.Settings = {};
 
-  constructor() {
+  constructor(private usuarioService: UsuarioService) {
   }
 
   getDtoptions(nombre) {
@@ -51,5 +54,27 @@ export class DtoptionsService {
       confirmButtonText: 'Sí',
       cancelButtonText: 'No'
     };
+  }
+
+  esEmailRepetido(email: string, usuario: Usuario): Promise<{ [s: string]: boolean }> {
+
+    return new Promise<{ [p: string]: boolean }>(resolve => {
+      this.usuarioService.obtenerUsuarioPorEmail(email).subscribe(result => {
+        if ((result && !usuario) || (result && usuario && result.Id != usuario.Id)) {
+          console.log('No Valido');
+          return resolve({emailEsNoValido: true});
+
+        } else {
+          console.log('Valido');
+          return resolve(null);
+
+        }
+
+      }, error => {
+        resolve(null);
+      });
+
+    });
+
   }
 }

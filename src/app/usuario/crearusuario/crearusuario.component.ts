@@ -6,6 +6,7 @@ import {Usuario} from '../../shared/models/usuario';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-crearusuario',
@@ -23,7 +24,8 @@ export class CrearusuarioComponent implements OnInit {
               private usuarioService: UsuarioService,
               private router: Router,
               private toaster: ToastrService,
-              private  autenticacionService: AutenticacionService) {
+              private  autenticacionService: AutenticacionService,
+              private dtoptionsService: DtoptionsService) {
     this.autenticacionService.estaAutenticado();
   }
 
@@ -34,7 +36,7 @@ export class CrearusuarioComponent implements OnInit {
     });
 
     this.formularioCrear = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      email: new FormControl(null, [Validators.required, Validators.email], this.esEmailRepetido.bind(this)),
       pwd: new FormControl(null, [Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&-_])[A-Za-z\\d$@$!%*?&-_].{7,}$')]),
       pwd2: new FormControl(null, [Validators.required,
@@ -44,6 +46,11 @@ export class CrearusuarioComponent implements OnInit {
     });
   }
 
+  esEmailRepetido(nombre: FormGroup) {
+
+    return this.dtoptionsService.esEmailRepetido(nombre.value, this.usuario);
+
+  }
   onRegister() {
 
     this.usuario = {
@@ -52,28 +59,23 @@ export class CrearusuarioComponent implements OnInit {
       Nombre: this.formularioCrear.value.name,
       Apellidos: this.formularioCrear.value.surname,
     };
-    this.usuarioService.obtenerUsuarioPorEmail(this.usuario.Email).subscribe(result => {
-      if (!result) {
-        this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
-          data => {
-            if (data === null) {
-              this.error = true;
-              this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
 
-            } else {
-              this.toaster.success(' El Usuario se ha creado con éxito');
-              this.router.navigate(['/usuario/' + this.tipousuario + '/listar']);
+    this.usuarioService.CrearUsuario(this.usuario, this.tipousuario).subscribe(
+      data => {
+        if (data === null) {
+          this.error = true;
+          this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
 
-            }
+        } else {
+          this.toaster.success(' El Usuario se ha creado con éxito');
+          this.router.navigate(['/usuario/' + this.tipousuario + '/listar']);
 
-          }, error => {
-            this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
+        }
 
-          }
-        );
-      } else {
-        this.toaster.error(' El Correo electrónico utilizado ya existe');
+      }, error => {
+        this.toaster.error(' El Usuario no se ha podido crear vuelva a probar más tarde');
+
       }
-    });
+    );
   }
 }
