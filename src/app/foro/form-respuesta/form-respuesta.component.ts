@@ -50,7 +50,7 @@ export class FormRespuestaComponent implements OnInit {
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
-      cuerpo: new FormControl(null, [Validators.required]),
+      cuerpo: new FormControl(null, [Validators.required, Validators.maxLength(1500)]),
       duda: new FormControl(null, [Validators.required])
     });
   }
