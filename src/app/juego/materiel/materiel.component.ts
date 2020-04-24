@@ -1,3 +1,4 @@
+import { DtoptionsService } from './../../shared/services/dtoptions.service';
 import { TipoContenedorService } from './../../shared/services/tipo-contenedor.service';
 import { Contenedor, TipoContenedor } from './../../shared/models/contenedor';
  import { Component, OnInit, ViewChild } from '@angular/core';
@@ -28,7 +29,7 @@ export class MaterielComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
-  constructor(private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
+  constructor(private dtOptionsService:DtoptionsService,private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
     private validacionService: ValidacionService) {
   }
 
@@ -44,32 +45,8 @@ export class MaterielComponent implements OnInit {
       this.router.navigate(['/']);
     });
     this.contenedores=this.contenedorService.getTipos();
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay material disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ materiales en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 materiales',
-        'infoFiltered': '(filtrado de _MAX_ materiales en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ materiales por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron materiales',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
+    this.dtOptions= this.dtOptionsService.getDtoptions("item");
+
     this.material = new Material();
   }
 

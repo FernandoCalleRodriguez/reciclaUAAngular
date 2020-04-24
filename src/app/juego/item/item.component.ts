@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ValidacionService } from '../../shared/services/validacion.service';
+import { DtoptionsService } from 'src/app/shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-item',
@@ -34,7 +35,7 @@ export class ItemComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
-  constructor(private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService,
+  constructor(private dtOptionsService:DtoptionsService,private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService,
     private nivelService: NivelService, private toaster: ToastrService, private validacionService: ValidacionService) {
   }
 
@@ -67,32 +68,7 @@ export class ItemComponent implements OnInit {
     this.materialService.getMaterial().subscribe(res => {
       this.materials = res;
     });
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay item disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ items en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 niveles',
-        'infoFiltered': '(filtrado de _MAX_ items en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ items por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron items',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
+    this.dtOptions= this.dtOptionsService.getDtoptions("item");
     this.item = new Item();
     this.itemNivel = this.nivelService.load();
   }

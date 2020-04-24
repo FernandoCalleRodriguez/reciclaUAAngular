@@ -1,3 +1,4 @@
+import { DtoptionsService } from './../../shared/services/dtoptions.service';
 import { ItemService } from '../../shared/services/item.service';
 import Swal from 'sweetalert2';
 import { Nivel } from '../../shared/models/nivel';
@@ -25,7 +26,7 @@ export class NivelComponent implements OnInit, OnDestroy {
   @ViewChild('AssignClosebutton') AssignClosebutton;
   @ViewChild('showModel') showModel;
 
-  constructor(private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+  constructor(private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
   }
 
   isEdit = false;
@@ -49,32 +50,7 @@ export class NivelComponent implements OnInit, OnDestroy {
     this.itemService.getItems().subscribe(res => this.items = res);
 
     this.nivel = new Nivel();
-    this.dtOptions = {
-      'language': {
-        'decimal': '',
-        'emptyTable': 'No hay nivel disponibles en la tabla',
-        'info': 'Mostrando _START_ hasta _END_ de _TOTAL_ niveles en total',
-        'infoEmpty': 'Mostrando 0 hasta 0 de 0 niveles',
-        'infoFiltered': '(filtrado de _MAX_ niveles en total)',
-        'infoPostFix': '',
-        'thousands': ',',
-        'lengthMenu': 'Mostar _MENU_ niveles por página',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'search': 'Buscar: ',
-        'zeroRecords': 'No se encontraron niveles',
-        'paginate': {
-          'first': 'Primero',
-          'last': 'Último',
-          'next': 'Próximo',
-          'previous': 'Anterior'
-        },
-        'aria': {
-          'sortAscending': ': activar ordenamiento de columnas ascendentemente',
-          'sortDescending': ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
+    this.dtOptions = this.dtOptionsService.getDtoptions("nivel");
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'Id',
