@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Nota} from '../../shared/models/nota';
 import {Usuario} from '../../shared/models/usuario';
 import {UsuarioService} from '../../shared/services/usuario.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-form-nota',
@@ -17,13 +18,17 @@ export class FormNotaComponent implements OnInit {
   Usuario: Usuario;
 
   constructor(protected notaservice: NotaService, protected router: Router, protected route: ActivatedRoute,
-              protected usuarioService: UsuarioService) {
+              protected usuarioService: UsuarioService, protected  autenticationService: AutenticacionService) {
+    this.autenticationService.estaAutenticado();
+    this.usuarioService.getLoggedUser().subscribe(u => {
+      this.nota.UsuarioAdministrador_oid = u.Id;
+    });
   }
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
-      titulo: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
-      cuerpo: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+      titulo: new FormControl(null, [Validators.required]),
+      cuerpo: new FormControl(null, [Validators.required]),
     });
   }
 
@@ -38,12 +43,7 @@ export class FormNotaComponent implements OnInit {
   onSubmit() {
     this.nota.Titulo = this.titulo().value;
     this.nota.Cuerpo = this.cuerpo().value;
-    this.nota.Fecha = new Date();
-    this.usuarioService.getLoggedUser().subscribe(u => {
-      this.nota.UsuarioAdministrador_oid = u.Id;
-    });
     this.notaservice.crear(this.nota).subscribe(id => {
-        console.log(this.nota);
         this.router.navigate(['/nota']);
       });
   }

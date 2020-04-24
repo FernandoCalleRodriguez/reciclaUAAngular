@@ -10,71 +10,39 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {FormNotaComponent} from '../form-nota/form-nota.component';
 import {ModalNotaComponent} from '../modal-nota/modal-nota.component';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-nota',
   templateUrl: './nota.component.html',
   styleUrls: ['./nota.component.css']
 })
-export class NotaComponent implements OnInit, OnDestroy {
+export class NotaComponent implements OnDestroy {
   Notas: Nota[];
   Nota: Nota;
-  edit = false;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
-  dtOptions: DataTablesModule;
+
+  public edit = false;
+  public dtOptions: DataTables.Settings = {};
 
   constructor(private notaservice: NotaService, protected modalService: NgbModal,
-              protected toaster: ToastrService, protected router: Router) { }
-
-  ngOnInit(): void {
+              protected toaster: ToastrService, protected router: Router,
+              protected  autenticationService: AutenticacionService, protected  dtoptionsService: DtoptionsService) {
+    this.autenticationService.estaAutenticado();
+    this.dtOptions = this.dtoptionsService.getDtoptions('notas');
     this.notaservice.obtenerTodasNotas().subscribe(res => {
       this.Notas = res;
       this.dtTrigger.next();
-    }, error => {
-      this.router.navigate(['/']);
     });
-
-    this.dtOptions = {
-      language: {
-        decimal: '',
-        emptyTable: 'No hay puntos disponibles en la tabla',
-        info: 'Mostrando START hasta END de TOTAL puntos en total',
-        infoEmpty: 'Mostrando 0 hasta 0 de 0 puntos',
-        infoFiltered: '(filtrado de MAX puntos en total)',
-        infoPostFix: '',
-        thousands: ',',
-        lengthMenu: 'Mostar MENU puntos por página',
-        loadingRecords: 'Cargando...',
-        processing: 'Procesando...',
-        search: 'Buscar: ',
-        zeroRecords: 'No se encontraron puntos',
-        paginate: {
-          first: 'Primero',
-          last: 'Último',
-          next: 'Próximo',
-          previous: 'Anterior'
-        },
-        aria: {
-          sortAscending: ': activar ordenamiento de columnas ascendentemente',
-          sortDescending: ': activar ordenamiento de columnas descendentemente'
-        }
-      }
-    };
-
   }
+
   public borrarNota(nota: Nota): void {
-      Swal.fire({
-        title: '¿Estás seguro de que deseas borrar la nota ' + nota.Id + '?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'No'
-      }).then((result) => {
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la nota', nota.Id))
+      .then((result) => {
         if (result.value) {
           this.notaservice.borrar(nota).subscribe(() => {
             const index = this.Notas.indexOf(nota);
@@ -115,6 +83,9 @@ export class NotaComponent implements OnInit, OnDestroy {
       });
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Nota ' + d.Id + ' modificada');
+    }, error => {
+      this.toaster.error('Error al modificar la nota');
     });
   }
 
@@ -126,6 +97,9 @@ export class NotaComponent implements OnInit, OnDestroy {
       this.Notas.push(d);
       modal.dismiss();
       this.refresh();
+      this.toaster.success('Nota ' + d.Id + ' creada');
+    }, error => {
+      this.toaster.error('Error al crear la nota');
     });
   }
 

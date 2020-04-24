@@ -10,54 +10,47 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-accionweb',
   templateUrl: './accionweb.component.html',
   styleUrls: ['./accionweb.component.css']
 })
-export class AccionwebComponent implements OnInit, OnDestroy {
+export class AccionwebComponent implements OnDestroy {
   accionesWeb: AccionWeb[];
   accionWeb: AccionWeb;
   usuario: Usuario;
   usuarios: Usuario[];
-  texto: string;
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private accionwebservice: AccionwebService, protected usuarioservice: UsuarioService,
-              protected modalService: NgbModal, protected toaster: ToastrService, protected router: Router) { }
+  public dtOptions: DataTables.Settings = {};
 
-  ngOnInit(): void {
+  constructor(private accionwebservice: AccionwebService, protected usuarioservice: UsuarioService,
+              protected modalService: NgbModal, protected toaster: ToastrService, protected router: Router,
+              protected  autenticationService: AutenticacionService, protected  dtoptionsService: DtoptionsService) {
+    this.autenticationService.estaAutenticado();
+    this.dtOptions = this.dtoptionsService.getDtoptions('acciones web');
     this.accionwebservice.obtenerTodosAccionWeb().subscribe(acciones => {
       this.accionesWeb = acciones;
-      this.texto = (JSON.stringify(acciones));
-      console.log('Detalle de la carga de acciones ' + this.texto);
       this.dtTrigger.next();
-    }, error => {
-      this.router.navigate(['/']);
     });
   }
 
   public borrarAccionWeb(accion: AccionWeb): void {
-    Swal.fire({
-      title: '¿Estás seguro de que deseas borrar la acción web ' + accion.Id + '?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'No',
-      confirmButtonText: 'Sí'
-    }).then((result) => {
+    Swal.fire(this.dtoptionsService.getSwalWarningOptions('la acción web', accion.Id))
+      .then((result) => {
       if (result.value) {
         this.accionwebservice.borrar(accion).subscribe(() => {
           const index = this.accionesWeb.indexOf(accion);
           if (index > -1) {
             this.accionesWeb.splice(index, 1);
           }
-          this.toaster.error('Tipo de acción ' + accion.Id + ' borrada');
+          this.toaster.error('Acción web ' + accion.Id + ' borrada');
           this.refresh();
         });
       }

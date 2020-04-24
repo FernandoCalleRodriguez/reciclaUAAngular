@@ -5,6 +5,7 @@ import {TipoAccion} from '../../shared/models/accion';
 import {NotaService} from '../../shared/services/nota.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TipoaccionService} from '../../shared/services/tipoaccion.service';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-form-tipoaccion',
@@ -16,12 +17,15 @@ export class FormTipoaccionComponent implements OnInit {
   tipoAccion: TipoAccion = new TipoAccion();
 
 
-  constructor(protected tipoaccionservice: TipoaccionService, protected router: Router, protected route: ActivatedRoute) { }
+  constructor(protected tipoaccionservice: TipoaccionService, protected router: Router, protected route: ActivatedRoute,
+              protected  autenticationService: AutenticacionService) {
+    this.autenticationService.estaAutenticado();
+  }
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
-      nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
-      puntuacion: new FormControl(null, [Validators.required]),
+      nombre: new FormControl(null, [Validators.required]),
+      puntuacion: new FormControl(null, [Validators.required, Validators.pattern('^[1-9]$|^[1-9][0-9]+$')]),
     });
   }
   public nombre(): AbstractControl {

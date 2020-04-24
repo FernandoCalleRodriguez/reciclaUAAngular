@@ -3,6 +3,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {TipoaccionService} from '../../shared/services/tipoaccion.service';
 import {Observable} from 'rxjs';
 import {TipoAccion} from '../../shared/models/accion';
+import {AutenticacionService} from '../../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-modal-tipoaccion',
@@ -17,18 +18,19 @@ export class ModalTipoaccionComponent implements OnInit {
   @Input('IdTipoAccion')
   public Id: number;
 
-  constructor(protected tipoaccionService: TipoaccionService) { }
+  constructor(protected tipoaccionService: TipoaccionService, protected  autenticationService: AutenticacionService) {
+    this.autenticationService.estaAutenticado();
+  }
 
   ngOnInit(): void {
     this.formulario = new FormGroup({
       nombre: new FormControl(null, [Validators.required]),
-      puntuacion: new FormControl(null, [Validators.required]),
+      puntuacion: new FormControl(null, [Validators.required, Validators.pattern('^[1-9]$|^[1-9][0-9]+$')]),
     });
 
     if (this.Id) {
       this.tipoaccionService.obtenerTipoAccionPorId(this.Id).subscribe(tipoAccion => {
         this.tipoAcccion = tipoAccion;
-        console.log('Se activa el true');
         this.edit = true;
         this.nombre().setValue(tipoAccion.Nombre);
         this.puntuacion().setValue(tipoAccion.Puntuacion);
