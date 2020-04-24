@@ -9,6 +9,7 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {FormUsuarioModalComponent} from '../form-usuario-modal/form-usuario-modal.component';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {consoleTestResultHandler} from 'tslint/lib/test';
 
 @Component({
   selector: 'app-usuario',
@@ -64,11 +65,20 @@ export class UsuarioComponent implements OnInit {
   }
 
   modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
-    form.onSubmit().subscribe(usuario => {
-      this.usuario = usuario;
-      modal.dismiss();
-      this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
+    this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
+      console.log(result);
+      if (result && result.Id != this.usuario.Id) {
 
+        this.toaster.error('  El Correo electrónico utilizado ya existe');
+
+      } else {
+        form.onSubmit().subscribe(usuario => {
+          this.usuario = usuario;
+          modal.dismiss();
+          this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
+
+        });
+      }
     });
 
   }

@@ -21,6 +21,7 @@ export class ModificarusuarioComponent implements OnInit {
               protected  usuarioService: UsuarioService,
               protected autenticacionService: AutenticacionService,
               private toaster: ToastrService) {
+
   }
 
   ngOnInit(): void {
@@ -43,17 +44,28 @@ export class ModificarusuarioComponent implements OnInit {
     this.usuario.Nombre = this.formularioModificar.value.name;
     this.usuario.Apellidos = this.formularioModificar.value.surname;
     this.usuario.Email = this.formularioModificar.value.email;
-    console.log(this.usuario);
-    this.usuarioService.modificarUsuario(this.usuario, 'administrador').subscribe(
-      data => {
-        this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
+    console.log(this.formularioModificar.value.email);
 
-        this.router.navigate(['/perfil']);
-      }, error => {
-        this.toaster.error('Error al modificar el usuario');
+    this.usuarioService.obtenerUsuarioPorEmail(this.formularioModificar.value.email).subscribe(result => {
+      console.log(result);
 
+      if (result && result.Id != this.usuario.Id) {
+
+        this.toaster.error('  El Correo electrónico utilizado ya existe');
+
+      } else {
+        this.usuarioService.modificarUsuario(this.usuario, 'administrador').subscribe(
+          data => {
+            this.toaster.success('Usuario ' + this.usuario.Id + ' modificado');
+
+            this.router.navigate(['/perfil']);
+          }, error => {
+            this.toaster.error('Error al modificar el usuario');
+
+          }
+        );
       }
-    );
+    });
   }
 
 }
