@@ -106,7 +106,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
           this.closebutton.nativeElement.click();
 
           //this.toaster.success('Edificio ' + this.edificio.Id + ' modificado');
-          this.toaster.success('Edificio modificado');
+          this.toaster.success('Edificio ' + res.Id + ' modificado');
           this.refresh();
         }
       });

@@ -128,7 +128,7 @@ export class EstanciaComponent implements OnInit, OnDestroy {
       this.estanciaService.updateEstancia(this.estancia).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
-          this.toaster.success('Estancia modificada');
+          this.toaster.success('Estancia "' + res.Id + '" modificada');
           this.refresh();
         }
       });
