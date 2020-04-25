@@ -93,7 +93,7 @@
                         <select class="browser-default custom-select" id="Estancia" required name="Estancia"
                             [ngClass]="{'is-invalid': Estancia.touched && !Estancia.valid,'is-valid': Estancia.valid}"
                             #Estancia="ngModel" [(ngModel)]="punto.Estancia_oid">
-                            <option value="" disabled selected>Elije una estancia</option>
+                            <option value="" disabled selected>Selecciona una estancia</option>
                             <option *ngFor="let item of estancia" [value]="item.Id">{{item.Nombre}}</option>
                         </select>
                         <div *ngIf="Estancia.touched && !Estancia.valid">

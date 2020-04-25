@@ -1,24 +1,24 @@
-import { Material } from '../../shared/models/material';
-import { NivelService } from '../../shared/services/nivel.service';
-import { MaterialService } from '../../shared/services/materiel.service';
-import { Estado } from '../../shared/models/estado';
-import { map } from 'rxjs/operators';
-import { Item } from '../../shared/models/item';
-import { ItemService } from '../../shared/services/item.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import {Material} from '../../shared/models/material';
+import {NivelService} from '../../shared/services/nivel.service';
+import {MaterialService} from '../../shared/services/materiel.service';
+import {Estado} from '../../shared/models/estado';
+import {map} from 'rxjs/operators';
+import {Item} from '../../shared/models/item';
+import {ItemService} from '../../shared/services/item.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm, FormGroup} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { Nivel } from '../../shared/models/nivel';
-import { stringify } from 'querystring';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
-import { ValidacionService } from '../../shared/services/validacion.service';
-import { DtoptionsService } from 'src/app/shared/services/dtoptions.service';
-import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
-import { Usuario } from 'src/app/shared/models/usuario';
-import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import {Nivel} from '../../shared/models/nivel';
+import {stringify} from 'querystring';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import {ValidacionService} from '../../shared/services/validacion.service';
+import {DtoptionsService} from 'src/app/shared/services/dtoptions.service';
+import {AutenticacionService} from 'src/app/shared/services/autenticacion.service';
+import {Usuario} from 'src/app/shared/models/usuario';
+import {UsuarioService} from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-item',
@@ -39,11 +39,13 @@ export class ItemComponent implements OnInit {
   dtElement: DataTableDirective;
   user: Usuario = new Usuario();
 
-  constructor(private userService: UsuarioService, private authService: AutenticacionService, private dtOptionsService: DtoptionsService, private router: Router, private route: ActivatedRoute, private itemService: ItemService, private materialService: MaterialService,
-    private nivelService: NivelService, private toaster: ToastrService, private validacionService: ValidacionService) {
+  constructor(private userService: UsuarioService, private authService: AutenticacionService,
+              private dtOptionsService: DtoptionsService, private router: Router, private route: ActivatedRoute,
+              private itemService: ItemService, private materialService: MaterialService,
+              private nivelService: NivelService, private toaster: ToastrService, private validacionService: ValidacionService) {
     this.authService.estaAutenticado();
     this.userService.getLoggedUser().subscribe(res => {
-      this.user = res
+      this.user = res;
     });
   }
 
@@ -52,23 +54,26 @@ export class ItemComponent implements OnInit {
   itemNivel: { item: Item, nivel: Nivel }[] = [];
 
   dtOptions: DataTables.Settings = {};
+
   ngOnInit(): void {
-    var nivelId = this.route.snapshot.queryParamMap.get('Niveles_oid');
-    if (nivelId != null) {
-      this.itemService.BuscarItemsPorNivel(nivelId).subscribe(res => {
-        this.items = res;
-        this.dtTrigger.next();
-      }, err => {
-        this.toaster.error("Error dell servidor")
-      });
-    } else {
-      this.itemService.getItems().subscribe(res => {
-        this.items = res;
-        this.dtTrigger.next();
-      }, error => {
-        this.router.navigate(['/']);
-      });
-    }
+    this.route.params.subscribe(params => {
+      const nivelId = params.nivelId;
+      if (nivelId != null) {
+        this.itemService.BuscarItemsPorNivel(nivelId).subscribe(res => {
+          this.items = res;
+          this.dtTrigger.next();
+        }, err => {
+          this.toaster.error('Error del servidor');
+        });
+      } else {
+        this.itemService.getItems().subscribe(res => {
+          this.items = res;
+          this.dtTrigger.next();
+        }, error => {
+          this.router.navigate(['/']);
+        });
+      }
+    });
 
     this.nivelService.getNivel().subscribe(res => {
       this.nivels = res;
@@ -76,7 +81,7 @@ export class ItemComponent implements OnInit {
     this.materialService.getMaterial().subscribe(res => {
       this.materials = res;
     });
-    this.dtOptions = this.dtOptionsService.getDtoptions("item");
+    this.dtOptions = this.dtOptionsService.getDtoptions('ítems');
     this.item = new Item();
     this.itemNivel = this.nivelService.load();
   }
@@ -99,18 +104,18 @@ export class ItemComponent implements OnInit {
 
   delete(item: Item) {
     var tempItem: Item;
-    Swal.fire(this.dtOptionsService.getSwalWarningOptions("item", item.Id)).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions('item', item.Id)).then((result) => {
       if (result.value) {
         this.itemService.removeItem(item.Id).subscribe(res => {
           const index = this.items.indexOf(item);
           if (index > -1) {
             this.items.splice(index, 1);
           }
-          this.toaster.error('item borrado');
+          this.toaster.error('Ítem ' + item.Id + ' borrado');
           this.itemService.RemoveImage(item.Id, item.Imagen).subscribe(res => console.log(res));
           this.refresh();
         }, err => {
-          this.toaster.error("Error dell servidor")
+          this.toaster.error('Error del servidor');
         });
       }
     });
@@ -146,7 +151,7 @@ export class ItemComponent implements OnInit {
           this.toaster.success('item creado');
         }
       }, err => {
-        this.toaster.error("Error dell servidor")
+        this.toaster.error('Error dell servidor');
       });
     } else {
       if (this.selectedImage != null) {
@@ -162,7 +167,7 @@ export class ItemComponent implements OnInit {
           this.toaster.info('item modificado');
         }
       }, err => {
-        this.toaster.error("Error dell servidor")
+        this.toaster.error('Error dell servidor');
       });
 
 
@@ -180,7 +185,7 @@ export class ItemComponent implements OnInit {
   }
 
   showImage(event) {
-    this.selectedImage = <File>event.target.files[0];
+    this.selectedImage = <File> event.target.files[0];
   }
 
   uploadImage(id) {
@@ -192,20 +197,27 @@ export class ItemComponent implements OnInit {
   }
 
   getEstado(id) {
-    if (id != null) return this.validacionService.getEstadoById(id)?.Estado;
+    if (id != null) {
+      return this.validacionService.getEstadoById(id)?.Estado;
+    }
   }
 
   getImage(id, imageName) {
     this.itemService.GetImage(id, imageName).subscribe(res => {
-      if (res == null)
+      if (res == null) {
         this.imageToDisplay = null;
-      else
+      } else {
         this.imageToDisplay = 'data:image/bmp;base64,' + res;
+      }
     });
   }
 
-  getItemNivel(id) {
-    return this.itemNivel.find(o => o.item.Id == id)?.nivel?.Numero;
-    // return this.nivelService.getNivelByItem(id)?.Numero;
+  getItemNivel(id: number) {
+    const nivel = this.itemNivel.find(o => o.item.Id === id)?.nivel?.Numero;
+    if (nivel) {
+      return nivel;
+    } else {
+      return 'No pertenece';
+    }
   }
 }

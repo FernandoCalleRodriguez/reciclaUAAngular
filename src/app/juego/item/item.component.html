@@ -17,10 +17,10 @@
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
-            <th scope="col">Imagen</th>
             <th scope="col">Estado</th>
             <th scope="col">Material</th>
             <th scope="col">Nivel</th>
+            <th scope="col">Imagen</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -29,11 +29,15 @@
             <td>{{item?.Id}}</td>
             <td>{{item?.Nombre}}</td>
             <td>{{item?.Descripcion}}</td>
-            <td><a (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''" data-toggle="modal"
-                data-target="#imageModel">Mostrar imagen </a></td>
             <td>{{getEstado(item?.EsValido)}}</td>
             <td>{{item?.MaterialItem?.Nombre }} </td>
             <td>{{getItemNivel(item?.Id)}} </td>
+            <td>
+              <button class="icon btn btn-outline-dark" (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''"
+                      data-toggle="modal" data-target="#imageModel">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
             <td>
               <div class="btn-group">
                 <button class="btn btn-outline-success" title="Editar" (click)="getItemById(item.Id)">
@@ -90,7 +94,7 @@
           <div class="form-group ">
             <label for="Imagen" class="">Imagen:</label>
             <div class="">
-              <input type="file" ngModel (change)="showImage($event)" class="form-control" name="Imagen" id="Imagen"
+              <input type="file" ngModel (change)="showImage($event)" class="form-control-file" name="Imagen" id="Imagen"
                 placeholder="Imagen" ngModel>
             </div>
           </div>
@@ -100,7 +104,7 @@
             <select [ngClass]="{'is-invalid': Material.touched && !Material.valid,'is-valid': Material.valid}"
               class="form-control" id="Material" required name="Material" #Material="ngModel"
               [(ngModel)]="item.Material_oid">
-              <option value="">Elije Material</option>
+              <option value="" disabled selected>Selecciona un material</option>
               <option *ngFor="let material of materials" [value]="material.Id">{{material.Nombre}}</option>
             </select>
             <div *ngIf="Material.touched && !Material.valid">

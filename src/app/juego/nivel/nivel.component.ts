@@ -1,18 +1,18 @@
-import { DtoptionsService } from './../../shared/services/dtoptions.service';
-import { ItemService } from '../../shared/services/item.service';
+import {DtoptionsService} from './../../shared/services/dtoptions.service';
+import {ItemService} from '../../shared/services/item.service';
 import Swal from 'sweetalert2';
-import { Nivel } from '../../shared/models/nivel';
-import { NivelService } from '../../shared/services/nivel.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
-import { Router } from '@angular/router';
-import { Item } from '../../shared/models/item';
+import {Nivel} from '../../shared/models/nivel';
+import {NivelService} from '../../shared/services/nivel.service';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import {Router} from '@angular/router';
+import {Item} from '../../shared/models/item';
 
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
- import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {AutenticacionService} from 'src/app/shared/services/autenticacion.service';
 
 
 @Component({
@@ -27,8 +27,8 @@ export class NivelComponent implements OnInit, OnDestroy {
   @ViewChild('AssignClosebutton') AssignClosebutton;
   @ViewChild('showModel') showModel;
 
-  constructor(private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
-  this.authService.estaAutenticado();
+  constructor(private authService: AutenticacionService, private dtOptionsService: DtoptionsService, private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
+    this.authService.estaAutenticado();
 
   }
 
@@ -53,7 +53,7 @@ export class NivelComponent implements OnInit, OnDestroy {
     this.itemService.getItems().subscribe(res => this.items = res);
 
     this.nivel = new Nivel();
-    this.dtOptions = this.dtOptionsService.getDtoptions("nivel");
+    this.dtOptions = this.dtOptionsService.getDtoptions('niveles');
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'Id',
@@ -84,7 +84,7 @@ export class NivelComponent implements OnInit, OnDestroy {
 
   delete(nivel: Nivel) {
 
-    Swal.fire(this.dtOptionsService.getSwalWarningOptions("nivel",nivel.Id)).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions('nivel', nivel.Id)).then((result) => {
       if (result.value) {
         this.nivelService.removeNivel(nivel.Id).subscribe(res => {
           const index = this.niveles.indexOf(nivel);
@@ -94,7 +94,7 @@ export class NivelComponent implements OnInit, OnDestroy {
           this.toaster.error('Nivel ' + nivel.Id + ' borrado');
           this.refresh();
         }, err => {
-          this.toaster.error("Error dell servidor")
+          this.toaster.error('Error dell servidor');
         });
       }
     });
@@ -114,13 +114,13 @@ export class NivelComponent implements OnInit, OnDestroy {
         if (res != null) {
           console.log('add', res);
           this.closebutton.nativeElement.click();
-           this.niveles.push(this.nivel);
+          this.niveles.push(this.nivel);
           this.refresh();
           this.toaster.success('nivel creado');
         }
       }, err => {
-        console.log(err)
-        this.toaster.error("Error ")
+        console.log(err);
+        this.toaster.error('Error ');
       });
     } else {
       console.log('n', this.nivel);
@@ -131,7 +131,7 @@ export class NivelComponent implements OnInit, OnDestroy {
           this.toaster.info('Nivel modificado');
         }
       }, err => {
-        this.toaster.error("Error dell servidor")
+        this.toaster.error('Error dell servidor');
       });
     }
     form.reset();

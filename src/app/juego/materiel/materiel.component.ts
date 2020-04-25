@@ -1,19 +1,19 @@
-import { DtoptionsService } from './../../shared/services/dtoptions.service';
-import { TipoContenedorService } from './../../shared/services/tipo-contenedor.service';
-import { Contenedor, TipoContenedor } from './../../shared/models/contenedor';
- import { Component, OnInit, ViewChild } from '@angular/core';
-import { Material } from '../../shared/models/material';
-import { ToastrService } from 'ngx-toastr';
-import { MaterialService } from '../../shared/services/materiel.service';
+import {DtoptionsService} from './../../shared/services/dtoptions.service';
+import {TipoContenedorService} from './../../shared/services/tipo-contenedor.service';
+import {Contenedor, TipoContenedor} from './../../shared/models/contenedor';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Material} from '../../shared/models/material';
+import {ToastrService} from 'ngx-toastr';
+import {MaterialService} from '../../shared/services/materiel.service';
 import Swal from 'sweetalert2';
-import { NgForm } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
-import { Router } from '@angular/router';
-import { ValidacionService } from '../../shared/services/validacion.service';
-import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
-import { Usuario } from 'src/app/shared/models/usuario';
-import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import {NgForm} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import {Router} from '@angular/router';
+import {ValidacionService} from '../../shared/services/validacion.service';
+import {AutenticacionService} from 'src/app/shared/services/autenticacion.service';
+import {Usuario} from 'src/app/shared/models/usuario';
+import {UsuarioService} from 'src/app/shared/services/usuario.service';
 
 @Component({
   selector: 'app-materiel',
@@ -33,14 +33,14 @@ export class MaterielComponent implements OnInit {
   dtElement: DataTableDirective;
   user: Usuario = new Usuario();
 
-  constructor(private userService: UsuarioService, private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
-    private validacionService: ValidacionService) {
-  this.authService.estaAutenticado();
-  this.userService.getLoggedUser().subscribe(res => {
-    this.user = res
-  });
-    }
-  
+  constructor(private userService: UsuarioService, private authService: AutenticacionService, private dtOptionsService: DtoptionsService, private contenedorService: TipoContenedorService, private router: Router, private materialService: MaterialService, private toaster: ToastrService,
+              private validacionService: ValidacionService) {
+    this.authService.estaAutenticado();
+    this.userService.getLoggedUser().subscribe(res => {
+      this.user = res;
+    });
+  }
+
 
   isEdit = false;
   dtOptions: DataTables.Settings = {};
@@ -48,13 +48,13 @@ export class MaterielComponent implements OnInit {
   ngOnInit(): void {
     this.materialService.getMaterial().subscribe(res => {
       this.materiales = res;
-      console.log(res)
+      console.log(res);
       this.dtTrigger.next();
     }, error => {
       this.router.navigate(['/']);
     });
-    this.contenedores=this.contenedorService.getTipos();
-    this.dtOptions= this.dtOptionsService.getDtoptions("item");
+    this.contenedores = this.contenedorService.getTipos();
+    this.dtOptions = this.dtOptionsService.getDtoptions('ítems');
 
     this.material = new Material();
   }
@@ -76,7 +76,7 @@ export class MaterielComponent implements OnInit {
   }
 
   delete(material: Material) {
-    Swal.fire(this.dtOptionsService.getSwalWarningOptions("material",material.Id)).then((result) => {
+    Swal.fire(this.dtOptionsService.getSwalWarningOptions('material', material.Id)).then((result) => {
       if (result.value) {
         this.materialService.removeMaterial(material.Id).subscribe(res => {
           const index = this.materiales.indexOf(material);
@@ -86,7 +86,7 @@ export class MaterielComponent implements OnInit {
           this.toaster.error('material borrado');
           this.refresh();
         }, err => {
-          this.toaster.error("Error dell servidor")
+          this.toaster.error('Error dell servidor');
         });
       }
     });
@@ -108,7 +108,7 @@ export class MaterielComponent implements OnInit {
           this.toaster.success('material creado');
         }
       }, err => {
-        this.toaster.error("Error dell servidor")
+        this.toaster.error('Error dell servidor');
       });
     } else {
       console.log('n', this.material);
@@ -119,7 +119,7 @@ export class MaterielComponent implements OnInit {
           this.toaster.info('material modificado');
         }
       }, err => {
-        this.toaster.error("Error dell servidor")
+        this.toaster.error('Error dell servidor');
       });
     }
     form.reset();
@@ -137,7 +137,8 @@ export class MaterielComponent implements OnInit {
   getEstado(id) {
     return this.validacionService.getEstadoById(id)?.Estado;
   }
-  getTipoContenedor(id){
+
+  getTipoContenedor(id) {
     return this.contenedorService.getTipoById(id);
   }
 }

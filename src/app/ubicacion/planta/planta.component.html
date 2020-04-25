@@ -82,7 +82,7 @@
             <select class="browser-default custom-select" id="Edificio" required name="Edificio"
               [ngClass]="{'is-invalid': Edificio.touched && !Edificio.valid,'is-valid': Edificio.valid}"
               #Edificio="ngModel" [(ngModel)]="planta.Edificio_oid">
-              <option value="" disabled selected>Elije un Edificio</option>
+              <option value="" disabled selected>Selecciona un edificio</option>
               <option *ngFor="let item of edificio" [value]="item.Id">{{item.Nombre}}</option>
             </select>
 

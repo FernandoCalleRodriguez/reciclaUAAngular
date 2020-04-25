@@ -66,7 +66,7 @@
                         <select [ngClass]="{'is-invalid': Tipo.touched && !Tipo.valid,'is-valid': Tipo.valid}"
                             [(ngModel)]="contenedor.Tipo" class="form-control" id="Tipo" required name="Tipo"
                             #Tipo="ngModel">
-                            <option hidden [value]="" selected>Elije tipo de contenedor</option>
+                            <option hidden value="" disabled selected>Selecciona un tipo de contenedor</option>
                             <option *ngFor="let item of tipos" [value]="item.Id">{{item.Tipo}}</option>
                         </select>
                         <div *ngIf="Tipo.touched && !Tipo.valid">
@@ -79,7 +79,7 @@
                         <select class="browser-default custom-select" id="Punto" required name="Punto"
                             [ngClass]="{'is-invalid': Punto.touched && !Punto.valid,'is-valid': Punto.valid}"
                             #Punto="ngModel" [(ngModel)]="contenedor.Punto_oid">
-                            <option value="" disabled selected>Elije un punto</option>
+                            <option value="" disabled selected>Selecciona un punto</option>
                             <option *ngFor="let item of punto" [value]="item.Id">{{item.Id}}</option>
                         </select>
                         <div *ngIf="Punto.touched && !Punto.valid">

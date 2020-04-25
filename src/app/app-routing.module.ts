@@ -78,7 +78,7 @@ const routes: Routes = [
 
   {path: 'juego/nivel/listar', component: NivelComponent, pathMatch: 'full'},
   {path: 'juego/item/listar', component: ItemComponent, pathMatch: 'full'},
-  {path: 'juego/item/:id', component: ItemComponent, pathMatch: 'full'},
+  {path: 'juego/nivel/:nivelId/items', component: ItemComponent, pathMatch: 'full'},
   {path: 'juego/material/listar', component: MaterielComponent, pathMatch: 'full'},
 
   {path: 'mapa', component: TestComponent, pathMatch: 'full'},

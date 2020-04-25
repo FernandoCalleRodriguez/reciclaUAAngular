@@ -18,30 +18,32 @@
             <th scope="col">Número</th>
             <th scope="col">Puntuación</th>
             <th scope="col">Ítems</th>
-            <th scope="col">Asignar ítems</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of niveles">
-            <td>{{item.Id}}</td>
-            <td>{{item.Numero}}</td>
-            <td>{{item.Puntuacion}}</td>
+          <tr *ngFor="let nivel of niveles">
+            <td>{{nivel.Id}}</td>
+            <td>{{nivel.Numero}}</td>
+            <td>{{nivel.Puntuacion}}</td>
             <td>
-              <a [routerLink]="['/juego/item']"class="btn btn-default" [queryParams]={Niveles_oid:item.Id}
-                routerLinkActive="router-link-active">ver ítems</a></td>
-            <td>
-              <p (click)="setAssignedNivel(item)" data-toggle="modal" data-target="#assignarItems">Asignar
-                ítems</p>
+              <div class="btn-group">
+                <button class="icon btn btn-outline-dark" [routerLink]="'/juego/nivel/' + nivel.Id + '/items'">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="icon btn btn-outline-primary" (click)="setAssignedNivel(nivel)" data-toggle="modal" data-target="#assignarItems">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
             </td>
             <td>
 
               <div class="btn-group">
-                <button class="btn btn-outline-success" (click)="getNivelById(item.Id)">
+                <button class="btn btn-outline-success" (click)="getNivelById(nivel.Id)">
                   <i class="fa fa-edit"></i>
                 </button>
 
-                <button class="btn btn-outline-danger" (click)="delete(item)">
+                <button class="btn btn-outline-danger" (click)="delete(nivel)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
