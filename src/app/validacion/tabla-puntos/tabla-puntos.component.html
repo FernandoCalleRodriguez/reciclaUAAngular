@@ -14,8 +14,8 @@
     <td>{{ punto.Longitud }}</td>
     <td>
       <div class="btn-group">
-        <button class="btn btn-outline-info" data-toggle="tooltip" title="Ver"><i
-          class="fa fa-info-circle"></i></button>
+        <button class="btn btn-outline-info" data-toggle="tooltip" title="Ver"
+                (click)="verPunto(punto, modalDetail)"><i class="fa fa-info-circle"></i></button>
         <button class="btn btn-outline-success" data-toggle="tooltip" title="Validar"
                 (click)="validarPunto(punto)"><i class="fa fa-check"></i></button>
         <button class="btn btn-outline-danger" data-toggle="tooltip" title="Descartar"
@@ -25,3 +25,17 @@
   </tr>
   </tbody>
 </table>
+
+<ng-template #modalDetail let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Punto {{ mpunto?.Id }}</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-wrap text-break">
+      <app-mapa-puntos [puntos]="[mpunto]" [single]="true"></app-mapa-puntos>
+    </div>
+  </div>
+</ng-template>

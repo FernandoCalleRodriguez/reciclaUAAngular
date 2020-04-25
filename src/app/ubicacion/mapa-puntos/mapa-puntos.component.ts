@@ -26,6 +26,9 @@ export class MapaPuntosComponent implements OnInit {
   @Input()
   public puntos: Punto[] = [];
 
+  @Input()
+  public single = false;
+
   @Output()
   public selectedPuntoChange: EventEmitter<Punto> = new EventEmitter<Punto>();
 
@@ -52,7 +55,7 @@ export class MapaPuntosComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.mlat = position.coords.latitude;
         this.mlong = position.coords.longitude;
-        this.map.setView(new L.LatLng(this.mlat, this.mlong), 20);
+        if (!this.single) this.map.setView(new L.LatLng(this.mlat, this.mlong), 20);
         this.position = this.getCircle();
         this.position.addTo(this.map);
         L.easyButton('fa-user', () => {
@@ -97,7 +100,13 @@ export class MapaPuntosComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
     this.puntos.forEach(p => {
       this.setMarker(p);
+      console.log(p.Latitud);
     });
+    if (this.single) {
+      this.map.setView(this.markers[0].getLatLng(), 20);
+      this.actualMarker = this.markers[0];
+      this.actualMarker.fire('click');
+    }
   }
 
   private getCircle(): L.Circle {
