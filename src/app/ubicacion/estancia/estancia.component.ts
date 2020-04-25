@@ -54,7 +54,7 @@ export class EstanciaComponent implements OnInit, OnDestroy {
     protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService,
     private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
-    this.dtOptions = dtoptionsService.getDtoptions('estancia');
+    this.dtOptions = dtoptionsService.getDtoptions('estancias');
   }
 
   ngOnInit(): void {

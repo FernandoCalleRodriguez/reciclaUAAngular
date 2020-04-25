@@ -44,7 +44,7 @@ export class PlantaComponent implements OnInit, OnDestroy {
 
   constructor(private plantaService: PlantaService, protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService, private edificioService: EdificioService, private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
-    this.dtOptions = dtoptionsService.getDtoptions('planta');
+    this.dtOptions = dtoptionsService.getDtoptions('plantas');
   }
 
   ngOnInit(): void {

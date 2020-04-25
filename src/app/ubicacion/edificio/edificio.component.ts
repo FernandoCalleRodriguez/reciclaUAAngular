@@ -41,7 +41,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
 
   constructor(private edificioService: EdificioService, protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService, private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
-    this.dtOptions = dtoptionsService.getDtoptions('edificio');
+    this.dtOptions = dtoptionsService.getDtoptions('edificios');
   }
 
   ngOnInit(): void {

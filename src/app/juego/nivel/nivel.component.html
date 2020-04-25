@@ -17,8 +17,8 @@
             <th scope="col">ID</th>
             <th scope="col">Número</th>
             <th scope="col">Puntuación</th>
-            <th scope="col">Items</th>
-            <th scope="col">Asignar items</th>
+            <th scope="col">Ítems</th>
+            <th scope="col">Asignar ítems</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -29,10 +29,10 @@
             <td>{{item.Puntuacion}}</td>
             <td>
               <a [routerLink]="['/juego/item']"class="btn btn-default" [queryParams]={Niveles_oid:item.Id}
-                routerLinkActive="router-link-active">ver items</a></td>
+                routerLinkActive="router-link-active">ver ítems</a></td>
             <td>
-              <p (click)="setAssignedNivel(item)" data-toggle="modal" data-target="#assignarItems">assiganar
-                Items</p>
+              <p (click)="setAssignedNivel(item)" data-toggle="modal" data-target="#assignarItems">Asignar
+                ítems</p>
             </td>
             <td>
 
@@ -58,7 +58,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo nivel</h5>
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nivel</h5>
         <ng-template #EditTitle>
           <h5 class="modal-title">Modificar nivel</h5>
         </ng-template>
@@ -69,7 +69,7 @@
       <div class="modal-body">
         <form #form="ngForm">
           <div class="form-group ">
-            <label for="Numero">Numero</label>
+            <label for="Numero">Número:</label>
             <input min="0" [ngClass]="{'is-invalid': Numero.touched && !Numero.valid,'is-valid': Numero.valid}" type="number"
               required class="form-control" [(ngModel)]="nivel.Numero" id="Numero" name="Numero" #Numero="ngModel">
             <div class="" *ngIf="Numero.touched && !Numero.valid">
@@ -78,7 +78,7 @@
           </div>
 
           <div class="form-group">
-            <label for="Puntuacion">Puntuacion</label>
+            <label for="Puntuacion">Puntuación:</label>
 
             <input min="0" [ngClass]="{'is-invalid': Puntuacion.touched && !Puntuacion.valid,'is-valid': Puntuacion.valid}"
               type="number" class="form-control" id="Puntuacion" name="Puntuacion" #Puntuacion="ngModel"
@@ -111,7 +111,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Assignar items</h5>
+        <h5 class="modal-title">Asignar ítems</h5>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" #AssignClosebutton>
           <span aria-hidden="true">&times;</span>
@@ -120,13 +120,13 @@
       <div class="modal-body">
         <form #AssignForm="ngForm">
           <div class="form-group ">
-            <label for="Numero">Item</label>
+            <label for="Numero">Ítems:</label>
             <!-- <select class="form-control">
               <option [value]="">Elije item</option>
               <option *ngFor="let item of items" [value]="item.Id">{{item.Nombre}}</option>
             </select> -->
 
-            <ng-multiselect-dropdown [placeholder]="'Elije los items'" [data]="items" name="selectedItems" required
+            <ng-multiselect-dropdown [placeholder]="'Selecciona los ítems'" [data]="items" name="selectedItems" required
               [(ngModel)]="selectedItems" [settings]="dropdownSettings">
             </ng-multiselect-dropdown>
           </div>
@@ -137,7 +137,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary float-right" (click)="assignar(AssignForm)"
           [disabled]="!AssignForm.valid">
-          Assignar
+          Asignar
         </button>
 
 

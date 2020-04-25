@@ -13,7 +13,7 @@ import { Item } from '../../shared/models/item';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
  import { AutenticacionService } from 'src/app/shared/services/autenticacion.service';
- 
+
 
 @Component({
   selector: 'app-nivel',
@@ -29,7 +29,7 @@ export class NivelComponent implements OnInit, OnDestroy {
 
   constructor(private authService:AutenticacionService,private dtOptionsService:DtoptionsService,private itemService: ItemService, private router: Router, private nivelService: NivelService, private toaster: ToastrService) {
   this.authService.estaAutenticado();
-  
+
   }
 
   isEdit = false;
@@ -58,8 +58,8 @@ export class NivelComponent implements OnInit, OnDestroy {
       singleSelection: false,
       idField: 'Id',
       textField: 'Nombre',
-      selectAllText: 'Elijir todos los items',
-      unSelectAllText: 'Quitar todos los items',
+      selectAllText: 'Seleccionar todos los ítems',
+      unSelectAllText: 'Quitar todos los ítems',
       allowSearchFilter: true,
       searchPlaceholderText: 'Buscar'
     };
@@ -109,7 +109,7 @@ export class NivelComponent implements OnInit, OnDestroy {
       }
       this.nivel.Numero = form.value.Numero;
       this.nivel.Puntuacion = form.value.Puntuacion;
-     
+
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
           console.log('add', res);

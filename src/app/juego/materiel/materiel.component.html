@@ -50,7 +50,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo material</h5>
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir material</h5>
         <ng-template #EditTitle>
           <h5 class="modal-title">Modificar material</h5>
         </ng-template>
@@ -61,7 +61,7 @@
       <div class="modal-body">
         <form #form="ngForm">
           <div class="form-group ">
-            <label for="Nombre" class="">Nombre</label>
+            <label for="Nombre" class="">Nombre:</label>
 
             <input [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}" type="text"
               [(ngModel)]="material.Nombre" required class="form-control" id="Nombre" name="Nombre" #Nombre="ngModel">
@@ -71,12 +71,12 @@
 
           </div>
           <div class="form-group ">
-            <label for="Contenedor" class="">Tipo contenedor</label>
+            <label for="Contenedor" class="">Tipo de contenedor:</label>
 
             <select  [ngClass]="{'is-invalid': Contenedor.touched && !Contenedor.valid,'is-valid': Contenedor.valid}"
             [(ngModel)]="material.Contenedor"
               class="form-control" id="Contenedor" required name="Contenedor" #Contenedor="ngModel">
-              <option hidden [value]="" selected>Elije Material</option>
+              <option hidden [value]="" selected>Selecciona un contenedor</option>
               <option *ngFor="let item of contenedores" [value]="item.Id">{{item.Tipo}}</option>
             </select>
             <div *ngIf="Contenedor.touched && !Contenedor.valid">

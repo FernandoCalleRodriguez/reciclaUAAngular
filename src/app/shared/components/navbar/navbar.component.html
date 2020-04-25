@@ -37,7 +37,7 @@
             Juego
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a [routerLink]="['/juego/item/listar']" class="dropdown-item">Items</a>
+            <a [routerLink]="['/juego/item/listar']" class="dropdown-item">Ítems</a>
             <a [routerLink]="['/juego/material/listar']" class="dropdown-item">Materiales</a>
             <a [routerLink]="['/juego/nivel/listar']" class="dropdown-item">Niveles</a>
           </div>
@@ -89,7 +89,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a [routerLink]="['/validar/items']" class="dropdown-item">
-              Items <span *ngIf="notificacionesItems > 0"
+              Ítems <span *ngIf="notificacionesItems > 0"
                           class="badge badge-pill badge-dark float-right mt-1">{{ notificacionesItems }}</span>
             </a>
             <a [routerLink]="['/validar/puntos']" class="dropdown-item">

@@ -64,7 +64,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
         this.usuarioService.getLoggedUser().subscribe(u => {
             this.user = u;
         });
-        this.dtOptions = dtoptionsService.getDtoptions('punto');
+        this.dtOptions = dtoptionsService.getDtoptions('puntos');
     }
 
     ngOnInit(): void {
@@ -82,7 +82,7 @@ export class PuntoComponent implements OnInit, OnDestroy {
         this.puntoService.getPuntoById(id).subscribe(res => {
 
             this.punto = res;
-            this.punto.Estancia_oid = "" + res?.EstanciaPunto.Id;
+            this.punto.Estancia_oid = '' + res?.EstanciaPunto.Id;
         });
 
         this.showModel.nativeElement.click();

@@ -1,11 +1,11 @@
 <div class="container-fluid mt-2">
   <div class="row">
     <div class="col">
-      <h1>Listado de items</h1>
+      <h1>Listado de ítems</h1>
     </div>
     <div class="col">
       <button class="btn btn-outline-primary float-right mt-2" data-toggle="modal" data-target="#exampleModal"
-        (click)="add(form)" #showModel><i class="fa fa-plus"></i> Añadir nuevo item</button>
+        (click)="add(form)" #showModel><i class="fa fa-plus"></i> Añadir nuevo ítem</button>
     </div>
   </div>
   <hr>
@@ -14,13 +14,13 @@
       <table class="table table-striped text-center" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
           <tr>
-            <th scope="col">Id </th>
-            <th scope="col">Nombre </th>
-            <th scope="col">Descripcion </th>
-            <th scope="col">Imagen </th>
-            <th scope="col">Estado </th>
-            <th scope="col">Material </th>
-            <th scope="col">Nivel </th>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Material</th>
+            <th scope="col">Nivel</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -56,9 +56,9 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir nuevo item</h5>
+        <h5 class="modal-title" *ngIf="isEdit==false;else EditTitle">Añadir ítem</h5>
         <ng-template #EditTitle>
-          <h5 class="modal-title">Modificar item</h5>
+          <h5 class="modal-title">Modificar ítem</h5>
         </ng-template>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
           <span aria-hidden="true">&times;</span>
@@ -67,7 +67,7 @@
       <div class="modal-body">
         <form #form="ngForm">
           <div class="form-group ">
-            <label for="Nombre" class="">Nombre</label>
+            <label for="Nombre" class="">Nombre:</label>
 
             <input type="text" [ngClass]="{'is-invalid': Nombre.touched && !Nombre.valid,'is-valid': Nombre.valid}"
               [(ngModel)]="item.Nombre" required class="form-control" id="Nombre" name="Nombre" #Nombre="ngModel">
@@ -77,10 +77,10 @@
 
           </div>
           <div class="form-group  ">
-            <label for="Descripcion" class="">Descripcion</label>
+            <label for="Descripcion" class="">Descripción:</label>
 
             <input [ngClass]="{'is-invalid': Descripcion.touched && !Descripcion.valid,'is-valid': Descripcion.valid}"
-              type="text" class="form-control" id="Descripcion" name="Descripcion" 
+              type="text" class="form-control" id="Descripcion" name="Descripcion"
               #Descripcion="ngModel" [(ngModel)]="item.Descripcion" required>
             <div *ngIf="Descripcion.touched && !Descripcion.valid">
               <small class="text-danger"> Campo requerido</small>
@@ -88,7 +88,7 @@
 
           </div>
           <div class="form-group ">
-            <label for="Imagen" class="">Imagen</label>
+            <label for="Imagen" class="">Imagen:</label>
             <div class="">
               <input type="file" ngModel (change)="showImage($event)" class="form-control" name="Imagen" id="Imagen"
                 placeholder="Imagen" ngModel>
@@ -96,7 +96,7 @@
           </div>
 
           <div class="form-group ">
-            <label for="Material" class="">Material</label>
+            <label for="Material" class="">Material:</label>
             <select [ngClass]="{'is-invalid': Material.touched && !Material.valid,'is-valid': Material.valid}"
               class="form-control" id="Material" required name="Material" #Material="ngModel"
               [(ngModel)]="item.Material_oid">
@@ -139,7 +139,7 @@
         <div class="row">
           <div class="col-md 12">
             <img src="{{imageToDisplay}}" style="width:100%; height:100%" alt="" *ngIf="imageToDisplay!=null;else noImage">
-         <ng-template #noImage> 
+         <ng-template #noImage>
            <p>El imagen no esta disponible</p>
          </ng-template>
           </div>
