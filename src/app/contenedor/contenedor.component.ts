@@ -68,7 +68,9 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   getContenedorById(id) {
     this.contenedorService.getContenedorById(id).subscribe(res => {
       this.contenedor = res;
-      //this.contenedor.Punto_oid = res?.PuntoContenedor.Id;
+      this.puntoService.getPuntoByContenedor(id).subscribe(p => {
+        this.contenedor.Punto_oid = p.Id;
+      });
     });
     console.log('contenedor;', this.contenedor);
     this.showModel.nativeElement.click();
