@@ -19,6 +19,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DtoptionsService } from '../shared/services/dtoptions.service';
 
 import { UsuarioService } from '../shared/services/usuario.service';
+import {MapaComponent} from '../ubicacion/mapa/mapa.component';
+import {LatLng} from 'leaflet';
 
 @Component({
     selector: 'app-punto',
@@ -78,11 +80,12 @@ export class PuntoComponent implements OnInit, OnDestroy {
         this.estanciaService.getEstancia().subscribe(res => this.estancia = res);
 
     }
-    getPuntoById(id) {
+    getPuntoById(id, mapa: MapaComponent) {
         this.puntoService.getPuntoById(id).subscribe(res => {
 
             this.punto = res;
             this.punto.Estancia_oid = '' + res?.EstanciaPunto.Id;
+            mapa.setMarker(new LatLng(res.Latitud, res.Longitud));
         });
 
         this.showModel.nativeElement.click();
@@ -150,4 +153,12 @@ export class PuntoComponent implements OnInit, OnDestroy {
         });
     }
 
+  mapCoordinateChange(latlng: L.LatLng, form: NgForm) {
+    form.controls['Latitud'].setValue(latlng.lat);
+    form.controls['Longitud'].setValue(latlng.lng);
+  }
+
+  setMarker(mapaComponent: MapaComponent, form: NgForm) {
+    mapaComponent.setMarker(new LatLng(form.value.Latitud, form.value.Longitud));
+  }
 }

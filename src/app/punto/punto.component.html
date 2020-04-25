@@ -33,7 +33,7 @@
 
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-outline-success" title="Editar" (click)="getPuntoById(item.Id)">
+                                <button class="btn btn-outline-success" title="Editar" (click)="getPuntoById(item.Id, mapaComponent)">
                                     <i class="fa fa-edit"></i>
                                 </button>
 
@@ -50,7 +50,7 @@
 </div>
 
 <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -100,11 +100,15 @@
                             <small class="text-danger">Campo requerido</small>
                         </div>
                     </div>
-
+                    <app-mapa #mapaComponent (coordinatesChange)="mapCoordinateChange($event, form)"></app-mapa>
                 </form>
             </div>
 
             <div class="modal-footer">
+                <button *ngIf="Latitud.valid && Longitud.valid" (click)="setMarker(mapaComponent, form)"
+                        class="btn btn-success pull-right">
+                  Ver coordenadas en el mapa
+                </button>
                 <button *ngIf="isEdit==false;else EditTitleBtn" type="button" class="btn btn-primary float-right"
                     (click)="submit(form)" [disabled]="!form.valid">Añadir</button>
                 <ng-template #EditTitleBtn>

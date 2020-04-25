@@ -1,0 +1,9 @@
+.modal {
+  visibility: hidden;
+  display: block;
+}
+
+.modal[aria-modal='true'] {
+  visibility: visible !important;
+  display: block;
+}
