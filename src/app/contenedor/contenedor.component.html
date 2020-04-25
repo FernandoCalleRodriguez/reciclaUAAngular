@@ -45,7 +45,7 @@
 </div>
 
 <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -74,19 +74,24 @@
                         </div>
                     </div>
 
+                  <ng-container *ngIf="punto">
                     <div class="form-group">
                         <label for="Punto">Punto:</label>
                         <select class="browser-default custom-select" id="Punto" required name="Punto"
+                                (ngModelChange)="mapaPuntosComponent.setActualMarker($event)"
                             [ngClass]="{'is-invalid': Punto.touched && !Punto.valid,'is-valid': Punto.valid}"
                             #Punto="ngModel" [(ngModel)]="contenedor.Punto_oid">
                             <option value="" disabled selected>Selecciona un punto</option>
-                            <option *ngFor="let item of punto" [value]="item.Id">{{item.Id}}</option>
+                            <option *ngFor="let item of punto" [value]="item.Id">
+                              {{item.Id}}
+                            </option>
                         </select>
                         <div *ngIf="Punto.touched && !Punto.valid">
                             <small class="text-danger">Campo requerido</small>
                         </div>
                     </div>
-
+                    <app-mapa-puntos #mapaPuntosComponent [puntos]="punto" (selectedPuntoChange)="mapPuntoChange($event, form)"></app-mapa-puntos>
+                  </ng-container>
                 </form>
             </div>
 

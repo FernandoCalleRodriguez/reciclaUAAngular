@@ -26,6 +26,9 @@ export class MapaPuntosComponent implements OnInit {
   @Input()
   public puntos: Punto[] = [];
 
+  @Output()
+  public selectedPuntoChange: EventEmitter<Punto> = new EventEmitter<Punto>();
+
   constructor(protected tipoContenedorService: TipoContenedorService) {
   }
 
@@ -68,7 +71,8 @@ export class MapaPuntosComponent implements OnInit {
               }
             }
             this.map.flyTo(this.actualMarker.getLatLng(), 18);
-            this.actualMarker.openPopup();
+            // this.actualMarker.openPopup();
+            this.actualMarker.fire('click');
           }
         }).addTo(this.map);
         L.easyButton('fa-arrow-left', () => {
@@ -84,7 +88,8 @@ export class MapaPuntosComponent implements OnInit {
               }
             }
             this.map.flyTo(this.actualMarker.getLatLng(), 18);
-            this.actualMarker.openPopup();
+            // this.actualMarker.openPopup();
+            this.actualMarker.fire('click');
           }
         }).addTo(this.map);
       });
@@ -106,6 +111,9 @@ export class MapaPuntosComponent implements OnInit {
           this.mlat = position.coords.latitude;
           this.mlong = position.coords.longitude;
           this.mtimer = timer(5000);
+          this.map.removeLayer(this.position);
+          this.position = this.getCircle();
+          this.position.addTo(this.map);
           this.refreshLocation();
         });
       }
@@ -113,8 +121,17 @@ export class MapaPuntosComponent implements OnInit {
   }
 
   private infoPunto(marker: L.Marker, punto: Punto) {
-    console.log(punto);
     this.actualMarker = marker;
+    this.selectedPuntoChange.emit(punto);
+  }
+
+  public setActualMarker(id: number) {
+    const index = this.puntos.findIndex(p => p.Id == id);
+    if (index !== -1 && this.actualMarker != this.markers[index]) {
+      this.actualMarker = this.markers[index];
+      this.map.flyTo(this.actualMarker.getLatLng(), 18);
+      this.actualMarker.openPopup();
+    }
   }
 
   private getPopup(punto: Punto): L.Popup {
