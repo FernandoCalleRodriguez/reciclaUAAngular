@@ -32,7 +32,7 @@ export class ModalNotaComponent implements OnInit {
   ngOnInit(): void {
     this.formulario = new FormGroup({
       titulo: new FormControl(null, [Validators.required]),
-      cuerpo: new FormControl(null, [Validators.required]),
+      cuerpo: new FormControl(null, [Validators.required, Validators.maxLength(15000)]),
     });
 
     if (this.Id) {

@@ -28,6 +28,9 @@
         <div class="invalid-feedback" *ngIf="cuerpo().errors?.required && cuerpo().touched">
           Campo requerido
         </div>
+        <div class="invalid-feedback" *ngIf="cuerpo().errors?.maxlength">
+          Longitud máxima excedida ({{ 1500 - cuerpo().value.length}})
+        </div>
       </div>
     </form>
   </div>
