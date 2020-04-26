@@ -49,6 +49,11 @@ export class MapaComponent implements OnInit {
     this.map.flyTo(latlng);
   }
 
+  public deleteMarker() {
+    this.map.removeLayer(this.marker);
+    this.map.setView(this.position.getLatLng(), 18);
+  }
+
   onMapReady(map: L.Map) {
     this.map = map;
     if (navigator.geolocation) {

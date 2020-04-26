@@ -4,7 +4,7 @@
             <h1>Listado de puntos de reciclaje</h1>
         </div>
         <div class="col-md-3">
-            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add(form)" data-toggle="modal"
+            <h1><button class="btn btn-outline-primary float-right mt-2" (click)="add(form); mapaComponent.deleteMarker()" data-toggle="modal"
                     #showModel data-target="#exampleModal"><i class="fa fa-plus"></i> Añadir nuevo punto</button></h1>
         </div>
     </div>
