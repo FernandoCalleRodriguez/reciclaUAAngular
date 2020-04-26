@@ -55,7 +55,9 @@ export class MapaPuntosComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.mlat = position.coords.latitude;
         this.mlong = position.coords.longitude;
-        if (!this.single) this.map.setView(new L.LatLng(this.mlat, this.mlong), 20);
+        if (!this.single) {
+          this.map.setView(new L.LatLng(this.mlat, this.mlong), 20);
+        }
         this.position = this.getCircle();
         this.position.addTo(this.map);
         L.easyButton('fa-user', () => {
@@ -146,9 +148,16 @@ export class MapaPuntosComponent implements OnInit {
   private getPopup(punto: Punto): L.Popup {
     let content = `<h4>Punto ${punto.Id}</h4><hr>`;
     if (punto.Contenedores && punto.Contenedores.length > 0) {
-      content += '<ul>';
+      const atipos = Array(this.tipoContenedorService.getTipos().length).fill(0);
       punto.Contenedores.forEach(c => {
-        content += `<li>${this.tipoContenedorService.getTipoById(c.Tipo).Tipo}</li>`;
+        atipos[c.Tipo - 1]++;
+      });
+      content += `<h6>Contenedores:</h6>`
+      content += '<ul>';
+      atipos.forEach((count, index) => {
+        if (count > 0) {
+          content += `<li>${this.tipoContenedorService.getTipoById(index + 1).Tipo} (${count})</li>`;
+        }
       });
       content += '</ul>';
     } else {
