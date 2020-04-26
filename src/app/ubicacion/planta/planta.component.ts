@@ -1,15 +1,15 @@
-import { AutenticacionService } from './../../shared/services/autenticacion.service';
+import {AutenticacionService} from './../../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
-import { Planta } from '../../shared/models/planta';
-import { PlantaService } from '../../shared/services/planta.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { Edificio } from '../../shared/models/edificio';
-import { EdificioService } from '../../shared/services/edificio.service';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
-import { DtoptionsService } from '../../shared/services/dtoptions.service';
+import {Planta, PlantaEnum} from '../../shared/models/planta';
+import {PlantaService} from '../../shared/services/planta.service';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {Edificio} from '../../shared/models/edificio';
+import {EdificioService} from '../../shared/services/edificio.service';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 
 @Component({
   selector: 'app-planta',
@@ -42,7 +42,8 @@ export class PlantaComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   isEdit = false;
 
-  constructor(private plantaService: PlantaService, protected dtoptionsService: DtoptionsService, private autenticacionService: AutenticacionService, private edificioService: EdificioService, private toaster: ToastrService) {
+  constructor(private plantaService: PlantaService, protected dtoptionsService: DtoptionsService,
+              private autenticacionService: AutenticacionService, public edificioService: EdificioService, private toaster: ToastrService) {
     autenticacionService.estaAutenticado();
     this.dtOptions = dtoptionsService.getDtoptions('plantas');
   }
@@ -61,8 +62,9 @@ export class PlantaComponent implements OnInit, OnDestroy {
   getPlantaById(id) {
     this.plantaService.getPlantaById(id).subscribe(res => {
       this.planta = res;
-      // this.planta.Edificio_oid = res?.EdificioPlanta.Id;
-
+      this.edificioService.getEdificioByPlanta(id).subscribe(e => {
+        this.planta.Edificio_oid = e.Id;
+      });
     });
     //console.log(this.planta);
     this.showModel.nativeElement.click();
@@ -93,10 +95,6 @@ export class PlantaComponent implements OnInit, OnDestroy {
 
   submit(form: NgForm) {
     if (!this.isEdit) {
-
-      this.planta.Planta = form.value.Planta;
-      this.planta.Edificio_oid = form.value.Edificio;
-
       this.plantaService.setPlanta(this.planta).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
@@ -105,8 +103,8 @@ export class PlantaComponent implements OnInit, OnDestroy {
           this.refresh();
         }
       });
-    }
-    else {
+    } else {
+
       this.plantaService.updatePlanta(this.planta).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
@@ -130,4 +128,11 @@ export class PlantaComponent implements OnInit, OnDestroy {
     });
   }
 
+  getEdificioByPlanta(Id: number): Promise<Edificio> {
+    return this.edificioService.getEdificioByPlanta(Id).toPromise();
+  }
+
+  getPlantaNum(planta: number): PlantaEnum {
+    return this.plantaService.getTipoPlantaById(planta);
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Planta } from '../models/planta';
+import {Planta, PlantaEnum} from '../models/planta';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,32 @@ export class PlantaService {
   SERVER = 'http://localhost:16209/api/Planta/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({ Authorization: this.token });
+  private tipoPlantas: PlantaEnum[] = [
+    {
+      Id: 1,
+      Planta: 'PB'
+    },
+    {
+      Id: 2,
+      Planta: 'P1'
+    },
+    {
+      Id: 3,
+      Planta: 'P2'
+    },
+    {
+      Id: 4,
+      Planta: 'P3'
+    },
+    {
+      Id: 5,
+      Planta: 'P4'
+    },
+    {
+      Id: 6,
+      Planta: 'PS'
+    }
+  ]
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +57,14 @@ export class PlantaService {
 
   public updatePlanta(planta: Planta) {
     return this.http.put<Planta>(this.SERVER + "Modificar?idPlanta=" + planta.Id, planta, { headers: this.headers });
+  }
+
+  public getTiposPlanta(): PlantaEnum[] {
+    return this.tipoPlantas;
+  }
+
+  public getTipoPlantaById(id: number): PlantaEnum {
+    return this.tipoPlantas.find(t => t.Id === id);
   }
 
 }
