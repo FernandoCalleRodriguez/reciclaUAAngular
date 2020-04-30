@@ -84,6 +84,29 @@
                         </div>
                     </div>
 
+                  <div class="form-group" *ngIf="!isEdit">
+                    <label for="Plantas">Número de plantas:</label>
+                    <select class="browser-default custom-select" id="Plantas" required name="Plantas"
+                            [ngClass]="{'is-invalid': Plantas.touched && !Plantas.valid,'is-valid': Plantas.valid}"
+                            #Plantas="ngModel" [(ngModel)]="nPlantas">
+                      <option *ngFor="let item of [1, 2, 3, 4, 5]" [value]="item">{{item}}</option>
+                    </select>
+                    <div *ngIf="Plantas.touched && !Plantas.valid">
+                      <small class="text-danger">Campo requerido</small>
+                    </div>
+                    <div class="row">
+                      <div class="col-11">
+                        <p class="form-text text-muted">Sin contar el sótano. Marcar si lo hubiese: </p>
+                      </div>
+                      <div class="col-1">
+                        <div class="form-text float-right">
+                          <input type="checkbox" class="form-check-input" id="Sotano" name="Sotano"
+                                 #Sotano="ngModel" [(ngModel)]="sotano" style="width: 15px; height: 15px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </form>
             </div>
 
