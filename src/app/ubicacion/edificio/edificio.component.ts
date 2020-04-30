@@ -1,13 +1,13 @@
-import { AutenticacionService } from './../../shared/services/autenticacion.service';
+import {AutenticacionService} from './../../shared/services/autenticacion.service';
 import Swal from 'sweetalert2';
-import { Edificio } from '../../shared/models/edificio';
-import { EdificioService } from '../../shared/services/edificio.service';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
-import { DtoptionsService } from '../../shared/services/dtoptions.service';
+import {Edificio} from '../../shared/models/edificio';
+import {EdificioService} from '../../shared/services/edificio.service';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {DataTableDirective} from 'angular-datatables';
+import {DtoptionsService} from '../../shared/services/dtoptions.service';
 import {PlantaService} from '../../shared/services/planta.service';
 import {Planta, PlantaEnum} from '../../shared/models/planta';
 
@@ -148,4 +148,18 @@ export class EdificioComponent implements OnInit, OnDestroy {
     });
   }
 
+  getPlantas(edificio: Edificio) {
+    let plantas = edificio.PlantasEdificio;
+    if (plantas && plantas.length > 0) {
+      plantas.sort((a, b) => {
+        return a.Planta - b.Planta;
+      });
+      let r = '';
+      plantas.forEach(p => {
+        r += this.plantaService.getTipoPlantaById(p.Planta).Planta + ' ';
+      });
+      return r;
+    }
+    return 'No hay plantas';
+  }
 }
