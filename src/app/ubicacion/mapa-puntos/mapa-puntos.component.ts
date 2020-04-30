@@ -61,7 +61,7 @@ export class MapaPuntosComponent implements OnInit {
         this.position = this.getCircle();
         this.position.addTo(this.map);
         L.easyButton('fa-user', () => {
-          this.map.flyTo(new L.LatLng(this.mlat, this.mlong), 18);
+          this.refresh();
         }).addTo(this.map);
         L.easyButton('fa-arrow-right', () => {
           if (this.puntos && this.puntos.length > 0) {
@@ -137,11 +137,15 @@ export class MapaPuntosComponent implements OnInit {
   }
 
   public setActualMarker(id: number) {
-    const index = this.puntos.findIndex(p => p.Id == id);
-    if (index !== -1 && this.actualMarker != this.markers[index]) {
-      this.actualMarker = this.markers[index];
-      this.map.flyTo(this.actualMarker.getLatLng(), 18);
-      this.actualMarker.openPopup();
+    if (id) {
+      const index = this.puntos.findIndex(p => p.Id == id);
+      if (index !== -1 && this.actualMarker != this.markers[index]) {
+        this.actualMarker = this.markers[index];
+        this.map.flyTo(this.actualMarker.getLatLng(), 18);
+        this.actualMarker.openPopup();
+      }
+    } else {
+      this.refresh();
     }
   }
 
@@ -152,7 +156,7 @@ export class MapaPuntosComponent implements OnInit {
       punto.Contenedores.forEach(c => {
         atipos[c.Tipo - 1]++;
       });
-      content += `<h6>Contenedores:</h6>`
+      content += `<h6>Contenedores:</h6>`;
       content += '<ul>';
       atipos.forEach((count, index) => {
         if (count > 0) {
@@ -166,5 +170,13 @@ export class MapaPuntosComponent implements OnInit {
     content += '<hr>';
     content += `${punto.Latitud}, ${punto.Longitud}`;
     return new L.Popup().setContent(content);
+  }
+
+  public refresh() {
+    this.map.flyTo(new L.LatLng(this.mlat, this.mlong), 18);
+    this.markers.forEach(m => {
+      m.closePopup();
+    });
+    this.actualMarker = null;
   }
 }

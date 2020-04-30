@@ -139,7 +139,9 @@ export class ContenedorComponent implements OnInit, OnDestroy {
   }
 
   mapPuntoChange(punto: Punto, form: NgForm) {
-    form.controls['Punto'].setValue(punto.Id);
+    if (!this.isEdit) {
+      form.controls['Punto'].setValue(punto.Id);
+    }
   }
 
 }

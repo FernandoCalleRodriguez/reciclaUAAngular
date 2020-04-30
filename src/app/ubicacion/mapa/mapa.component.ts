@@ -50,8 +50,10 @@ export class MapaComponent implements OnInit {
   }
 
   public deleteMarker() {
-    this.map.removeLayer(this.marker);
-    this.map.setView(this.position.getLatLng(), 18);
+    if (this.marker) {
+      this.map.removeLayer(this.marker);
+      this.map.setView(this.position.getLatLng(), 18);
+    }
   }
 
   onMapReady(map: L.Map) {

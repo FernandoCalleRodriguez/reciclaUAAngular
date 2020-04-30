@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label for="Punto">Punto:</label>
                         <select class="browser-default custom-select" id="Punto" required name="Punto"
-                                (ngModelChange)="mapaPuntosComponent.setActualMarker($event)"
+                                (ngModelChange)="mapaPuntosComponent.setActualMarker($event)" [disabled]="isEdit"
                             [ngClass]="{'is-invalid': Punto.touched && !Punto.valid,'is-valid': Punto.valid}"
                             #Punto="ngModel" [(ngModel)]="contenedor.Punto_oid">
                             <option value="" disabled selected>Selecciona un punto</option>
@@ -90,7 +90,7 @@
                             <small class="text-danger">Campo requerido</small>
                         </div>
                     </div>
-                    <app-mapa-puntos #mapaPuntosComponent [puntos]="punto" (selectedPuntoChange)="mapPuntoChange($event, form)"></app-mapa-puntos>
+                    <app-mapa-puntos [hidden]="isEdit" #mapaPuntosComponent [puntos]="punto" (selectedPuntoChange)="mapPuntoChange($event, form)"></app-mapa-puntos>
                   </ng-container>
                 </form>
             </div>
