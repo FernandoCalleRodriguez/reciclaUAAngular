@@ -48,6 +48,7 @@ export class EstanciaComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject();
 
   isEdit = false;
+  selectEdificio: Edificio = null;
 
   constructor(private estanciaService: EstanciaService,
     private plantaService: PlantaService, private edificioService: EdificioService,
@@ -147,4 +148,17 @@ export class EstanciaComponent implements OnInit, OnDestroy {
     });
   }
 
+  reloadPlantas(id: number) {
+    if (id) {
+      this.edificioService.getEdificioById(id).subscribe(e => {
+        this.selectEdificio = e;
+      });
+    } else {
+      this.selectEdificio = null;
+    }
+  }
+
+  selectedPlantas(): Planta[] {
+    return this.selectEdificio.PlantasEdificio.sort((a, b) => { return a.Planta - b.Planta });
+  }
 }

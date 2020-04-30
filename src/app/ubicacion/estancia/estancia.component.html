@@ -123,9 +123,9 @@
 
                     <div class="form-group">
                         <label for="Edificio">Edificio:</label>
-                        <select class="browser-default custom-select" id="Edificio" required name="Edificio"
+                        <select class="browser-default custom-select" id="Edificio" required name="Edificio" [disabled]="isEdit"
                             [ngClass]="{'is-invalid': Edificio.touched && !Edificio.valid,'is-valid': Edificio.valid}"
-                            #Edificio="ngModel" [(ngModel)]="estancia.Edificio_oid">
+                            #Edificio="ngModel" [(ngModel)]="estancia.Edificio_oid" (ngModelChange)="reloadPlantas($event)">
                             <option value="" disabled selected>Selecciona un edificio</option>
                             <option *ngFor="let item of edificio" [value]="item.Id">{{item.Nombre}}</option>
                         </select>
@@ -134,13 +134,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectEdificio">
                         <label for="Planta">Planta:</label>
                         <select class="browser-default custom-select" id="Planta" required name="Planta"
                             [ngClass]="{'is-invalid': Planta.touched && !Planta.valid,'is-valid': Planta.valid}"
                             #Planta="ngModel" [(ngModel)]="estancia.Planta_oid">
-                            <option value="" disabled selected>Selecciona una planta</option>
-                            <option *ngFor="let item of planta" [value]="item.Id">{{item.Planta}}</option>
+                            <option value="" disabled>Selecciona una planta</option>
+                            <option *ngFor="let item of selectedPlantas()" [value]="item.Id">{{item.Planta}}</option>
                         </select>
                         <div *ngIf="Planta.touched && !Planta.valid">
                             <small class="text-danger">Campo requerido</small>
