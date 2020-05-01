@@ -5,8 +5,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col-3"><i class="fa fa-users fa-3x"></i></div>
-            <div class="col"><h6 class="card-subtitle text-muted"> Número de usuarios:</h6>
-              <h2 class="card-title text-center">{{countUsuarios}}</h2></div>
+            <div class="col">
+              <h6 class="card-subtitle text-muted"> Número de usuarios:</h6>
+              <h2 class="card-title text-center">{{countUsuarios}}</h2>
+            </div>
           </div>
         </div>
       </div>
@@ -49,6 +51,37 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-2">
+      <h1>
+        Statesticas
+      </h1>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-md-4">
+      <app-foro-chart></app-foro-chart>
+    </div>
+    <div class="col-md-4">
+      <app-juego-bar-chart></app-juego-bar-chart>
+    </div>
+    <div class="col-md-4">
+      <app-estancia-chart></app-estancia-chart>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>Puntos de recyclage</h1>
+      <hr>
+    </div>
+    <div class="col-md-12">
+      <app-mapa-puntos></app-mapa-puntos>
     </div>
   </div>
 </div>

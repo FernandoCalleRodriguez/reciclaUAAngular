@@ -66,6 +66,11 @@ import { MapaComponent } from './ubicacion/mapa/mapa.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {TestComponent} from './test/test.component';
 import { MapaPuntosComponent } from './ubicacion/mapa-puntos/mapa-puntos.component';
+import { ChartsModule } from 'ng2-charts';
+
+import { JuegoBarChartComponent } from './charts/juego-bar-chart/juego-bar-chart.component';
+import { ForoChartComponent } from './charts/foro-chart/foro-chart.component';
+import { EstanciaChartComponent } from './charts/estancia-chart/estancia-chart.component';
 
 
 @NgModule({
@@ -113,7 +118,10 @@ import { MapaPuntosComponent } from './ubicacion/mapa-puntos/mapa-puntos.compone
     ValidarElementoComponent,
     MapaComponent,
     TestComponent,
-    MapaPuntosComponent // test
+    MapaPuntosComponent, // test
+	 JuegoBarChartComponent,
+    ForoChartComponent,
+    EstanciaChartComponent
   ],
   imports: [
     BrowserModule,
@@ -129,6 +137,8 @@ import { MapaPuntosComponent } from './ubicacion/mapa-puntos/mapa-puntos.compone
     NgMultiSelectDropDownModule.forRoot(),
     LeafletModule,
     NgbCollapseModule,
+    ChartsModule,
+
   ],
   providers: [
     UsuarioService,
