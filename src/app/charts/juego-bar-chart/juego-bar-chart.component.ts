@@ -45,10 +45,10 @@ export class JuegoBarChartComponent implements OnInit {
       this.barChartData[0].data.push("" + res.length);
     })
     this.materialService.getMaterial().subscribe(res => {
-      this.barChartLabels.push("mateial");
+      this.barChartLabels.push("material");
       this.barChartData[0].data.push("" + res.length);
     })
-  
+
   }
 
 }

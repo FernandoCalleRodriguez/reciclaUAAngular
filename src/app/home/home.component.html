@@ -57,9 +57,8 @@
   <div class="row">
     <div class="col-md-2">
       <h1>
-        Statesticas
+        Estadísticas
       </h1>
-      <hr>
     </div>
   </div>
   <div class="row">
@@ -76,12 +75,11 @@
   </div>
   <hr>
   <div class="row">
-    <div class="col-md-4">
-      <h1>Puntos de recyclage</h1>
-      <hr>
-    </div>
     <div class="col-md-12">
-      <app-mapa-puntos></app-mapa-puntos>
+      <h1>Puntos de reciclaje</h1>
+    </div>
+    <div class="col-md-6">
+      <app-mapa-puntos *ngIf="puntos" [puntos]="puntos"></app-mapa-puntos>
     </div>
   </div>
 </div>

@@ -4,6 +4,7 @@ import {AutenticacionService} from '../shared/services/autenticacion.service';
 import {PuntoService} from '../shared/services/punto.service';
 import {NivelService} from '../shared/services/nivel.service';
 import {DudaService} from '../shared/services/duda.service';
+import {Punto} from '../shared/models/punto';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   countPuntos: number;
   countNiveles: number;
   countDudas: number;
-
+  puntos: Punto[] = null;
 
   constructor(private usuarioService: UsuarioService,
               private autenticacionService: AutenticacionService,
@@ -35,6 +36,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerCountCards();
+    this.puntoService.getPunto().subscribe(p => {
+      this.puntos = p;
+    });
   }
 
 
