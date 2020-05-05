@@ -13,11 +13,11 @@ export class TemaService {
     },
     {
       Id: 2,
-      Tema: 'Anecdota'
+      Tema: 'Anécdota'
     },
     {
       Id: 3,
-      Tema: 'Cuestion'
+      Tema: 'Cuestión'
     },
   ];
 

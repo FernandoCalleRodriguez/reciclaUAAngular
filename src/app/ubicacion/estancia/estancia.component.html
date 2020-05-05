@@ -140,7 +140,7 @@
                             [ngClass]="{'is-invalid': Planta.touched && !Planta.valid,'is-valid': Planta.valid}"
                             #Planta="ngModel" [(ngModel)]="estancia.Planta_oid">
                             <option value="" disabled>Selecciona una planta</option>
-                            <option *ngFor="let item of selectedPlantas()" [value]="item.Id">{{item.Planta}}</option>
+                            <option *ngFor="let item of selectedPlantas()" [value]="item.Id">{{item.Planta | planta}}</option>
                         </select>
                         <div *ngIf="Planta.touched && !Planta.valid">
                             <small class="text-danger">Campo requerido</small>

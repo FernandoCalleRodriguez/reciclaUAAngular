@@ -147,19 +147,4 @@ export class EdificioComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  getPlantas(edificio: Edificio) {
-    let plantas = edificio.PlantasEdificio;
-    if (plantas && plantas.length > 0) {
-      plantas.sort((a, b) => {
-        return a.Planta - b.Planta;
-      });
-      let r = '';
-      plantas.forEach(p => {
-        r += this.plantaService.getTipoPlantaById(p.Planta).Planta + ' ';
-      });
-      return r;
-    }
-    return 'No hay plantas';
-  }
 }

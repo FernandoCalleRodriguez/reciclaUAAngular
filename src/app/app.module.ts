@@ -71,6 +71,10 @@ import { ChartsModule } from 'ng2-charts';
 import { JuegoBarChartComponent } from './charts/juego-bar-chart/juego-bar-chart.component';
 import { ForoChartComponent } from './charts/foro-chart/foro-chart.component';
 import { EstanciaChartComponent } from './charts/estancia-chart/estancia-chart.component';
+import { ListadoPlantasPipe } from './shared/pipes/listado-plantas.pipe';
+import { PlantaPipe } from './shared/pipes/planta.pipe';
+import {EstadoPipe} from './shared/pipes/estado.pipe';
+import {TemaPipe} from './shared/pipes/tema.pipe';
 
 
 @NgModule({
@@ -121,7 +125,11 @@ import { EstanciaChartComponent } from './charts/estancia-chart/estancia-chart.c
     MapaPuntosComponent, // test
 	 JuegoBarChartComponent,
     ForoChartComponent,
-    EstanciaChartComponent
+    EstanciaChartComponent,
+    ListadoPlantasPipe,
+    PlantaPipe,
+    EstadoPipe,
+    TemaPipe
   ],
   imports: [
     BrowserModule,

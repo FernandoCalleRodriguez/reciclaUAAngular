@@ -14,7 +14,7 @@ export class PlantaService {
   private tipoPlantas: PlantaEnum[] = [
     {
       Id: 1,
-      Planta: 'PB'
+      Planta: 'Planta Baja'
     },
     {
       Id: 2,
@@ -34,7 +34,7 @@ export class PlantaService {
     },
     {
       Id: 6,
-      Planta: 'PS'
+      Planta: 'Sótano'
     }
   ]
 

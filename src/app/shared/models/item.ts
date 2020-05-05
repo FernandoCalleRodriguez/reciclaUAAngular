@@ -6,7 +6,7 @@ export class Item {
   Nombre?: string;
   Descripcion?: string;
   Imagen?: string;
-  EsValido?: Estado;
+  EsValido?: number;
   Usuario_oid?: number;
   Material_oid?: number;
   MaterialItem?: Material;

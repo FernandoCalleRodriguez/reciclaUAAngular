@@ -29,7 +29,7 @@
                         <td>{{item.Id}}</td>
                         <td>{{item.Latitud}}</td>
                         <td>{{item.Longitud}}</td>
-                        <td>{{validacionService.getEstadoById(item.EsValido).Estado}}</td>
+                        <td>{{item.EsValido | estado}}</td>
 
                         <td>
                             <div class="btn-group">

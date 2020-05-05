@@ -29,7 +29,7 @@
             <td>{{item?.Id}}</td>
             <td>{{item?.Nombre}}</td>
             <td>{{item?.Descripcion}}</td>
-            <td>{{getEstado(item?.EsValido)}}</td>
+            <td>{{item?.EsValido | estado}}</td>
             <td>{{item?.MaterialItem?.Nombre }} </td>
             <td>{{getItemNivel(item?.Id)}} </td>
             <td>
