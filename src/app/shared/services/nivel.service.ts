@@ -66,5 +66,5 @@ export class NivelService {
   public countNivel(): Observable<number> {
     return this.http.get<number>(this.SERVER + 'BuscarNivelCount');
   }
-
+ 
 }
