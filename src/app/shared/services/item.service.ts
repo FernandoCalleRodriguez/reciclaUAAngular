@@ -56,4 +56,7 @@ export class ItemService {
   public BuscarItemsPorNivel(id): Observable<Item[]> {
     return this.http.get<Item[]>(this.SERVER + 'BuscarItemsPorNivel?id_nivel=' + id,{headers: this.headers});
   }
+  public ItemCount(): Observable<number> {
+    return this.http.get<number>(this.SERVER + "ItemCount", { headers: this.headers })
+  }
 }

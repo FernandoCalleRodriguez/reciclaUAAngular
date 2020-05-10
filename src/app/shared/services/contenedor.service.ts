@@ -30,4 +30,8 @@ export class ContenedorService {
     return this.http.get<Contenedor>(this.SERVER + id, { headers: this.headers });
   }
 
+  public buscarPorTipo(tipo): Observable<Contenedor[]> {
+    console.log(tipo,"tititi")
+    return this.http.get<Contenedor[]>(this.SERVER + "BuscarContenedoresPorTipo?tipo_contenedor="+tipo, { headers: this.headers })
+  }
 }

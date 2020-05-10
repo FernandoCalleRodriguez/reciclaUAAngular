@@ -75,6 +75,7 @@ import { ListadoPlantasPipe } from './shared/pipes/listado-plantas.pipe';
 import { PlantaPipe } from './shared/pipes/planta.pipe';
 import {EstadoPipe} from './shared/pipes/estado.pipe';
 import {TemaPipe} from './shared/pipes/tema.pipe';
+import { PuntosChartComponent } from './charts/puntos-chart/puntos-chart.component';
 
 
 @NgModule({
@@ -129,7 +130,8 @@ import {TemaPipe} from './shared/pipes/tema.pipe';
     ListadoPlantasPipe,
     PlantaPipe,
     EstadoPipe,
-    TemaPipe
+    TemaPipe,
+    PuntosChartComponent
   ],
   imports: [
     BrowserModule,
