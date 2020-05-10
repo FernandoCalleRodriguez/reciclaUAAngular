@@ -87,9 +87,19 @@ export class EdificioComponent implements OnInit, OnDestroy {
     Swal.fire(this.dtoptionsService.getSwalWarningOptions('el edificio', id))
       .then((result) => {
         if (result.value) {
-          this.edificioService.removeEdificio(id).subscribe(res => {
-            this.toaster.error('Edificio ' + id + ' borrado');
-            this.refresh();
+          let dedificio: Edificio = null;
+          this.edificioService.getEdificioById(id).subscribe(e => {
+            dedificio = e;
+            this.edificioService.removeEdificio(dedificio.Id).subscribe(res => {
+              this.toaster.error('Edificio ' + id + ' borrado');
+              this.refresh();
+              dedificio.PlantasEdificio.forEach(p => {
+                this.plantaService.removePlanta(p.Id).subscribe(() => {
+                }, error => {
+                  console.log(error);
+                });
+              });
+            });
           });
         }
       });
