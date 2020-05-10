@@ -8,19 +8,23 @@ export class TipoContenedorService {
   public tipos: TipoContenedor[] = [
     {
       Id: 1,
-      Tipo: 'Papel'
+      Tipo: 'Papel',
+      RGB: 'rgb(0,92,189)'
     },
     {
       Id: 2,
-      Tipo: 'Cristal'
+      Tipo: 'Cristal',
+      RGB: 'rgb(46,171,78)'
     },
     {
       Id: 3,
-      Tipo: 'Plástico'
+      Tipo: 'Plástico',
+      RGB: 'rgb(242,242,19)'
     },
     {
       Id: 4,
-      Tipo: 'Orgánico'
+      Tipo: 'Orgánico',
+      RGB: 'rgb(145,142,139)'
     },
   ];
 

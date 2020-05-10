@@ -1,6 +1,6 @@
-import { TipoContenedorService } from './../../shared/services/tipo-contenedor.service';
-import { ContenedorService } from './../../shared/services/contenedor.service';
-import { Component, OnInit } from '@angular/core';
+import {TipoContenedorService} from './../../shared/services/tipo-contenedor.service';
+import {ContenedorService} from './../../shared/services/contenedor.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-puntos-chart',
@@ -11,7 +11,7 @@ export class PuntosChartComponent implements OnInit {
 
   public pieChartColors = [
     {
-      backgroundColor: ['rgb(0, 111, 230)','rgb(40, 167, 69)' ,'rgb(255, 255, 17)','rgb(221, 221, 221)'],
+      backgroundColor: [],
     },
   ];
   public barChartOptions = {
@@ -31,19 +31,23 @@ export class PuntosChartComponent implements OnInit {
   public barChartType = 'pie';
   public barChartLegend = true;
   public barChartData = [
-    { data: [], label: 'Foro' },
+    {data: [], label: 'Foro'},
   ];
-  constructor(private contenedorService: ContenedorService, private tipoContenedorService: TipoContenedorService) { }
+
+  constructor(private contenedorService: ContenedorService, private tipoContenedorService: TipoContenedorService) {
+  }
 
   ngOnInit(): void {
     this.tipoContenedorService.getTipos().forEach(tipo => {
-      console.log("tipo", tipo.Id)
+      console.log('tipo', tipo.Id);
+      this.pieChartColors[0].backgroundColor.push(tipo.RGB);
+      this.barChartLabels.push(tipo.Tipo);
       this.contenedorService.buscarPorTipo(tipo.Id).subscribe(res => {
         if (res) {
-        this.barChartData[0].data.push(res.length)
-          this.barChartLabels.push(tipo.Tipo)
+          console.log(res);
+          this.barChartData[0].data.push(res.length);
         }
-      })
+      });
 
     });
     // this.respuesetaService.getAllRespuestas().subscribe(res => {

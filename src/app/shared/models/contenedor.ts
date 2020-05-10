@@ -8,4 +8,5 @@ export class Contenedor {
 export class TipoContenedor {
   Id?: number;
   Tipo?: string;
+  RGB?: string;
 }
