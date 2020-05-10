@@ -36,13 +36,13 @@ import {MapaComponent} from './ubicacion/mapa/mapa.component';
 import {TestComponent} from './test/test.component';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
 
   {path: '', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperarcontrasena', component: RecuperarcontrasenaComponent},
   {path: 'usuario/ranking', component: RankingComponent},
-  /*{path: 'usuario/verificacion/:usuarioId', component: VerificacionComponent},*/
+  {path: 'verificacion/:usuarioId', component: VerificacionComponent},
   {path: 'usuario/:tipousuario/listar', component: UsuariolistarComponent},
   {path: 'usuario/:tipousuario/crear', component: CrearusuarioComponent},
   {path: 'perfil/modificar', component: ModificarusuarioComponent},

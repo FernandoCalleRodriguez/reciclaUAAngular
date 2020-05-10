@@ -86,7 +86,7 @@ export class UsuarioService {
   }
 
   verificarEmail(id): Observable<void> {
-    return this.http.post<void>(this.SERVER + 'UsuarioWeb/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken());
+    return this.http.post<void>(this.SERVER + 'UsuarioWebVerificarCuenta/VerificarEmail?p_usuarioweb_oid=' + id, this.getHeaderToken());
   }
 
   recuperarPass(usuario: Usuario): Observable<void> {
