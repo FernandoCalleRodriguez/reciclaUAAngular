@@ -43,7 +43,7 @@ export class CambiarcontrasenaComponent implements OnInit {
 
     this.usuarioService.cambiarPass(this.usuario).subscribe(usuario => {
       if (usuario != null) {
-        console.log(usuario);
+        // console.log(usuario);
         this.toaster.success('La contraseña se ha cambiado con éxito');
 
       } else {

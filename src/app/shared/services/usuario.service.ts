@@ -21,7 +21,7 @@ export class UsuarioService {
     } else if (tipo === 'administrador') {
       url = 'UsuarioAdminAutenticado/Crear';
     } else {
-      console.log('Crear usuario error tipo usuario no valido');
+      // console.log('Crear usuario error tipo usuario no valido');
     }
     return this.http.post<Usuario>(this.SERVER + url, usuario, this.getHeaderToken());
 

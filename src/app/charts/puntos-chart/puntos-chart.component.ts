@@ -39,12 +39,12 @@ export class PuntosChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.tipoContenedorService.getTipos().forEach(tipo => {
-      console.log('tipo', tipo.Id);
+      // console.log('tipo', tipo.Id);
       this.pieChartColors[0].backgroundColor.push(tipo.RGB);
       this.barChartLabels.push(tipo.Tipo);
       this.contenedorService.buscarPorTipo(tipo.Id).subscribe(res => {
         if (res) {
-          console.log(res);
+          // console.log(res);
           this.barChartData[0].data.push(res.length);
         }
       });

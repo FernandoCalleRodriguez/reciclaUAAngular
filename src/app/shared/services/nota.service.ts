@@ -33,7 +33,7 @@ export class NotaService {
 
 
   public modificar(nota: Nota): Observable<any> {
-    console.log(nota);
+    // console.log(nota);
     return this.http.put<Nota>(this.server + 'NotaInformativa/Modificar?idNotaInformativa=' + nota.Id, nota, {headers: this.headers});
   }
 

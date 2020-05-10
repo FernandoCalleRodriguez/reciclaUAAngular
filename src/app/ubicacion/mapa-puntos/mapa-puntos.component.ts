@@ -102,7 +102,7 @@ export class MapaPuntosComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
     this.puntos.forEach(p => {
       this.setMarker(p);
-      console.log(p.Latitud);
+      // console.log(p.Latitud);
     });
     if (this.single) {
       this.map.setView(this.markers[0].getLatLng(), 20);

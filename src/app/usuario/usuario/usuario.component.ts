@@ -66,7 +66,7 @@ export class UsuarioComponent implements OnInit {
 
   modificarUsuario(form: FormUsuarioModalComponent, modal: NgbModalRef) {
     this.usuarioService.obtenerUsuarioPorEmail(form.formulario.value.email).subscribe(result => {
-      console.log(result);
+      // console.log(result);
       if (result && result.Id != this.usuario.Id) {
 
         this.toaster.error('  El Correo electrónico utilizado ya existe');

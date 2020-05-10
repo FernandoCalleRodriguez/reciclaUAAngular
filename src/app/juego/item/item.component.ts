@@ -112,7 +112,7 @@ export class ItemComponent implements OnInit {
             this.items.splice(index, 1);
           }
           this.toaster.error('Ítem ' + item.Id + ' borrado');
-          this.itemService.RemoveImage(item.Id, item.Imagen).subscribe(res => console.log(res));
+          this.itemService.RemoveImage(item.Id, item.Imagen).subscribe(/* res => console.log(res) */);
           this.refresh();
         }, err => {
           this.toaster.error('Error del servidor');

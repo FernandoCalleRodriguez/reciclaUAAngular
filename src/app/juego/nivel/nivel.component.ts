@@ -73,7 +73,7 @@ export class NivelComponent implements OnInit, OnDestroy {
 
     this.showModel.nativeElement.click();
     this.isEdit = true;
-    console.log(this.modelTitle);
+    // console.log(this.modelTitle);
   }
 
   add(form) {
@@ -112,18 +112,18 @@ export class NivelComponent implements OnInit, OnDestroy {
 
       this.nivelService.setNivel(this.nivel).subscribe(res => {
         if (res != null) {
-          console.log('add', res);
+          // console.log('add', res);
           this.closebutton.nativeElement.click();
           this.niveles.push(this.nivel);
           this.refresh();
           this.toaster.success('nivel creado');
         }
       }, err => {
-        console.log(err);
+        // console.log(err);
         this.toaster.error('Error ');
       });
     } else {
-      console.log('n', this.nivel);
+      // console.log('n', this.nivel);
       this.nivelService.updateNivel(this.nivel).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();
@@ -169,7 +169,7 @@ export class NivelComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log('tt', this.selectedItems.map((item: Item) => item.Id));
+    // console.log('tt', this.selectedItems.map((item: Item) => item.Id));
     this.AssignClosebutton.nativeElement.click();
 
   }

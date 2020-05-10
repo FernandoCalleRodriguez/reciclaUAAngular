@@ -68,7 +68,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
     this.edificioService.getEdificioById(id).subscribe(res => {
       this.edificio = res;
     });
-    console.log(this.edificio);
+    // console.log(this.edificio);
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }
@@ -96,7 +96,7 @@ export class EdificioComponent implements OnInit, OnDestroy {
               dedificio.PlantasEdificio.forEach(p => {
                 this.plantaService.removePlanta(p.Id).subscribe(() => {
                 }, error => {
-                  console.log(error);
+                  // console.log(error);
                 });
               });
             });

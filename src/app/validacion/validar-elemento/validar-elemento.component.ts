@@ -11,7 +11,7 @@ export class ValidarElementoComponent implements OnInit {
   public data: { Id: number; Element: string; } = null;
 
   constructor(protected route: ActivatedRoute) {
-    console.log('entra');
+    // console.log('entra');
   }
 
   ngOnInit(): void {

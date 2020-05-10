@@ -72,7 +72,7 @@ export class ContenedorComponent implements OnInit, OnDestroy {
         this.contenedor.Punto_oid = p.Id;
       });
     });
-    console.log('contenedor;', this.contenedor);
+    // console.log('contenedor;', this.contenedor);
     this.showModel.nativeElement.click();
     this.isEdit = true;
   }

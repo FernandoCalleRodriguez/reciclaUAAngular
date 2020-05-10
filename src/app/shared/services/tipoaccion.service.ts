@@ -37,7 +37,7 @@ export class TipoaccionService {
   }
 
   public modificar(tipoAccion: TipoAccion): Observable<any> {
-    console.log(tipoAccion);
+    // console.log(tipoAccion);
     return this.http.put<Nota>(this.server + 'TipoAccion/Modificar?idTipoAccion=' + tipoAccion.Id, tipoAccion,{headers: this.headers});
   }
 

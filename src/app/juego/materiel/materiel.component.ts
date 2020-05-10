@@ -48,7 +48,7 @@ export class MaterielComponent implements OnInit {
   ngOnInit(): void {
     this.materialService.getMaterial().subscribe(res => {
       this.materiales = res;
-      console.log(res);
+      // console.log(res);
       this.dtTrigger.next();
     }, error => {
       this.router.navigate(['/']);
@@ -63,7 +63,7 @@ export class MaterielComponent implements OnInit {
     this.materialService.getMaterialById(id).subscribe(res => {
       this.material = res;
     });
-    console.log(this.material);
+    // console.log(this.material);
     this.showModel.nativeElement.click();
     this.isEdit = true;
 
@@ -111,7 +111,7 @@ export class MaterielComponent implements OnInit {
         this.toaster.error('Error dell servidor');
       });
     } else {
-      console.log('n', this.material);
+      // console.log('n', this.material);
       this.materialService.updateMaterial(this.material).subscribe(res => {
         if (res != null) {
           this.closebutton.nativeElement.click();

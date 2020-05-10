@@ -17,7 +17,6 @@ export class AccionwebService {
   constructor(private http: HttpClient) { }
 
   public obtenerTodosAccionWeb(): Observable<AccionWeb[]> {
-    console.log()
     return this.http.get<AccionWeb[]>(this.server + 'AccionWeb/BuscarTodos', {headers: this.headers});
   }
 

@@ -42,7 +42,7 @@ export class FormRespuestaModalComponent implements OnInit {
     });
 
     if (this.dId) {
-      console.log('DudaID: ' + this.dId);
+      // console.log('DudaID: ' + this.dId);
       this.dudaService.getDudaById(this.dId).subscribe(d => {
         this.duda = d;
         this.dudaId().setValue(d.Id);

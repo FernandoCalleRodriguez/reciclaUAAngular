@@ -52,7 +52,7 @@ export class NivelService {
   }
 
   load() {
-    console.log('load');
+    // console.log('load');
     this.itemService.getItems().subscribe(items => {
       items.forEach(item => {
         this.getNivelByItem(item.Id).subscribe(nivel => {
@@ -66,5 +66,5 @@ export class NivelService {
   public countNivel(): Observable<number> {
     return this.http.get<number>(this.SERVER + 'BuscarNivelCount');
   }
- 
+
 }
