@@ -20,6 +20,7 @@
             <th scope="col">Estado</th>
             <th scope="col">Material</th>
             <th scope="col">Nivel</th>
+            <th scope="col">Puntuación</th>
             <th scope="col">Imagen</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -32,6 +33,7 @@
             <td>{{item?.EsValido | estado}}</td>
             <td>{{item?.MaterialItem?.Nombre }} </td>
             <td>{{getItemNivel(item?.Id)}} </td>
+            <td>{{item?.Puntuacion}}</td>
             <td>
               <button class="icon btn btn-outline-dark" (click)="getImage(item.Id,item.Imagen)" *ngIf="item.Imagen!=''"
                       data-toggle="modal" data-target="#imageModel">
@@ -109,6 +111,16 @@
             </select>
             <div *ngIf="Material.touched && !Material.valid">
               <small class="text-danger"> Campo requerido</small>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="isEdit">
+            <label for="Puntuacion" class="">Puntuación:</label>
+            <input [ngClass]="{'is-invalid': Puntuacion.touched && !Puntuacion.valid,'is-valid': Puntuacion.valid}"
+                    class="form-control" id="Puntuacion" required name="Puntuacion" #Puntuacion="ngModel" min="1"
+                    [(ngModel)]="item.Puntuacion" type="number" oninput="validity.valid||(value='');" required>
+            <div *ngIf="Puntuacion.touched && !Puntuacion.valid">
+              <small class="text-danger">Campo requerido</small>
             </div>
           </div>
         </form>
