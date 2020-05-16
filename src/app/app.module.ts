@@ -51,31 +51,31 @@ import {ContenedorComponent} from './contenedor/contenedor.component';
 import {NivelComponent} from './juego/nivel/nivel.component';
 import {MaterielComponent} from './juego/materiel/materiel.component';
 import {ItemComponent} from './juego/item/item.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
-import { NotaComponent } from './notainfo/nota/nota.component';
-import { AccionwebComponent } from './accion/accionweb/accionweb.component';
-import { AccionreciclarComponent } from './accion/accionreciclar/accionreciclar.component';
-import { TipoaccionComponent } from './accion/tipoaccion/tipoaccion.component';
-import { FormNotaComponent } from './notainfo/form-nota/form-nota.component';
-import { ModalNotaComponent } from './notainfo/modal-nota/modal-nota.component';
-import { FormTipoaccionComponent } from './accion/form-tipoaccion/form-tipoaccion.component';
-import { ModalTipoaccionComponent } from './accion/modal-tipoaccion/modal-tipoaccion.component';
-import { ValidarElementoComponent } from './validacion/validar-elemento/validar-elemento.component';
-import { MapaComponent } from './ubicacion/mapa/mapa.component';
+import {NotaComponent} from './notainfo/nota/nota.component';
+import {AccionwebComponent} from './accion/accionweb/accionweb.component';
+import {AccionreciclarComponent} from './accion/accionreciclar/accionreciclar.component';
+import {TipoaccionComponent} from './accion/tipoaccion/tipoaccion.component';
+import {FormNotaComponent} from './notainfo/form-nota/form-nota.component';
+import {ModalNotaComponent} from './notainfo/modal-nota/modal-nota.component';
+import {FormTipoaccionComponent} from './accion/form-tipoaccion/form-tipoaccion.component';
+import {ModalTipoaccionComponent} from './accion/modal-tipoaccion/modal-tipoaccion.component';
+import {ValidarElementoComponent} from './validacion/validar-elemento/validar-elemento.component';
+import {MapaComponent} from './ubicacion/mapa/mapa.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {TestComponent} from './test/test.component';
-import { MapaPuntosComponent } from './ubicacion/mapa-puntos/mapa-puntos.component';
-import { ChartsModule } from 'ng2-charts';
+import {MapaPuntosComponent} from './ubicacion/mapa-puntos/mapa-puntos.component';
+import {ChartsModule} from 'ng2-charts';
 
-import { JuegoBarChartComponent } from './charts/juego-bar-chart/juego-bar-chart.component';
-import { ForoChartComponent } from './charts/foro-chart/foro-chart.component';
-import { EstanciaChartComponent } from './charts/estancia-chart/estancia-chart.component';
-import { ListadoPlantasPipe } from './shared/pipes/listado-plantas.pipe';
-import { PlantaPipe } from './shared/pipes/planta.pipe';
+import {JuegoBarChartComponent} from './charts/juego-bar-chart/juego-bar-chart.component';
+import {ForoChartComponent} from './charts/foro-chart/foro-chart.component';
+import {EstanciaChartComponent} from './charts/estancia-chart/estancia-chart.component';
+import {ListadoPlantasPipe} from './shared/pipes/listado-plantas.pipe';
+import {PlantaPipe} from './shared/pipes/planta.pipe';
 import {EstadoPipe} from './shared/pipes/estado.pipe';
 import {TemaPipe} from './shared/pipes/tema.pipe';
-import { PuntosChartComponent } from './charts/puntos-chart/puntos-chart.component';
+import {PuntosChartComponent} from './charts/puntos-chart/puntos-chart.component';
 
 
 @NgModule({
@@ -124,7 +124,7 @@ import { PuntosChartComponent } from './charts/puntos-chart/puntos-chart.compone
     MapaComponent,
     TestComponent,
     MapaPuntosComponent, // test
-	 JuegoBarChartComponent,
+    JuegoBarChartComponent,
     ForoChartComponent,
     EstanciaChartComponent,
     ListadoPlantasPipe,

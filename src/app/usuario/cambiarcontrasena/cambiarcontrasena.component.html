@@ -22,14 +22,13 @@
         <div class="form-group">
         <label for="pwd2">Repetir contraseña:</label>
         <input
-          [ngClass]="{'is-invalid' : formularioCambiar.get('pwd2').invalid && formularioCambiar.get('pwd2').touched,
+          [ngClass]="{'is-invalid' : formularioCambiar.get('pwd2').value != formularioCambiar.get('pwd').value  && formularioCambiar.get('pwd2').touched,
               'is-valid' : formularioCambiar.get('pwd2').valid}"
           type="password"
           class="form-control"
           id="pwd2"
           formControlName="pwd2">
-        <span class="invalid-feedback"
-              *ngIf="formularioCambiar.get('pwd').value != formularioCambiar.get('pwd2').value && formularioCambiar.get('pwd2').touched && formularioCambiar.get('pwd').touched "> Las contraseñas no coinciden</span>
+        <span class="invalid-feedback" *ngIf="formularioCambiar.get('pwd2').value != formularioCambiar.get('pwd').value && formularioCambiar.get('pwd2').touched" > Las contraseñas no coinciden</span>
 
       </div>
         <div class="row">
