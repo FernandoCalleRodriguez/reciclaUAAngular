@@ -44,6 +44,6 @@ export class DudaService {
   }
 
   public countDudas(): Observable<number> {
-    return this.http.get<number>(this.SERVER + 'Duda/BuscarDudasCount');
+    return this.http.get<number>(this.SERVER + 'Duda/BuscarDudasCount', { headers: this.headers });
   }
 }
