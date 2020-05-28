@@ -5,6 +5,7 @@ import {PuntoService} from '../shared/services/punto.service';
 import {NivelService} from '../shared/services/nivel.service';
 import {DudaService} from '../shared/services/duda.service';
 import {Punto} from '../shared/models/punto';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -25,13 +26,16 @@ export class HomeComponent implements OnInit {
               private autenticacionService: AutenticacionService,
               private puntoService: PuntoService,
               private nivelService: NivelService,
-              private dudaService: DudaService) {
+              private dudaService: DudaService,
+              private titleService: Title) {
 
     this.autenticacionService.estaAutenticado();
     this.usuarioService.getLoggedUser()?.subscribe(u => {
     }, error => {
       this.autenticacionService.Logout();
     });
+    this.titleService.setTitle( 'Inicio' );
+
   }
 
   ngOnInit(): void {

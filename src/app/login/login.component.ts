@@ -5,6 +5,7 @@ import {UsuarioService} from '../shared/services/usuario.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutenticacionService} from '../shared/services/autenticacion.service';
 import {ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,11 @@ export class LoginComponent implements OnInit {
   constructor(private autenticacionService: AutenticacionService,
               private router: Router,
               private route: ActivatedRoute,
-              private toaster: ToastrService
-  ) {
+              private toaster: ToastrService,
+              private titleService: Title) {
 
     this.autenticacionService.noEstaAutenticado();
+    this.titleService.setTitle( 'Inicio de sesión' );
 
   }
 
