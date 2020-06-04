@@ -34,15 +34,15 @@ export class PuntoService {
   }
 
   public getPuntoById(id: number) {
-    return this.http.get<Punto>(this.SERVER + id);
+    return this.http.get<Punto>(this.SERVER + id, {headers: this.headers});
   }
 
   public countPuntos(): Observable<number> {
-    return this.http.get<number>(this.SERVER + 'BuscarPuntosCount');
+    return this.http.get<number>(this.SERVER + 'BuscarPuntosCount', {headers: this.headers});
   }
 
   public getPuntoByContenedor(id: number): Observable<Punto> {
-    return this.http.get<Punto>(this.SERVER + 'BuscarPuntoPorContenedor?contenedor_id=' + id);
+    return this.http.get<Punto>(this.SERVER + 'BuscarPuntoPorContenedor?contenedor_id=' + id, {headers: this.headers});
   }
 
   // NO SE HAN UTILIZADO AUN
