@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AccionreciclarService {
-  server = 'http://localhost:16209/api/';
+  server = 'http://reciclaua-admin.azurewebsites.net/api/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});
 

@@ -14,7 +14,7 @@ import {Observable} from 'rxjs';
 })
 export class AutenticacionService {
 
-  SERVER = 'http://localhost:16209/api/';
+  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/';
   private token: string;
   private id;
   usuario: Usuario;

@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EstanciaService {
-  SERVER = 'http://localhost:16209/api/Estancia/';
+  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Estancia/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({ Authorization: this.token });
 

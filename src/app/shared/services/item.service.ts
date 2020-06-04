@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ItemService {
-  SERVER = 'http://localhost:16209/api/Item/';
+  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Item/';
 
   private TOKEN = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.TOKEN});

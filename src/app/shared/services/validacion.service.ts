@@ -11,7 +11,7 @@ import {Estado} from '../models/estado';
   providedIn: 'root'
 })
 export class ValidacionService {
-  private SERVER = 'http://localhost:16209/api/';
+  private SERVER = 'http://reciclaua-admin.azurewebsites.net/api/';
   private TOKEN = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.TOKEN});
 
