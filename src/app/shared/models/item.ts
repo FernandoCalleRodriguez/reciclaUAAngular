@@ -10,5 +10,6 @@ export class Item {
   Usuario_oid?: number;
   Material_oid?: number;
   MaterialItem?: Material;
+  Puntuacion?: number;
 }
 

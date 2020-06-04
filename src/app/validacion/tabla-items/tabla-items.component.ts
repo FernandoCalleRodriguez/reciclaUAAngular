@@ -8,6 +8,8 @@ import {TipoContenedor} from '../../shared/models/contenedor';
 import Swal from 'sweetalert2';
 import {ToastrService} from 'ngx-toastr';
 import {DtoptionsService} from '../../shared/services/dtoptions.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tabla-items',
@@ -20,9 +22,11 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
+  public formulario: FormGroup;
+  public vitem: Item = null;
 
   constructor(protected validacionService: ValidacionService, protected toaster: ToastrService,
-              protected dtoptionsService: DtoptionsService) {
+              protected dtoptionsService: DtoptionsService, protected modalService: NgbModal) {
     validacionService.getAllItemsSinValidar().subscribe(m => {
       this.items = m;
       this.dtTrigger.next();
@@ -31,6 +35,9 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.formulario = new FormGroup({
+      puntuacion: new FormControl(1, [Validators.required])
+    });
   }
 
   ngOnDestroy(): void {
@@ -38,8 +45,8 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
   }
 
 
-  validarItem(item: Item) {
-    this.validacionService.validarItem(item).subscribe(() => {
+  validarItem(item: Item, puntuacion: number) {
+    this.validacionService.validarItem(item, puntuacion).subscribe(() => {
       this.deleteFromArray(this.items, item);
       this.toaster.success('Item ' + item.Id + ' validado');
     });
@@ -77,5 +84,10 @@ export class TablaItemsComponent implements OnInit, OnDestroy {
       return this.items.length;
     }
     return 0;
+  }
+
+  validarModal(modal: any, item: Item) {
+    this.vitem = item;
+    this.modalService.open(modal);
   }
 }

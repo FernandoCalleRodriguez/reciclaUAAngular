@@ -14,10 +14,35 @@
     <td>{{ item.MaterialItem?.Nombre }}</td>
     <td>
       <div class="btn-group">
-        <button class="btn btn-outline-success" data-toggle="tooltip" title="Validar" (click)="validarItem(item)"><i class="fa fa-check"></i></button>
+        <button class="btn btn-outline-success" data-toggle="tooltip" title="Validar" (click)="validarModal(modalForm, item)"><i class="fa fa-check"></i></button>
         <button class="btn btn-outline-danger" data-toggle="tooltip" title="Descartar" (click)="descartarItem(item)"><i class="fa fa-times"></i></button>
       </div>
     </td>
   </tr>
   </tbody>
 </table>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Puntuación del ítem</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formulario">
+        <div class="form-group">
+          <label for="puntuacion">Puntuación:</label>
+          <input type="number" formControlName="puntuacion" class="form-control" id="puntuacion" name="puntuacion" min="1">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" [disabled]="formulario.invalid"
+              (click)="validarItem(vitem, formulario.get('puntuacion').value); modal.dismiss();">
+        Validar
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -164,10 +164,10 @@ export class ItemComponent implements OnInit {
           }
           this.closebutton.nativeElement.click();
           this.refresh();
-          this.toaster.info('item modificado');
+          this.toaster.info('Ítem modificado');
         }
       }, err => {
-        this.toaster.error('Error dell servidor');
+        this.toaster.error('Error del servidor');
       });
 
 

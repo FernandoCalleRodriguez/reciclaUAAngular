@@ -65,8 +65,8 @@ export class ValidacionService {
     return this.http.post<void>(this.SERVER + 'Material/ValidarMaterial?p_oid=' + material.Id, null, {headers: this.headers});
   }
 
-  public validarItem(item: Item): Observable<void> {
-    return this.http.post<void>(this.SERVER + 'Item/ValidarItem?p_oid=' + item.Id, null, {headers: this.headers});
+  public validarItem(item: Item, puntuacion: number): Observable<void> {
+    return this.http.post<void>(this.SERVER + 'Item/ValidarItem?p_oid=' + item.Id + '&p_puntuacion=' + puntuacion, null, {headers: this.headers});
   }
 
   public descartarPunto(punto: Punto): Observable<void> {
