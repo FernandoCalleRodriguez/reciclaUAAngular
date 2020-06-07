@@ -8,7 +8,7 @@ import {Respuesta} from '../models/respuesta';
   providedIn: 'root'
 })
 export class RespuestaService {
-  private SERVER = 'http://reciclaua-admin.azurewebsites.net/api/';
+  private SERVER = 'https://reciclaua-admin.azurewebsites.net/api/';
   private TOKEN = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.TOKEN});
 

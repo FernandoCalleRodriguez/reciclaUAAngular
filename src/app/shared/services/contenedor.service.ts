@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ContenedorService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Contenedor/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/Contenedor/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({ Authorization: this.token });
 

@@ -10,7 +10,7 @@ import {Nivel} from '../models/nivel';
   providedIn: 'root'
 })
 export class NivelService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Nivel/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/Nivel/';
   private TOKEN = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.TOKEN});
 
@@ -44,11 +44,11 @@ export class NivelService {
   }
 
   public assignItem(idNivel, items: number[]) {
-    return this.http.put('http://reciclaua-admin.azurewebsites.net/api/AccionReciclar/294912/ItemAccion/' + items[0] + '/NivelItem/AsignarItems?p_nivel_oid=' + idNivel, items, {headers: this.headers});
+    return this.http.put('https://reciclaua-admin.azurewebsites.net/api/AccionReciclar/294912/ItemAccion/' + items[0] + '/NivelItem/AsignarItems?p_nivel_oid=' + idNivel, items, {headers: this.headers});
   }
 
   public desassignarItems(idNivel, items: number[]) {
-    return this.http.put('http://reciclaua-admin.azurewebsites.net/api/AccionReciclar/294912/ItemAccion/' + items[0] + '/NivelItem/DesasignarItems?p_nivel_oid=' + idNivel, items, {headers: this.headers});
+    return this.http.put('https://reciclaua-admin.azurewebsites.net/api/AccionReciclar/294912/ItemAccion/' + items[0] + '/NivelItem/DesasignarItems?p_nivel_oid=' + idNivel, items, {headers: this.headers});
   }
 
   load() {

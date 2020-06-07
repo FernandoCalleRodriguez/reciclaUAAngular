@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 })
 
 export class PuntoService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/PuntoReciclaje/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/PuntoReciclaje/';
 
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});

@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class UsuarioService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/';
 
   constructor(private http: HttpClient,
               private autenticacionService: AutenticacionService) {

@@ -10,7 +10,7 @@ import {Usuario} from '../models/usuario';
   providedIn: 'root'
 })
 export class AccionwebService {
-  server = 'http://reciclaua-admin.azurewebsites.net/api/';
+  server = 'https://reciclaua-admin.azurewebsites.net/api/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});
   AccionWeb: AccionWeb;

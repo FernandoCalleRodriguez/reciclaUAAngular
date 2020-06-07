@@ -7,7 +7,7 @@ import { Material } from '../models/Material';
   providedIn: 'root'
 })
 export class MaterialService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Material/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/Material/';
 
   private TOKEN = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({ Authorization: this.TOKEN });

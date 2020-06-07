@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PlantaService {
-  SERVER = 'http://reciclaua-admin.azurewebsites.net/api/Planta/';
+  SERVER = 'https://reciclaua-admin.azurewebsites.net/api/Planta/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({ Authorization: this.token });
   private tipoPlantas: PlantaEnum[] = [

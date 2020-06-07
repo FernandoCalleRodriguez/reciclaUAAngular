@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class TipoaccionService {
-  server = 'http://reciclaua-admin.azurewebsites.net/api/';
+  server = 'https://reciclaua-admin.azurewebsites.net/api/';
   private token = localStorage.getItem('ACCESS_TOKEN');
   private headers: HttpHeaders = new HttpHeaders({Authorization: this.token});
 
