@@ -27,7 +27,7 @@
     "@sweetalert2/ngx-sweetalert2": "^8.1.0",
     "angular-datatables": "^9.0.1",
     "bn-ng-idle": "^1.0.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-buttons-bs4": "^1.6.1",
